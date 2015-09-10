@@ -673,14 +673,14 @@
       copy1.setTime(obj.getTime());
       return copy1;
     }
-    if(obj instanceof Array){
+    if(isArray(obj)){
       var copy2 = [], arr = obj.slice(0);
       for(var i = 0, len = arr.length; i < len; ++i){
         copy2[i] = Bella.clone(arr[i]);
       }
       return copy2;
     }
-    if(obj instanceof Object){
+    if(isObject(obj)){
       var copy = {};
       for(var attr in obj){
         if(attr=='clone'){
@@ -724,6 +724,54 @@
       r = (k in ob);
     }
     return r;
+  }
+
+  Bella.equals = function(a, b){
+    if(isNumber(a) && isNumber(b)){
+      return a===b;
+    }
+    else if(isString(a) && isString(b)){
+      return a==b;
+    }
+    else if(isArray(a) && isArray(b)){
+      if(a.length != b.length){
+        return false;
+      }
+      var re = true;
+      for(var i = 0, l = a.length; i < l; i++){
+        if(!Bella.equals(a[i], b[i])){
+          re = false;
+          break;
+        }
+      }
+      return re;
+    }
+    else if(isObject(a) && isObject(b)){
+      var re = true;
+      var as = [], bs = [];
+      for(var k in a){
+        as.push(k);
+      }
+      for(var k in b){
+        bs.push(k);
+      }
+      if(as.length!=bs.length){
+        re = false;
+      }
+      else{
+        for(var k in a){
+          if(!Bella.hasProperty(b, k) || !Bella.equals(a[k], b[k])){
+            re = false;
+            break;
+          }
+        }
+      }
+      return re;
+    }
+    else if(a instanceof Date && b instanceof Date){
+      return a.getTime()===b.getTime();
+    }
+    return false;
   }
 
   // for browser only

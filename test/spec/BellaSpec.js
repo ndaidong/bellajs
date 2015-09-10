@@ -1373,4 +1373,94 @@ describe('BellaJS : Array & Object', function(){
     });
   });
 
+  describe('Bella.equals:', function(){
+    [
+      {
+        input: {
+          a: 1,
+          b: 1
+        },
+        expectation: true
+      },
+      {
+        input: {
+          a: 1,
+          b: 0
+        },
+        expectation: false
+      },
+      {
+        input: {
+          a: {name: 'X'},
+          b: {name: 'Y'}
+        },
+        expectation: false
+      },
+      {
+        input: {
+          a: {name: 'X'},
+          b: 'Hello'
+        },
+        expectation: false
+      },
+      {
+        input: {
+          a: 'Hello',
+          b: 'Hello'
+        },
+        expectation: true
+      },
+      {
+        input: {
+          a: [1, 3, 5, 6],
+          b: [1, 3, 5, 6]
+        },
+        expectation: true
+      },
+      {
+        input: {
+          a: [1, 3, 5, {name: 'X'}, [4, 6, 7]],
+          b: [1, 3, 5, {name: 'X'}, [4, 6, 7]]
+        },
+        expectation: true
+      },
+      {
+        input: {
+          a: [3, 5, {name: 'X'}, [4, 6, 7]],
+          b: [1, 3, 5, {name: 'X'}, [4, 6, 7]]
+        },
+        expectation: false
+      },
+      {
+        input: {
+          a: [1, 3, 5, {name: 'X'}, [4, 6, 7]],
+          b: [1, 3, 5, {name: 'X'}, [4, 6, 8]]
+        },
+        expectation: false
+      },
+      {
+        input: {
+          a: [1, 3, 5, {name: 'X'}, [4, 6, 8]],
+          b: [1, 3, 5, {name: 'X', email: 'ga@gmail.com'}, [4, 6, 8]]
+        },
+        expectation: false
+      },
+      {
+        input: {
+          a: [1, 3, 5, {email: 'ga@gmail.com', name: 'X'}, [4, 6, 8]],
+          b: [1, 3, 5, {name: 'X', email: 'ga@gmail.com'}, [4, 6, 8]]
+        },
+        expectation: true
+      }
+    ].forEach(function(useCase){
+      var s = useCase.input, a = s.a, b = s.b;
+      var e = useCase.expectation;
+      var p1 = (Bella.isString(a))?'"'+a+'"':(Bella.isFunction(a)?a.toString():JSON.stringify(a));
+      var p2 = (Bella.isString(b))?'"'+b+'"':(Bella.isFunction(b)?b.toString():JSON.stringify(b));
+      it('Bella.equals('+p1+', '+p2+') should return "'+e+'"', function(){
+        var testType = Bella.equals(a, b);
+        expect(testType).toBe(e);
+      });
+    });
+  });
 });
