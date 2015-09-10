@@ -5,8 +5,8 @@ BellaJS is a lightweight library with the useful functions for handling string, 
 
 # Contents
 
-* [Setup](#setup)
 * [What's new](#changes)
+* [Setup](#setup)
 * [Usage](#usage)
   * [Methods](#methods)
     * [DataType detection](#datatype-detection)
@@ -21,6 +21,15 @@ BellaJS is a lightweight library with the useful functions for handling string, 
     * [Other methods](#other-methods)
   * [Properties](#properties)
 * [Test with Jasmine](#test-with-jasmine)
+
+
+# Changes
+
+#### Sep 10, 2015
+- Added "equals" method
+
+#### Aug 21, 2015
+- Added "compile" as an alias for "make" method
 
 
 
@@ -83,12 +92,6 @@ Assuming there is a file bella.min.js located at "/public/js/lib/", the followin
 <script type="text/javascript" src="/public/js/lib/bella.min.js"></script>
 ```
 
-# Changes
-
-#### Sep 10, 2015
-- Added "equals" method
-#### Aug 21, 2015
-- Added "compile" as an alias for "make" method
 
 # Usage
 
