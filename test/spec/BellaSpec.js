@@ -1451,6 +1451,13 @@ describe('BellaJS : Array & Object', function(){
           b: [1, 3, 5, {name: 'X', email: 'ga@gmail.com'}, [4, 6, 8]]
         },
         expectation: true
+      },
+      {
+        input: {
+          a: [],
+          b: []
+        },
+        expectation: true
       }
     ].forEach(function(useCase){
       var s = useCase.input, a = s.a, b = s.b;

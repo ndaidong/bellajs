@@ -727,7 +727,10 @@
   }
 
   Bella.equals = function(a, b){
-    if(isNumber(a) && isNumber(b)){
+    if(isEmpty(a) && isEmpty(b)){
+      return true;
+    }
+    else if(isNumber(a) && isNumber(b)){
       return a===b;
     }
     else if(isString(a) && isString(b)){
@@ -735,13 +738,16 @@
     }
     else if(isArray(a) && isArray(b)){
       if(a.length != b.length){
+        console.log(1000);
         return false;
       }
       var re = true;
-      for(var i = 0, l = a.length; i < l; i++){
-        if(!Bella.equals(a[i], b[i])){
-          re = false;
-          break;
+      if(a.length>0){
+        for(var i = 0, l = a.length; i < l; i++){
+          if(!Bella.equals(a[i], b[i])){
+            re = false;
+            break;
+          }
         }
       }
       return re;
