@@ -1,5 +1,5 @@
 /**
- * BellaJS v3.6.3
+ * BellaJS v3.6.4
  * Author by @ndaidong
  * GitHub : https://github.com/techpush/bella.js.git
  * Copyright by *.techpush.net
