@@ -1,0 +1,50 @@
+{
+  "env": {
+    "browser": true,
+    "node": true,
+    "es6": true
+  },
+  "ecmaFeatures": {
+    "modules": true
+  },
+  "rules": {
+    "block-scoped-var": 0,
+    "brace-style": [2, "stroustrup"],
+    "no-unused-expressions": 1,
+    "no-unused-vars": [2, "local"],
+    "no-use-before-define": [2, "nofunc"],
+    "no-warning-comments": 2,
+    "no-underscore-dangle": 0,
+    "no-extra-semi": 0,
+    "no-mixed-requires": 0,
+    "quotes": [2, "single"],
+    "radix": 2,
+    "semi": 0,
+    "sort-vars": 0,
+    "space-after-keywords": 0,
+    "object-curly-spacing": [2, "never"],
+    "space-infix-ops": 0,
+    "strict": 2,
+    "use-isnan": 2,
+    "valid-jsdoc": 0,
+    "valid-typeof": 2,
+    "wrap-iife": 0,
+    "wrap-regex": 0,
+    "eqeqeq": 0
+  },
+  "globals": {
+    "angular": true,
+    "App": true,
+    "System": true,
+    "Bella": true,
+    "ADATA": true,
+    "RECONF": true,
+    "require": true,
+    "requirejs": true,
+    "NProgress": true,
+    "$": true,
+    "hello": true,
+    "jQuery": true,
+    "define": true
+  }
+}

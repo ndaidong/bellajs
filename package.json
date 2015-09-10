@@ -1,0 +1,25 @@
+{
+  "version": "3.6.3",
+  "name": "bellajs",
+  "description": "A useful helper for any javascript program",
+  "homepage": "http://techpush.net",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/techpush/bella.js"
+  },
+  "author": "Dong Nguyen <ndaidong@gmail.com> (https://twitter.com/ndaidong)",
+  "main": "./index.js",
+  "engines": {
+    "node": ">= 0.9"
+  },
+  "license": "MIT",
+  "maintainers": [
+    "ndaidong <ndaidong@gmail.com>"
+  ],
+  "bugs": {
+    "url": "https://github.com/techpush/bella.js/issues"
+  },
+  "directories": {
+    "test": "test"
+  }
+}
