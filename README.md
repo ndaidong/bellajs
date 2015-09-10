@@ -5,6 +5,7 @@ BellaJS is a lightweight library with the useful functions for handling string, 
 
 # Contents
 
+* [What's new](#changes)
 * [Setup](#setup)
 * [Usage](#usage)
   * [Methods](#methods)
@@ -20,6 +21,15 @@ BellaJS is a lightweight library with the useful functions for handling string, 
     * [Other methods](#other-methods)
   * [Properties](#properties)
 * [Test with Jasmine](#test-with-jasmine)
+
+
+# Changes
+
+#### Sep 10, 2015
+- Added "equals" method
+
+#### Aug 21, 2015
+- Added "compile" as an alias for "make" method
 
 
 
@@ -102,6 +112,7 @@ Assuming there is a file bella.min.js located at "/public/js/lib/", the followin
  - Bella.isLetter(Anything val)
  - Bella.isEmail(Anything val)
  - Bella.isGeneratedKey(Anything val)
+ - Bella.equals(Anything a, Anything b)
 
 ### Device detection
  - Bella.detectDevice([String userAgent])
