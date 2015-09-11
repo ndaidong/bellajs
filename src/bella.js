@@ -1,5 +1,5 @@
 /**
- * BellaJS v3.6.4
+ * BellaJS v3.6.5
  * Author by @ndaidong
  * GitHub : https://github.com/techpush/bella.js.git
  * Copyright by *.techpush.net
@@ -185,6 +185,7 @@
     var isVivaldi = detect(/vivaldi/i);
     var isOpera = detect(/opera/i);
     var isOperaMini = detect(/opera mini/i);
+    var isEdge = detect(/edge/);
     var isIE = detect(/msie/i);
     var isMidori = detect(/midori/i);
     var isMaxthon = detect(/maxthon/i);
@@ -197,30 +198,49 @@
     var isGecko = detect(/gecko/i);
     var isPresto = detect(/presto/i);
     var isTrident = detect(/trident/i);
+    var isAvantBrowser = detect(/avant browser/i);
+    var isSeaMonkey = detect(/seamonkey/i);
+    var isDeepnetExplorer = detect(/deepnet/i);
+    var isDorothy = detect(/dorothy/i);
+    var isFennec = detect(/fennec/i);
+    var isMaemo = detect(/maemo/i);
 
     re.type = (function(){
       var t = 'Desktop';
-      if(detect(/(ipad|android(?!.*mobile))/i) || detect(/\W(kindle|silk)\W/i)){
+      if(detect(/(ipad|android(?!.*mobile))/i) || detect(/\W(kindle|silk|tablet)\W/i)){
         t = 'Tablet';
       }
-      else if(detect(/(iphone|ipod|((?:android)?.*?mobile)|blackberry|nokia)/i)){
+      else if(detect(/(iphone|ipod|((?:android)?.*?mobile)|blackberry|nokia|maemo)/i)){
         t = 'Mobile';
+      }
+      else if(detect(/(bot|crawler|spider|slurp|seeker)/i)){
+        t = 'Bot';
+      }
+      else if(detect(/(fetcher|scan|valid|check|news|engine)/i)){
+        t = 'Util';
       }
       return t;
     })();
 
     re.os = (function(){
 
-      var o = 'Unknown';
+      var o = '';
 
-      if(detect(/cros/i)){
-        o = 'ChromeOS';
+      if(re.type=='Bot' || re.type=='Util'){
+        return o;
       }
-      else if(detect(/android/i)){
+
+      if(detect(/android/i)){
         o = 'Android';
       }
       else if(detect(/(ipad|iphone|ipod)/i)){
         o = 'iOS';
+      }
+      else if(detect(/(blackberry)/i)){
+        o = 'BlackBerry';
+      }
+      else if(detect(/(symbian|nokia|maemo)/i)){
+        o = 'SymbianOS';
       }
       else if(detect(/linux/i)){
         o = 'Linux';
@@ -232,25 +252,37 @@
         o = 'WindowsPhone';
       }
       else if(detect(/win/i)){
-        o = 'Windows';
+        if(detect(/windows nt/i)){
+          o = 'Windows NT';
+        }
+        else{
+          o = 'Windows';
+        }
+      }
+      else if(detect(/cros/i)){
+        o = 'ChromeOS';
       }
       return o;
     })();
 
     re.browser = (function(){
 
-      var b = 'Unknown';
+      var b = '';
 
-      if(isWebkit && isChrome && !isMidori && !isVivaldi){
+      if(re.type=='Bot' || re.type=='Util'){
+        return b;
+      }
+
+      if(isWebkit && isChrome && !isMidori && !isVivaldi && !isEdge){
          b = 'Chrome';
       }
       else if(isMinefield){
         b = 'Minefield';
       }
-      else if(isGecko && isFirefox){
+      else if(isGecko && isFirefox && !isFennec && !isMaemo){
         b = 'Firefox';
       }
-      else if(isWebkit && isSafari && !isChrome && !isMidori && !isOmniWeb && !isUCBrowser && !isVivaldi && !isMaxthon){
+      else if(isWebkit && isSafari && !isChrome && !isMidori && !isOmniWeb && !isUCBrowser && !isVivaldi && !isMaxthon && !isDorothy){
         b = 'Safari';
       }
       else if(isOmniWeb){
@@ -272,10 +304,22 @@
         b = 'Midori';
       }
       else if(isOperaMini){
-        b = 'OperaMini';
+        b = 'Opera Mini';
       }
       else if(isOpera){
         b = 'Opera';
+      }
+      else if(isEdge){
+        b = 'Edge';
+      }
+      else if(isAvantBrowser){
+        b = 'Avant Browser';
+      }
+      else if(isSeaMonkey){
+        b = 'SeaMonkey';
+      }
+      else if(isDeepnetExplorer){
+        b = 'Deepnet Explorer';
       }
       else if(detect(/iemobile/i)){
         b = 'IEMobile';
@@ -283,49 +327,154 @@
       else if(isIE && !isOpera && !isVivaldi){
         b = 'MSIE';
       }
+      else if(isDorothy){
+        b = 'Dorothy Browser';
+      }
+      else if(isFennec){
+        b = 'Fennec';
+      }
+      else if(isMaemo){
+        b = 'Maemo Browser';
+      }
+
+      if(!b){
+        if(re.os==='SymbianOS'){
+          if(detect(/doris/i)){
+            b = 'Doris';
+          }
+          else if(detect(/gobrowser/)){
+            b = 'GoBrowser';
+          }
+          else{
+            b = 'Nokia Browser';
+          }
+        }
+      }
       return b;
     })();
 
     re.engine = (function(){
-      var e = 'Unknown';
+      var e = '';
 
-      if(isWebkit){
-        e = 'Webkit';
+      if(re.type=='Bot' || re.type=='Util'){
+        if(detect(/google/i)){
+          if(detect(/image/i)){
+            e = 'Googlebot-Image';
+          }
+          else if(detect(/feedfetcher/i)){
+            e = 'Feedfetcher-Google';
+          }
+          else if(detect(/appengine/i)){
+            e = 'AppEngine-Google';
+          }
+          else{
+            e = 'Googlebot';
+          }
+        }
+        else if(detect(/bing/i)){
+          e = 'Bingbot';
+        }
+        else if(detect(/baidu/i)){
+          e = 'BaiduSpider';
+        }
+        else if(detect(/yandexbot/i)){
+          e = 'YandexBot';
+        }
+        else if(detect(/yandeximages/i)){
+          e = 'YandexImages';
+        }
+        else if(detect(/yahoo/i)){
+          if(detect(/yahooseeker/i)){
+            e = 'YahooSeeker';
+          }
+          else{
+            e = 'Yahoo! Slurp';
+          }
+        }
+        else if(detect(/soso/i)){
+          e = 'Sosospider';
+        }
+        else if(detect(/exabot/i)){
+          e = 'Exabot';
+        }
+        else if(detect(/sogou/i)){
+          e = 'Sogou Spider';
+        }
+        else if(detect(/newsgator/i)){
+          e = 'NewsGator';
+        }
       }
-      else if(isGecko){
-        e = 'Gecko';
+      else{
+        if(isWebkit){
+          e = 'Webkit';
+        }
+        else if(isGecko){
+          e = 'Gecko';
+        }
+        else if(isTrident){
+          e = 'Trident';
+        }
+        else if(isPresto){
+          e = 'Presto';
+        }
       }
-      else if(isTrident){
-        e = 'Trident';
-      }
-      else if(isPresto){
-        e = 'Presto';
-      }
-
       return e;
     })();
 
-    var getVersionByName = function(bname){
+    var getVersionByName = function(){
 
-      var v = 'Unknown';
-      var a = n.split(' ');
+      var bname = (re.type=='Bot' || re.type=='Util')?re.engine:re.browser;
 
-      var key = bname.toLowerCase();
-      if(key=='safari'){
-        key = 'version/';
+      var v = '';
+
+      if(isDeepnetExplorer){
+        a = n.split(';');
+        for(var i=0; i<a.length; i++){
+          var ai = a[i];
+          if(/deepnet explorer/.test(ai)){
+            v = ai.replace(/[^0-9\.]/ig, '');
+            break;
+          }
+        }
+      }
+      else if(isAvantBrowser || isIE){
+        a = n.split(';');
+        for(var i=0; i<a.length; i++){
+          var ai = a[i];
+          if(/msie/.test(ai)){
+            v = ai.replace(/[^0-9\.]/ig, '');
+            break;
+          }
+        }
+      }
+      else if(re.browser=='Nokia Browser'){
+        var a = n.split('symbianos/');
+        v = a[1]?parseFloat(a[1]):'';
+      }
+      else if(re.browser=='GoBrowser'){
+        var a = n.split('gobrowser/');
+        v = a[1]?parseFloat(a[1]):'';
       }
       else{
-        key+='/';
-      }
+        var key = bname.toLowerCase(), _key = key;
+        var a = n.replace(_key, '________').split(' ');
 
-      for(var i=0; i<a.length; i++){
-        var s = a[i];
-        if(s.indexOf(key)!==-1){
-          var x = s.split('/');
-          if(x.length>1){
-            v = x[1];
+        if(key=='safari' || isDorothy){
+          key = 'version/';
+        }
+        else{
+          key+='/';
+        }
+
+        for(var i=0; i<a.length; i++){
+          var s = a[i].replace('________', _key);
+          if(s.indexOf(key)!==-1){
+            var x = s.split('/');
+            if(x.length>1){
+              v = x[1];
+            }
+            break;
           }
-          break;
         }
       }
 
@@ -333,7 +482,7 @@
     }
 
     re.version = (function(){
-      var v = getVersionByName(re.browser);
+      var v = getVersionByName();
       return v;
     })();
 
@@ -738,7 +887,6 @@
     }
     else if(isArray(a) && isArray(b)){
       if(a.length != b.length){
-        console.log(1000);
         return false;
       }
       var re = true;

@@ -1470,4 +1470,5 @@ describe('BellaJS : Array & Object', function(){
       });
     });
   });
+
 });
