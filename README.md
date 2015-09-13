@@ -105,6 +105,7 @@ Assuming there is a file bella.min.js located at "/public/js/lib/", the followin
  - Bella.isNumber(Anything val)
  - Bella.isObject(Anything val)
  - Bella.isArray(Anything val)
+ - Bella.isDate(Anything val)
  - Bella.isFunction(Anything val)
  - Bella.isBoolean(Anything val)
  - Bella.isElement(Anything val)

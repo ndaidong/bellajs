@@ -1,5 +1,5 @@
 /**
- * BellaJS v3.6.6
+ * BellaJS v3.6.7
  * Author by @ndaidong
  * GitHub : https://github.com/techpush/bella.js.git
  * Copyright by *.techpush.net
@@ -177,6 +177,8 @@
 
     var ua = userAgent || navigator.userAgent;
     var n = ua.toLowerCase();
+
+    re.userAgent = ua;
 
     var detect = function(p){
       return p.test(n);
@@ -529,7 +531,7 @@
     return isString(s) ? encodeURIComponent(s) : '';
   }
   Bella.decode = function(s){
-    return isString(s) ? decodeURIComponent(s.replace(/\+/g, ' ')):'';
+    return isString(s) ? decodeURIComponent(s.replace(/\+/g, ' ')) : '';
   }
   Bella.trim = function(s){
     return ((s && isString(s)) ? s.replace(/^[\s\xa0]+|[\s\xa0]+$/g, '') : s) || '';
@@ -610,7 +612,7 @@
       var g = spad || '0';
       var o = String(s);
       var z = size || 2;
-      return o.length >= z ? o : (new Array(z - o.length + 1).join(g))+o;
+      return o.length >= z ? o : (new Array(z - o.length + 1).join(g)) + o;
     }
     return '';
   }
@@ -622,7 +624,7 @@
       var g = spad || '0';
       var o = String(s);
       var z = size || 2;
-      return o.length >= z ? o : o+(new Array(z - o.length + 1).join(g));
+      return o.length >= z ? o : o + (new Array(z - o.length + 1).join(g));
     }
     return '';
   }
@@ -784,7 +786,7 @@
       one = a[0];
       if(o === 1 || o === -1){
         a.sort(function(m, n){
-          return (m > n) ? o : (m < n ? (-1*o) : 0);
+          return (m > n) ? o : (m < n ? (-1 * o) : 0);
         });
       }
       else if(isString(o) && Bella.hasProperty(one, o)){
@@ -887,7 +889,7 @@
 
   Bella.hasProperty = function(ob, k){
     var r = true;
-    if(ob[k] === undefined){
+    if(!isDef(ob[k])){
       r = (k in ob);
     }
     return r;
@@ -1440,29 +1442,6 @@
 
     var TaskList = [], pattern = 'Y m d H i s', checkTimer;
 
-    function check(){
-
-      var gt = Bella.time(), ggt = Math.round(gt / 1000);
-      var sysTime = Bella.date.format(pattern, gt);
-      var sysDay = Bella.date.format('l', gt);
-
-      if(TaskList.length > 0){
-        for(var i = TaskList.length - 1; i >= 0; i--){
-          var t = TaskList[i];
-          if(compare(t, sysTime, sysDay, ggt)){
-            t.fn();
-            if(!t.repeat){
-              TaskList.splice(i, 1);
-            }
-          }
-        }
-      }
-      else{
-        clearInterval(checkTimer);
-        checkTimer = null;
-      }
-    }
-
     function compare(task, sysTime, sysDay, currTime){
 
       var taskTime = task.time, beginAt = Math.round(task.at / 1000);
@@ -1517,9 +1496,9 @@
           delta = 60 * 60 * 24;
         }
 
-        delta*=v;
+        delta *= v;
         var sdur = currTime - beginAt;
-        return delta>0 && sdur%delta===0;
+        return delta > 0 && sdur % delta === 0;
       }
 
       var a1 = taskTime.split(' '), a21 = sysTime.split(' '), s1 = '', s2 = '';
@@ -1531,8 +1510,32 @@
         s1 += a1[j];
         s2 += a21[j];
       }
-      return s1===s2;
+      return s1 === s2;
     }
+
+    function check(){
+
+      var gt = Bella.time(), ggt = Math.round(gt / 1000);
+      var sysTime = Bella.date.format(pattern, gt);
+      var sysDay = Bella.date.format('l', gt);
+
+      if(TaskList.length > 0){
+        for(var i = TaskList.length - 1; i >= 0; i--){
+          var t = TaskList[i];
+          if(compare(t, sysTime, sysDay, ggt)){
+            t.fn();
+            if(!t.repeat){
+              TaskList.splice(i, 1);
+            }
+          }
+        }
+      }
+      else{
+        clearInterval(checkTimer);
+        checkTimer = null;
+      }
+    }
+
 
     function register(t, fn, single){
       var ot = single || false;
@@ -1549,22 +1552,22 @@
     }
 
     function yearly(t, fn){
-      var pt = '* '+t;
+      var pt = '* ' + t;
       register(pt, fn);
     }
 
     function monthly(t, fn){
-      var pt = '* * '+t;
+      var pt = '* * ' + t;
       register(pt, fn);
     }
 
     function daily(t, fn){
-      var pt = '* * * '+t;
+      var pt = '* * * ' + t;
       register(pt, fn);
     }
 
     function hourly(t, fn){
-      var pt = '* * * * '+t;
+      var pt = '* * * * ' + t;
       register(pt, fn);
     }
 
@@ -1588,7 +1591,7 @@
 
 
   // exports
-  if(Bella.ENV==='node'){
+  if(Bella.ENV === 'node'){
     module.exports = Bella;
   }
   else{
