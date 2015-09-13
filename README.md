@@ -25,7 +25,10 @@ BellaJS is a lightweight library with the useful functions for handling string, 
 
 # Changes
 
-#### Sep 10, 2015
+#### v3.6.6 - Sep 13, 2015
+- Added "isDate" method
+
+#### v3.6.5 - Sep 10, 2015
 - Added "equals" method
 
 #### Aug 21, 2015

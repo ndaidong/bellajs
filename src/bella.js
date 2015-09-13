@@ -1,5 +1,5 @@
 /**
- * BellaJS v3.6.5
+ * BellaJS v3.6.6
  * Author by @ndaidong
  * GitHub : https://github.com/techpush/bella.js.git
  * Copyright by *.techpush.net
@@ -11,34 +11,33 @@
     ENV: 'browser'
   }
 
-  if(typeof module!='undefined' && module.exports){
+  if(typeof module !== 'undefined' && module.exports){
     Bella.ENV = 'node';
   }
 
   var tof = function(v){
     var ots = Object.prototype.toString;
-    var s=typeof v;
-    if(s=='object'){
+    var s = typeof v;
+    if(s === 'object'){
       if(v){
-      if((ots.call(v).indexOf('HTML')!==-1 && ots.call(v).indexOf('Element')!=-1)){
-        return 'element';
-      }
-      if(v instanceof Array ||
-         (
-          !(v instanceof Object) &&
-          (ots.call(v)=='[object Array]') ||
-          typeof v.length=='number' &&
-          typeof v.splice!='undefined' &&
-          typeof v.propertyIsEnumerable!='undefined' &&
-          !v.propertyIsEnumerable('splice')
-        )
-      ){
-        return 'array';
-      }
-      if(!(v instanceof Object) &&
-          (ots.call(v)=='[object Function]' ||
-          typeof v.call!='undefined' &&
-           typeof v.propertyIsEnumerable!='undefined' &&
+        if((ots.call(v).indexOf('HTML') !== -1 && ots.call(v).indexOf('Element') !== -1)){
+          return 'element';
+        }
+        if(v instanceof Array ||
+          (
+            !(v instanceof Object) &&
+            (ots.call(v) === '[object Array]') ||
+            typeof v.length === 'number' &&
+            typeof v.splice !== 'undefined' &&
+            typeof v.propertyIsEnumerable !== 'undefined' && !v.propertyIsEnumerable('splice')
+          )
+        ){
+          return 'array';
+        }
+        if(!(v instanceof Object) &&
+          (ots.call(v) === '[object Function]' ||
+          typeof v.call !== 'undefined' &&
+           typeof v.propertyIsEnumerable !== 'undefined' &&
             !v.propertyIsEnumerable('call')
           )
         ){
@@ -47,7 +46,7 @@
       }
       return 'null';
     }
-    else if(s=='function' && typeof v.call=='undefined'){
+    else if(s === 'function' && typeof v.call === 'undefined'){
       return 'object';
     }
     return s;
@@ -98,35 +97,38 @@
   /*eslint-enable*/
 
   var isDef = function(val){
-    return tof(val)!=='undefined';
+    return tof(val) !== 'undefined';
   }
   var isNull = function(val){
-    return tof(val)===null || val===null;
+    return tof(val) === null || val === null;
   }
 
   var isString = function(val){
-    return !isNull(val) && tof(val)==='string';
+    return !isNull(val) && tof(val) === 'string';
   }
   var isNumber = function(val){
-    return !isNaN(val) && tof(Number(val))==='number';
+    return !isNaN(val) && tof(Number(val)) === 'number';
   }
   var isBoolean = function(val){
-    return val===true || val===false;
+    return val === true || val === false;
   }
   var isArray = function(val){
-    return !isNull(val) && tof(val)==='array';
+    return !isNull(val) && tof(val) === 'array';
   }
   var isFunction = function(val){
-    return !isNull(val) && tof(val)==='function';
+    return !isNull(val) && tof(val) === 'function';
   }
   var isElement = function(val){
-    return !isNull(val) && tof(val)==='element';
+    return !isNull(val) && tof(val) === 'element';
   }
   var isObject = function(val){
-    return !isNull(val) && typeof val==='object';
+    return !isNull(val) && typeof val === 'object';
+  }
+  var isDate = function(val){
+    return (val instanceof Date && !isNaN(val.valueOf()));
   }
   var isEmpty = function(val){
-    return !isDef(val) || isNull(val) || (isString(val) && val==='') || (isArray(val) && val.length===0) || (isObject(val) && Object.keys(val).length===0);
+    return !isDef(val) || isNull(val) || (isString(val) && val === '') || (isArray(val) && val.length === 0) || (isObject(val) && Object.keys(val).length === 0);
   }
   var isLetter = function(val){
     var re = /^[a-z]+$/i;
@@ -134,7 +136,7 @@
   }
   var isInteger = function(val){
     var re = /^[\d-]+$/i;
-    var s = val+'';
+    var s = String(val);
     return isString(s) && re.test(s);
   }
   var isEmail = function(val){
@@ -156,6 +158,7 @@
   Bella.isFunction = isFunction;
   Bella.isElement = isElement;
   Bella.isObject = isObject;
+  Bella.isDate = isDate;
   Bella.isLetter = isLetter;
   Bella.isInteger = isInteger;
   Bella.isEmail = isEmail;
@@ -226,7 +229,7 @@
 
       var o = '';
 
-      if(re.type=='Bot' || re.type=='Util'){
+      if(re.type === 'Bot' || re.type === 'Util'){
         return o;
       }
 
@@ -269,12 +272,12 @@
 
       var b = '';
 
-      if(re.type=='Bot' || re.type=='Util'){
+      if(re.type === 'Bot' || re.type === 'Util'){
         return b;
       }
 
       if(isWebkit && isChrome && !isMidori && !isVivaldi && !isEdge){
-         b = 'Chrome';
+        b = 'Chrome';
       }
       else if(isMinefield){
         b = 'Minefield';
@@ -338,7 +341,7 @@
       }
 
       if(!b){
-        if(re.os==='SymbianOS'){
+        if(re.os === 'SymbianOS'){
           if(detect(/doris/i)){
             b = 'Doris';
           }
@@ -356,7 +359,7 @@
     re.engine = (function(){
       var e = '';
 
-      if(re.type=='Bot' || re.type=='Util'){
+      if(re.type === 'Bot' || re.type === 'Util'){
         if(detect(/google/i)){
           if(detect(/image/i)){
             e = 'Googlebot-Image';
@@ -423,54 +426,64 @@
 
     var getVersionByName = function(){
 
-      var bname = (re.type=='Bot' || re.type=='Util')?re.engine:re.browser;
+      var bname = (re.type === 'Bot' || re.type === 'Util') ? re.engine : re.browser;
 
       var v = '';
 
       if(isDeepnetExplorer){
-        a = n.split(';');
-        for(var i=0; i<a.length; i++){
-          var ai = a[i];
-          if(/deepnet explorer/.test(ai)){
-            v = ai.replace(/[^0-9\.]/ig, '');
-            break;
+        v = (function(){
+          var x = '', a = n.split(';');
+          for(var i = 0; i < a.length; i++){
+            var ai = a[i];
+            if(/deepnet explorer/.test(ai)){
+              x = ai.replace(/[^0-9\.]/ig, '');
+              break;
+            }
           }
-        }
+          return x;
+        })();
       }
       else if(isAvantBrowser || isIE){
-        a = n.split(';');
-        for(var i=0; i<a.length; i++){
-          var ai = a[i];
-          if(/msie/.test(ai)){
-            v = ai.replace(/[^0-9\.]/ig, '');
-            break;
+        v = (function(){
+          var x = '', a = n.split(';');
+          for(var i = 0; i < a.length; i++){
+            var ai = a[i];
+            if(/msie/.test(ai)){
+              x = ai.replace(/[^0-9\.]/ig, '');
+              break;
+            }
           }
-        }
+          return x;
+        })();
       }
-      else if(re.browser=='Nokia Browser'){
-        var a = n.split('symbianos/');
-        v = a[1]?parseFloat(a[1]):'';
+      else if(re.browser === 'Nokia Browser'){
+        v = (function(){
+          var a = n.split('symbianos/');
+          return a[1] ? parseFloat(a[1]) : '';
+        })();
       }
-      else if(re.browser=='GoBrowser'){
-        var a = n.split('gobrowser/');
-        v = a[1]?parseFloat(a[1]):'';
+      else if(re.browser === 'GoBrowser'){
+        v = (function(){
+          var a = n.split('gobrowser/');
+          return a[1] ? parseFloat(a[1]) : '';
+        })();
       }
       else{
-        var key = bname.toLowerCase(), _key = key;
-        var a = n.replace(_key, '________').split(' ');
+        var key = bname.toLowerCase(), xkey = key;
+        var a = n.replace(xkey, '________').split(' ');
 
-        if(key=='safari' || isDorothy){
+        if(key === 'safari' || isDorothy){
           key = 'version/';
         }
         else{
-          key+='/';
+          key += '/';
         }
 
-        for(var i=0; i<a.length; i++){
-          var s = a[i].replace('________', _key);
-          if(s.indexOf(key)!==-1){
+        for(var i = 0; i < a.length; i++){
+          var s = a[i].replace('________', xkey);
+          if(s.indexOf(key) !== -1){
             var x = s.split('/');
-            if(x.length>1){
+            if(x.length > 1){
               v = x[1];
             }
             break;
@@ -493,16 +506,16 @@
 
   function createId(leng, prefix){
     var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    chars+=chars.toLowerCase();
-    chars+='0123456789';
+    chars += chars.toLowerCase();
+    chars += '0123456789';
     var t = chars.length;
     var px = prefix || '';
     var ln = Math.max(leng || 32, px.length);
 
     var s = px;
-    while(s.length<ln){
-      var k = Math.floor(Math.random()*t);
-      s+=chars.charAt(k) || '';
+    while(s.length < ln){
+      var k = Math.floor(Math.random() * t);
+      s += chars.charAt(k) || '';
     }
     return s;
   }
@@ -513,13 +526,13 @@
 
   // string
   Bella.encode = function(s){
-    return isString(s)?encodeURIComponent(s):'';
+    return isString(s) ? encodeURIComponent(s) : '';
   }
   Bella.decode = function(s){
-    return isString(s)?decodeURIComponent(s.replace(/\+/g, ' ')):'';
+    return isString(s) ? decodeURIComponent(s.replace(/\+/g, ' ')):'';
   }
   Bella.trim = function(s){
-    return ((s && isString(s))?s.replace(/^[\s\xa0]+|[\s\xa0]+$/g, ''):s) || '';
+    return ((s && isString(s)) ? s.replace(/^[\s\xa0]+|[\s\xa0]+$/g, '') : s) || '';
   }
   Bella.truncate = function(s, l){
     if(!s || !isString(s)){
@@ -527,57 +540,57 @@
     }
     s = Bella.trim(s);
 
-    if(s==''){
+    if(s === ''){
       return s;
     }
 
     var t = l || 140;
 
-    if(s.length<=t){
+    if(s.length <= t){
       return s;
     }
 
     var x = s.substring(0, t);
     var a = x.split(' '), b = a.length, r = '';
-    if(b>1){
+    if(b > 1){
       a.pop();
-      r+=a.join(' ');
-      if(r.length<s.length){
-        r+='...';
+      r += a.join(' ');
+      if(r.length < s.length){
+        r += '...';
       }
     }
     else{
-      x=x.substring(0, t-3);
-      r+='...';
+      x = x.substring(0, t - 3);
+      r += '...';
     }
     return r;
   }
   Bella.stripTags = function(s){
-    return isString(s)?s.replace(/<\w+(\s+("[^"]*"|'[^']*'|[^>])+)?>|<\/\w+>/gi, ''):'';
+    return isString(s) ? s.replace(/<\w+(\s+("[^"]*"|'[^']*'|[^>])+)?>|<\/\w+>/gi, '') : '';
   }
 
   Bella.escapeHTML = function(s){
-    return isString(s)?s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'):'';
+    return isString(s) ? s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;') : '';
   }
   Bella.unescapeHTML = function(s){
-    return isString(s)?s.replace(/&quot;/g, '"').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&'):'';
+    return isString(s) ? s.replace(/&quot;/g, '"').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&') : '';
   }
 
   Bella.strtolower = function(s){
-    return isString(s)?s.toLowerCase():'';
+    return isString(s) ? s.toLowerCase() : '';
   }
   Bella.strtoupper = function(s){
-    return isString(s)?s.toUpperCase():'';
+    return isString(s) ? s.toUpperCase() : '';
   }
   Bella.ucfirst = function(s){
     if(!isString(s)){
       return '';
     }
-    if(s.length===1){
+    if(s.length === 1){
       return s.toUpperCase();
     }
     s = s.toLowerCase();
-    return s.charAt(0).toUpperCase()+s.slice(1);
+    return s.charAt(0).toUpperCase() + s.slice(1);
   }
   Bella.ucwords = function(s){
     if(isString(s)){
@@ -591,11 +604,11 @@
   }
   Bella.leftPad = function(s, size, spad){
     if(isNumber(s)){
-      s+='';
+      s += '';
     }
     if(isString(s)){
       var g = spad || '0';
-      var o = s+'';
+      var o = String(s);
       var z = size || 2;
       return o.length >= z ? o : (new Array(z - o.length + 1).join(g))+o;
     }
@@ -603,11 +616,11 @@
   }
   Bella.rightPad = function(s, size, spad){
     if(isNumber(s)){
-      s+='';
+      s += '';
     }
     if(isString(s)){
       var g = spad || '0';
-      var o = s+'';
+      var o = String(s);
       var z = size || 2;
       return o.length >= z ? o : o+(new Array(z - o.length + 1).join(g));
     }
@@ -620,10 +633,10 @@
       return '';
     }
     if(isNumber(a)){
-      a+='';
+      a += '';
     }
     if(isNumber(b)){
-      b+='';
+      b += '';
     }
     if(isString(a) && isString(b)){
       var aa = s.split(a);
@@ -634,10 +647,10 @@
         s = Bella.replaceAll(s, v, b);
       });
     }
-    else if(isArray(a) && isArray(b) && a.length===b.length){
+    else if(isArray(a) && isArray(b) && a.length === b.length){
       var k = a.length;
-      if(k>0){
-        for(var i=0; i<k; i++){
+      if(k > 0){
+        for(var i = 0; i < k; i++){
           var aaa = a[i], bb = b[i];
           s = Bella.replaceAll(s, aaa, bb);
         }
@@ -669,25 +682,27 @@
       Y: 'Ý|Ỳ|Ỷ|Ỹ|Ỵ'
     }
     for(var key in map){
-      var a = map[key].split('|');
-      for(var i=0; i<a.length; i++){
-        s = Bella.replaceAll(s, a[i], key);
+      if(Bella.hasProperty(map, key)){
+        var a = map[key].split('|');
+        for(var i = 0; i < a.length; i++){
+          s = Bella.replaceAll(s, a[i], key);
+        }
       }
     }
     return s;
   }
 
   Bella.createAlias = function(s, delimiter){
-    s = Bella.stripAccent(s);
-    if(s){
+    var x = Bella.stripAccent(s);
+    if(x){
       var d = delimiter || '-';
-      s = Bella.strtolower(s);
-      s = Bella.trim(s);
-      s = s.replace(/\W+/g, ' ');
-      s = s.replace(/\s+/g, ' ');
-      s = s.replace(/\s/g, d);
+      x = Bella.strtolower(x);
+      x = Bella.trim(x);
+      x = x.replace(/\W+/g, ' ');
+      x = x.replace(/\s+/g, ' ');
+      x = x.replace(/\s/g, d);
     }
-    return s;
+    return x;
   }
 
   Bella.compile = function(tpl, data){
@@ -698,18 +713,20 @@
       }
       var a = [];
       for(var k in ctx){
-        var v = ctx[k];
-        if(isObject(v) || isArray(v)){
-          a.push({key: k, data: v});
-        }
-        else if(isString(v)){
-          v = Bella.replaceAll(v, ['{', '}'], ['&#123;', '&#125;']);
-          var cns = ns.concat([k]);
-          var r = new RegExp('{'+cns.join('.')+'}', 'gi');
-          s = s.replace(r, v);
+        if(Bella.hasProperty(ctx, k)){
+          var v = ctx[k];
+          if(isObject(v) || isArray(v)){
+            a.push({key: k, data: v});
+          }
+          else if(isString(v)){
+            v = Bella.replaceAll(v, ['{', '}'], ['&#123;', '&#125;']);
+            var cns = ns.concat([k]);
+            var r = new RegExp('{' + cns.join('.') + '}', 'gi');
+            s = s.replace(r, v);
+          }
         }
       }
-      if(a.length>0){
+      if(a.length > 0){
         a.forEach(function(item){
           s = compile(s, item.data, item.key);
         });
@@ -734,25 +751,25 @@
     if(isArray(a)){
       var r = [];
       for(var i = 0; i < a.length; i++){
-         if(r.indexOf(a[i]) === -1){
+        if(r.indexOf(a[i]) === -1){
           r.push(a[i]);
-         }
+        }
       }
       return r;
     }
     return a || [];
   }
   Bella.max = function(a){
-    return isArray(a)?Math.max.apply({}, a):a;
+    return isArray(a) ? Math.max.apply({}, a) : a;
   }
   Bella.min = function(a){
-    return isArray(a)?Math.min.apply({}, a):a;
+    return isArray(a) ? Math.min.apply({}, a) : a;
   }
   Bella.contains = function(a, el, key){
     if(isArray(a)){
-      for(var i=0; i<a.length; i++){
+      for(var i = 0; i < a.length; i++){
         var val = a[i];
-        if((key && val[key]===el[key])||(val===el)){
+        if((key && val[key] === el[key]) || (val === el)){
           return true;
         }
       }
@@ -762,24 +779,23 @@
   Bella.sort = function(arr, opts){
     var a = [], one;
     var o = opts || 1;
-    if(isArray(arr) && arr.length>0){
+    if(isArray(arr) && arr.length > 0){
       a = Bella.clone(arr);
       one = a[0];
-      if(o===1 || o===-1){
+      if(o === 1 || o === -1){
         a.sort(function(m, n){
-          return (m>n)?o:(m<n?(-1*o):0);
+          return (m > n) ? o : (m < n ? (-1*o) : 0);
         });
       }
-      else if(isString(o) && one.hasOwnProperty(o)){
+      else if(isString(o) && Bella.hasProperty(one, o)){
         a.sort(function(m, n){
-          return (m[o]>n[o])?1:(m[o]<n[o]?-1:0);
+          return (m[o] > n[o]) ? 1 : (m[o] < n[o] ? -1 : 0);
         });
       }
       else if(isObject(o)){
         for(var key in o){
-          var order = 1;
-          if(one.hasOwnProperty(key)){
-            order = o[key]===-1?-1:1;
+          if(Bella.hasProperty(one, key)){
+            var order = o[key] === -1 ? -1 : 1;
             /*eslint-disable*/
             a.sort(function(m, n){
               return (m[key]>n[key])?order:(m[key]<n[key]?(-1*order):0);
@@ -796,13 +812,13 @@
     var mt = matched || false;
     var ex = excepts || [];
     for(var k in from){
-      if(ex.length>0 && Bella.contains(ex, k)){
+      if(ex.length > 0 && Bella.contains(ex, k)){
         continue;
       }
-      if(!mt || (!!mt && to.hasOwnProperty(k))){
+      if(!mt || (mt && to.hasOwnProperty(k))){
         var oa = from[k];
         var ob = to[k];
-        if((isObject(ob) && isObject(oa))||(isArray(ob) && isArray(oa))){
+        if((isObject(ob) && isObject(oa)) || (isArray(ob) && isArray(oa))){
           to[k] = Bella.copies(oa, to[k], mt, ex);
         }
         else{
@@ -814,10 +830,10 @@
   }
 
   Bella.clone = function(obj){
-    if(obj==null || typeof obj!='object'){
+    if(!isObject(obj) && !isArray(obj) && !isDate(obj)){
       return obj;
     }
-    if(obj instanceof Date){
+    if(isDate(obj)){
       var copy1 = new Date();
       copy1.setTime(obj.getTime());
       return copy1;
@@ -832,7 +848,7 @@
     if(isObject(obj)){
       var copy = {};
       for(var attr in obj){
-        if(attr=='clone'){
+        if(attr === 'clone'){
           continue;
         }
         if(obj.hasOwnProperty(attr)){
@@ -846,7 +862,7 @@
 
   Bella.empty = function(a){
     if(isArray(a)){
-      for(var i=a.length-1; i>=0; i--){
+      for(var i = a.length - 1; i >= 0; i--){
         a[i] = null;
         delete a[i];
       }
@@ -854,8 +870,10 @@
     }
     else if(isObject(a)){
       for(var k in a){
-        a[k] = null;
-        delete a[k];
+        if(Bella.hasProperty(a, k)){
+          a[k] = null;
+          delete a[k];
+        }
       }
     }
     else if(isString(a)){
@@ -869,28 +887,28 @@
 
   Bella.hasProperty = function(ob, k){
     var r = true;
-    if(ob[k]===undefined){
+    if(ob[k] === undefined){
       r = (k in ob);
     }
     return r;
   }
 
   Bella.equals = function(a, b){
+    var re = true;
     if(isEmpty(a) && isEmpty(b)){
       return true;
     }
-    else if(isNumber(a) && isNumber(b)){
-      return a===b;
+    else if(isDate(a) && isDate(b)){
+      return a.getTime() === b.getTime();
     }
-    else if(isString(a) && isString(b)){
-      return a==b;
+    else if((isNumber(a) && isNumber(b)) || (isString(a) && isString(b))){
+      return a === b;
     }
     else if(isArray(a) && isArray(b)){
-      if(a.length != b.length){
+      if(a.length !== b.length){
         return false;
       }
-      var re = true;
-      if(a.length>0){
+      if(a.length > 0){
         for(var i = 0, l = a.length; i < l; i++){
           if(!Bella.equals(a[i], b[i])){
             re = false;
@@ -901,15 +919,14 @@
       return re;
     }
     else if(isObject(a) && isObject(b)){
-      var re = true;
       var as = [], bs = [];
-      for(var k in a){
-        as.push(k);
+      for(var k1 in a){
+        as.push(k1);
       }
-      for(var k in b){
-        bs.push(k);
+      for(var k2 in b){
+        bs.push(k2);
       }
-      if(as.length!=bs.length){
+      if(as.length !== bs.length){
         re = false;
       }
       else{
@@ -922,24 +939,21 @@
       }
       return re;
     }
-    else if(a instanceof Date && b instanceof Date){
-      return a.getTime()===b.getTime();
-    }
     return false;
   }
 
   // for browser only
-  if(Bella.ENV=='browser'){
+  if(Bella.ENV === 'browser'){
 
     Bella.device = detectDevice();
 
     var _getElement = function(el){
-      var p = (isString(el)?document.getElementById(el):el)||null;
-      if(!!p && isElement(p)){
+      var p = (isString(el) ? document.getElementById(el) : el) || null;
+      if(p && isElement(p)){
         p.hasClass = function(c){
           var r = true, e = p.className.split(' '); c = c.split(' ');
-          for(var i=0; i<c.length; i++){
-            if(e.indexOf(c[i])===-1){
+          for(var i = 0; i < c.length; i++){
+            if(e.indexOf(c[i]) === -1){
               r = false;
               break;
             }
@@ -956,7 +970,7 @@
         }
         p.removeClass = function(c){
           var e = p.className.split(' '); c = c.split(' ');
-          for(var i=0; i<c.length; i++){
+          for(var i = 0; i < c.length; i++){
             if(p.hasClass(c[i])){
               e.splice(e.indexOf(c[i]), 1);
             }
@@ -978,7 +992,7 @@
           return p;
         }
         p.html = function(s){
-          if(s!=='' && isEmpty(s)){
+          if(s !== '' && isEmpty(s)){
             return p.innerHTML;
           }
           p.innerHTML = s;
@@ -994,8 +1008,8 @@
     }
 
     var _addElement = function(tag, parent){
-      var p = parent?_getElement(parent):document.body;
-      var d = isElement(tag)?tag:document.createElement(tag);
+      var p = parent ? _getElement(parent) : document.body;
+      var d = isElement(tag) ? tag : document.createElement(tag);
       p.appendChild(d);
       return _getElement(d);
     }
@@ -1005,7 +1019,7 @@
     }
 
     var _query = function(condition){
-      var el=null, tmp = document.querySelector(condition);
+      var el, tmp = document.querySelector(condition);
       if(tmp){
         el = _getElement(tmp);
       }
@@ -1013,9 +1027,9 @@
     }
 
     var _queryAll = function(condition){
-      var els=[], tmp = document.querySelectorAll(condition);
+      var els = [], tmp = document.querySelectorAll(condition);
       if(tmp){
-        for(var i=0; i<tmp.length; i++){
+        for(var i = 0; i < tmp.length; i++){
           els.push(_getElement(tmp[i]));
         }
       }
@@ -1071,37 +1085,37 @@
 
       return {
         on: function(element, event, callback){
-          if(event=='wheel'){
-            event = Bella.device.engine==='Gecko'?'DOMMouseScroll':'mousewheel';
+          if(event === 'wheel'){
+            event = Bella.device.engine === 'Gecko' ? 'DOMMouseScroll' : 'mousewheel';
           }
-          var el = isString(element)?_getElement(element):element;
+          var el = isString(element) ? _getElement(element) : element;
           var cb = callback || function(){};
 
           if(el.addEventListener){
             el.addEventListener(event, cb, false);
           }
           else if(el.attachEvent){
-            el.attachEvent('on'+event, cb);
+            el.attachEvent('on' + event, cb);
           }
         },
         off: function(element, event, callback){
-          var el = isString(element)?_getElement(element):element;
+          var el = isString(element) ? _getElement(element) : element;
           if(el.removeEventListener){
             el.removeEventListener(event, callback, false);
           }
           else if(el.detachEvent){
-            el.detachEvent('on'+event, callback);
+            el.detachEvent('on' + event, callback);
           }
         },
         simulate: function(element, event){
-          var evt, el = isString(element)?_getElement(element):element;
+          var evt, el = isString(element) ? _getElement(element) : element;
           if(document.createEventObject){
             evt = document.createEventObject();
-            el.fireEvent('on'+event, evt);
+            el.fireEvent('on' + event, evt);
           }
           else{
             evt = document.createEvent('HTMLEvents');
-            evt.initEvent(event, true, true );
+            evt.initEvent(event, true, true);
             el.dispatchEvent(evt);
           }
         },
@@ -1118,7 +1132,7 @@
         detect: function(e){
           var evt = e || window.event;
           var targ = evt.target || evt.srcElement;
-          if (targ && targ.nodeType == 3){
+          if(targ && targ.nodeType === 3){
             targ = targ.parentNode;
           }
           return _getElement(targ);
@@ -1132,15 +1146,15 @@
         x: 0,
         y: 0
       }
-      if(e.pageX||e.pageY){
-        cursor.x=e.pageX;
-        cursor.y=e.pageY;
+      if(e.pageX || e.pageY){
+        cursor.x = e.pageX;
+        cursor.y = e.pageY;
       }
       else{
-        var de=document.documentElement;
-        var db=document.body;
-        cursor.x=e.clientX+(de.scrollLeft||db.scrollLeft)-(de.clientLeft||0);
-        cursor.y=e.clientY+(de.scrollTop||db.scrollTop)-(de.clientTop||0);
+        var de = document.documentElement;
+        var db = document.body;
+        cursor.x = e.clientX + (de.scrollLeft || db.scrollLeft) - (de.clientLeft || 0);
+        cursor.y = e.clientY + (de.scrollTop || db.scrollTop) - (de.clientTop || 0);
       }
       return cursor;
     }
@@ -1178,9 +1192,9 @@
           var _dom = ob.domain || false;
 
           if(_name){
-            var vx = (!isObject(_val) && !isArray(_val))?_val:JSON.stringify(_val);
+            var vx = (!isObject(_val) && !isArray(_val)) ? _val : JSON.stringify(_val);
             var arr = [
-              [_name, isString(vx)?encodeURIComponent(vx):vx],
+              [_name, isString(vx) ? encodeURIComponent(vx) : vx],
               ['path', _pat]
             ];
             if(_dom){
@@ -1191,25 +1205,25 @@
               var v = parseInt(_exp, 10);
               var s = _exp.replace(v, '');
               var delta = 0;
-              if(s==='s'){
+              if(s === 's'){
                 delta = 1;
               }
-              else if(s==='m'){
+              else if(s === 'm'){
                 delta = 60;
               }
-              else if(s==='h'){
-                delta = 60*60;
+              else if(s === 'h'){
+                delta = 60 * 60;
               }
-              else if(s==='d'){
-                delta = 60*60*24;
+              else if(s === 'd'){
+                delta = 60 * 60 * 24;
               }
-              else if(s==='w'){
-                delta = 7*60*60*24;
+              else if(s === 'w'){
+                delta = 7 * 60 * 60 * 24;
               }
-              var ms = delta*v*1000;
+              var ms = delta * v * 1000;
               if(Bella.isInteger(ms)){
                 var d = new Date();
-                var t = d.getTime()+ms;
+                var t = d.getTime() + ms;
                 d.setTime(t);
                 arr.push(['expires', d.toUTCString()]);
               }
@@ -1222,7 +1236,7 @@
           }
         }
 
-        if(arguments.length===1 && Bella.isObject(name)){
+        if(arguments.length === 1 && Bella.isObject(name)){
           cdata = parse(name);
         }
         else{
@@ -1242,9 +1256,9 @@
         if(document.cookie){
           var a = document.cookie.split(';');
           var n = Bella.trim(name);
-          for(var i=0; i<a.length; i++){
+          for(var i = 0; i < a.length; i++){
             var t = a[i], ac = t.split('='), x = Bella.trim(ac[0]);
-            if(x==n){
+            if(x === n){
               return decodeURIComponent(ac[1]);
             }
           }
@@ -1273,13 +1287,13 @@
 
     var tz = (function(){
       var t = (new Date()).getTimezoneOffset();
-      var z = Math.abs(t/60);
-      var sign = t<0?'+':'-';
+      var z = Math.abs(t / 60);
+      var sign = t < 0 ? '+' : '-';
       return ['GMT', sign, Bella.leftPad(z, 2)].join('');
     })();
 
     var format = function(output, input){
-      var meridiem=false, d, f, vchar=/\.*\\?([a-z])/gi;
+      var meridiem = false, d, f, vchar = /\.*\\?([a-z])/gi;
       if(!input){
         input = Bella.time();
       }
@@ -1292,41 +1306,41 @@
       var wn = weeks;
       var mn = months;
       var _num = function(n){
-        return ''+(n<10?'0'+n:n);
+        return String(n < 10 ? '0' + n : n);
       }
       var _ord = function(day){
-        var s = day+' ', x = s.charAt(s.length-2);
-        if(x==='1'){
-          s+='st';
+        var s = day + ' ', x = s.charAt(s.length - 2);
+        if(x === '1'){
+          s += 'st';
         }
-        else if(x==='2'){
-          s+='nd';
+        else if(x === '2'){
+          s += 'nd';
         }
-        else if(x==='3'){
-          s+='rd';
+        else if(x === '3'){
+          s += 'rd';
         }
         else{
-          s+='th';
+          s += 'th';
         }
         return s;
       }
 
       var _term = function(t, s){
-        return f[t]?f[t]():s;
+        return f[t] ? f[t]() : s;
       }
       d = (input instanceof Date) ? input : new Date(input);
 
       if(isNaN(d.getTime())){
-        var reg=/^(\d+-\d+-\d+)\s(\d+:\d+:\d+)$/i;
+        var reg = /^(\d+-\d+-\d+)\s(\d+:\d+:\d+)$/i;
         if(reg.test(input)){
           d = new Date(input.replace(' ', 'T'));
         }
         else{
-          return input+' !';
+          return input + ' !';
         }
       }
-      if(output.indexOf('a')>0 || output.indexOf('A')>0){
-        meridiem=true;
+      if(output.indexOf('a') > 0 || output.indexOf('A') > 0){
+        meridiem = true;
       }
       /*eslint-disable */
       f = {
@@ -1358,8 +1372,8 @@
     }
 
     var relativize = function(input){
-      var time = (input instanceof Date?input:new Date(input));
-      var delta = new Date()-time;
+      var time = (input instanceof Date ? input : new Date(input));
+      var delta = new Date() - time;
       var nowThreshold = parseInt(time, 10);
       if(isNaN(nowThreshold)){
         nowThreshold = 0;
@@ -1378,7 +1392,7 @@
         year: 12
       }
       for(var key in conversions){
-        if (delta < conversions[key]){
+        if(delta < conversions[key]){
           break;
         }
         else{
@@ -1387,10 +1401,10 @@
         }
       }
       delta = Math.floor(delta);
-      if (delta!==1){
-        units+='s';
+      if(delta !== 1){
+        units += 's';
       }
-      return [delta, units].join(' ')+' ago';
+      return [delta, units].join(' ') + ' ago';
     }
 
     var utc = function(t){
@@ -1428,12 +1442,12 @@
 
     function check(){
 
-      var gt = Bella.time(), ggt = Math.round(gt/1000);
+      var gt = Bella.time(), ggt = Math.round(gt / 1000);
       var sysTime = Bella.date.format(pattern, gt);
       var sysDay = Bella.date.format('l', gt);
 
-      if(TaskList.length>0){
-        for(var i=TaskList.length-1; i>=0; i--){
+      if(TaskList.length > 0){
+        for(var i = TaskList.length - 1; i >= 0; i--){
           var t = TaskList[i];
           if(compare(t, sysTime, sysDay, ggt)){
             t.fn();
@@ -1451,30 +1465,30 @@
 
     function compare(task, sysTime, sysDay, currTime){
 
-      var taskTime = task.time, beginAt = Math.round(task.at/1000);
+      var taskTime = task.time, beginAt = Math.round(task.at / 1000);
 
       if(taskTime.match(/^(sun|mon|tue|wed|thu|fri|sat)+(\w+)?(\s+)+(\d+(:\d)?)+$/gi)){
         var a = taskTime.split(' ');
         var yes = false;
-        if(a.length>1){
+        if(a.length > 1){
 
           var day = Bella.trim(a[0]), time = Bella.trim(a[1]);
 
           if(sysDay.match(new RegExp(day, 'gi'))){
 
             var a2 = time.split(':');
-            if(a2.length===1){
+            if(a2.length === 1){
               a2 = a2.concat(['00', '00']);
             }
-            if(a2.length===2){
+            if(a2.length === 2){
               a2 = a2.concat(['00']);
             }
 
             var a3 = sysTime.split(' ').slice(3, 6);
 
             yes = true;
-            for(var i=0; i< a3.length; i++){
-              if(parseInt(a3[i], 10)!==parseInt(a2[i], 10)){
+            for(var i = 0; i < a3.length; i++){
+              if(parseInt(a3[i], 10) !== parseInt(a2[i], 10)){
                 yes = false;
                 break;
               }
@@ -1490,35 +1504,34 @@
 
         var delta = 0;
 
-        if(s==='s'){
+        if(s === 's'){
           delta = 1;
         }
-        else if(s==='m'){
+        else if(s === 'm'){
           delta = 60;
         }
-        else if(s==='h'){
-          delta = 60*60;
+        else if(s === 'h'){
+          delta = 60 * 60;
         }
-        else if(s==='d'){
-          delta = 60*60*24;
+        else if(s === 'd'){
+          delta = 60 * 60 * 24;
         }
 
         delta*=v;
         var sdur = currTime - beginAt;
         return delta>0 && sdur%delta===0;
       }
-      else{
-        var a1 = taskTime.split(' '), a21 = sysTime.split(' '), s1 = '', s2 = '';
 
-        for(var j=0; j<a1.length; j++){
-          if(a1[j]==='*'){
-            a21[j] = '*';
-          }
-          s1+=a1[j];
-          s2+=a21[j];
+      var a1 = taskTime.split(' '), a21 = sysTime.split(' '), s1 = '', s2 = '';
+
+      for(var j = 0; j < a1.length; j++){
+        if(a1[j] === '*'){
+          a21[j] = '*';
         }
-        return s1===s2;
+        s1 += a1[j];
+        s2 += a21[j];
       }
+      return s1===s2;
     }
 
     function register(t, fn, single){

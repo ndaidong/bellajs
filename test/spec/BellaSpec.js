@@ -1,4 +1,6 @@
-/*global describe, it, expect*/
+/*
+ * global describe, it, expect
+ */
 
 describe('BellaJS : DataType detection', function(){
 
@@ -59,23 +61,23 @@ describe('BellaJS : DataType detection', function(){
   });
 
   describe('Bella.isInteger(Number) :', function(){
-    var x1 = Math.round(Math.random()*100000);
-    it('It should return true with '+x1, function(){
+    var x1 = Math.round(Math.random() * 100000);
+    it('It should return true with ' + x1, function(){
       var testType = Bella.isInteger(x1);
       expect(testType).toBe(true);
     });
     var x2 = 6.05;
-    it('It should return false with '+x2, function(){
+    it('It should return false with ' + x2, function(){
       var testType = Bella.isInteger(x2);
       expect(testType).toBe(false);
     });
     var x3 = 'Alpes';
-    it('It should return false with '+x3, function(){
+    it('It should return false with ' + x3, function(){
       var testType = Bella.isInteger(x3);
       expect(testType).toBe(false);
     });
-    var x4 = -Math.round(Math.random()*100000);
-    it('It should return true with '+x4, function(){
+    var x4 = -Math.round(Math.random() * 100000);
+    it('It should return true with ' + x4, function(){
       var testType = Bella.isInteger(x4);
       expect(testType).toBe(true);
     });
@@ -83,28 +85,28 @@ describe('BellaJS : DataType detection', function(){
 
   describe('Bella.isLetter(String) :', function(){
     var x1 = 'google';
-    it('It should return true with '+x1, function(){
+    it('It should return true with ' + x1, function(){
       var testType = Bella.isLetter(x1);
       expect(testType).toBe(true);
     });
     var x11 = 'Google';
-    it('It should return true with '+x11, function(){
+    it('It should return true with ' + x11, function(){
       var testType = Bella.isLetter(x11);
       expect(testType).toBe(true);
     });
     var x12 = 'GOOGLE';
-    it('It should return true with '+x12, function(){
+    it('It should return true with ' + x12, function(){
       var testType = Bella.isLetter(x12);
       expect(testType).toBe(true);
     });
 
-    var x2 = Math.round(Math.random()*100000);
-    it('It should return false with '+x2, function(){
+    var x2 = Math.round(Math.random() * 100000);
+    it('It should return false with ' + x2, function(){
       var testType = Bella.isLetter(x2);
       expect(testType).toBe(false);
     });
     var x3 = 'Noop!';
-    it('It should return false with '+x3, function(){
+    it('It should return false with ' + x3, function(){
       var testType = Bella.isLetter(x3);
       expect(testType).toBe(false);
     });
@@ -144,8 +146,8 @@ describe('BellaJS : DataType detection', function(){
       var s = useCase.input;
       var e = useCase.expectation;
 
-      var param = (Bella.isString(s))?'"'+s+'"':(Bella.isFunction(s)?s.toString():JSON.stringify(s));
-      it('Bella.isEmail('+param+') should return "'+e+'"', function(){
+      var param = (Bella.isString(s)) ? '"' + s + '"' : (Bella.isFunction(s) ? s.toString() : JSON.stringify(s));
+      it('Bella.isEmail(' + param + ') should return "' + e + '"', function(){
         var testType = Bella.isEmail(s);
         expect(testType).toBe(e);
       });
@@ -154,7 +156,7 @@ describe('BellaJS : DataType detection', function(){
 
   describe('Bella.isGeneratedKey:', function(){
     var ids = [];
-    while(ids.length<10){
+    while(ids.length < 10){
       ids.push({
         input: Bella.createId(),
         expectation: true
@@ -197,8 +199,8 @@ describe('BellaJS : DataType detection', function(){
     ids.forEach(function(useCase){
       var s = useCase.input;
       var e = useCase.expectation;
-      var param = (Bella.isString(s))?'"'+s+'"':(Bella.isFunction(s)?s.toString():JSON.stringify(s));
-      it('Bella.isGeneratedKey('+param+') should return "'+e+'"', function(){
+      var param = (Bella.isString(s)) ? '"' + s + '"' : (Bella.isFunction(s) ? s.toString() : JSON.stringify(s));
+      it('Bella.isGeneratedKey(' + param + ') should return "' + e + '"', function(){
         var testType = Bella.isGeneratedKey(s);
         expect(testType).toBe(e);
       });
@@ -215,9 +217,9 @@ describe('BellaJS : Random key generating', function(){
       var len = id.length;
       expect(len).toEqual(32);
     });
-    it('The keys should contain only alphabet, 0-9, and _', function(){
+    it('The keys should contain only alphabet, 0-9', function(){
       var id = Bella.createId(100);
-      expect(id).toMatch(/^[0-9a-z_]+/i);
+      expect(id).toMatch(/^[0-9A-z]+/i);
     });
   });
 
@@ -279,9 +281,9 @@ describe('BellaJS : String manipulation', function(){
       var s = useCase.input;
       var e = useCase.expectation;
 
-      var param = (Bella.isString(s))?'"'+s+'"':(Bella.isFunction(s)?s.toString():JSON.stringify(s));
+      var param = (Bella.isString(s)) ? '"' + s + '"' : (Bella.isFunction(s) ? s.toString() : JSON.stringify(s));
 
-      it('Bella.encode('+param+') should return "'+e+'"', function(){
+      it('Bella.encode(' + param + ') should return "' + e + '"', function(){
         var v = Bella.encode(s);
         expect(v).toEqual(e);
       });
@@ -322,15 +324,15 @@ describe('BellaJS : String manipulation', function(){
       var s = useCase.input;
       var e = useCase.expectation;
 
-      var param = (Bella.isString(s))?'"'+s+'"':(Bella.isFunction(s)?s.toString():JSON.stringify(s));
+      var param = (Bella.isString(s)) ? '"' + s + '"' : (Bella.isFunction(s) ? s.toString() : JSON.stringify(s));
 
-      it('Bella.decode('+param+') should return "'+e+'"', function(){
+      it('Bella.decode(' + param + ') should return "' + e + '"', function(){
         var v = Bella.decode(s);
         expect(v).toEqual(e);
       });
     });
   });
-  // trim
+
   describe('Bella.trim(String s) : ', function(){
 
     var data = [
@@ -359,9 +361,9 @@ describe('BellaJS : String manipulation', function(){
     data.forEach(function(useCase){
       var s = useCase.input;
       var e = useCase.expectation;
-      var param = (Bella.isString(s))?'"'+s+'"':(Bella.isFunction(s)?s.toString():JSON.stringify(s));
+      var param = (Bella.isString(s)) ? '"' + s + '"' : (Bella.isFunction(s) ? s.toString() : JSON.stringify(s));
 
-      it('Bella.trim('+param+') should return "'+e+'"', function(){
+      it('Bella.trim(' + param + ') should return "' + e + '"', function(){
         var v = Bella.trim(s);
         expect(v).toEqual(e);
       });
@@ -399,12 +401,12 @@ describe('BellaJS : String manipulation', function(){
       var t = useCase.input[1] || false;
       var e = useCase.expectation;
 
-      var param = (Bella.isString(s))?'"'+s+'"':(Bella.isFunction(s)?s.toString():JSON.stringify(s));
+      var param = (Bella.isString(s)) ? '"' + s + '"' : (Bella.isFunction(s) ? s.toString() : JSON.stringify(s));
       if(t){
-        param+=', '+t;
+        param += (', ' + t);
       }
 
-      it('Bella.truncate('+param+') should return "'+e+'"', function(){
+      it('Bella.truncate(' + param + ') should return "' + e + '"', function(){
         var v = Bella.truncate(s, t);
         expect(v).toEqual(e);
       });
@@ -442,9 +444,9 @@ describe('BellaJS : String manipulation', function(){
       var s = useCase.input;
       var e = useCase.expectation;
 
-      var param = (Bella.isString(s))?'"'+s+'"':(Bella.isFunction(s)?s.toString():JSON.stringify(s));
+      var param = (Bella.isString(s)) ? '"' + s + '"' : (Bella.isFunction(s) ? s.toString() : JSON.stringify(s));
 
-      it('Bella.stripTags('+param+') should return "'+e+'"', function(){
+      it('Bella.stripTags(' + param + ') should return "' + e + '"', function(){
         var v = Bella.stripTags(s);
         expect(v).toEqual(e);
       });
@@ -481,9 +483,9 @@ describe('BellaJS : String manipulation', function(){
       var s = useCase.input;
       var e = useCase.expectation;
 
-      var param = (Bella.isString(s))?'"'+s+'"':(Bella.isFunction(s)?s.toString():JSON.stringify(s));
+      var param = (Bella.isString(s)) ? '"' + s + '"' : (Bella.isFunction(s) ? s.toString() : JSON.stringify(s));
 
-      it('Bella.escapeHTML('+param+') should return "'+e+'"', function(){
+      it('Bella.escapeHTML(' + param + ') should return "' + e + '"', function(){
         var v = Bella.escapeHTML(s);
         expect(v).toEqual(e);
       });
@@ -520,9 +522,9 @@ describe('BellaJS : String manipulation', function(){
       var s = useCase.input;
       var e = useCase.expectation;
 
-      var param = (Bella.isString(s))?'"'+s+'"':(Bella.isFunction(s)?s.toString():JSON.stringify(s));
+      var param = (Bella.isString(s)) ? '"' + s + '"' : (Bella.isFunction(s) ? s.toString() : JSON.stringify(s));
 
-      it('Bella.unescapeHTML('+param+') should return "'+e+'"', function(){
+      it('Bella.unescapeHTML(' + param + ') should return "' + e + '"', function(){
         var v = Bella.unescapeHTML(s);
         expect(v).toEqual(e);
       });
@@ -559,9 +561,9 @@ describe('BellaJS : String manipulation', function(){
       var s = useCase.input;
       var e = useCase.expectation;
 
-      var param = (Bella.isString(s))?'"'+s+'"':(Bella.isFunction(s)?s.toString():JSON.stringify(s));
+      var param = (Bella.isString(s)) ? '"' + s + '"' : (Bella.isFunction(s) ? s.toString() : JSON.stringify(s));
 
-      it('Bella.strtolower('+param+') should return "'+e+'"', function(){
+      it('Bella.strtolower(' + param + ') should return "' + e + '"', function(){
         var v = Bella.strtolower(s);
         expect(v).toEqual(e);
       });
@@ -598,9 +600,9 @@ describe('BellaJS : String manipulation', function(){
       var s = useCase.input;
       var e = useCase.expectation;
 
-      var param = (Bella.isString(s))?'"'+s+'"':(Bella.isFunction(s)?s.toString():JSON.stringify(s));
+      var param = (Bella.isString(s)) ? '"' + s + '"' : (Bella.isFunction(s) ? s.toString() : JSON.stringify(s));
 
-      it('Bella.strtoupper('+param+') should return "'+e+'"', function(){
+      it('Bella.strtoupper(' + param + ') should return "' + e + '"', function(){
         var v = Bella.strtoupper(s);
         expect(v).toEqual(e);
       });
@@ -638,9 +640,9 @@ describe('BellaJS : String manipulation', function(){
       var s = useCase.input;
       var e = useCase.expectation;
 
-      var param = (Bella.isString(s))?'"'+s+'"':(Bella.isFunction(s)?s.toString():JSON.stringify(s));
+      var param = (Bella.isString(s)) ? '"' + s + '"' : (Bella.isFunction(s) ? s.toString() : JSON.stringify(s));
 
-      it('Bella.ucfirst('+param+') should return "'+e+'"', function(){
+      it('Bella.ucfirst(' + param + ') should return "' + e + '"', function(){
         var v = Bella.ucfirst(s);
         expect(v).toEqual(e);
       });
@@ -678,9 +680,9 @@ describe('BellaJS : String manipulation', function(){
       var s = useCase.input;
       var e = useCase.expectation;
 
-      var param = (Bella.isString(s))?'"'+s+'"':(Bella.isFunction(s)?s.toString():JSON.stringify(s));
+      var param = (Bella.isString(s)) ? '"' + s + '"' : (Bella.isFunction(s) ? s.toString() : JSON.stringify(s));
 
-      it('Bella.ucwords('+param+') should return "'+e+'"', function(){
+      it('Bella.ucwords(' + param + ') should return "' + e + '"', function(){
         var v = Bella.ucwords(s);
         expect(v).toEqual(e);
       });
@@ -768,15 +770,15 @@ describe('BellaJS : String manipulation', function(){
       var c = input.c;
       var e = useCase.expectation;
 
-      var param = (Bella.isString(a))?'"'+a+'"':(Bella.isBoolean(a) || Bella.isNumber(a))?a:(Bella.isFunction(a)?a.toString():JSON.stringify(a));
+      var param = (Bella.isString(a)) ? '"' + a + '"' : (Bella.isBoolean(a) || Bella.isNumber(a)) ? a : (Bella.isFunction(a) ? a.toString() : JSON.stringify(a));
       if(b){
-        param+=', '+b;
+        param += (', ' + b);
       }
       if(c){
-        param+=', "'+c+'"';
+        param += (', "' + c + '"');
       }
 
-      it('Bella.leftPad('+param+') should return "'+e+'"', function(){
+      it('Bella.leftPad(' + param + ') should return "' + e + '"', function(){
         var v = Bella.leftPad(a, b, c);
         expect(v).toEqual(e);
       });
@@ -864,15 +866,15 @@ describe('BellaJS : String manipulation', function(){
       var c = input.c;
       var e = useCase.expectation;
 
-      var param = (Bella.isString(a))?'"'+a+'"':(Bella.isBoolean(a) || Bella.isNumber(a))?a:(Bella.isFunction(a)?a.toString():JSON.stringify(a));
+      var param = (Bella.isString(a)) ? '"' + a + '"' : (Bella.isBoolean(a) || Bella.isNumber(a)) ? a : (Bella.isFunction(a) ? a.toString() : JSON.stringify(a));
       if(b){
-        param+=', '+b;
+        param += (', ' + b);
       }
       if(c){
-        param+=', "'+c+'"';
+        param += (', "' + c + '"');
       }
 
-      it('Bella.rightPad('+param+') should return "'+e+'"', function(){
+      it('Bella.rightPad(' + param + ') should return "' + e + '"', function(){
         var v = Bella.rightPad(a, b, c);
         expect(v).toEqual(e);
       });
@@ -978,15 +980,15 @@ describe('BellaJS : String manipulation', function(){
       var c = input.c;
       var e = useCase.expectation;
 
-      var param = (Bella.isString(a))?'"'+a+'"':(Bella.isBoolean(a) || Bella.isNumber(a))?a:(Bella.isFunction(a)?a.toString():JSON.stringify(a));
+      var param = (Bella.isString(a)) ? '"' + a + '"' : (Bella.isBoolean(a) || Bella.isNumber(a)) ? a : (Bella.isFunction(a) ? a.toString() : JSON.stringify(a));
       if(b){
-        param+=', '+JSON.stringify(b);
+        param += ', ' + JSON.stringify(b);
       }
       if(c){
-        param+=', '+JSON.stringify(c);
+        param += ', ' + JSON.stringify(c);
       }
 
-      it('Bella.replaceAll('+param+') should return "'+e+'"', function(){
+      it('Bella.replaceAll(' + param + ') should return "' + e + '"', function(){
         var v = Bella.replaceAll(a, b, c);
         expect(v).toEqual(e);
       });
@@ -1020,9 +1022,9 @@ describe('BellaJS : String manipulation', function(){
       var s = useCase.input;
       var e = useCase.expectation;
 
-      var param = (Bella.isString(s))?'"'+s+'"':(Bella.isFunction(s)?s.toString():JSON.stringify(s));
+      var param = (Bella.isString(s)) ? '"' + s + '"' : (Bella.isFunction(s) ? s.toString() : JSON.stringify(s));
 
-      it('Bella.stripAccent('+param+') should return "'+e+'"', function(){
+      it('Bella.stripAccent(' + param + ') should return "' + e + '"', function(){
         var v = Bella.stripAccent(s);
         expect(v).toEqual(e);
       });
@@ -1057,9 +1059,9 @@ describe('BellaJS : String manipulation', function(){
       var s = useCase.input;
       var e = useCase.expectation;
 
-      var param = (Bella.isString(s))?'"'+s+'"':(Bella.isFunction(s)?s.toString():JSON.stringify(s));
+      var param = (Bella.isString(s)) ? '"' + s + '"' : (Bella.isFunction(s) ? s.toString() : JSON.stringify(s));
 
-      it('Bella.createAlias('+param+') should return "'+e+'"', function(){
+      it('Bella.createAlias(' + param + ') should return "' + e + '"', function(){
         var v = Bella.createAlias(s);
         expect(v).toEqual(e);
       });
@@ -1076,33 +1078,33 @@ describe('BellaJS : Array & Object', function(){
       1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 5, 4, 3, 2, 1
     ];
 
-    it('Bella.unique('+JSON.stringify(sampleArray)+') should not contain duplicate items', function(){
+    it('Bella.unique(' + JSON.stringify(sampleArray) + ') should not contain duplicate items', function(){
 
       var uniqueArray = Bella.unique(sampleArray);
 
       var expectResult = 1;
       var arr1 = uniqueArray.filter(function(item){
-        return item===1;
+        return item === 1;
       });
       expect(arr1.length).toEqual(expectResult);
 
       var arr2 = uniqueArray.filter(function(item){
-        return item===2;
+        return item === 2;
       });
       expect(arr2.length).toEqual(expectResult);
 
       var arr3 = uniqueArray.filter(function(item){
-        return item===3;
+        return item === 3;
       });
       expect(arr3.length).toEqual(expectResult);
 
       var arr4 = uniqueArray.filter(function(item){
-        return item===4;
+        return item === 4;
       });
       expect(arr4.length).toEqual(expectResult);
 
       var arr5 = uniqueArray.filter(function(item){
-        return item===5;
+        return item === 5;
       });
       expect(arr5.length).toEqual(expectResult);
     });
@@ -1114,7 +1116,7 @@ describe('BellaJS : Array & Object', function(){
   ];
 
   describe('Bella.max(Array a)', function(){
-    it('Bella.max('+JSON.stringify(sampleArray)+') should return 100', function(){
+    it('Bella.max(' + JSON.stringify(sampleArray) + ') should return 100', function(){
 
       var realResult = Bella.max(sampleArray);
 
@@ -1125,7 +1127,7 @@ describe('BellaJS : Array & Object', function(){
   });
 
   describe('Bella.min(Array a)', function(){
-    it('Bella.min('+JSON.stringify(sampleArray)+') should return 1', function(){
+    it('Bella.min(' + JSON.stringify(sampleArray) + ') should return 1', function(){
 
       var realResult = Bella.min(sampleArray);
 
@@ -1136,7 +1138,7 @@ describe('BellaJS : Array & Object', function(){
   });
 
   describe('Bella.contains(Array a, String|Object search [, String key])', function(){
-    it('Bella.contains('+JSON.stringify(sampleArray)+', 1) should return true', function(){
+    it('Bella.contains(' + JSON.stringify(sampleArray) + ', 1) should return true', function(){
 
       var realResult = Bella.contains(sampleArray, 1);
 
@@ -1145,7 +1147,7 @@ describe('BellaJS : Array & Object', function(){
       expect(realResult).toBe(expectResult);
     });
 
-    it('Bella.contains('+JSON.stringify(sampleArray)+', 80) should return true', function(){
+    it('Bella.contains(' + JSON.stringify(sampleArray) + ', 80) should return true', function(){
 
       var realResult = Bella.contains(sampleArray, 80);
 
@@ -1154,7 +1156,7 @@ describe('BellaJS : Array & Object', function(){
       expect(realResult).toBe(expectResult);
     });
 
-    it('Bella.contains('+JSON.stringify(sampleArray)+', 1000) should return false', function(){
+    it('Bella.contains(' + JSON.stringify(sampleArray) + ', 1000) should return false', function(){
 
       var realResult = Bella.contains(sampleArray, 1000);
 
@@ -1165,7 +1167,7 @@ describe('BellaJS : Array & Object', function(){
   });
 
   describe('Bella.sort(Array a [, String order | Object option ])', function(){
-    it('Bella.sort('+JSON.stringify(sampleArray)+') should have 1 at first', function(){
+    it('Bella.sort(' + JSON.stringify(sampleArray) + ') should have 1 at first', function(){
 
       var sortedArray = Bella.sort(sampleArray);
 
@@ -1176,7 +1178,7 @@ describe('BellaJS : Array & Object', function(){
       expect(realResult).toEqual(expectResult);
     });
 
-    it('Bella.sort('+JSON.stringify(sampleArray)+') should have 18 at second', function(){
+    it('Bella.sort(' + JSON.stringify(sampleArray) + ') should have 18 at second', function(){
 
       var sortedArray = Bella.sort(sampleArray);
 
@@ -1187,22 +1189,22 @@ describe('BellaJS : Array & Object', function(){
       expect(realResult).toEqual(expectResult);
     });
 
-    it('Bella.sort('+JSON.stringify(sampleArray)+') should have 97 at second last', function(){
+    it('Bella.sort(' + JSON.stringify(sampleArray) + ') should have 97 at second last', function(){
 
       var sortedArray = Bella.sort(sampleArray);
 
-      var realResult = sortedArray[sortedArray.length-2];
+      var realResult = sortedArray[sortedArray.length - 2];
 
       var expectResult = 97;
 
       expect(realResult).toEqual(expectResult);
     });
 
-    it('Bella.sort('+JSON.stringify(sampleArray)+') should have 100 at last', function(){
+    it('Bella.sort(' + JSON.stringify(sampleArray) + ') should have 100 at last', function(){
 
       var sortedArray = Bella.sort(sampleArray);
 
-      var realResult = sortedArray[sortedArray.length-1];
+      var realResult = sortedArray[sortedArray.length - 1];
 
       var expectResult = 100;
 
@@ -1210,7 +1212,7 @@ describe('BellaJS : Array & Object', function(){
     });
 
 
-    it('Bella.sort('+JSON.stringify(sampleArray)+', -1) should have 100 at first', function(){
+    it('Bella.sort(' + JSON.stringify(sampleArray) + ', -1) should have 100 at first', function(){
 
       var sortedArray = Bella.sort(sampleArray, -1);
 
@@ -1221,7 +1223,7 @@ describe('BellaJS : Array & Object', function(){
       expect(realResult).toEqual(expectResult);
     });
 
-    it('Bella.sort('+JSON.stringify(sampleArray)+', -1) should have 97 at second', function(){
+    it('Bella.sort(' + JSON.stringify(sampleArray) + ', -1) should have 97 at second', function(){
 
       var sortedArray = Bella.sort(sampleArray, -1);
 
@@ -1232,22 +1234,22 @@ describe('BellaJS : Array & Object', function(){
       expect(realResult).toEqual(expectResult);
     });
 
-    it('Bella.sort('+JSON.stringify(sampleArray)+', -1) should have 18 at second last', function(){
+    it('Bella.sort(' + JSON.stringify(sampleArray) + ', -1) should have 18 at second last', function(){
 
       var sortedArray = Bella.sort(sampleArray, -1);
 
-      var realResult = sortedArray[sortedArray.length-2];
+      var realResult = sortedArray[sortedArray.length - 2];
 
       var expectResult = 18;
 
       expect(realResult).toEqual(expectResult);
     });
 
-    it('Bella.sort('+JSON.stringify(sampleArray)+', -1) should have 1 at last', function(){
+    it('Bella.sort(' + JSON.stringify(sampleArray) + ', -1) should have 1 at last', function(){
 
       var sortedArray = Bella.sort(sampleArray, -1);
 
-      var realResult = sortedArray[sortedArray.length-1];
+      var realResult = sortedArray[sortedArray.length - 1];
 
       var expectResult = 1;
 
@@ -1257,7 +1259,7 @@ describe('BellaJS : Array & Object', function(){
   });
 
   describe('Bella.empty(Array a)', function(){
-    it('Bella.empty('+JSON.stringify(sampleArray)+') should return []', function(){
+    it('Bella.empty(' + JSON.stringify(sampleArray) + ') should return []', function(){
 
       var realResult = Bella.empty(sampleArray);
 
@@ -1267,7 +1269,7 @@ describe('BellaJS : Array & Object', function(){
     });
 
     var sampleObject = {name: 'Alice', age: 18};
-    it('Bella.empty('+JSON.stringify(sampleObject)+') should return {}', function(){
+    it('Bella.empty(' + JSON.stringify(sampleObject) + ') should return {}', function(){
 
       var realResult = Bella.empty(sampleObject);
 
@@ -1283,7 +1285,7 @@ describe('BellaJS : Array & Object', function(){
     var sampleArray2 = [
       1, 3, 4, 6, 9, 12
     ];
-    it('Bella.clone('+JSON.stringify(sampleArray2)+') should return '+JSON.stringify(sampleArray2), function(){
+    it('Bella.clone(' + JSON.stringify(sampleArray2) + ') should return ' + JSON.stringify(sampleArray2), function(){
 
       var realResult = Bella.clone(sampleArray2);
 
@@ -1295,7 +1297,7 @@ describe('BellaJS : Array & Object', function(){
     });
 
     var sampleObject = {name: 'Alice', age: 18};
-    it('Bella.clone('+JSON.stringify(sampleObject)+') should return '+JSON.stringify(sampleObject), function(){
+    it('Bella.clone(' + JSON.stringify(sampleObject) + ') should return ' + JSON.stringify(sampleObject), function(){
 
       var realResult = Bella.clone(sampleObject);
 
@@ -1310,7 +1312,7 @@ describe('BellaJS : Array & Object', function(){
     var srcObject1 = {name: 'Alice', age: 18};
     var destObject1 = {country: 'USA'};
     var expectResult1 = {name: 'Alice', age: 18, country: 'USA'};
-    it('Bella.copies('+JSON.stringify(srcObject1)+', '+JSON.stringify(destObject1)+') should return '+JSON.stringify(expectResult1), function(){
+    it('Bella.copies(' + JSON.stringify(srcObject1) + ', ' + JSON.stringify(destObject1) + ') should return ' + JSON.stringify(expectResult1), function(){
       var realResult = Bella.copies(srcObject1, destObject1);
       expect(realResult).toEqual(expectResult1);
     });
@@ -1318,7 +1320,7 @@ describe('BellaJS : Array & Object', function(){
     var srcObject2 = {name: 'Alice', age: 18};
     var destObject2 = {name: 'Helen', country: 'USA'};
     var expectResult2 = {name: 'Alice', country: 'USA'};
-    it('Bella.copies('+JSON.stringify(srcObject2)+', '+JSON.stringify(destObject2)+', true) should return '+JSON.stringify(expectResult2), function(){
+    it('Bella.copies(' + JSON.stringify(srcObject2) + ', ' + JSON.stringify(destObject2) + ', true) should return ' + JSON.stringify(expectResult2), function(){
       var realResult = Bella.copies(srcObject2, destObject2, true);
       expect(realResult).toEqual(expectResult2);
     });
@@ -1326,7 +1328,7 @@ describe('BellaJS : Array & Object', function(){
     var srcObject3 = {name: 'Alice', age: 18};
     var destObject3 = {name: 'Helen', country: 'USA'};
     var expectResult3 = {name: 'Helen', country: 'USA'};
-    it('Bella.copies('+JSON.stringify(srcObject3)+', '+JSON.stringify(destObject3)+', true, [\'name\']) should return '+JSON.stringify(expectResult3), function(){
+    it('Bella.copies(' + JSON.stringify(srcObject3) + ', ' + JSON.stringify(destObject3) + ', true, [\'name\']) should return ' + JSON.stringify(expectResult3), function(){
       var realResult = Bella.copies(srcObject3, destObject3, true, ['name']);
       expect(realResult).toEqual(expectResult3);
     });
@@ -1462,9 +1464,9 @@ describe('BellaJS : Array & Object', function(){
     ].forEach(function(useCase){
       var s = useCase.input, a = s.a, b = s.b;
       var e = useCase.expectation;
-      var p1 = (Bella.isString(a))?'"'+a+'"':(Bella.isFunction(a)?a.toString():JSON.stringify(a));
-      var p2 = (Bella.isString(b))?'"'+b+'"':(Bella.isFunction(b)?b.toString():JSON.stringify(b));
-      it('Bella.equals('+p1+', '+p2+') should return "'+e+'"', function(){
+      var p1 = (Bella.isString(a)) ? '"' + a + '"' : (Bella.isFunction(a) ? a.toString() : JSON.stringify(a));
+      var p2 = (Bella.isString(b)) ? '"' + b + '"' : (Bella.isFunction(b) ? b.toString() : JSON.stringify(b));
+      it('Bella.equals(' + p1 + ', ' + p2 + ') should return "' + e + '"', function(){
         var testType = Bella.equals(a, b);
         expect(testType).toBe(e);
       });
