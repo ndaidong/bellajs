@@ -1,5 +1,5 @@
 /**
- * BellaJS v3.6.8
+ * BellaJS v3.6.9
  * Author by @ndaidong
  * GitHub : https://github.com/techpush/bella.js.git
  * Copyright by *.techpush.net
@@ -1371,7 +1371,6 @@
         A: function(){return (f.a()).toUpperCase()},  // AM, PM
         O: function(){return tz}
       }
-      console.log(meridiem);
       /*eslint-enable */
       return output.replace(vchar, _term);
     }
