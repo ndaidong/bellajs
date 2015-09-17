@@ -1,5 +1,5 @@
 /**
- * BellaJS v3.6.7
+ * BellaJS v3.6.8
  * Author by @ndaidong
  * GitHub : https://github.com/techpush/bella.js.git
  * Copyright by *.techpush.net
@@ -1305,6 +1305,11 @@
       if(!output){
         output = pattern;
       }
+
+      if(output.match(/(\.*)a{1}(\.*)*/i)){
+        meridiem = true;
+      }
+
       var wn = weeks;
       var mn = months;
       var _num = function(n){
@@ -1341,9 +1346,7 @@
           return input + ' !';
         }
       }
-      if(output.indexOf('a') > 0 || output.indexOf('A') > 0){
-        meridiem = true;
-      }
+
       /*eslint-disable */
       f = {
         Y: function(){return d.getFullYear()},     // full year, ex: 2014
@@ -1361,14 +1364,14 @@
         D: function(){return (f.l()+'').slice(0,3)},// short name of weekday, ex: Sun
         G: function(){return d.getHours()},      // hour, with no zero: 0 - 24
         g: function(){return (f.G()%12||12)},    // hour, with no zero: 0 - 12
-        h: function(){return _num(f.g())},       // hour, with zero:  00 - 24
-        H: function(){return (meridiem?f.h():_num(f.G()))}, // hour, with zero:  00 - 12
+        h: function(){return _num(meridiem?f.g():f.G())}, // hour, with zero:  00 - 12 or 00 - 24
         i: function(){return _num(d.getMinutes())},  // minute:  00 - 59
         s: function(){return _num(d.getSeconds())},  // second:  00 - 59
         a: function(){return f.G()>11?'pm':'am'},  // am, pm
         A: function(){return (f.a()).toUpperCase()},  // AM, PM
         O: function(){return tz}
       }
+      console.log(meridiem);
       /*eslint-enable */
       return output.replace(vchar, _term);
     }
