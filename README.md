@@ -26,7 +26,7 @@ BellaJS is a lightweight library with the useful functions for handling string, 
 # Changes
 
 #### v3.6.8 - Sep 17, 2015
-- Remove 'H' from date format pattern. See date pattern for more info.
+- Removed 'H' from date format pattern. Now it will automatically detect if the pattern contains 'a' or 'A'. If so, it will display as meridiem style. Otherwise, it would display 00-24 hour. See [DateTime](#datetime) pattern for more info.
 
 #### v3.6.6 - Sep 13, 2015
 - Added "isDate" method
@@ -340,7 +340,6 @@ BellaJS' datetime pattern is familiar with PHP developers than MomentJS. The ava
     - G: hour, with no zero: 0 - 24
     - g: hour, with no zero: 0 - 12
     - h: hour, with zero:  00 - 24
-    - H: hour, with zero:  00 - 12
     - i: minute:  00 - 59
     - s: second:  00 - 59
     - a: am, pm
