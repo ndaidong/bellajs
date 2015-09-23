@@ -26,7 +26,7 @@ BellaJS is a lightweight library with the useful functions for handling string, 
 
 #### v3.7.1 - Sep 23, 2015
 - Added 3 new methods "trace", "enableTrace" and "disableTrace"
-- Removed detectDevice method. This has been separated to [DeviceDetector](https://www.npmjs.com/package/device-detector) package.
+- Removed "detectDevice" method. Recommend to use [DeviceDetector](https://www.npmjs.com/package/device-detector) instead.
 - Removed "device" property.
 
 #### v3.6.8 - Sep 17, 2015
