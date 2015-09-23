@@ -1,5 +1,5 @@
 /**
- * BellaJS v3.6.9
+ * BellaJS v3.7.0
  * Author by @ndaidong
  * GitHub : https://github.com/techpush/bella.js.git
  * Copyright by *.techpush.net
@@ -1591,6 +1591,20 @@
     }
   })();
 
+  var tracable = 1;
+  Bella.enableTrace = function(){
+    tracable = 1;
+  }
+  Bella.disableTrace = function(){
+    tracable = 0;
+  }
+  Bella.trace = function(){
+    if(tracable !== 1 || !console){
+      return false;
+    }
+    var a = Array.prototype.slice.call(arguments);
+    console.trace.apply(console, a);
+  }
 
   // exports
   if(Bella.ENV === 'node'){

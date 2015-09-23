@@ -25,6 +25,9 @@ BellaJS is a lightweight library with the useful functions for handling string, 
 
 # Changes
 
+#### v3.7.0 - Sep 23, 2015
+- Added 3 new methods "trace", "enableTrace" and "disableTrace"
+
 #### v3.6.8 - Sep 17, 2015
 - Removed 'H' from date format pattern. Now it will automatically detect if the pattern contains 'a' or 'A'. If so, it will display as meridiem style. Otherwise, it would display 00-24 hour. See [DateTime](#datetime) pattern for more info.
 

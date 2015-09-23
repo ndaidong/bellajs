@@ -1,6 +1,4 @@
-/*
- * global describe, it, expect
- */
+/* global describe, it, expect Bella */
 
 describe('BellaJS : DataType detection', function(){
 
@@ -1338,7 +1336,7 @@ describe('BellaJS : Array & Object', function(){
 
     var samOb = {
       a: 1,
-      b: undefined,
+      b: 'undefined',
       c: null,
       d: '',
       e: false
