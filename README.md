@@ -10,7 +10,6 @@ BellaJS is a lightweight library with the useful functions for handling string, 
 * [Usage](#usage)
   * [Methods](#methods)
     * [DataType detection](#datatype-detection)
-    * [Device detection](#device-detection)
     * [String manipulation](#string-manipulation)
     * [Template manipulation](#template-manipulation)
     * [Array & Object](#array--object)
@@ -25,8 +24,10 @@ BellaJS is a lightweight library with the useful functions for handling string, 
 
 # Changes
 
-#### v3.7.0 - Sep 23, 2015
+#### v3.7.1 - Sep 23, 2015
 - Added 3 new methods "trace", "enableTrace" and "disableTrace"
+- Removed detectDevice method. This has been separated to [DeviceDetector](https://www.npmjs.com/package/device-detector) package.
+- Removed "device" property.
 
 #### v3.6.8 - Sep 17, 2015
 - Removed 'H' from date format pattern. Now it will automatically detect if the pattern contains 'a' or 'A'. If so, it will display as meridiem style. Otherwise, it would display 00-24 hour. See [DateTime](#datetime) pattern for more info.
@@ -123,69 +124,6 @@ Assuming there is a file bella.min.js located at "/public/js/lib/", the followin
  - Bella.isEmail(Anything val)
  - Bella.isGeneratedKey(Anything val)
  - Bella.equals(Anything a, Anything b)
-
-### Device detection
- - Bella.detectDevice([String userAgent])
-
-In the browsers, this method automatically executes and its result - current browser info - is being set to Bella.device object.
-
-In Node.js environment, this method can be used to detect the device with it the request has been sent. Here is an example:
-
-```
-var bella = require('bellajs');
-
-var server = require('http').createServer(function(req, res){
-
-    res.writeHeader(200, {'Content-Type': 'text/plain'});
-    res.write('Running...');
-
-    var ua = req.headers['user-agent'];
-
-    // Let's BellaJS parse userAgent string
-    var deviceInfo = bella.detectDevice(ua);
-
-    // see how does it look like:
-    console.log(deviceInfo);
-
-    res.end();
-});
-
-var port = 8080;
-server.listen(port, function(){
-    console.log('Running at http://127.0.0.1:%s', port);
-});
-```
-
-An another example with ExpressJS:
-
-```
-var bella = require('bellajs');
-
-var express = require('express');
-
-var app = express();
-
-app.use(function(req, res, next){
-
-    var ua = req.headers['user-agent'];
-
-    // Let's BellaJS parse userAgent string
-    var deviceInfo = bella.detectDevice(ua);
-
-    // see how does it look like:
-    console.log(deviceInfo);
-
-    // or attach to response object to reuse at another place
-    res.device = deviceInfo;
-
-  next();
-});
-
-var port = 8080;
-app.listen(port, function(){
-  console.log('Running at http://127.0.0.1:%s', port);
-});
-```
 
 
 ### String manipulation
@@ -548,7 +486,6 @@ Bella.dom.ready(function(){
 ## Properties
 
  - Bella.id
- - Bella.device // browser only
  - Bella.hostname // browser only
 
 
