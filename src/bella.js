@@ -1,8 +1,7 @@
 /**
- * BellaJS v3.7.2
- * Author by @ndaidong
+ * BellaJS
+ * Author by @ndaidong at Twitter
  * GitHub : https://github.com/techpush/bella.js.git
- * Copyright by *.techpush.net
 **/
 
 ;(function(context){
@@ -52,50 +51,6 @@
     return s;
   }
 
-  /*eslint-disable*/
-  // From https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/keys
-  if (!Object.keys) {
-    Object.keys = (function() {
-    'use strict';
-    var hasOwnProperty = Object.prototype.hasOwnProperty,
-      hasDontEnumBug = !({ toString: null }).propertyIsEnumerable('toString'),
-      dontEnums = [
-        'toString',
-        'toLocaleString',
-        'valueOf',
-        'hasOwnProperty',
-        'isPrototypeOf',
-        'propertyIsEnumerable',
-        'constructor'
-      ],
-      dontEnumsLength = dontEnums.length;
-
-    return function(obj) {
-      if (typeof obj !== 'object' && (typeof obj !== 'function' || obj === null)) {
-      throw new TypeError('Object.keys called on non-object');
-      }
-
-      var result = [], prop, i;
-
-      for (prop in obj) {
-      if (hasOwnProperty.call(obj, prop)) {
-        result.push(prop);
-      }
-      }
-
-      if (hasDontEnumBug) {
-      for (i = 0; i < dontEnumsLength; i++) {
-        if (hasOwnProperty.call(obj, dontEnums[i])) {
-        result.push(dontEnums[i]);
-        }
-      }
-      }
-      return result;
-    };
-    }());
-  }
-  /*eslint-enable*/
-
   var isDef = function(val){
     return tof(val) !== 'undefined';
   }
@@ -128,7 +83,7 @@
     return (val instanceof Date && !isNaN(val.valueOf()));
   }
   var isEmpty = function(val){
-    return !isDef(val) || isNull(val) || (isString(val) && val === '') || (isArray(val) && val.length === 0) || (isObject(val) && Object.keys(val).length === 0);
+    return !isDef(val) || isNull(val) || (isString(val) && val === '') || (isArray(val) && JSON.stringify(val) === '[]') || (isObject(val) && JSON.stringify(val) === '{}');
   }
   var isLetter = function(val){
     var re = /^[a-z]+$/i;
@@ -226,7 +181,7 @@
     return r;
   }
   Bella.stripTags = function(s){
-    return isString(s) ? s.replace(/<\w+(\s+("[^"]*"|'[^']*'|[^>])+)?>|<\/\w+>/gi, '') : '';
+    return isString(s) ? s.replace(/<.*?>/gi, '') : '';
   }
 
   Bella.escapeHTML = function(s){
@@ -403,7 +358,6 @@
   /** https://github.com/jbt/js-crypto */
   /*eslint-disable*/
   Bella.md5 = function(){for(var m=[],l=0;64>l;)m[l]=0|4294967296*Math.abs(Math.sin(++l));return function(c){var e,g,f,a,h=[];c=unescape(encodeURI(c));for(var b=c.length,k=[e=1732584193,g=-271733879,~e,~g],d=0;d<=b;)h[d>>2]|=(c.charCodeAt(d)||128)<<8*(d++%4);h[c=16*(b+8>>6)+14]=8*b;for(d=0;d<c;d+=16){b=k;for(a=0;64>a;)b=[f=b[3],(e=b[1]|0)+((f=b[0]+[e&(g=b[2])|~e&f,f&e|~f&g,e^g^f,g^(e|~f)][b=a>>4]+(m[a]+(h[[a,5*a+1,3*a+5,7*a][b]%16+d]|0)))<<(b=[7,12,17,22,5,9,14,20,4,11,16,23,6,10,15,21][4*b+a++%4])|f>>>32-b),e,g];for(a=4;a;)k[--a]=k[a]+b[a]}for(c="";32>a;)c+=(k[a>>3]>>4*(1^a++&7)&15).toString(16);return c}}();
-  Bella.sha256 = function(){function e(a,b){return a>>>b|a<<32-b}for(var b=1,a,n=[],m=[];18>++b;)for(a=b*b;312>a;a+=b)m[a]=1;b=1;for(a=0;313>b;)m[++b]||(m[a]=Math.pow(b,0.5)%1*4294967296|0,n[a++]=Math.pow(b,1/3)%1*4294967296|0);return function(g){for(var l=m.slice(b=0),c=unescape(encodeURI(g)),h=[],d=c.length,k=[],f,p;b<d;)k[b>>2]|=(c.charCodeAt(b)&255)<<8*(3-b++%4);d*=8;k[d>>5]|=128<<24-d%32;k[p=(d+64>>9<<4)+15]=d;for(b=0;b<p;b+=16){for(c=l.slice(a=0,8);64>a;c[4]+=f)h[a]=16>a?k[a+b]:(e(f=h[a-2],17)^e(f,19)^f>>>10)+(h[a-7]|0)+(e(f=h[a-15],7)^e(f,18)^f>>>3)+(h[a-16]|0),c.unshift((f=(c.pop()+(e(g=c[4],6)^e(g,11)^e(g,25))+((g&c[5]^~g&c[6])+n[a])|0)+(h[a++]|0))+(e(d=c[0],2)^e(d,13)^e(d,22))+(d&c[1]^c[1]&c[2]^c[2]&d));for(a=8;a--;)l[a]=c[a]+l[a]}for(c="";63>a;)c+=(l[++a>>3]>>4*(7-a%8)&15).toString(16);return c}}();
   /*eslint-enable*/
 
   // collection

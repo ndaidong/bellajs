@@ -24,10 +24,14 @@ BellaJS is a lightweight library with the useful functions for handling string, 
 
 # Changes
 
+#### v3.7.2 - Sep 24, 2015
+- Removed "sha256" method
+- Update pattern in Bella.scheduler
+
 #### v3.7.1 - Sep 23, 2015
 - Added 3 new methods "trace", "enableTrace" and "disableTrace"
 - Removed "detectDevice" method. Recommend to use [DeviceDetector](https://www.npmjs.com/package/device-detector) instead.
-- Removed "device" property.
+- Removed "device" property
 
 #### v3.6.8 - Sep 17, 2015
 - Removed 'H' from date format pattern. Now it will automatically detect if the pattern contains 'a' or 'A'. If so, it will display as meridiem style. Otherwise, it would display 00-24 hour. See [DateTime](#datetime) pattern for more info.
@@ -123,7 +127,6 @@ Assuming there is a file bella.min.js located at "/public/js/lib/", the followin
  - Bella.isLetter(Anything val)
  - Bella.isEmail(Anything val)
  - Bella.isGeneratedKey(Anything val)
- - Bella.equals(Anything a, Anything b)
 
 
 ### String manipulation
@@ -145,7 +148,6 @@ Assuming there is a file bella.min.js located at "/public/js/lib/", the followin
  - Bella.rightPad(String s, Number limit, String pad)
  - Bella.replaceAll(String s, String|Array search, String|Array replace)
  - Bella.md5(String s)
- - Bella.sha256(String s)
 
 
 ### Template manipulation
@@ -196,6 +198,7 @@ This method has an old name "Bella.make", will be removed in future;
  - Bella.empty(Array|Object|Element|String o)
  - Bella.contains(Array a, String|Object search [, String key])
  - Bella.sort(Array a [, String order | Object option ])
+ - Bella.equals(Anything a, Anything b)
 
 How to use Bella.sort?
 
