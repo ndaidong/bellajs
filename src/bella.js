@@ -1,5 +1,5 @@
 /**
- * BellaJS v3.7.1
+ * BellaJS v3.7.2
  * Author by @ndaidong
  * GitHub : https://github.com/techpush/bella.js.git
  * Copyright by *.techpush.net
@@ -944,7 +944,7 @@
   }
   Bella.date = (function(){
 
-    var pattern = 'D, M d, Y  H:i:s A';
+    var pattern = 'D, M d, Y  h:i:s A';
     var weeks = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
@@ -1010,24 +1010,24 @@
 
       /*eslint-disable */
       f = {
-        Y: function(){return d.getFullYear()},     // full year, ex: 2014
-        y: function(){return (f.Y()+'').slice(-2)},  // short year, ex: 14
-        F: function(){return mn[f.n()-1]},       // full month name, ex: August
-        M: function(){return (f.F()+'').slice(0,3)}, // short month name, ex: Aug
-        m: function(){return _num(f.n())},       // month index with zero, ex: 08 (in 08/24/2014)
-        n: function(){return d.getMonth()+1},    // short month name with no zero, ex: 8 (in 8/24/2014)
-        S: function(){return _ord(f.j())},       // the ordering subfix for date, ext: 1st, 2nd, 3rd, 4th
-        j: function(){return d.getDate()},       // date, with no zero, ex: 3 (in 18/3/2014)
-        d: function(){return _num(f.j())},       // date, with zero, ex: 03 (in 18/03/2014)
+        Y: function(){return d.getFullYear()},     // 2015
+        y: function(){return (f.Y()+'').slice(-2)},  // 15
+        F: function(){return mn[f.n()-1]},       // August
+        M: function(){return (f.F()+'').slice(0,3)}, // Aug
+        m: function(){return _num(f.n())},       // 08
+        n: function(){return d.getMonth()+1},    // 8
+        S: function(){return _ord(f.j())},       // 1st, 2nd, 3rd, 4th
+        j: function(){return d.getDate()},       // 3
+        d: function(){return _num(f.j())},       // 03
         t: function(){return (new Date(f.Y(), f.n(), 0)).getDate()}, // date in year
         w: function(){return d.getDay()},      // weekday in number
-        l: function(){return wn[f.w()]},       // long name of weekday, ex: Sunday
-        D: function(){return (f.l()+'').slice(0,3)},// short name of weekday, ex: Sun
-        G: function(){return d.getHours()},      // hour, with no zero: 0 - 24
-        g: function(){return (f.G()%12||12)},    // hour, with no zero: 0 - 12
-        h: function(){return _num(meridiem?f.g():f.G())}, // hour, with zero:  00 - 12 or 00 - 24
-        i: function(){return _num(d.getMinutes())},  // minute:  00 - 59
-        s: function(){return _num(d.getSeconds())},  // second:  00 - 59
+        l: function(){return wn[f.w()]},       // Sunday, Monday
+        D: function(){return (f.l()+'').slice(0,3)},// Sun, Mon
+        G: function(){return d.getHours()},      // 0 - 24
+        g: function(){return (f.G()%12||12)},    // 0 - 12
+        h: function(){return _num(meridiem?f.g():f.G())}, // 00 - 12 or 00 - 24
+        i: function(){return _num(d.getMinutes())},  // 00 - 59
+        s: function(){return _num(d.getSeconds())},  // 00 - 59
         a: function(){return f.G()>11?'pm':'am'},  // am, pm
         A: function(){return (f.a()).toUpperCase()},  // AM, PM
         O: function(){return tz}
@@ -1077,7 +1077,7 @@
     }
 
     var local = function(t){
-      return format('D, j M Y H:i:s O', t);
+      return format('D, j M Y h:i:s O', t);
     }
 
     var strtotime = function(t){
@@ -1103,7 +1103,7 @@
   // schedule
   Bella.scheduler = (function(){
 
-    var TaskList = [], pattern = 'Y m d H i s', checkTimer;
+    var TaskList = [], pattern = 'Y m d h i s', checkTimer;
 
     function compare(task, sysTime, sysDay, currTime){
 
