@@ -1,7 +1,7 @@
 /**
  * BellaJS
+ * GitHub : https://github.com/ndaidong/bella.js.git
  * Author by @ndaidong at Twitter
- * GitHub : https://github.com/techpush/bella.js.git
 **/
 
 ;(function(context){
