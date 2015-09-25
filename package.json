@@ -1,23 +1,32 @@
 {
-  "version": "3.7.3",
+  "version": "3.7.4",
   "name": "bellajs",
   "description": "A useful helper for any javascript program",
   "homepage": "http://techpush.net",
   "repository": {
     "type": "git",
-    "url": "https://github.com/techpush/bella.js"
+    "url": "git@github.com:ndaidong/bella.js.git"
   },
   "author": "Dong Nguyen <ndaidong@gmail.com> (https://twitter.com/ndaidong)",
   "main": "./index.js",
   "engines": {
     "node": ">= 0.9"
   },
+  "scripts": {
+    "test": "mocha test"
+  },
+  "devDependencies": {
+    "babel": "latest",
+    "bellajs": "latest",
+    "mocha": "latest",
+    "chai": "latest"
+  },
   "license": "MIT",
   "maintainers": [
     "ndaidong <ndaidong@gmail.com>"
   ],
   "bugs": {
-    "url": "https://github.com/techpush/bella.js/issues"
+    "url": "https://github.com/ndaidong/bella.js/issues"
   },
   "directories": {
     "test": "test"

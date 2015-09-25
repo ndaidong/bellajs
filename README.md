@@ -185,7 +185,6 @@ var html = Bella.compile(template, data);
 console.log(html);
 ```
 
-This method has an old name "Bella.make", will be removed in future;
 
 ### Array & Object
  - Bella.hasProperty(Array|Object o, String key)
@@ -297,8 +296,8 @@ Examples:
     var t = Bella.now();
     console.log(t);
 
-    // format it as YYYY/MM/DD hh:ii:ss
-    var f = Bella.date.format('Y/m/d H:i:s', t);
+    // format it as 2015/09/25 09:44:51
+    var f = Bella.date.format('Y/m/d h:i:s', t);
     console.log(f);
 
     // this is a time in future
@@ -330,7 +329,7 @@ Examples:
 
 Scheduler is the best utility BellaJS provides. Almost cases you can use Bella.scheduler instead of setInterval or setTimeout, because it runs only one timer for the entire process. Regarding parameter "pattern" for Bella.scheduler.every, it may be:
 
-**1, A string in the format of 'Y m d H i s'.**
+**1, A string in the format of 'Y m d h i s'.**
 
 For example:
 

@@ -353,7 +353,6 @@
     }
     return tpl;
   }
-  Bella.make = Bella.compile;
 
   /** https://github.com/jbt/js-crypto */
   /*eslint-disable*/
