@@ -24,6 +24,9 @@ BellaJS is a lightweight library with the useful functions for handling string, 
 
 # Changes
 
+#### v3.7.6 - Sep 24, 2015
+- Added 3 new methods: "random", "pick" and "shuffle"
+
 #### v3.7.2 - Sep 24, 2015
 - Removed "sha256" method
 - Update pattern in Bella.scheduler
@@ -187,17 +190,21 @@ console.log(html);
 
 
 ### Array & Object
+ - Bella.clone(Array|Object|Date o)
+ - Bella.contains(Array a, String|Object search [, String key])
+ - Bella.copies(Array|Object src, Array|Object dest [, Boolean mustMatch[, Array exclude] ])
+ - Bella.empty(Array|Object|Element|String o)
+ - Bella.equals(Anything a, Anything b)
  - Bella.hasProperty(Array|Object o, String key)
  - Bella.inherits(Proto o)
- - Bella.clone(Array|Object|Date o)
- - Bella.copies(Array|Object src, Array|Object dest [, Boolean mustMatch[, Array exclude] ])
- - Bella.unique(Array a)
  - Bella.max(Array a)
  - Bella.min(Array a)
- - Bella.empty(Array|Object|Element|String o)
- - Bella.contains(Array a, String|Object search [, String key])
+ - Bella.pick(Array a [, Number count])
+ - Bella.random([Number min [, Number max]])
  - Bella.sort(Array a [, String order | Object option ])
- - Bella.equals(Anything a, Anything b)
+ - Bella.shuffle(Array a)
+ - Bella.unique(Array a)
+
 
 How to use Bella.sort?
 

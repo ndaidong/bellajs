@@ -1,5 +1,5 @@
 /**
- * BellaJS
+ * BellaJS v3.7.6
  * Author by @ndaidong at Twitter
  * GitHub : https://github.com/techpush/bella.js.git
 **/
@@ -359,6 +359,26 @@
   Bella.md5 = function(){for(var m=[],l=0;64>l;)m[l]=0|4294967296*Math.abs(Math.sin(++l));return function(c){var e,g,f,a,h=[];c=unescape(encodeURI(c));for(var b=c.length,k=[e=1732584193,g=-271733879,~e,~g],d=0;d<=b;)h[d>>2]|=(c.charCodeAt(d)||128)<<8*(d++%4);h[c=16*(b+8>>6)+14]=8*b;for(d=0;d<c;d+=16){b=k;for(a=0;64>a;)b=[f=b[3],(e=b[1]|0)+((f=b[0]+[e&(g=b[2])|~e&f,f&e|~f&g,e^g^f,g^(e|~f)][b=a>>4]+(m[a]+(h[[a,5*a+1,3*a+5,7*a][b]%16+d]|0)))<<(b=[7,12,17,22,5,9,14,20,4,11,16,23,6,10,15,21][4*b+a++%4])|f>>>32-b),e,g];for(a=4;a;)k[--a]=k[a]+b[a]}for(c="";32>a;)c+=(k[a>>3]>>4*(1^a++&7)&15).toString(16);return c}}();
   /*eslint-enable*/
 
+  Bella.random = function(min, max){
+    if(!min || min < 0){
+      min = 0;
+    }
+    if(!max){
+      max = 9007199254740991;
+    }
+    if(min === max){
+      return max;
+    }
+    if(min > max){
+      min = Math.min(min, max);
+      max = Math.max(min, max);
+    }
+    var offset = min;
+    var range = (max - min) + 1;
+    var rd = Math.floor(Math.random() * range) + offset;
+    return rd;
+  }
+
   // collection
   Bella.unique = function(a){
     if(isArray(a)){
@@ -411,7 +431,7 @@
             var order = o[key] === -1 ? -1 : 1;
             /*eslint-disable*/
             a.sort(function(m, n){
-              return (m[key]>n[key])?order:(m[key]<n[key]?(-1*order):0);
+              return (m[key] > n[key]) ? order : (m[key] < n[key] ? (-1 * order) : 0);
             });
             /*eslint-enable*/
           }
@@ -419,6 +439,37 @@
       }
     }
     return a;
+  }
+
+  Bella.shuffle = function(arr){
+    for(var i = arr.length - 1; i > 0; i--){
+      var j = Math.floor(Math.random() * (i + 1));
+      var tmp = arr[i];
+      arr[i] = arr[j];
+      arr[j] = tmp;
+    }
+    return arr;
+  }
+
+  Bella.pick = function(arr, count){
+    var c = count ? Math.min(count, arr.length) : 1;
+    if(c < 1){
+      c = 1;
+    }
+    if(c >= arr.length){
+      return arr;
+    }
+    if(c === 1){
+      var ri = Bella.random(0, arr.length - 1);
+      return arr[ri];
+    }
+    var ab = [], ba = Bella.clone(arr);
+    while(ab.length < c){
+      var i = Bella.random(0, ba.length - 1);
+      ab.push(ba[i]);
+      ba.splice(i, 1);
+    }
+    return ab;
   }
 
   Bella.copies = function(from, to, matched, excepts){

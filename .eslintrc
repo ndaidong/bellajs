@@ -109,7 +109,7 @@
     "radix": 2,
     "semi-spacing": [2, {"before": false, "after": true}],
     "space-after-keywords": [2, "never"],
-    "space-before-blocks": 0,
+    "space-before-blocks": [2, "never"],
     "space-before-function-paren": [2, "never"],
     "space-in-parens": [2, "never"],
     "space-infix-ops": [2, {"int32Hint": false}],
