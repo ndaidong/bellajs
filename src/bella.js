@@ -1,5 +1,5 @@
 /**
- * BellaJS v3.7.6
+ * BellaJS v3.7.7
  * Author by @ndaidong at Twitter
  * GitHub : https://github.com/techpush/bella.js.git
 **/
@@ -62,7 +62,10 @@
     return !isNull(val) && tof(val) === 'string';
   }
   var isNumber = function(val){
-    return !isNaN(val) && tof(Number(val)) === 'number';
+    return val !== '' && !isNull(val) && isDef(val) && !isNaN(val) && tof(val) === 'number';
+  }
+  var isInteger = function(val){
+    return isNumber(val) && isFinite(val) && Math.floor(val) === val;
   }
   var isBoolean = function(val){
     return val === true || val === false;
@@ -88,11 +91,6 @@
   var isLetter = function(val){
     var re = /^[a-z]+$/i;
     return isString(val) && re.test(val);
-  }
-  var isInteger = function(val){
-    var re = /^[\d-]+$/i;
-    var s = String(val);
-    return isString(s) && re.test(s);
   }
   var isEmail = function(val){
     var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;

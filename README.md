@@ -115,22 +115,21 @@ Assuming there is a file bella.min.js located at "/public/js/lib/", the followin
 ## Methods
 
 ### DataType detection
- - Bella.isString(Anything val)
- - Bella.isNumber(Anything val)
- - Bella.isObject(Anything val)
  - Bella.isArray(Anything val)
- - Bella.isDate(Anything val)
- - Bella.isFunction(Anything val)
  - Bella.isBoolean(Anything val)
- - Bella.isElement(Anything val)
+ - Bella.isDate(Anything val)
  - Bella.isDef(Anything val)
- - Bella.isNull(Anything val)
+ - Bella.isElement(Anything val)
+ - Bella.isEmail(Anything val)
  - Bella.isEmpty(Anything val)
+ - Bella.isFunction(Anything val)
+ - Bella.isGeneratedKey(Anything val)
  - Bella.isInteger(Anything val)
  - Bella.isLetter(Anything val)
- - Bella.isEmail(Anything val)
- - Bella.isGeneratedKey(Anything val)
-
+ - Bella.isNull(Anything val)
+ - Bella.isNumber(Anything val)
+ - Bella.isObject(Anything val)
+ - Bella.isString(Anything val)
 
 ### String manipulation
  - Bella.createId(Number length [, String prefix])
