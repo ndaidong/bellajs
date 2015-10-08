@@ -17,33 +17,30 @@ var rootDir = '../../../src/';
 
 var bella = require(path.join(rootDir, 'bella'));
 
-describe('.createAlias(String s)', () => {
+describe('.stripAccent(String s)', () => {
 
-  describe(' / bella.createAlias("Sur l\'année 2015")', () => {
+  let s = 'Sur l\'année 2015';
+  describe(' / bella.stripAccent("' + s + '")', () => {
 
-    let alias = bella.createAlias('Sur l\'année 2015');
+    let alias = bella.stripAccent(s);
     it(' should generate a standard slug', () => {
-      expect(alias).to.equal('sur-l-annee-2015');
-    });
-
-    it(' should contain only alphabet, 0-9 and -', () => {
-      expect(alias).to.match(/^[0-9a-z-]+/);
+      expect(alias).to.equal('Sur l\'annee 2015');
     });
 
   });
 
-  describe(' / bella.createAlias("")', () => {
+  describe(' / bella.stripAccent("")', () => {
 
-    let alias = bella.createAlias('');
+    let alias = bella.stripAccent('');
     it(' should generate an empty string', () => {
       expect(alias).to.equal('');
     });
 
   });
 
-  describe(' / bella.createAlias(123456)', () => {
+  describe(' / bella.stripAccent(123456)', () => {
 
-    let alias = bella.createAlias(123456);
+    let alias = bella.stripAccent(123456);
     it(' should return "123456"', () => {
       expect(alias).to.equal('123456');
     });

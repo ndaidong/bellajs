@@ -17,7 +17,7 @@ var rootDir = '../../../src/';
 
 var bella = require(path.join(rootDir, 'bella'));
 
-describe('.createId()', () => {
+describe('.createId(Number len, String prefix)', () => {
 
   describe(' / bella.createId()', () => {
 
@@ -26,7 +26,7 @@ describe('.createId()', () => {
       expect(id).to.have.length(32);
     });
 
-    it(' should contain only alphabet, 0-9', function(){
+    it(' should contain only alphabet, 0-9', () => {
       expect(id).to.match(/^[0-9A-z_]+/i);
     });
 
@@ -40,7 +40,7 @@ describe('.createId()', () => {
       expect(id).to.have.length(15);
     });
 
-    it(' should contain only alphabet, 0-9', function(){
+    it(' should contain only alphabet, 0-9', () => {
       expect(id).to.match(/^[0-9A-z_]+/i);
     });
 
@@ -54,11 +54,11 @@ describe('.createId()', () => {
       expect(id).to.have.length(36);
     });
 
-    it(' should contain only alphabet, 0-9', function(){
+    it(' should contain only alphabet, 0-9', () => {
       expect(id).to.match(/^[0-9A-z_]+/i);
     });
 
-    it(' should begin with \'__prefix__\'', function(){
+    it(' should begin with \'__prefix__\'', () => {
       expect(id).to.match(/^__prefix__/);
     });
   });

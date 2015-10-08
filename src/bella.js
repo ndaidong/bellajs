@@ -139,17 +139,21 @@
 
   // string
   Bella.encode = function(s){
+    s = String(s);
     return isString(s) ? encodeURIComponent(s) : '';
   }
   Bella.decode = function(s){
+    s = String(s);
     return isString(s) ? decodeURIComponent(s.replace(/\+/g, ' ')) : '';
   }
   Bella.trim = function(s){
+    s = String(s);
     return ((s && isString(s)) ? s.replace(/^[\s\xa0]+|[\s\xa0]+$/g, '') : s) || '';
   }
   Bella.truncate = function(s, l){
+    s = String(s);
     if(!s || !isString(s)){
-      return '...';
+      return '';
     }
     s = Bella.trim(s);
 
@@ -179,26 +183,29 @@
     return r;
   }
   Bella.stripTags = function(s){
+    s = String(s);
     return isString(s) ? s.replace(/<.*?>/gi, '') : '';
   }
 
   Bella.escapeHTML = function(s){
+    s = String(s);
     return isString(s) ? s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;') : '';
   }
   Bella.unescapeHTML = function(s){
+    s = String(s);
     return isString(s) ? s.replace(/&quot;/g, '"').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&') : '';
   }
 
   Bella.strtolower = function(s){
+    s = String(s);
     return isString(s) ? s.toLowerCase() : '';
   }
   Bella.strtoupper = function(s){
+    s = String(s);
     return isString(s) ? s.toUpperCase() : '';
   }
   Bella.ucfirst = function(s){
-    if(!isString(s)){
-      return '';
-    }
+    s = String(s);
     if(s.length === 1){
       return s.toUpperCase();
     }
@@ -206,6 +213,7 @@
     return s.charAt(0).toUpperCase() + s.slice(1);
   }
   Bella.ucwords = function(s){
+    s = String(s);
     if(isString(s)){
       var c = s.split(' '), a = [];
       c.forEach(function(w){
@@ -213,12 +221,10 @@
       });
       return a.join(' ');
     }
-    return '';
+    return s;
   }
   Bella.leftPad = function(s, size, spad){
-    if(isNumber(s)){
-      s += '';
-    }
+    s = String(s);
     if(isString(s)){
       var g = spad || '0';
       var o = String(s);
@@ -228,9 +234,7 @@
     return '';
   }
   Bella.rightPad = function(s, size, spad){
-    if(isNumber(s)){
-      s += '';
-    }
+    s = String(s);
     if(isString(s)){
       var g = spad || '0';
       var o = String(s);
@@ -241,16 +245,16 @@
   }
 
   Bella.replaceAll = function(s, a, b){
-
     if(!isString(s)){
       return '';
     }
     if(isNumber(a)){
-      a += '';
+      a = String(a);
     }
     if(isNumber(b)){
-      b += '';
+      b = String(b);
     }
+
     if(isString(a) && isString(b)){
       var aa = s.split(a);
       s = aa.join(b);
@@ -273,9 +277,7 @@
   }
 
   Bella.stripAccent = function(s){
-    if(!isString(s)){
-      return '';
-    }
+    s = String(s);
     var map = {
       a: 'á|à|ả|ã|ạ|ă|ắ|ặ|ằ|ẳ|ẵ|â|ấ|ầ|ẩ|ẫ|ậ|ä',
       A: 'Á|À|Ả|Ã|Ạ|Ă|Ắ|Ặ|Ằ|Ẳ|Ẵ|Â|Ấ|Ầ|Ẩ|Ẫ|Ậ|Ä',
@@ -306,6 +308,7 @@
   }
 
   Bella.createAlias = function(s, delimiter){
+    s = String(s);
     var x = Bella.stripAccent(s);
     if(x){
       var d = delimiter || '-';
