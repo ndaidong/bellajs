@@ -110,7 +110,6 @@ describe('.replaceAll(String s, [String | Array] search, [String | Array] replac
     describe(' / bella.replaceAll(' + param + ')', () => {
       it(' should return "' + e + '"', () => {
         let result = bella.replaceAll(a, b, c);
-        console.log(param, '-->', result);
         expect(result).to.equal(e);
       });
 
