@@ -1,6 +1,6 @@
 var traceur = require('traceur');
-traceur.require.makeDefault((filename) => {
-  return !filename.includes('node_modules');
+traceur.require.makeDefault(function(filename){
+  return filename.indexOf('node_modules') === -1;
 });
 
 var fs = require('fs');
