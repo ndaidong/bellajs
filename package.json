@@ -1,5 +1,5 @@
 {
-  "version": "4.0.11",
+  "version": "4.0.12",
   "name": "bellajs",
   "description": "A useful helper for any javascript program",
   "homepage": "http://techpush.net",
@@ -16,7 +16,7 @@
     "test": "mocha test"
   },
   "devDependencies": {
-	"traceur": "latest",
+    "traceur": "latest",
     "mocha": "latest",
     "chai": "latest"
   },
