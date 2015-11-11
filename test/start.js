@@ -1,6 +1,8 @@
+'use strict';
+
 var traceur = require('traceur');
-traceur.require.makeDefault(function(filename){
-  return filename.indexOf('node_modules') === -1;
+traceur.require.makeDefault((filename) => {
+  return !filename.includes('node_modules');
 });
 
 var fs = require('fs');
@@ -11,10 +13,10 @@ var path = require('path');
  */
 
 var dirs = ['', 'types', 'string', 'template', 'array', 'object'];
-dirs.forEach(function(dir){
-  var where = './test/specs/' + dir;
+dirs.forEach((dir) => {
+  let where = './test/specs/' + dir;
   if(fs.existsSync(where)){
-    fs.readdirSync(where).forEach(function(file){
+    fs.readdirSync(where).forEach((file) => {
       if(path.extname(file) === '.js'){
         require(path.join('.' + where, file));
       }

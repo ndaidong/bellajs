@@ -10,14 +10,13 @@
   "author": "Dong Nguyen <ndaidong@gmail.com> (https://twitter.com/ndaidong)",
   "main": "./index.js",
   "engines": {
-    "node": ">= 0.9"
+    "node": ">= 4.0"
   },
   "scripts": {
     "test": "mocha test"
   },
   "devDependencies": {
-    "traceur": "latest",
-    "bellajs": "latest",
+	"traceur": "latest",
     "mocha": "latest",
     "chai": "latest"
   },
