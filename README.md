@@ -499,6 +499,18 @@ Bella.dom.ready(function(){
  - Bella.hostname // browser only
 
 
-# Test with Jasmine
+# Test with Mocha
 
-/test/SpecRunner.html
+```
+git clone https://github.com/ndaidong/bella.js.git
+cd bella.js
+npm install
+mocha
+```
+
+Make sure [Mocha](https://mochajs.org/) is already and check the specs under /test folder.
+
+
+# License
+
+Apache License
