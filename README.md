@@ -3,7 +3,7 @@ bella.js
 
 BellaJS is a lightweight library with the useful functions for handling string, array/object, datetime, schedule, template and dom/event better and easier. It supports both Node.js and browser environments.
 
-![Travis](https://travis-ci.org/ndaidong/bella.js.svg?branch=master)
+[![NPM](https://badge.fury.io/js/bellajs.svg)](https://badge.fury.io/js/bellajs) ![Travis](https://travis-ci.org/ndaidong/bella.js.svg?branch=master)
 
 # Contents
 
