@@ -21,7 +21,7 @@ BellaJS is a lightweight library with the useful functions for handling string, 
     * [DOM & Event manipulation](#dom--event-manipulation)
     * [Other methods](#other-methods)
   * [Properties](#properties)
-* [Test with Jasmine](#test-with-jasmine)
+* [Test](#test)
 
 
 # Changes
@@ -503,7 +503,7 @@ Bella.dom.ready(function(){
  - Bella.hostname // browser only
 
 
-# Test with Mocha
+# Test
 
 ```
 git clone https://github.com/ndaidong/bella.js.git
@@ -512,7 +512,8 @@ npm install
 mocha
 ```
 
-Make sure [Mocha](https://mochajs.org/) is already and check the specs under /test folder.
+ _* Ensure that you have [mocha](https://mochajs.org/) installed_
+
 
 
 # License
