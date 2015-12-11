@@ -185,7 +185,7 @@
     s = String(s);
     var r = isString(s) ? s.replace(/<.*?>/gi, ' ') : '';
     if(r){
-      r = r.replace(/\s\s+/g, ' ');
+      r = Bella.trim(r.replace(/\s\s+/g, ' '));
     }
     return r;
   }
