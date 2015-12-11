@@ -1,7 +1,6 @@
 /**
- * BellaJS v3.7.7
- * Author by @ndaidong at Twitter
- * GitHub : https://github.com/techpush/bella.js.git
+ * bellajs
+ * @ndaidong
 **/
 
 ;(function(context){
@@ -184,7 +183,11 @@
   }
   Bella.stripTags = function(s){
     s = String(s);
-    return isString(s) ? s.replace(/<.*?>/gi, '') : '';
+    var r = isString(s) ? s.replace(/<.*?>/gi, ' ') : '';
+    if(r){
+      r = r.replace(/\s\s+/g, ' ');
+    }
+    return r;
   }
 
   Bella.escapeHTML = function(s){
