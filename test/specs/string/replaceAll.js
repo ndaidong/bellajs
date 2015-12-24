@@ -99,11 +99,21 @@ describe('.replaceAll(String s, [String | Array] search, [String | Array] replac
     var c = input.c;
     var e = useCase.expectation;
 
-    var param = (bella.isString(a)) ? '"' + a + '"' : (bella.isBoolean(a) || bella.isNumber(a)) ? a : (bella.isFunction(a) ? a.toString() : JSON.stringify(a));
-    if(b){
+    var param;
+    if (bella.isString(a)) {
+      param = '"' + a + '"';
+    } else if (bella.isBoolean(a) || bella.isNumber(a)) {
+      param = a;
+    } else if (bella.isFunction(a)) {
+      param = a.toString();
+    } else {
+      param = JSON.stringify(a);
+    }
+
+    if (b) {
       param += ', ' + JSON.stringify(b);
     }
-    if(c){
+    if (c) {
       param += ', ' + JSON.stringify(c);
     }
 

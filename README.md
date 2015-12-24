@@ -26,6 +26,9 @@ BellaJS is a lightweight library with the useful functions for handling string, 
 
 # Changes
 
+#### v4.1.0 - Dec 24, 2015
+- Update coding convension
+
 #### v4.0.12 - Nov 11, 2015
 - Unsupports old node.js (< 4.0.0)
 - Change test script to use Mocha instead of Jasmine

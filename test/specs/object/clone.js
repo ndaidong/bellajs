@@ -63,7 +63,7 @@ describe('.clone(Array|Object|Date o)', () => {
     });
 
     let mustHaveKeys = [];
-    for(let key in sample2){
+    for (let key in sample2) {
       mustHaveKeys.push(key);
     }
     it(' should have these keys "' + JSON.stringify(mustHaveKeys) + '"', () => {

@@ -49,7 +49,7 @@ describe('.isArray()', () => {
     Math.PI,
     null,
     undefined,
-    function(){}
+    function x() {}
   ]
 
   falseResult.forEach((v) => {
@@ -93,7 +93,7 @@ describe('.isBoolean()', () => {
     Math.PI,
     null,
     undefined,
-    function(){}
+    function x() {}
   ]
 
   falseResult.forEach((v) => {
@@ -137,7 +137,7 @@ describe('.isDate()', () => {
     Math.PI,
     null,
     undefined,
-    function(){}
+    function x() {}
   ]
 
   falseResult.forEach((v) => {
@@ -259,7 +259,7 @@ describe('.isEmpty()', () => {
     true,
     {a: 1},
     [1, 3],
-    function(){}
+    function x() {}
   ]
 
   falseResult.forEach((v) => {
@@ -279,7 +279,7 @@ describe('.isFunction()', () => {
 
 
   let trueResult = [
-    function(){},
+    function x() {},
     new Function()
   ]
 
@@ -323,7 +323,7 @@ describe('.isFunction()', () => {
 describe('.isGeneratedKey()', () => {
 
   let trueResult = [];
-  while(trueResult.length < 10){
+  while (trueResult.length < 10) {
     trueResult.push(bella.createId());
   }
 
