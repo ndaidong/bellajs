@@ -80,7 +80,7 @@ describe('.contains(Array a, String|Object search [, String key])', () => {
       let blue = {
         id: 5,
         name: 'blue'
-      }
+      };
       let result = bella.contains(sample, blue, 'id');
       expect(result).to.equal(true);
     });
@@ -89,7 +89,7 @@ describe('.contains(Array a, String|Object search [, String key])', () => {
       let blue = {
         id: 5,
         name: 'blue'
-      }
+      };
       let result = bella.contains(sample, blue, 'name');
       expect(result).to.equal(false);
     });
@@ -98,10 +98,9 @@ describe('.contains(Array a, String|Object search [, String key])', () => {
       let orange = {
         id: 1,
         name: 'orange'
-      }
+      };
       let result = bella.contains(sample, orange, 'name');
       expect(result).to.equal(false);
     });
   });
 });
-

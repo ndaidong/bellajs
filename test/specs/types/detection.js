@@ -24,7 +24,7 @@ describe('.isArray()', () => {
     [1, 2, 3],
     new Array(),
     new Array(5)
-  ]
+  ];
 
   trueResult.forEach((v) => {
 
@@ -50,7 +50,7 @@ describe('.isArray()', () => {
     null,
     undefined,
     function x() {}
-  ]
+  ];
 
   falseResult.forEach((v) => {
 
@@ -68,8 +68,8 @@ describe('.isBoolean()', () => {
 
   let trueResult = [
     true,
-    (2 - 1) === 1
-  ]
+    2 - 1 === 1
+  ];
 
   trueResult.forEach((v) => {
 
@@ -94,7 +94,7 @@ describe('.isBoolean()', () => {
     null,
     undefined,
     function x() {}
-  ]
+  ];
 
   falseResult.forEach((v) => {
 
@@ -113,7 +113,7 @@ describe('.isDate()', () => {
 
   let trueResult = [
     new Date()
-  ]
+  ];
 
   trueResult.forEach((v) => {
 
@@ -138,7 +138,7 @@ describe('.isDate()', () => {
     null,
     undefined,
     function x() {}
-  ]
+  ];
 
   falseResult.forEach((v) => {
 
@@ -159,7 +159,7 @@ describe('.isDef()', () => {
   let trueResult = [
     a,
     b
-  ]
+  ];
 
   trueResult.forEach((v) => {
 
@@ -175,7 +175,7 @@ describe('.isDef()', () => {
   let something;
   let falseResult = [
     something
-  ]
+  ];
 
   falseResult.forEach((v) => {
 
@@ -195,7 +195,7 @@ describe('.isEmail()', () => {
     'ndaidong@gmail.com',
     'bob.nany@live.com',
     'bob.nany@live.com.vn'
-  ]
+  ];
 
   trueResult.forEach((v) => {
 
@@ -216,7 +216,7 @@ describe('.isEmail()', () => {
     '',
     undefined,
     0
-  ]
+  ];
 
   falseResult.forEach((v) => {
 
@@ -240,7 +240,7 @@ describe('.isEmpty()', () => {
     {},
     [],
     Object.create({})
-  ]
+  ];
 
   trueResult.forEach((v) => {
 
@@ -260,7 +260,7 @@ describe('.isEmpty()', () => {
     {a: 1},
     [1, 3],
     function x() {}
-  ]
+  ];
 
   falseResult.forEach((v) => {
 
@@ -281,7 +281,7 @@ describe('.isFunction()', () => {
   let trueResult = [
     function x() {},
     new Function()
-  ]
+  ];
 
   trueResult.forEach((v) => {
 
@@ -305,7 +305,7 @@ describe('.isFunction()', () => {
     {},
     [],
     Object.create({})
-  ]
+  ];
 
   falseResult.forEach((v) => {
 
@@ -346,7 +346,7 @@ describe('.isGeneratedKey()', () => {
     '',
     undefined,
     0
-  ]
+  ];
 
   falseResult.forEach((v) => {
 
@@ -367,7 +367,7 @@ describe('.isInteger()', () => {
     6e4,
     9,
     0
-  ]
+  ];
 
   trueResult.forEach((v) => {
 
@@ -389,7 +389,7 @@ describe('.isInteger()', () => {
     Math.PI,
     null,
     undefined
-  ]
+  ];
 
   falseResult.forEach((v) => {
 
@@ -431,7 +431,7 @@ describe('.isLetter()', () => {
     undefined,
     0,
     1325
-  ]
+  ];
 
   falseResult.forEach((v) => {
 
@@ -455,7 +455,7 @@ describe('.isNumber()', () => {
     Math.PI,
     9,
     0
-  ]
+  ];
 
   trueResult.forEach((v) => {
 
@@ -474,7 +474,7 @@ describe('.isNumber()', () => {
     '100',
     null,
     undefined
-  ]
+  ];
 
   falseResult.forEach((v) => {
 
@@ -499,7 +499,7 @@ describe('.isObject()', () => {
     Object.create({}),
     [],
     new Date()
-  ]
+  ];
 
   trueResult.forEach((v) => {
 
@@ -519,7 +519,7 @@ describe('.isObject()', () => {
     null,
     undefined,
     0
-  ]
+  ];
 
   falseResult.forEach((v) => {
 
@@ -542,7 +542,7 @@ describe('.isString()', () => {
     '',
     'undefined',
     String(1000)
-  ]
+  ];
 
   trueResult.forEach((v) => {
 
@@ -562,7 +562,7 @@ describe('.isString()', () => {
     undefined,
     Number('1000'),
     0
-  ]
+  ];
 
   falseResult.forEach((v) => {
 

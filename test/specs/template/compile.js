@@ -37,7 +37,7 @@ describe('.compile(String s, Object date)', () => {
       name: 'Dong Nguyen',
       email: 'ndaidong@gmail.com'
     }
-  }
+  };
 
   let expectation = `
     <article>
@@ -60,4 +60,3 @@ describe('.compile(String s, Object date)', () => {
   });
 
 });
-

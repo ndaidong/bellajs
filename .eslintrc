@@ -226,7 +226,7 @@
     "quotes": [2, "single"],                    // specify whether backticks, double or single quotes should be used (fixable)
     "require-jsdoc": 0,             // Require JSDoc comment
     "semi-spacing": [2, {"before": false, "after": true}],              // enforce spacing before and after semicolons
-    "semi": 0,                      // require or disallow use of semicolons instead of ASI (fixable)
+    "semi": [2, "always"],            // require or disallow use of semicolons instead of ASI (fixable)
     "sort-vars": 0,                 // sort variables within the same declaration block
     "space-after-keywords": [2, "always"],      // require a space after certain keywords (fixable)
     "space-before-blocks": [2, "always"],       // require or disallow a space before blocks (fixable)

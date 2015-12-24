@@ -7,13 +7,13 @@
 
   var Bella = {
     ENV: 'browser'
-  }
+  };
 
   if (typeof module !== 'undefined' && module.exports) {
     Bella.ENV = 'node';
   }
 
-  var tof = function tof(v) {
+  function tof(v) {
     var ots = Object.prototype.toString;
     var s = typeof v;
     if (s === 'object') {
@@ -141,15 +141,18 @@
   Bella.encode = function encode(s) {
     s = String(s);
     return isString(s) ? encodeURIComponent(s) : '';
-  }
+  };
+
   Bella.decode = function decode(s) {
     s = String(s);
     return isString(s) ? decodeURIComponent(s.replace(/\+/g, ' ')) : '';
-  }
+  };
+
   Bella.trim = function trim(s) {
     s = String(s);
     return s && isString(s) ? s.replace(/^[\s\xa0]+|[\s\xa0]+$/g, '') : s || '';
-  }
+  };
+
   Bella.truncate = function truncate(s, l) {
     s = String(s);
     if (!s || !isString(s)) {
@@ -180,7 +183,8 @@
       r += '...';
     }
     return r;
-  }
+  };
+
   Bella.stripTags = function stripTags(s) {
     s = String(s);
     var r = isString(s) ? s.replace(/<.*?>/gi, ' ') : '';
@@ -188,7 +192,7 @@
       r = Bella.trim(r.replace(/\s\s+/g, ' '));
     }
     return r;
-  }
+  };
 
   Bella.escapeHTML = function escapeHTML(s) {
     s = String(s);
@@ -196,23 +200,26 @@
       return '';
     }
     return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-  }
+  };
+
   Bella.unescapeHTML = function unescapeHTML(s) {
     s = String(s);
     if (!isString(s)) {
       return '';
     }
     return s.replace(/&quot;/g, '"').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
-  }
+  };
 
   Bella.strtolower = function strtolower(s) {
     s = String(s);
     return isString(s) ? s.toLowerCase() : '';
-  }
+  };
+
   Bella.strtoupper = function strtoupper(s) {
     s = String(s);
     return isString(s) ? s.toUpperCase() : '';
-  }
+  };
+
   Bella.ucfirst = function ucfirst(s) {
     s = String(s);
     if (s.length === 1) {
@@ -220,7 +227,8 @@
     }
     s = s.toLowerCase();
     return s.charAt(0).toUpperCase() + s.slice(1);
-  }
+  };
+
   Bella.ucwords = function ucwords(s) {
     s = String(s);
     if (isString(s)) {
@@ -231,7 +239,8 @@
       return a.join(' ');
     }
     return s;
-  }
+  };
+
   Bella.leftPad = function leftPad(s, size, spad) {
     s = String(s);
     if (isString(s)) {
@@ -241,7 +250,8 @@
       return o.length >= z ? o : new Array(z - o.length + 1).join(g) + o;
     }
     return '';
-  }
+  };
+
   Bella.rightPad = function rightPad(s, size, spad) {
     s = String(s);
     if (isString(s)) {
@@ -251,7 +261,7 @@
       return o.length >= z ? o : o + new Array(z - o.length + 1).join(g);
     }
     return '';
-  }
+  };
 
   Bella.replaceAll = function replaceAll(s, a, b) {
     if (!isString(s)) {
@@ -281,7 +291,7 @@
       }
     }
     return s;
-  }
+  };
 
   Bella.stripAccent = function stripAccent(s) {
     s = String(s);
@@ -302,7 +312,7 @@
       U: 'Ú|Ù|Ủ|Ũ|Ụ|Ư|Ứ|Ừ|Ử|Ữ|Ự|Û',
       y: 'ý|ỳ|ỷ|ỹ|ỵ',
       Y: 'Ý|Ỳ|Ỷ|Ỹ|Ỵ'
-    }
+    };
     for (var key in map) {
       if (Bella.hasProperty(map, key)) {
         var a = map[key].split('|');
@@ -312,7 +322,7 @@
       }
     }
     return s;
-  }
+  };
 
   Bella.createAlias = function createAlias(s, delimiter) {
     s = String(s);
@@ -326,7 +336,7 @@
       x = x.replace(/\s/g, d);
     }
     return x;
-  }
+  };
 
   Bella.compile = function comp(tpl, data) {
     var ns = [];
@@ -359,7 +369,7 @@
       return compile(tpl, data);
     }
     return tpl;
-  }
+  };
 
   /** https://github.com/jbt/js-crypto */
   /*eslint-disable*/
@@ -384,7 +394,7 @@
     var range = max - min + 1;
     var rd = Math.floor(Math.random() * range) + offset;
     return rd;
-  }
+  };
 
   // collection
   Bella.unique = function unique(a) {
@@ -398,13 +408,16 @@
       return r;
     }
     return a || [];
-  }
+  };
+
   Bella.max = function max(a) {
     return isArray(a) ? Math.max.apply({}, a) : a;
-  }
+  };
+
   Bella.min = function min(a) {
     return isArray(a) ? Math.min.apply({}, a) : a;
-  }
+  };
+
   Bella.contains = function contains(a, el, key) {
     if (isArray(a)) {
       for (var i = 0; i < a.length; i++) {
@@ -415,7 +428,8 @@
       }
     }
     return false;
-  }
+  };
+
   Bella.sort = function sort(arr, opts) {
     var a = [];
     var one = {};
@@ -436,7 +450,7 @@
           if (Bella.hasProperty(one, key)) {
             var order = o[key] === -1 ? -1 : 1;
             /*eslint-disable*/
-            a.sort(function f3(m, n) {
+            a.sort(function(m, n) {
               return (m[key] > n[key]) ? order : (m[key] < n[key] ? (-1 * order) : 0);
             });
             /*eslint-enable*/
@@ -445,7 +459,7 @@
       }
     }
     return a;
-  }
+  };
 
   Bella.shuffle = function shuffle(arr) {
     for (var i = arr.length - 1; i > 0; i--) {
@@ -455,7 +469,7 @@
       arr[j] = tmp;
     }
     return arr;
-  }
+  };
 
   Bella.pick = function pick(arr, count) {
     var c = count ? Math.min(count, arr.length) : 1;
@@ -476,7 +490,7 @@
       ba.splice(i, 1);
     }
     return ab;
-  }
+  };
 
   Bella.copies = function copies(from, to, matched, excepts) {
     var mt = matched || false;
@@ -496,7 +510,7 @@
       }
     }
     return to;
-  }
+  };
 
   Bella.clone = function clone(obj) {
     if (!isObject(obj) && !isArray(obj) && !isDate(obj)) {
@@ -527,7 +541,7 @@
       return copy;
     }
     return false;
-  }
+  };
 
   Bella.empty = function empty(a) {
     if (isArray(a)) {
@@ -549,7 +563,7 @@
       a.innerHTML = '';
     }
     return a;
-  }
+  };
 
   Bella.hasProperty = function hasProperty(ob, k) {
     if (!ob || !k) {
@@ -560,7 +574,7 @@
       r = k in ob;
     }
     return r;
-  }
+  };
 
   Bella.equals = function equals(a, b) {
     var re = true;
@@ -607,7 +621,7 @@
       return re;
     }
     return false;
-  }
+  };
 
   // for browser only
   var _getElement, _addElement, _createElement, _query, _queryAll;
@@ -626,7 +640,7 @@
             }
           }
           return r;
-        }
+        };
         p.addClass = function addClass(c) {
           c = c.split(' ');
           var t = p.className.split(' ');
@@ -634,7 +648,7 @@
           var sc = Bella.unique(nc);
           p.className = sc.join(' ');
           return p;
-        }
+        };
         p.removeClass = function removeClass(c) {
           var e = p.className.split(' '); c = c.split(' ');
           for (var i = 0; i < c.length; i++) {
@@ -644,7 +658,7 @@
           }
           p.className = e.join(' ');
           return p;
-        }
+        };
         p.toggleClass = function toggleClass(c) {
           if (p.hasClass(c)) {
             p.removeClass(c);
@@ -652,37 +666,37 @@
             p.addClass(c);
           }
           return p;
-        }
+        };
         p.empty = function empty() {
           p.innerHTML = '';
           return p;
-        }
+        };
         p.html = function html(s) {
           if (s !== '' && isEmpty(s)) {
             return p.innerHTML;
           }
           p.innerHTML = s;
           return p;
-        }
+        };
         p.destroy = function destroy() {
           if (p.parentNode) {
             p.parentNode.removeChild(p);
           }
-        }
+        };
       }
       return p;
-    }
+    };
 
     _addElement = function __addElement(tag, parent) {
       var p = parent ? _getElement(parent) : document.body;
       var d = isElement(tag) ? tag : document.createElement(tag);
       p.appendChild(d);
       return _getElement(d);
-    }
+    };
 
     _createElement = function __createElement(tag) {
       return _getElement(document.createElement(tag));
-    }
+    };
 
     _query = function __query(condition) {
       var el, tmp = document.querySelector(condition);
@@ -690,7 +704,7 @@
         el = _getElement(tmp);
       }
       return el;
-    }
+    };
 
     _queryAll = function __queryAll(condition) {
       var els = [], tmp = document.querySelectorAll(condition);
@@ -700,7 +714,7 @@
         }
       }
       return els;
-    }
+    };
 
     /*eslint-disable*/
     /*!
@@ -729,6 +743,8 @@
 
     })();
 
+    /*eslint-enable*/
+
     Bella.dom = {
       ready: onready,
       one: _query,
@@ -736,9 +752,9 @@
       get: _getElement,
       add: _addElement,
       create: _createElement
-    }
+    };
 
-    Bella.hostname = (function hostname() {
+    Bella.hostname = (function _hostname() {
       var atag = _createElement('A');
       atag.href = document.URL;
       var loc = atag.hostname;
@@ -746,12 +762,12 @@
       return loc;
     })();
 
-    var isGecko = (function isGecko(ua) {
+    var isGecko = (function _isGecko(ua) {
       var n = ua.toLowerCase();
       return /gecko/i.test(n);
     })(navigator.userAgent);
 
-    Bella.event = (function event() {
+    Bella.event = (function _event() {
 
       return {
         on: function on(element, event, callback) {
@@ -804,7 +820,7 @@
           }
           return _getElement(targ);
         }
-      }
+      };
     })();
 
     Bella.getMousePosition = function getMousePosition(ev) {
@@ -812,7 +828,7 @@
       var cursor = {
         x: 0,
         y: 0
-      }
+      };
       if (e.pageX || e.pageY) {
         cursor.x = e.pageX;
         cursor.y = e.pageY;
@@ -823,7 +839,7 @@
         cursor.y = e.clientY + (de.scrollTop || db.scrollTop) - (de.clientTop || 0);
       }
       return cursor;
-    }
+    };
 
     Bella.getWindowSize = function getWindowSize() {
       var w = 0, h = 0;
@@ -840,8 +856,8 @@
       return {
         width: w,
         height: h
-      }
-    }
+      };
+    };
 
     var cookie = {
       set: function set(name, value, expires, domain, path) {
@@ -856,7 +872,8 @@
           var _dom = ob.domain || false;
 
           if (_name) {
-            var vx = (!isObject(_val) && !isArray(_val)) ? _val : JSON.stringify(_val);
+            var iss = !isObject(_val) && !isArray(_val);
+            var vx = iss ? _val : JSON.stringify(_val);
             var arr = [
               [_name, isString(vx) ? encodeURIComponent(vx) : vx],
               ['path', _pat]
@@ -894,7 +911,7 @@
             });
             return tmp.join('; ');
           }
-        }
+        };
 
         if (arguments.length === 1 && Bella.isObject(name)) {
           cdata = parse(name);
@@ -927,17 +944,19 @@
       unset: function unset(name) {
         cookie.set(name, '', '-1d');
       }
-    }
+    };
     Bella.cookie = cookie;
   }
 
   // DateTime
   Bella.now = function now() {
     return new Date();
-  }
+  };
+
   Bella.time = function time() {
     return (new Date()).getTime();
-  }
+  };
+
   Bella.date = (function _date() {
 
     var pattern = 'D, M d, Y  h:i:s A';
@@ -1001,7 +1020,7 @@
       function _term(t, s) {
         return f[t] ? f[t]() : s;
       }
-      d = (input instanceof Date) ? input : new Date(input);
+      d = input instanceof Date ? input : new Date(input);
 
       if (isNaN(d.getTime())) {
         var reg = /^(\d+-\d+-\d+)\s(\d+:\d+:\d+)$/i;
@@ -1040,8 +1059,8 @@
       return output.replace(vchar, _term);
     }
 
-    var relativize = function  relativize(input) {
-      var time = (input instanceof Date ? input : new Date(input));
+    var relativize = function _relativize(input) {
+      var time = input instanceof Date ? input : new Date(input);
       var delta = new Date() - time;
       var nowThreshold = parseInt(time, 10);
       if (isNaN(nowThreshold)) {
@@ -1059,7 +1078,7 @@
         day: 24,
         month: 30,
         year: 12
-      }
+      };
       for (var key in conversions) {
         if (delta < conversions[key]) {
           break;
@@ -1073,19 +1092,19 @@
         units += 's';
       }
       return [delta, units].join(' ') + ' ago';
-    }
+    };
 
     var utc = function utc(t) {
       return (new Date(t || Bella.now())).toUTCString();
-    }
+    };
 
     var local = function local(t) {
       return format('D, j M Y h:i:s O', t);
-    }
+    };
 
     var strtotime = function strtotime(t) {
       return (new Date(t)).getTime();
-    }
+    };
 
     return {
       utc: utc,
@@ -1093,7 +1112,7 @@
       strtotime: strtotime,
       format: format,
       relativize: relativize
-    }
+    };
   })();
 
   // schedule
@@ -1190,7 +1209,6 @@
       }
     }
 
-
     function register(t, fn, single) {
       var ot = single || false;
       TaskList.push({
@@ -1240,23 +1258,28 @@
       hourly: hourly,
       every: every,
       once: once
-    }
+    };
   })();
 
   var tracable = 1;
   Bella.enableTrace = function enableTrace() {
     tracable = 1;
-  }
+  };
+
   Bella.disableTrace = function disableTrace() {
     tracable = 0;
-  }
+  };
+
   Bella.trace = function trace() {
     if (tracable !== 1 || !console) {
       return false;
     }
     var a = Array.prototype.slice.call(arguments);
+
+    /*eslint-disable */
     console.trace.apply(console, a);
-  }
+    /*eslint-enable */
+  };
 
   // exports
   if (Bella.ENV === 'node') {

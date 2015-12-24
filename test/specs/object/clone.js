@@ -52,7 +52,7 @@ describe('.clone(Array|Object|Date o)', () => {
     birthday: '02/01/1980',
     email: 'ndaidong@mailinator.com',
     phone: '12391403098'
-  }
+  };
 
   let result2 = bella.clone(sample2);
 
