@@ -329,9 +329,9 @@
     return x;
   }
 
-  Bella.compile = function compile(tpl, data) {
+  Bella.compile = function comp(tpl, data) {
     var ns = [];
-    var compile = function com(s, ctx, namespace) {
+    function compile(s, ctx, namespace) {
       if (namespace) {
         ns.push(namespace);
       }
@@ -933,7 +933,7 @@
   Bella.time = function time() {
     return (new Date()).getTime();
   }
-  Bella.date = (function date() {
+  Bella.date = (function _date() {
 
     var pattern = 'D, M d, Y  h:i:s A';
     var weeks = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -959,7 +959,7 @@
       return ['GMT', sign, Bella.leftPad(z, 2)].join('');
     })();
 
-    var format = function format(output, input) {
+    function format(output, input) {
       var meridiem = false, d, f, vchar = /\.*\\?([a-z])/gi;
       if (!input) {
         input = Bella.time();
@@ -976,10 +976,10 @@
 
       var wn = weeks;
       var mn = months;
-      var _num = function _num(n) {
+      function _num(n) {
         return String(n < 10 ? '0' + n : n);
       }
-      var _ord = function _ord(day) {
+      function _ord(day) {
         var s = day + ' ', x = s.charAt(s.length - 2);
         if (x === '1') {
           s += 'st';
@@ -993,7 +993,7 @@
         return s;
       }
 
-      var _term = function _term(t, s) {
+      function _term(t, s) {
         return f[t] ? f[t]() : s;
       }
       d = (input instanceof Date) ? input : new Date(input);
@@ -1083,13 +1083,6 @@
     }
 
     return {
-      pattern: function pattern(p) {
-        if (!p) {
-          return pattern;
-        }
-        pattern = p;
-        return pattern;
-      },
       utc: utc,
       local: local,
       strtotime: strtotime,

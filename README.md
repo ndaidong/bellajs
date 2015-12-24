@@ -28,6 +28,7 @@ BellaJS is a lightweight library with the useful functions for handling string, 
 
 #### v4.1.0 - Dec 24, 2015
 - Update coding convension
+- Remove .date.pattern
 
 #### v4.0.12 - Nov 11, 2015
 - Unsupports old node.js (< 4.0.0)
@@ -276,7 +277,6 @@ players2.forEach(function(item){
  - Bella.date.local(Date|Number|String input)
  - Bella.date.utc(Date|Number|String input)
  - Bella.date.strtotime(String input)
- - Bella.date.pattern([String pattern])
 
 Default pattern is 'D, M d, Y  H:i:s A'. Without any parameter, Bella.date.format() return a string related to current time, in the format of default pattern.
 
