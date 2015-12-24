@@ -64,4 +64,3 @@ describe('.createId(Number len, String prefix)', () => {
   });
 
 });
-

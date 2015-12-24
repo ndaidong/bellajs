@@ -64,7 +64,9 @@ describe('.clone(Array|Object|Date o)', () => {
 
     let mustHaveKeys = [];
     for (let key in sample2) {
-      mustHaveKeys.push(key);
+      if (bella.hasProperty(sample2, key)) {
+        mustHaveKeys.push(key);
+      }
     }
     it(' should have these keys "' + JSON.stringify(mustHaveKeys) + '"', () => {
       expect(result2).to.have.all.keys(mustHaveKeys);

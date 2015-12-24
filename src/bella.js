@@ -586,10 +586,14 @@
     } else if (isObject(a) && isObject(b)) {
       var as = [], bs = [];
       for (var k1 in a) {
-        as.push(k1);
+        if (Bella.hasProperty(a, k1)) {
+          as.push(k1);
+        }
       }
       for (var k2 in b) {
-        bs.push(k2);
+        if (Bella.hasProperty(b, k2)) {
+          bs.push(k2);
+        }
       }
       if (as.length !== bs.length) {
         return false;
