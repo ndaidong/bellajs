@@ -76,4 +76,3 @@ describe('.clone(Array|Object|Date o)', () => {
     });
   });
 });
-

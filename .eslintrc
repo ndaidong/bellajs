@@ -48,34 +48,34 @@
   "rules": {
     ////////// Possible Errors //////////
 
-    "comma-dangle": 0,               // disallow or enforce trailing commas (recommended)
-    "no-cond-assign": 0,             // disallow assignment in conditional expressions (recommended)
-    "no-console": 0,                 // disallow use of console in the node environment (recommended)
-    "no-constant-condition": 0,      // disallow use of constant expressions in conditions (recommended)
-    "no-control-regex": 0,           // disallow control characters in regular expressions (recommended)
-    "no-debugger": 0,                // disallow use of debugger (recommended)
-    "no-dupe-args": 0,               // disallow duplicate arguments in functions (recommended)
-    "no-dupe-keys": 0,               // disallow duplicate keys when creating object literals (recommended)
-    "no-duplicate-case": 0,          // disallow a duplicate case label. (recommended)
-    "no-empty-character-class": 0,   // disallow the use of empty character classes in regular expressions (recommended)
-    "no-empty": 0,                   // disallow empty statements (recommended)
-    "no-ex-assign": 0,               // disallow assigning to the exception in a catch block (recommended)
-    "no-extra-boolean-cast": 0,      // disallow double-negation boolean casts in a boolean context (recommended)
-    "no-extra-parens": 0,            // disallow unnecessary parentheses
-    "no-extra-semi": 0,              // disallow unnecessary semicolons (recommended) (fixable)
-    "no-func-assign": 0,             // disallow overwriting functions written as function declarations (recommended)
-    "no-inner-declarations": 0,      // disallow function or variable declarations in nested blocks (recommended)
-    "no-invalid-regexp": 0,          // disallow invalid regular expression strings in the RegExp constructor (recommended)
-    "no-irregular-whitespace": 0,    // disallow irregular whitespace outside of strings and comments (recommended)
-    "no-negated-in-lhs": 0,          // disallow negation of the left operand of an in expression (recommended)
-    "no-obj-calls": 0,               // disallow the use of object properties of the global object (Math and JSON) as functions (recommended)
-    "no-regex-spaces": 0,            // disallow multiple spaces in a regular expression literal (recommended)
+    "comma-dangle": 2,               // disallow or enforce trailing commas (recommended)
+    "no-cond-assign": 2,             // disallow assignment in conditional expressions (recommended)
+    "no-console": 2,                 // disallow use of console in the node environment (recommended)
+    "no-constant-condition": 2,      // disallow use of constant expressions in conditions (recommended)
+    "no-control-regex": 2,           // disallow control characters in regular expressions (recommended)
+    "no-debugger": 2,                // disallow use of debugger (recommended)
+    "no-dupe-args": 2,               // disallow duplicate arguments in functions (recommended)
+    "no-dupe-keys": 2,               // disallow duplicate keys when creating object literals (recommended)
+    "no-duplicate-case": 2,          // disallow a duplicate case label. (recommended)
+    "no-empty-character-class": 2,   // disallow the use of empty character classes in regular expressions (recommended)
+    "no-empty": 2,                   // disallow empty statements (recommended)
+    "no-ex-assign": 2,               // disallow assigning to the exception in a catch block (recommended)
+    "no-extra-boolean-cast": 2,      // disallow double-negation boolean casts in a boolean context (recommended)
+    "no-extra-parens": 2,            // disallow unnecessary parentheses
+    "no-extra-semi": 2,              // disallow unnecessary semicolons (recommended) (fixable)
+    "no-func-assign": 2,             // disallow overwriting functions written as function declarations (recommended)
+    "no-inner-declarations": 2,      // disallow function or variable declarations in nested blocks (recommended)
+    "no-invalid-regexp": 2,          // disallow invalid regular expression strings in the RegExp constructor (recommended)
+    "no-irregular-whitespace": 2,    // disallow irregular whitespace outside of strings and comments (recommended)
+    "no-negated-in-lhs": 2,          // disallow negation of the left operand of an in expression (recommended)
+    "no-obj-calls": 2,               // disallow the use of object properties of the global object (Math and JSON) as functions (recommended)
+    "no-regex-spaces": 2,            // disallow multiple spaces in a regular expression literal (recommended)
     "no-sparse-arrays": 0,           // disallow sparse arrays (recommended)
     "no-unexpected-multiline": 0,    // Avoid code that looks like two expressions but is actually one
-    "no-unreachable": 0,             // disallow unreachable statements after a return, throw, continue, or break statement (recommended)
-    "use-isnan": 0,                  // disallow comparisons with the value NaN (recommended)
-    "valid-jsdoc": 0,                // Ensure JSDoc comments are valid
-    "valid-typeof": 0,               // Ensure that the results of typeof are compared against a valid string (recommended)
+    "no-unreachable": 2,             // disallow unreachable statements after a return, throw, continue, or break statement (recommended)
+    "use-isnan": 2,                  // disallow comparisons with the value NaN (recommended)
+    "valid-jsdoc": 2,                // Ensure JSDoc comments are valid
+    "valid-typeof": 2,               // Ensure that the results of typeof are compared against a valid string (recommended)
 
 
     ////////// Best Practices //////////
@@ -101,7 +101,7 @@
     "no-eval": 0,               // disallow use of eval()
     "no-extend-native": 0,      // disallow adding to native types
     "no-extra-bind": 0,         // disallow unnecessary function binding
-    "no-fallthrough": 0,        // disallow fallthrough of case statements (recommended)
+    "no-fallthrough": 2,        // disallow fallthrough of case statements (recommended)
     "no-floating-decimal": 0,   // disallow the use of leading or trailing decimal points in numeric literals
     "no-implicit-coercion": 0,  // disallow the type conversions with shorter notations
     "no-implied-eval": 0,       // disallow use of eval()-like methods
@@ -122,7 +122,7 @@
     "no-param-reassign": 0,     // disallow reassignment of function parameters
     "no-process-env": 0,        // disallow use of process.env
     "no-proto": 0,              // disallow usage of __proto__ property
-    "no-redeclare": 0,          // disallow declaring the same variable more than once (recommended)
+    "no-redeclare": 2,          // disallow declaring the same variable more than once (recommended)
     "no-return-assign": 0,      // disallow use of assignment in return statement
     "no-script-url": 0,         // disallow use of javascript: urls.
     "no-self-compare": 0,       // disallow comparisons where both sides are exactly the same
@@ -147,28 +147,28 @@
     ////////// Variables //////////
 
     "init-declarations": 0,           // enforce or disallow variable initializations at definition
-    "no-catch-shadow": 0,             // disallow the catch clause parameter name being the same as a variable in the outer scope
-    "no-delete-var": 0,               // disallow deletion of variables
-    "no-label-var": 0,                // disallow labels that share a name with a variable
-    "no-shadow": 0,                   // disallow declaration of variables already declared in the outer scope
+    "no-catch-shadow": 2,             // disallow the catch clause parameter name being the same as a variable in the outer scope
+    "no-delete-var": 2,               // disallow deletion of variables
+    "no-label-var": 2,                // disallow labels that share a name with a variable
+    "no-shadow": 2,                   // disallow declaration of variables already declared in the outer scope
     "no-shadow-restricted-names": 0,  // disallow shadowing of names such as arguments
-    "no-undef": 0,                    // disallow use of undeclared variables unless mentioned in a /*global */ block (recommended)
-    "no-undef-init": 0,               // disallow use of undefined when initializing variables
-    "no-undefined": 0,                // disallow use of undefined variable
-    "no-unused-vars": 0,              // disallow declaration of variables that are not used in the code (recommended)
-    "no-use-before-define": 0,        // disallow use of variables before they are defined
+    "no-undef": 2,                    // disallow use of undeclared variables unless mentioned in a /*global */ block (recommended)
+    "no-undef-init": 2,               // disallow use of undefined when initializing variables
+    "no-undefined": 2,                // disallow use of undefined variable
+    "no-unused-vars": 2,              // disallow declaration of variables that are not used in the code (recommended)
+    "no-use-before-define": 2,        // disallow use of variables before they are defined
 
 
     ////////// Node.js //////////
 
-    "callback-return": 0,       // enforce return after a callback
+    "callback-return": 2,       // enforce return after a callback
     "global-require": 0,        // enforce require() on top-level module scope
-    "handle-callback-err": 0,   // enforce error handling in callbacks
-    "no-mixed-requires": 0,     // disallow mixing regular variable and require declarations
-    "no-new-require": 0,        // disallow use of new operator with the require function
-    "no-path-concat": 0,        // disallow string concatenation with __dirname and __filename
-    "no-process-exit": 0,       // disallow process.exit()
-    "no-restricted-modules": 0, // restrict usage of specified node modules
+    "handle-callback-err": 2,   // enforce error handling in callbacks
+    "no-mixed-requires": 2,     // disallow mixing regular variable and require declarations
+    "no-new-require": 2,        // disallow use of new operator with the require function
+    "no-path-concat": 2,        // disallow string concatenation with __dirname and __filename
+    "no-process-exit": 2,       // disallow process.exit()
+    "no-restricted-modules": 2, // restrict usage of specified node modules
     "no-sync": 0,               // disallow use of synchronous methods
 
 

@@ -47,4 +47,3 @@ describe('.stripAccent(String s)', () => {
 
   });
 });
-

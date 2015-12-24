@@ -3,7 +3,7 @@
  * @ndaidong
 **/
 
-;(function init(context) {
+(function init(context) {
 
   var Bella = {
     ENV: 'browser'
@@ -24,9 +24,8 @@
         if (v instanceof Array ||
           (
             !(v instanceof Object) &&
-            (ots.call(v) === '[object Array]') ||
-            typeof v.length === 'number' &&
-            typeof v.splice !== 'undefined' &&
+            ots.call(v) === '[object Array]' ||
+            typeof v.length === 'number' && typeof v.splice !== 'undefined' &&
             typeof v.propertyIsEnumerable !== 'undefined' && !v.propertyIsEnumerable('splice')
           )
         ) {
@@ -81,13 +80,13 @@
     return !isNull(val) && typeof val === 'object';
   }
   function isDate(val) {
-    return (val instanceof Date && !isNaN(val.valueOf()));
+    return val instanceof Date && !isNaN(val.valueOf());
   }
   function isEmpty(val) {
     return !isDef(val) || isNull(val) ||
-      (isString(val) && val === '') ||
-      (isArray(val) && JSON.stringify(val) === '[]') ||
-      (isObject(val) && JSON.stringify(val) === '{}');
+      isString(val) && val === '' ||
+      isArray(val) && JSON.stringify(val) === '[]' ||
+      isObject(val) && JSON.stringify(val) === '{}';
   }
   function isLetter(val) {
     var re = /^[a-z]+$/i;
@@ -149,7 +148,7 @@
   }
   Bella.trim = function trim(s) {
     s = String(s);
-    return ((s && isString(s)) ? s.replace(/^[\s\xa0]+|[\s\xa0]+$/g, '') : s) || '';
+    return s && isString(s) ? s.replace(/^[\s\xa0]+|[\s\xa0]+$/g, '') : s || '';
   }
   Bella.truncate = function truncate(s, l) {
     s = String(s);
@@ -239,7 +238,7 @@
       var g = spad || '0';
       var o = String(s);
       var z = size || 2;
-      return o.length >= z ? o : (new Array(z - o.length + 1).join(g)) + o;
+      return o.length >= z ? o : new Array(z - o.length + 1).join(g) + o;
     }
     return '';
   }
@@ -249,7 +248,7 @@
       var g = spad || '0';
       var o = String(s);
       var z = size || 2;
-      return o.length >= z ? o : o + (new Array(z - o.length + 1).join(g));
+      return o.length >= z ? o : o + new Array(z - o.length + 1).join(g);
     }
     return '';
   }
@@ -382,7 +381,7 @@
       max = Math.max(min, max);
     }
     var offset = min;
-    var range = (max - min) + 1;
+    var range = max - min + 1;
     var rd = Math.floor(Math.random() * range) + offset;
     return rd;
   }
@@ -410,7 +409,7 @@
     if (isArray(a)) {
       for (var i = 0; i < a.length; i++) {
         var val = a[i];
-        if ((key && val[key] === el[key]) || (val === el)) {
+        if (key && val[key] === el[key] || val === el) {
           return true;
         }
       }
@@ -418,18 +417,19 @@
     return false;
   }
   Bella.sort = function sort(arr, opts) {
-    var a = [], one;
+    var a = [];
+    var one = {};
     var o = opts || 1;
     if (isArray(arr) && arr.length > 0) {
       a = Bella.clone(arr);
       one = a[0];
       if (o === 1 || o === -1) {
         a.sort(function f1(m, n) {
-          return (m > n) ? o : (m < n ? (-1 * o) : 0);
+          return m > n ? o : m < n ? -1 * o : 0;
         });
       } else if (isString(o) && Bella.hasProperty(one, o)) {
         a.sort(function f2(m, n) {
-          return (m[o] > n[o]) ? 1 : (m[o] < n[o] ? -1 : 0);
+          return m[o] > n[o] ? 1 : m[o] < n[o] ? -1 : 0;
         });
       } else if (isObject(o)) {
         for (var key in o) {
@@ -485,10 +485,10 @@
       if (ex.length > 0 && Bella.contains(ex, k)) {
         continue;
       }
-      if (!mt || (mt && to.hasOwnProperty(k))) {
+      if (!mt || mt && to.hasOwnProperty(k)) {
         var oa = from[k];
         var ob = to[k];
-        if ((isObject(ob) && isObject(oa)) || (isArray(ob) && isArray(oa))) {
+        if (isObject(ob) && isObject(oa) || isArray(ob) && isArray(oa)) {
           to[k] = Bella.copies(oa, to[k], mt, ex);
         } else {
           to[k] = oa;
@@ -557,7 +557,7 @@
     }
     var r = true;
     if (!isDef(ob[k])) {
-      r = (k in ob);
+      r = k in ob;
     }
     return r;
   }
@@ -568,7 +568,7 @@
       return true;
     } else if (isDate(a) && isDate(b)) {
       return a.getTime() === b.getTime();
-    } else if ((isNumber(a) && isNumber(b)) || (isString(a) && isString(b))) {
+    } else if (isNumber(a) && isNumber(b) || isString(a) && isString(b)) {
       return a === b;
     } else if (isArray(a) && isArray(b)) {
       if (a.length !== b.length) {
@@ -606,9 +606,11 @@
   }
 
   // for browser only
+  var _getElement, _addElement, _createElement, _query, _queryAll;
+
   if (Bella.ENV === 'browser') {
 
-    var _getElement = function _getElement(el) {
+    _getElement = function __getElement(el) {
       var p = (isString(el) ? document.getElementById(el) : el) || null;
       if (p && isElement(p)) {
         p.hasClass = function hasClass(c) {
@@ -667,18 +669,18 @@
       return p;
     }
 
-    var _addElement = function _addElement(tag, parent) {
+    _addElement = function __addElement(tag, parent) {
       var p = parent ? _getElement(parent) : document.body;
       var d = isElement(tag) ? tag : document.createElement(tag);
       p.appendChild(d);
       return _getElement(d);
     }
 
-    var _createElement = function _createElement(tag) {
+    _createElement = function __createElement(tag) {
       return _getElement(document.createElement(tag));
     }
 
-    var _query = function _query(condition) {
+    _query = function __query(condition) {
       var el, tmp = document.querySelector(condition);
       if (tmp) {
         el = _getElement(tmp);
@@ -686,7 +688,7 @@
       return el;
     }
 
-    var _queryAll = function _queryAll(condition) {
+    _queryAll = function __queryAll(condition) {
       var els = [], tmp = document.querySelectorAll(condition);
       if (tmp) {
         for (var i = 0; i < tmp.length; i++) {
@@ -722,7 +724,6 @@
       }
 
     })();
-    /*eslint-enable*/
 
     Bella.dom = {
       ready: onready,

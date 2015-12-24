@@ -84,4 +84,3 @@ describe('.rightPad(String s, Number limit, String pad)', () => {
 
   });
 });
-
