@@ -521,4 +521,4 @@ mocha
 
 # License
 
-Apache License
+The MIT License (MIT)
