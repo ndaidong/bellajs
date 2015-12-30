@@ -31,15 +31,15 @@ describe('.replaceAll(String s, [String | Array] search, [String | Array] replac
     {
       input: {
         a: 'Hello world',
-        b: ['l', 'o'],
-        c: ['2', '0']
+        b: [ 'l', 'o' ],
+        c: [ '2', '0' ]
       },
       expectation: 'He220 w0r2d'
     },
     {
       input: {
         a: 'Hello world',
-        b: ['l', 'o'],
+        b: [ 'l', 'o' ],
         c: '2'
       },
       expectation: 'He222 w2r2d'
@@ -47,8 +47,8 @@ describe('.replaceAll(String s, [String | Array] search, [String | Array] replac
     {
       input: {
         a: 'Hello world',
-        b: ['l'],
-        c: ['2', '0']
+        b: [ 'l' ],
+        c: [ '2', '0' ]
       },
       expectation: 'Hello world'
     },
@@ -79,13 +79,15 @@ describe('.replaceAll(String s, [String | Array] search, [String | Array] replac
     },
     {
       input: {
-        a: {q: 97}
+        a: {
+          q: 97
+        }
       },
       expectation: ''
     },
     {
       input: {
-        a: [20, 15, 0, 'T']
+        a: [ 20, 15, 0, 'T' ]
       },
       expectation: ''
     }
@@ -127,4 +129,3 @@ describe('.replaceAll(String s, [String | Array] search, [String | Array] replac
   });
 
 });
-

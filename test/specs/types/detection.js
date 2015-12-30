@@ -21,7 +21,7 @@ describe('.isArray()', () => {
 
   let trueResult = [
     [],
-    [1, 2, 3],
+    [ 1, 2, 3 ],
     new Array(),
     new Array(5)
   ];
@@ -257,8 +257,8 @@ describe('.isEmpty()', () => {
   let falseResult = [
     1,
     true,
-    {a: 1},
-    [1, 3],
+    { a: 1 },
+    [ 1, 3 ],
     function x() {}
   ];
 
@@ -298,8 +298,8 @@ describe('.isFunction()', () => {
   let falseResult = [
     1,
     true,
-    {a: 1},
-    [1, 3],
+    { a: 1 },
+    [ 1, 3 ],
     something,
     '',
     {},
@@ -495,7 +495,7 @@ describe('.isObject()', () => {
     chai,
     path,
     {},
-    {a: 1, b: 0},
+    { a: 1, b: 0 },
     Object.create({}),
     [],
     new Date()

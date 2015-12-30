@@ -349,10 +349,10 @@
         if (Bella.hasProperty(ctx, k)) {
           var v = ctx[k];
           if (isObject(v) || isArray(v)) {
-            a.push({key: k, data: v});
+            a.push({ key: k, data: v });
           } else if (isString(v)) {
-            v = Bella.replaceAll(v, ['{', '}'], ['&#123;', '&#125;']);
-            var cns = ns.concat([k]);
+            v = Bella.replaceAll(v, [ '{', '}' ], [ '&#123;', '&#125;' ]);
+            var cns = ns.concat([ k ]);
             var r = new RegExp('{' + cns.join('.') + '}', 'gi');
             s = s.replace(r, v);
           }
@@ -875,11 +875,11 @@
             var iss = !isObject(_val) && !isArray(_val);
             var vx = iss ? _val : JSON.stringify(_val);
             var arr = [
-              [_name, isString(vx) ? encodeURIComponent(vx) : vx],
-              ['path', _pat]
+              [ _name, isString(vx) ? encodeURIComponent(vx) : vx ],
+              [ 'path', _pat ]
             ];
             if (_dom) {
-              arr.push(['domain', _dom]);
+              arr.push([ 'domain', _dom ]);
             }
 
             if (_exp && _exp.length && _exp.match(/(w|d|h|m|s)/gi)) {
@@ -902,7 +902,7 @@
                 var d = new Date();
                 var t = d.getTime() + ms;
                 d.setTime(t);
-                arr.push(['expires', d.toUTCString()]);
+                arr.push([ 'expires', d.toUTCString() ]);
               }
             }
             var tmp = [];
@@ -960,7 +960,7 @@
   Bella.date = (function _date() {
 
     var pattern = 'D, M d, Y  h:i:s A';
-    var weeks = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    var weeks = [ 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday' ];
     var months = [
       'January',
       'February',
@@ -980,7 +980,7 @@
       var t = (new Date()).getTimezoneOffset();
       var z = Math.abs(t / 60);
       var sign = t < 0 ? '+' : '-';
-      return ['GMT', sign, Bella.leftPad(z, 2)].join('');
+      return [ 'GMT', sign, Bella.leftPad(z, 2) ].join('');
     })();
 
     function format(output, input) {
@@ -1091,7 +1091,7 @@
       if (delta !== 1) {
         units += 's';
       }
-      return [delta, units].join(' ') + ' ago';
+      return [ delta, units ].join(' ') + ' ago';
     };
 
     var utc = function utc(t) {
@@ -1135,10 +1135,10 @@
 
             var a2 = time.split(':');
             if (a2.length === 1) {
-              a2 = a2.concat(['00', '00']);
+              a2 = a2.concat([ '00', '00' ]);
             }
             if (a2.length === 2) {
-              a2 = a2.concat(['00']);
+              a2 = a2.concat([ '00' ]);
             }
 
             var a3 = sysTime.split(' ').slice(3, 6);

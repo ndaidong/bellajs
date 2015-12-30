@@ -21,7 +21,7 @@ describe('.contains(Array a, String|Object search [, String key])', () => {
 
   describe(' / bella.contains(Array, String)', () => {
 
-    let sample = ['red', 'green', 'yellow', 'white', 'black'];
+    let sample = [ 'red', 'green', 'yellow', 'white', 'black' ];
 
     sample.forEach((color) => {
       describe(' / bella.contains(' + JSON.stringify(sample) + ', "' + color + '")', () => {
@@ -32,7 +32,7 @@ describe('.contains(Array a, String|Object search [, String key])', () => {
       });
     });
 
-    let falseResult = ['blue', 'orange'];
+    let falseResult = [ 'blue', 'orange' ];
     falseResult.forEach((color) => {
       describe(' / bella.contains(' + JSON.stringify(sample) + ', "' + color + '")', () => {
         it(' should return false', () => {

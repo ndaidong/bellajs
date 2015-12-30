@@ -19,7 +19,7 @@ var bella = require(path.join(rootDir, 'bella'));
 
 describe('.clone(Array|Object|Date o)', () => {
 
-  let sample1 = ['red', 'green', 'yellow', 'white', 'black'];
+  let sample1 = [ 'red', 'green', 'yellow', 'white', 'black' ];
   let result1 = bella.clone(sample1);
 
   describe(' / bella.clone(' + JSON.stringify(sample1) + ')', () => {
@@ -38,7 +38,7 @@ describe('.clone(Array|Object|Date o)', () => {
       });
     });
 
-    let falseResult = ['blue', 'orange'];
+    let falseResult = [ 'blue', 'orange' ];
     falseResult.forEach((key) => {
       it(' should not include "' + key + '"', () => {
         expect(result1).to.not.include(key);
@@ -72,7 +72,7 @@ describe('.clone(Array|Object|Date o)', () => {
       expect(result2).to.have.all.keys(mustHaveKeys);
     });
 
-    let falseResult = ['address', 'visa'];
+    let falseResult = [ 'address', 'visa' ];
     it(' should not have these keys "' + JSON.stringify(falseResult) + '"', () => {
       expect(result2).to.not.have.all.keys(falseResult);
     });

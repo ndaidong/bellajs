@@ -19,7 +19,12 @@ var bella = require(path.join(rootDir, 'bella'));
 
 describe('.unique(Array a)', () => {
 
-  let sample = ['red', 'green', 'yellow', 'green', 'red', 'red', 'black', 'white', 'yellow', 'black', 'white', 'black'];
+  let sample = [
+    'red', 'green', 'yellow',
+    'green', 'red', 'red',
+    'black', 'white', 'yellow',
+    'black', 'white', 'black'
+  ];
   let result = bella.unique(sample);
 
   describe(' / bella.unique(' + JSON.stringify(sample) + ')', () => {
