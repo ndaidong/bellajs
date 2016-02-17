@@ -1,7 +1,7 @@
 /**
  * Testing
  * @ndaidong
-**/
+ */
 /* global describe it */
 /* eslint no-undefined: 0*/
 /* eslint no-array-constructor: 0*/
