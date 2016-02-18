@@ -343,6 +343,7 @@
       2,
       "never"
     ],                                // require or disallow a space before function opening parenthesis (fixable)
+    "space-before-keywords": 0,       // require a space before certain keywords (fixable)
     "space-in-parens": [
       2,
       "never"

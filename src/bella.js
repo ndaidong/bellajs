@@ -865,6 +865,7 @@
 
         var parse = function parse(ob) {
 
+          var tmp = [];
           var _name = ob.name || '';
           var _val = ob.value;
           var _exp = ob.expires || false;
@@ -905,12 +906,11 @@
                 arr.push([ 'expires', d.toUTCString() ]);
               }
             }
-            var tmp = [];
             arr.forEach(function join(item) {
               tmp.push(item.join('='));
             });
-            return tmp.join('; ');
           }
+          return tmp.join('; ');
         };
 
         if (arguments.length === 1 && Bella.isObject(name)) {
@@ -960,7 +960,15 @@
   Bella.date = (function _date() {
 
     var pattern = 'D, M d, Y  h:i:s A';
-    var weeks = [ 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday' ];
+    var weeks = [
+      'Sunday',
+      'Monday',
+      'Tuesday',
+      'Wednesday',
+      'Thursday',
+      'Friday',
+      'Saturday'
+    ];
     var months = [
       'January',
       'February',
@@ -1279,6 +1287,7 @@
     /*eslint-disable */
     console.trace.apply(console, a);
     /*eslint-enable */
+    return true;
   };
 
   // exports

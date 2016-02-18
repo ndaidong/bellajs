@@ -17,64 +17,30 @@ var rootDir = '../../../src/';
 
 var bella = require(path.join(rootDir, 'bella'));
 
-describe('.clone(Array|Object|Date o)', () => {
+describe('.date', () => {
 
-  let sample1 = [ 'red', 'green', 'yellow', 'white', 'black' ];
-  let result1 = bella.clone(sample1);
+  let atime = 1455784100752;
 
-  describe(' / bella.clone(' + JSON.stringify(sample1) + ')', () => {
+  let samples = [
+    { template: 'Y/m/d h:i:s', expectation: '2016/02/18 15:28:20' },
+    { template: 'Y/m/d h:i:s A', expectation: '2016/02/18 03:28:20 PM' },
+    { template: 'M j, Y h:i:s A', expectation: 'Feb 18, 2016 03:28:20 PM' },
+    { template: 'l, j F Y h:i:s a', expectation: 'Thursday, 18 February 2016 03:28:20 pm' }
+  ];
 
-    it(' should be an array', () => {
-      expect(result1).to.be.an('array');
-    });
+  samples.forEach((sample) => {
+    let tpl = sample.template;
+    let exp = sample.expectation;
 
-    it(' should have same size: ' + sample1.length, () => {
-      expect(result1).to.have.length(sample1.length);
-    });
+    describe(` / bella.date.format(, "${tpl}", ${atime})`, () => {
 
-    sample1.forEach((key) => {
-      it(' should include "' + key + '"', () => {
-        expect(result1).to.include(key);
+      let result = bella.date.format(tpl, atime);
+      it(' should be a string', () => {
+        expect(result).to.be.a('string');
       });
-    });
-
-    let falseResult = [ 'blue', 'orange' ];
-    falseResult.forEach((key) => {
-      it(' should not include "' + key + '"', () => {
-        expect(result1).to.not.include(key);
+      it(` should be "${exp}"`, () => {
+        expect(result).to.be.equal(exp);
       });
-    });
-  });
-
-  let sample2 = {
-    id: 1,
-    name: 'Dong Nguyen',
-    birthday: '02/01/1980',
-    email: 'ndaidong@mailinator.com',
-    phone: '12391403098'
-  };
-
-  let result2 = bella.clone(sample2);
-
-  describe(' / bella.clone(' + JSON.stringify(sample2) + ')', () => {
-
-    it(' should be an object', () => {
-      expect(result2).to.be.an('object');
-    });
-
-    let mustHaveKeys = [];
-    for (let key in sample2) {
-      if (bella.hasProperty(sample2, key)) {
-        mustHaveKeys.push(key);
-      }
-    }
-    it(' should have these keys "' + JSON.stringify(mustHaveKeys) + '"', () => {
-      expect(result2).to.have.all.keys(mustHaveKeys);
-    });
-
-    let falseResult = [ 'address', 'visa' ];
-    it(' should not have these keys "' + JSON.stringify(falseResult) + '"', () => {
-      expect(result2).to.not.have.all.keys(falseResult);
     });
   });
 });
