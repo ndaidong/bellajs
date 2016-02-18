@@ -26,6 +26,9 @@ BellaJS is a lightweight library with the useful functions for handling string, 
 
 # Changes
 
+#### v4.1.4 - Feb 18, 2016
+- Resolve issue with eslint 2.0.0 and node.js v5.6.0
+
 #### v4.1.2 - Dec 24, 2015
 - Update coding convension
 - Remove .date.pattern
