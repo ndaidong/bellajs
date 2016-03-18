@@ -5,4 +5,3 @@ node_js:
   - "5.0"
   - "4.2"
   - "4.0"
-script: npm run coverage

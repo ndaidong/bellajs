@@ -15,10 +15,12 @@
   "scripts": {
     "test": "./node_modules/.bin/mocha --reporter nyan --timeout 5000",
     "coverage": "./node_modules/.bin/nyc --require traceur mocha",
-    "report": "./node_modules/.bin/nyc report --reporter=lcov"
+    "report": "npm run coverage && ./node_modules/.bin/nyc report --reporter=lcov",
+    "coveralls": "npm run report && cat ./coverage/lcov.info | ./node_modules/.bin/coveralls"
   },
   "devDependencies": {
     "chai": "latest",
+    "coveralls": "latest",
     "mocha": "latest",
     "nyc": "latest",
     "traceur": "latest"
