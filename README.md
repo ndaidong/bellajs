@@ -26,6 +26,12 @@ BellaJS is a lightweight library with the useful functions for handling string, 
 
 # Changes
 
+#### v4.1.5 - Mar 18, 2016
+- Implement nyc/istanbul to check test coverage
+- Remove mocha.opts, move configs to package.json
+- Use local mocha only. No longer require global mocha
+- Update travis config
+
 #### v4.1.4 - Feb 18, 2016
 - Resolve issue with eslint 2.0.0 and node.js v5.6.0
 
@@ -515,10 +521,17 @@ Bella.dom.ready(function(){
 git clone https://github.com/ndaidong/bella.js.git
 cd bella.js
 npm install
-mocha
+
+// test
+npm test
+
+// test coverage
+npm run coverage
+
+// generate coverage report
+npm run report
 ```
 
- _* Ensure that you have [mocha](https://mochajs.org/) installed_
 
 
 

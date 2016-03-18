@@ -28,7 +28,7 @@ describe('.isArray()', () => {
 
   trueResult.forEach((v) => {
 
-    describe(' / Test for "' + v + '"', () => {
+    describe(' / Test for "' + JSON.stringify(v) + '"', () => {
 
       let result = bella.isArray(v);
       it(' should be "true"', (done) => {

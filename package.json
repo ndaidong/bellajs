@@ -1,5 +1,5 @@
 {
-  "version": "4.1.4",
+  "version": "4.1.5",
   "name": "bellajs",
   "description": "A useful helper for any javascript program",
   "homepage": "http://techpush.net",
@@ -13,12 +13,15 @@
     "node": ">= 4.0"
   },
   "scripts": {
-    "test": "mocha test"
+    "test": "./node_modules/.bin/mocha --reporter nyan --timeout 5000",
+    "coverage": "./node_modules/.bin/nyc --require traceur mocha",
+    "report": "./node_modules/.bin/nyc report --reporter=lcov"
   },
   "devDependencies": {
-    "traceur": "latest",
+    "chai": "latest",
     "mocha": "latest",
-    "chai": "latest"
+    "nyc": "latest",
+    "traceur": "latest"
   },
   "keywords": [
     "detection",
