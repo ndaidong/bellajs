@@ -13,16 +13,17 @@
     "node": ">= 4.0"
   },
   "scripts": {
-    "test": "./node_modules/.bin/mocha --reporter nyan --timeout 5000",
-    "coverage": "./node_modules/.bin/nyc --require traceur mocha",
+    "test": "./node_modules/.bin/tape test/start.js | tap-spec",
+    "coverage": "./node_modules/.bin/nyc tape test/start.js | tap-spec",
     "report": "npm run coverage && ./node_modules/.bin/nyc report --reporter=lcov",
     "coveralls": "npm run report && cat ./coverage/lcov.info | ./node_modules/.bin/coveralls"
   },
   "devDependencies": {
-    "chai": "latest",
+    "chance": "latest",
     "coveralls": "latest",
-    "mocha": "latest",
     "nyc": "latest",
+    "tap-spec": "latest",
+    "tape": "latest",
     "traceur": "latest"
   },
   "keywords": [
