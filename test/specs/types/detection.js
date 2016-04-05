@@ -2,43 +2,40 @@
  * Testing
  * @ndaidong
  */
-/* global describe it */
+
 /* eslint no-undefined: 0*/
 /* eslint no-array-constructor: 0*/
 /* eslint no-new-func: 0*/
 
 import path from 'path';
-import chai from 'chai';
-
-chai.should();
-var expect = chai.expect;
+import test from 'tape';
+import is from 'is';
 
 var rootDir = '../../../src/';
 
 var bella = require(path.join(rootDir, 'bella'));
 
-describe('.isArray()', () => {
+var stringify = (x) => {
+  if (is.array(x) || is.object(x)) {
+    x = JSON.stringify(x);
+  }
+  return x;
+};
 
-  let trueResult = [
+// isArray
+test('Testing .isArray(Anything) method:', (assert) => {
+  [
     [],
     [ 1, 2, 3 ],
     new Array(),
     new Array(5)
-  ];
-
-  trueResult.forEach((v) => {
-
-    describe(' / Test for "' + JSON.stringify(v) + '"', () => {
-
-      let result = bella.isArray(v);
-      it(' should be "true"', (done) => {
-        expect(result).to.equal(true);
-        done();
-      });
-    });
+  ].forEach((item) => {
+    let r = bella.isArray(item);
+    var x = stringify(item);
+    assert.ok(r, `"${x}" must be an array.`);
   });
 
-  let falseResult = [
+  [
     'ABC',
     '',
     '100',
@@ -50,39 +47,85 @@ describe('.isArray()', () => {
     null,
     undefined,
     function x() {}
-  ];
-
-  falseResult.forEach((v) => {
-
-    describe(' / Test for "' + v + '"', () => {
-
-      let result = bella.isArray(v);
-      it(' should be "false"', () => {
-        expect(result).to.equal(false);
-      });
-    });
+  ].forEach((item) => {
+    let r = bella.isArray(item);
+    var x = stringify(item);
+    assert.error(r, `"${x}" must be not array.`);
   });
+  assert.end();
 });
 
-describe('.isBoolean()', () => {
+// isObject
+test('Testing .isObject(Anything) method:', (assert) => {
+  [
+    {},
+    { a: 1, b: 0 },
+    Object.create({}),
+    [],
+    new Date()
+  ].forEach((item) => {
+    let r = bella.isObject(item);
+    var x = stringify(item);
+    assert.ok(r, `"${x}" must be an object.`);
+  });
 
-  let trueResult = [
+  [
+    100,
+    'ABC',
+    '',
+    null,
+    undefined,
+    0
+  ].forEach((item) => {
+    let r = bella.isObject(item);
+    var x = stringify(item);
+    assert.error(r, `"${x}" must be not object.`);
+  });
+  assert.end();
+});
+
+
+// isString
+test('Testing .isString(Anything) method:', (assert) => {
+  [
+    'Something',
+    '10000',
+    '',
+    'undefined',
+    String(1000)
+  ].forEach((item) => {
+    let r = bella.isString(item);
+    var x = stringify(item);
+    assert.ok(r, `"${x}" must be an string.`);
+  });
+
+  [
+    false,
+    true,
+    null,
+    undefined,
+    Number('1000'),
+    0
+  ].forEach((item) => {
+    let r = bella.isString(item);
+    var x = stringify(item);
+    assert.error(r, `"${x}" must be not string.`);
+  });
+  assert.end();
+});
+
+// isBoolean
+test('Testing .isBoolean(Anything) method:', (assert) => {
+  [
     true,
     2 - 1 === 1
-  ];
-
-  trueResult.forEach((v) => {
-
-    describe(' / Test for "' + v + '"', () => {
-
-      let result = bella.isBoolean(v);
-      it(' should be "true"', () => {
-        expect(result).to.equal(true);
-      });
-    });
+  ].forEach((item) => {
+    let r = bella.isBoolean(item);
+    var x = stringify(item);
+    assert.ok(r, `"${x}" must be true.`);
   });
 
-  let falseResult = [
+  [
     'ABC',
     '',
     '100',
@@ -94,39 +137,25 @@ describe('.isBoolean()', () => {
     null,
     undefined,
     function x() {}
-  ];
-
-  falseResult.forEach((v) => {
-
-    describe(' / Test for "' + v + '"', () => {
-
-      let result = bella.isBoolean(v);
-      it(' should be "false"', () => {
-        expect(result).to.equal(false);
-      });
-    });
+  ].forEach((item) => {
+    let r = bella.isBoolean(item);
+    var x = stringify(item);
+    assert.error(r, `"${x}" must be false.`);
   });
+  assert.end();
 });
 
-
-describe('.isDate()', () => {
-
-  let trueResult = [
+// isDate
+test('Testing .isBoolean(Anything) method:', (assert) => {
+  [
     new Date()
-  ];
-
-  trueResult.forEach((v) => {
-
-    describe(' / Test for "' + v + '"', () => {
-
-      let result = bella.isDate(v);
-      it(' should be "true"', () => {
-        expect(result).to.equal(true);
-      });
-    });
+  ].forEach((item) => {
+    let r = bella.isDate(item);
+    var x = stringify(item);
+    assert.ok(r, `"${x}" must be date.`);
   });
 
-  let falseResult = [
+  [
     'ABC',
     '',
     '100',
@@ -138,77 +167,54 @@ describe('.isDate()', () => {
     null,
     undefined,
     function x() {}
-  ];
-
-  falseResult.forEach((v) => {
-
-    describe(' / Test for "' + v + '"', () => {
-
-      let result = bella.isDate(v);
-      it(' should be "false"', () => {
-        expect(result).to.equal(false);
-      });
-    });
+  ].forEach((item) => {
+    let r = bella.isDate(item);
+    var x = stringify(item);
+    assert.error(r, `"${x}" must not be date.`);
   });
+  assert.end();
 });
 
 
-describe('.isDef()', () => {
-
-  let a = 1, b = null;
-  let trueResult = [
+// isDef
+test('Testing .isDef(Anything) method:', (assert) => {
+  let a = 1;
+  let b = null;
+  let c = 'undefined';
+  [
     a,
-    b
-  ];
-
-  trueResult.forEach((v) => {
-
-    describe(' / Test for "' + v + '"', () => {
-
-      let result = bella.isDef(v);
-      it(' should be "true"', () => {
-        expect(result).to.equal(true);
-      });
-    });
+    b,
+    c
+  ].forEach((item) => {
+    let r = bella.isDef(item);
+    var x = stringify(item);
+    assert.ok(r, `"${x}" must be defined.`);
   });
 
   let something;
-  let falseResult = [
+  [
     something
-  ];
-
-  falseResult.forEach((v) => {
-
-    describe(' / Test for "' + v + '"', () => {
-
-      let result = bella.isDef(v);
-      it(' should be "false"', () => {
-        expect(result).to.equal(false);
-      });
-    });
+  ].forEach((item) => {
+    let r = bella.isDef(item);
+    var x = stringify(item);
+    assert.error(r, `"${x}" must not be defined.`);
   });
+  assert.end();
 });
 
-describe('.isEmail()', () => {
-
-  let trueResult = [
+// isEmail
+test('Testing .isEmail(Anything) method:', (assert) => {
+  [
     'ndaidong@gmail.com',
     'bob.nany@live.com',
     'bob.nany@live.com.vn'
-  ];
-
-  trueResult.forEach((v) => {
-
-    describe(' / Test for "' + v + '"', () => {
-
-      let result = bella.isEmail(v);
-      it(' should be "true"', () => {
-        expect(result).to.equal(true);
-      });
-    });
+  ].forEach((item) => {
+    let r = bella.isEmail(item);
+    var x = stringify(item);
+    assert.ok(r, `"${x}" must be email.`);
   });
 
-  let falseResult = [
+  [
     'karu@.com',
     'karu',
     'bob.nany@live@com.v',
@@ -216,86 +222,57 @@ describe('.isEmail()', () => {
     '',
     undefined,
     0
-  ];
-
-  falseResult.forEach((v) => {
-
-    describe(' / Test for "' + v + '"', () => {
-
-      let result = bella.isEmail(v);
-      it(' should be "false"', () => {
-        expect(result).to.equal(false);
-      });
-    });
+  ].forEach((item) => {
+    let r = bella.isEmail(item);
+    var x = stringify(item);
+    assert.error(r, `"${x}" must not be email.`);
   });
+  assert.end();
 });
 
 
-describe('.isEmpty()', () => {
-
+// isEmpty
+test('Testing .isEmpty(Anything) method:', (assert) => {
   let something;
-  let trueResult = [
+  [
     something,
     '',
     {},
     [],
     Object.create({})
-  ];
-
-  trueResult.forEach((v) => {
-
-    describe(' / Test for "' + v + '"', () => {
-
-      let result = bella.isEmpty(v);
-      it(' should be "true"', () => {
-        expect(result).to.equal(true);
-      });
-    });
+  ].forEach((item) => {
+    let r = bella.isEmpty(item);
+    var x = stringify(item);
+    assert.ok(r, `"${x}" must be empty.`);
   });
 
-
-  let falseResult = [
+  [
     1,
     true,
     { a: 1 },
     [ 1, 3 ],
     function x() {}
-  ];
-
-  falseResult.forEach((v) => {
-
-    describe(' / Test for "' + v + '"', () => {
-
-      let result = bella.isEmpty(v);
-      it(' should be "false"', () => {
-        expect(result).to.equal(false);
-      });
-    });
+  ].forEach((item) => {
+    let r = bella.isEmpty(item);
+    var x = stringify(item);
+    assert.error(r, `"${x}" must not be empty.`);
   });
+  assert.end();
 });
 
-
-describe('.isFunction()', () => {
-
-
-  let trueResult = [
+// isFunction
+test('Testing .isFunction(Anything) method:', (assert) => {
+  [
     function x() {},
     new Function()
-  ];
-
-  trueResult.forEach((v) => {
-
-    describe(' / Test for "' + v + '"', () => {
-
-      let result = bella.isFunction(v);
-      it(' should be "true"', () => {
-        expect(result).to.equal(true);
-      });
-    });
+  ].forEach((item) => {
+    let r = bella.isFunction(item);
+    var x = stringify(item);
+    assert.ok(r, `"${x}" must be function.`);
   });
 
   let something;
-  let falseResult = [
+  [
     1,
     true,
     { a: 1 },
@@ -305,40 +282,28 @@ describe('.isFunction()', () => {
     {},
     [],
     Object.create({})
-  ];
-
-  falseResult.forEach((v) => {
-
-    describe(' / Test for "' + v + '"', () => {
-
-      let result = bella.isFunction(v);
-      it(' should be "false"', () => {
-        expect(result).to.equal(false);
-      });
-    });
+  ].forEach((item) => {
+    let r = bella.isFunction(item);
+    var x = stringify(item);
+    assert.error(r, `"${x}" must not be function.`);
   });
+  assert.end();
 });
 
 
-describe('.isGeneratedKey()', () => {
-
+// isGeneratedKey
+test('Testing .isGeneratedKey(Anything) method:', (assert) => {
   let trueResult = [];
   while (trueResult.length < 10) {
     trueResult.push(bella.createId());
   }
-
-  trueResult.forEach((v) => {
-
-    describe(' / Test for "' + v + '"', () => {
-
-      let result = bella.isGeneratedKey(v);
-      it(' should be "true"', () => {
-        expect(result).to.equal(true);
-      });
-    });
+  trueResult.forEach((item) => {
+    let r = bella.isGeneratedKey(item);
+    var x = stringify(item);
+    assert.ok(r, `"${x}" must be generated key.`);
   });
 
-  let falseResult = [
+  [
     ')jki',
     'karu_',
     'bob.nany@',
@@ -346,41 +311,28 @@ describe('.isGeneratedKey()', () => {
     '',
     undefined,
     0
-  ];
-
-  falseResult.forEach((v) => {
-
-    describe(' / Test for "' + v + '"', () => {
-
-      let result = bella.isGeneratedKey(v);
-      it(' should be "false"', () => {
-        expect(result).to.equal(false);
-      });
-    });
+  ].forEach((item) => {
+    let r = bella.isGeneratedKey(item);
+    var x = stringify(item);
+    assert.error(r, `"${x}" must not be generated key.`);
   });
+  assert.end();
 });
 
 
-describe('.isInteger()', () => {
-
-  let trueResult = [
+// isInteger
+test('Testing .isInteger(Anything) method:', (assert) => {
+  [
     6e4,
     9,
     0
-  ];
-
-  trueResult.forEach((v) => {
-
-    describe(' / Test for "' + v + '"', () => {
-
-      let result = bella.isInteger(v);
-      it(' should be "true"', () => {
-        expect(result).to.equal(true);
-      });
-    });
+  ].forEach((item) => {
+    let r = bella.isInteger(item);
+    var x = stringify(item);
+    assert.ok(r, `"${x}" must be integer.`);
   });
 
-  let falseResult = [
+  [
     'ABC',
     '',
     '100',
@@ -389,40 +341,28 @@ describe('.isInteger()', () => {
     Math.PI,
     null,
     undefined
-  ];
-
-  falseResult.forEach((v) => {
-
-    describe(' / Test for "' + v + '"', () => {
-
-      let result = bella.isInteger(v);
-      it(' should be "false"', () => {
-        expect(result).to.equal(false);
-      });
-    });
+  ].forEach((item) => {
+    let r = bella.isInteger(item);
+    var x = stringify(item);
+    assert.error(r, `"${x}" must not be integer.`);
   });
+  assert.end();
 });
 
-describe('.isLetter()', () => {
 
-  let trueResult = [
+// isLetter
+test('Testing .isLetter(Anything) method:', (assert) => {
+  [
     'abc',
     'ABC',
     'AbCd'
-  ];
-
-  trueResult.forEach((v) => {
-
-    describe(' / Test for "' + v + '"', () => {
-
-      let result = bella.isLetter(v);
-      it(' should be "true"', () => {
-        expect(result).to.equal(true);
-      });
-    });
+  ].forEach((item) => {
+    let r = bella.isLetter(item);
+    var x = stringify(item);
+    assert.ok(r, `"${x}" must be letter.`);
   });
 
-  let falseResult = [
+  [
     ')jki',
     'karu_',
     'bob.nany@',
@@ -430,148 +370,47 @@ describe('.isLetter()', () => {
     '',
     undefined,
     0,
-    1325
-  ];
-
-  falseResult.forEach((v) => {
-
-    describe(' / Test for "' + v + '"', () => {
-
-      let result = bella.isLetter(v);
-      it(' should be "false"', () => {
-        expect(result).to.equal(false);
-      });
-    });
+    1325,
+    4.2,
+    3 / 5,
+    Math.PI,
+    null,
+    undefined
+  ].forEach((item) => {
+    let r = bella.isLetter(item);
+    var x = stringify(item);
+    assert.error(r, `"${x}" must not be letter.`);
   });
+  assert.end();
 });
 
 
-describe('.isNumber()', () => {
-
-  let trueResult = [
+// isNumber
+test('Testing .isNumber(Anything) method:', (assert) => {
+  [
     4.2,
     3 / 5,
     6e4,
     Math.PI,
     9,
     0
-  ];
-
-  trueResult.forEach((v) => {
-
-    describe(' / Test for "' + v + '"', () => {
-
-      let result = bella.isNumber(v);
-      it(' should be "true"', () => {
-        expect(result).to.equal(true);
-      });
-    });
+  ].forEach((item) => {
+    let r = bella.isNumber(item);
+    var x = stringify(item);
+    assert.ok(r, `"${x}" must be number.`);
   });
 
-  let falseResult = [
-    'ABC',
+  [
+    ')jki',
     '',
     '100',
     null,
-    undefined
-  ];
-
-  falseResult.forEach((v) => {
-
-    describe(' / Test for "' + v + '"', () => {
-
-      let result = bella.isNumber(v);
-      it(' should be "false"', () => {
-        expect(result).to.equal(false);
-      });
-    });
-  });
-});
-
-
-describe('.isObject()', () => {
-
-  let trueResult = [
-    chai,
-    path,
-    {},
-    { a: 1, b: 0 },
-    Object.create({}),
-    [],
-    new Date()
-  ];
-
-  trueResult.forEach((v) => {
-
-    describe(' / Test for "' + v + '"', () => {
-
-      let result = bella.isObject(v);
-      it(' should be "true"', () => {
-        expect(result).to.equal(true);
-      });
-    });
-  });
-
-  let falseResult = [
-    100,
-    'ABC',
-    '',
-    null,
     undefined,
-    0
-  ];
-
-  falseResult.forEach((v) => {
-
-    describe(' / Test for "' + v + '"', () => {
-
-      let result = bella.isObject(v);
-      it(' should be "false"', () => {
-        expect(result).to.equal(false);
-      });
-    });
+    new Function()
+  ].forEach((item) => {
+    let r = bella.isNumber(item);
+    var x = stringify(item);
+    assert.error(r, `"${x}" must not be number.`);
   });
-});
-
-
-describe('.isString()', () => {
-
-  let trueResult = [
-    'Something',
-    '10000',
-    '',
-    'undefined',
-    String(1000)
-  ];
-
-  trueResult.forEach((v) => {
-
-    describe(' / Test for "' + v + '"', () => {
-
-      let result = bella.isString(v);
-      it(' should be "true"', () => {
-        expect(result).to.equal(true);
-      });
-    });
-  });
-
-  let falseResult = [
-    false,
-    true,
-    null,
-    undefined,
-    Number('1000'),
-    0
-  ];
-
-  falseResult.forEach((v) => {
-
-    describe(' / Test for "' + v + '"', () => {
-
-      let result = bella.isString(v);
-      it(' should be "false"', () => {
-        expect(result).to.equal(false);
-      });
-    });
-  });
+  assert.end();
 });

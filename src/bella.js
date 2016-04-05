@@ -148,9 +148,13 @@
     return isString(s) ? decodeURIComponent(s.replace(/\+/g, ' ')) : '';
   };
 
-  Bella.trim = function trim(s) {
+  Bella.trim = function trim(s, force) {
     s = String(s);
-    return s && isString(s) ? s.replace(/^[\s\xa0]+|[\s\xa0]+$/g, '') : s || '';
+    var x = s && isString(s) ? s.replace(/^[\s\xa0]+|[\s\xa0]+$/g, '') : s || '';
+    if (x && force) {
+      return x.replace(/\s\s+|\r?\n|\r/g, '');
+    }
+    return x;
   };
 
   Bella.truncate = function truncate(s, l) {
@@ -363,7 +367,7 @@
           s = compile(s, item.data, item.key);
         });
       }
-      return s;
+      return Bella.trim(s, true);
     }
     if (data && (isString(data) || isObject(data) || isArray(data))) {
       return compile(tpl, data);

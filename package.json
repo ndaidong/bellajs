@@ -21,6 +21,7 @@
   "devDependencies": {
     "chance": "latest",
     "coveralls": "latest",
+    "is": "^3.1.0",
     "nyc": "latest",
     "tap-spec": "latest",
     "tape": "latest",
