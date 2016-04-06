@@ -21,12 +21,13 @@
   // import collection
   // import date
   // import scheduler
+  // import dom
 
   // exports
-  if (Bella.ENV === 'node') {
+  if (ENV === 'node') {
     module.exports = Bella;
   } else {
-    var root = context || window;
+    var root = context || window || {};
     if (root.define && root.define.amd) {
       root.define(() => {
         return Bella;

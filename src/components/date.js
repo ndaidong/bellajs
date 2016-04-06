@@ -96,27 +96,27 @@ var time = () => {
 
     /*eslint-disable */
     f = {
-      Y: function() {return d.getFullYear()},     // 2015
-      y: function() {return (f.Y()+'').slice(-2)},  // 15
-      F: function() {return mn[f.n()-1]},       // August
-      M: function() {return (f.F()+'').slice(0,3)}, // Aug
-      m: function() {return _num(f.n())},       // 08
-      n: function() {return d.getMonth()+1},    // 8
-      S: function() {return _ord(f.j())},       // 1st, 2nd, 3rd, 4th
-      j: function() {return d.getDate()},       // 3
-      d: function() {return _num(f.j())},       // 03
-      t: function() {return (new Date(f.Y(), f.n(), 0)).getDate()}, // date in year
-      w: function() {return d.getDay()},      // weekday in number
-      l: function() {return wn[f.w()]},       // Sunday, Monday
-      D: function() {return (f.l()+'').slice(0,3)},// Sun, Mon
-      G: function() {return d.getHours()},      // 0 - 24
-      g: function() {return (f.G()%12||12)},    // 0 - 12
-      h: function() {return _num(meridiem?f.g():f.G())}, // 00 - 12 or 00 - 24
-      i: function() {return _num(d.getMinutes())},  // 00 - 59
-      s: function() {return _num(d.getSeconds())},  // 00 - 59
-      a: function() {return f.G()>11?'pm':'am'},  // am, pm
-      A: function() {return (f.a()).toUpperCase()},  // AM, PM
-      O: function() {return tz}
+      Y: () => {return d.getFullYear()},     // 2015
+      y: () => {return (f.Y()+'').slice(-2)},  // 15
+      F: () => {return mn[f.n()-1]},       // August
+      M: () => {return (f.F()+'').slice(0,3)}, // Aug
+      m: () => {return _num(f.n())},       // 08
+      n: () => {return d.getMonth()+1},    // 8
+      S: () => {return _ord(f.j())},       // 1st, 2nd, 3rd, 4th
+      j: () => {return d.getDate()},       // 3
+      d: () => {return _num(f.j())},       // 03
+      t: () => {return (new Date(f.Y(), f.n(), 0)).getDate()}, // date in year
+      w: () => {return d.getDay()},      // weekday in number
+      l: () => {return wn[f.w()]},       // Sunday, Monday
+      D: () => {return (f.l()+'').slice(0,3)},// Sun, Mon
+      G: () => {return d.getHours()},      // 0 - 24
+      g: () => {return (f.G()%12||12)},    // 0 - 12
+      h: () => {return _num(meridiem?f.g():f.G())}, // 00 - 12 or 00 - 24
+      i: () => {return _num(d.getMinutes())},  // 00 - 59
+      s: () => {return _num(d.getSeconds())},  // 00 - 59
+      a: () => {return f.G()>11?'pm':'am'},  // am, pm
+      A: () => {return (f.a()).toUpperCase()},  // AM, PM
+      O: () => {return tz}
     }
     /*eslint-enable */
     return output.replace(vchar, _term);
@@ -169,6 +169,9 @@ var time = () => {
     return (new Date(t)).getTime();
   };
 
+  Bella.now = now;
+  Bella.time = time;
+
   Bella.date = {
     utc: utc,
     local: local,
@@ -177,6 +180,3 @@ var time = () => {
     relativize: relativize
   };
 })();
-
-Bella.now = now;
-Bella.time = time;
