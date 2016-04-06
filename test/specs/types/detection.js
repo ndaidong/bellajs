@@ -10,6 +10,7 @@
 import path from 'path';
 import test from 'tape';
 import is from 'is';
+import cheerio from 'cheerio';
 
 var rootDir = '../../../src/';
 
@@ -21,6 +22,33 @@ var stringify = (x) => {
   }
   return x;
 };
+
+// isElement
+test('Testing .isElement(Anything) method:', (assert) => {
+  let $ = cheerio.load('<h2 class="title">Hello world</h2>');
+  let ra = bella.isElement($);
+  assert.ok(ra, 'Fragment must be an element.');
+
+  [
+    'ABC',
+    '',
+    '100',
+    4.2,
+    3 / 5,
+    0,
+    1,
+    Math.PI,
+    null,
+    undefined,
+    function x() {}
+  ].forEach((item) => {
+    let r = bella.isElement(item);
+    var x = stringify(item);
+    assert.error(r, `"${x}" must be not element.`);
+  });
+  assert.end();
+});
+
 
 // isArray
 test('Testing .isArray(Anything) method:', (assert) => {
@@ -146,7 +174,7 @@ test('Testing .isBoolean(Anything) method:', (assert) => {
 });
 
 // isDate
-test('Testing .isBoolean(Anything) method:', (assert) => {
+test('Testing .isDate(Anything) method:', (assert) => {
   [
     new Date()
   ].forEach((item) => {

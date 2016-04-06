@@ -20,8 +20,11 @@
   },
   "devDependencies": {
     "chance": "latest",
+    "cheerio": "latest",
     "coveralls": "latest",
-    "is": "^3.1.0",
+    "gulp": "latest",
+    "is": "latest",
+    "jsdom": "latest",
     "nyc": "latest",
     "tap-spec": "latest",
     "tape": "latest",
