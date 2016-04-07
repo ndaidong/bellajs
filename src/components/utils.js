@@ -111,6 +111,31 @@ var copies = (from, to, matched, excepts) => {
   return to;
 };
 
+var debounce = (fn, wait, immediate) => {
+  let timeout;
+  return () => {
+
+    /* eslint no-invalid-this: 0 */
+    let self = this, args = arguments;
+    let later = () => {
+      timeout = null;
+      if (!immediate) {
+        fn.apply(self, args);
+      }
+    };
+    let callNow = immediate && !timeout;
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait || 200);
+    if (callNow) {
+      fn.apply(self, args);
+    }
+  };
+};
+
+var throttle = (fn, wait) => {
+  return debounce(fn, wait, true);
+};
+
 Bella.id = createId();
 Bella.createId = createId;
 Bella.random = random;
@@ -120,3 +145,5 @@ Bella.empty = empty;
 Bella.copies = copies;
 Bella.clone = clone;
 Bella.assign = assign;
+Bella.debounce = debounce;
+Bella.throttle = throttle;
