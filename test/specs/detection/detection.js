@@ -12,7 +12,7 @@ import test from 'tape';
 import is from 'is';
 import cheerio from 'cheerio';
 
-var rootDir = '../../../src/';
+var rootDir = '../../../dist';
 
 var bella = require(path.join(rootDir, 'bella'));
 
@@ -440,5 +440,122 @@ test('Testing .isNumber(Anything) method:', (assert) => {
     var x = stringify(item);
     assert.error(r, `"${x}" must not be number.`);
   });
+  assert.end();
+});
+
+// hasProperty
+test('Tesing .hasProperty(Object o, String propertyName) method:', (assert) => {
+  let sample = {
+    name: 'lemond',
+    age: 15,
+    group: null,
+    label: 'undefined',
+    color: 0
+  };
+
+  let props = [
+    'name',
+    'age',
+    'group',
+    'label',
+    'color',
+    '__proto__',
+    'toString'
+  ];
+  for (let i = 0; i < props.length; i++) {
+    let k = props[i];
+    assert.ok(bella.hasProperty(sample, k), `"${k}" must be recognized.`);
+  }
+
+  let fails = [
+    'class',
+    'year',
+    'prototype'
+  ];
+  for (let i = 0; i < fails.length; i++) {
+    let k = fails[i];
+    assert.error(bella.hasProperty(sample, k), `"${k}" must be unrecognized.`);
+  }
+
+  assert.error(bella.hasProperty({ a: 1 }), 'Return false if missing k');
+  assert.error(bella.hasProperty(), 'Return false if no parameter');
+  assert.end();
+});
+
+// equals
+test('Tesing .equals(Anything a, Anything b) method:', (assert) => {
+  let t = new Date();
+  let a1 = [
+    {},
+    [],
+    0,
+    'a',
+    [ 1, 4, 6, 8 ],
+    {
+      a: 1,
+      b: 4,
+      c: 6
+    },
+    t
+  ];
+  let b1 = [
+    {},
+    [],
+    0,
+    'a',
+    [ 1, 4, 6, 8 ],
+    {
+      c: 6,
+      b: 4,
+      a: 1
+    },
+    t
+  ];
+
+  for (let i = 0; i < a1.length; i++) {
+    let a = a1[i], b = b1[i];
+    let result = bella.equals(a, b);
+    let as = stringify(a);
+    let bs = stringify(b);
+    assert.ok(result, `"${as}" must be equal to ${bs}.`);
+  }
+
+
+  let at = new Date(), bt = new Date(at.getTime() - 1000);
+  let a2 = [
+    { x: 5 },
+    [ 11, 66, 'ab' ],
+    0,
+    'a',
+    [ 1, 4, 6, 8 ],
+    {
+      a: 1,
+      b: 4,
+      c: 6
+    },
+    at
+  ];
+  let b2 = [
+    {},
+    [ 'ab' ],
+    8,
+    'b',
+    [ 1, 6, 4, 8 ],
+    {
+      c: 6,
+      b: 4,
+      a: 2
+    },
+    bt
+  ];
+
+  for (let i = 0; i < a2.length; i++) {
+    let a = a2[i], b = b2[i];
+    let result = bella.equals(a, b);
+    let as = stringify(a);
+    let bs = stringify(b);
+    assert.error(result, `"${as}" must be not equal to ${bs}.`);
+  }
+
   assert.end();
 });

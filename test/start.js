@@ -12,7 +12,7 @@ var path = require('path');
  * Import specs
  */
 
-var dirs = [ '', 'types' ];
+var dirs = [ '', 'detection', 'utils' ];
 dirs.forEach((dir) => {
   let where = './test/specs/' + dir;
   if (fs.existsSync(where)) {

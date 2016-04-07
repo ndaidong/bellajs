@@ -239,7 +239,7 @@
     };
   };
 
-  var set = (name, value, expires, domain, path) => {
+  var setCookie = (name, value, expires, domain, path) => {
     let cdata = false;
 
     let parse = (ob) => {
@@ -308,7 +308,7 @@
     }
   };
 
-  var get = (name) => {
+  var getCookie = (name) => {
     if (document.cookie) {
       let a = document.cookie.split(';');
       let n = trim(name);
@@ -321,13 +321,13 @@
     }
     return null;
   };
-  var unset = (name) => {
-    set(name, '', '-1d');
+  var unsetCookie = (name) => {
+    setCookie(name, '', '-1d');
   };
   Bella.cookie = {
-    set: set,
-    get: get,
-    unset: unset
+    set: setCookie,
+    get: getCookie,
+    unset: unsetCookie
   };
   return null;
 })();

@@ -16,12 +16,11 @@
 
   // import detection
   // import utils
-  // import string
-  // import md5
-  // import collection
-  // import date
-  // import scheduler
-  // import dom
+  //* import string
+  //* import md5
+  //* import date
+  //* import scheduler
+  //* import dom
 
   // exports
   if (ENV === 'node') {

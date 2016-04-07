@@ -1,5 +1,5 @@
 /**
- * bellajs > schedule
+ * bellajs > scheduler
 **/
 
 /* global Bella time trim date */

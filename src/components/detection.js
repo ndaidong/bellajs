@@ -123,11 +123,14 @@ var equals = (a, b) => {
   let re = true;
   if (isEmpty(a) && isEmpty(b)) {
     return true;
-  } else if (isDate(a) && isDate(b)) {
+  }
+  if (isDate(a) && isDate(b)) {
     return a.getTime() === b.getTime();
-  } else if (isNumber(a) && isNumber(b) || isString(a) && isString(b)) {
+  }
+  if (isNumber(a) && isNumber(b) || isString(a) && isString(b)) {
     return a === b;
-  } else if (isArray(a) && isArray(b)) {
+  }
+  if (isArray(a) && isArray(b)) {
     if (a.length !== b.length) {
       return false;
     }
@@ -139,7 +142,6 @@ var equals = (a, b) => {
         }
       }
     }
-    return re;
   } else if (isObject(a) && isObject(b)) {
     let as = [], bs = [];
     for (let k1 in a) {
@@ -161,9 +163,8 @@ var equals = (a, b) => {
         break;
       }
     }
-    return re;
   }
-  return false;
+  return re;
 };
 
 Bella.isDef = isDef;
