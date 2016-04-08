@@ -195,13 +195,15 @@ var sort = (arr, opts) => {
 };
 
 var shuffle = (arr) => {
-  for (let i = arr.length - 1; i > 0; i--) {
-    let j = Math.floor(Math.random() * (i + 1));
-    let tmp = arr[i];
-    arr[i] = arr[j];
-    arr[j] = tmp;
+  let a = clone(arr);
+  let j, x, i;
+  for (i = a.length - 1; i >= 0; i--) {
+    j = Math.floor(Math.random() * i);
+    x = a[i - 1];
+    a[i - 1] = a[j];
+    a[j] = x;
   }
-  return clone(arr);
+  return a;
 };
 
 var pick = (arr, count) => {

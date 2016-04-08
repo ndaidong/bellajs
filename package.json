@@ -25,11 +25,13 @@
     "gulp": "latest",
     "is": "latest",
     "jsdom": "latest",
+    "mkdirp": "latest",
     "nyc": "latest",
     "sinon": "latest",
     "tap-spec": "latest",
     "tape": "latest",
-    "traceur": "latest"
+    "traceur": "latest",
+    "uglify-js": "latest"
   },
   "keywords": [
     "detection",

@@ -16,8 +16,8 @@
 
   // import detection
   // import utils
+  // import md5
   //* import string
-  //* import md5
   //* import date
   //* import scheduler
   //* import dom
