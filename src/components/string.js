@@ -5,41 +5,33 @@
 /* global Bella isString isArray isObject isNumber hasProperty */
 
 var encode = (s) => {
-  s = String(s);
   return isString(s) ? encodeURIComponent(s) : '';
 };
 
 var decode = (s) => {
-  s = String(s);
   return isString(s) ? decodeURIComponent(s.replace(/\+/g, ' ')) : '';
 };
 
 var trim = (s, all) => {
-  s = String(s);
-  let x = s && isString(s) ? s.replace(/^[\s\xa0]+|[\s\xa0]+$/g, '') : s || '';
+  if (!isString(s)) {
+    return '';
+  }
+  let x = s ? s.replace(/^[\s\xa0]+|[\s\xa0]+$/g, '') : s || '';
   if (x && all) {
-    return x.replace(/\s\s+|\r?\n|\r/g, '');
+    return x.replace(/\r?\n|\r/g, ' ').replace(/\s\s+|\r/g, ' ');
   }
   return x;
 };
 
 var truncate = (s, l) => {
-  s = String(s);
-  if (!s || !isString(s)) {
-    return '';
-  }
-  s = Bella.trim(s);
-
+  s = trim(s);
   if (s === '') {
     return s;
   }
-
   let t = l || 140;
-
   if (s.length <= t) {
     return s;
   }
-
   let x = s.substring(0, t);
   let a = x.split(' '), b = a.length, r = '';
   if (b > 1) {
@@ -50,48 +42,50 @@ var truncate = (s, l) => {
     }
   } else {
     x = x.substring(0, t - 3);
-    r += '...';
+    r = x + '...';
   }
   return r;
 };
 
 var stripTags = (s) => {
-  s = String(s);
-  let r = isString(s) ? s.replace(/<.*?>/gi, ' ') : '';
+  if (!isString(s)) {
+    return '';
+  }
+  let r = s.replace(/<.*?>/gi, ' ');
   if (r) {
-    r = Bella.trim(r.replace(/\s\s+/g, ' '));
+    r = trim(r.replace(/\s\s+/g, ' '));
   }
   return r;
 };
 
 var escapeHTML = (s) => {
-  s = String(s);
   if (!isString(s)) {
     return '';
   }
+  s = String(s);
   return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 };
 
 var unescapeHTML = (s) => {
-  s = String(s);
   if (!isString(s)) {
     return '';
   }
+  s = String(s);
   return s.replace(/&quot;/g, '"').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
 };
 
 var strtolower = (s) => {
-  s = String(s);
   return isString(s) ? s.toLowerCase() : '';
 };
 
 var strtoupper = (s) => {
-  s = String(s);
   return isString(s) ? s.toUpperCase() : '';
 };
 
 var ucfirst = (s) => {
-  s = String(s);
+  if (!isString(s)) {
+    return '';
+  }
   if (s.length === 1) {
     return s.toUpperCase();
   }
@@ -100,37 +94,34 @@ var ucfirst = (s) => {
 };
 
 var ucwords = (s) => {
-  s = String(s);
-  if (isString(s)) {
-    let c = s.split(' '), a = [];
-    c.forEach((w) => {
-      a.push(ucfirst(w));
-    });
-    return a.join(' ');
+  if (!isString(s)) {
+    return '';
   }
-  return s;
+  let c = s.split(' '), a = [];
+  c.forEach((w) => {
+    a.push(ucfirst(w));
+  });
+  return a.join(' ');
 };
 
 var leftPad = (s, size, spad) => {
-  s = String(s);
-  if (isString(s)) {
-    let g = spad || '0';
-    let o = String(s);
-    let z = size || 2;
-    return o.length >= z ? o : new Array(z - o.length + 1).join(g) + o;
+  if (!isString(s)) {
+    return '';
   }
-  return '';
+  let g = spad || '0';
+  let o = String(s);
+  let z = size || 2;
+  return o.length >= z ? o : new Array(z - o.length + 1).join(g) + o;
 };
 
 var rightPad = (s, size, spad) => {
-  s = String(s);
-  if (isString(s)) {
-    let g = spad || '0';
-    let o = String(s);
-    let z = size || 2;
-    return o.length >= z ? o : o + new Array(z - o.length + 1).join(g);
+  if (!isString(s)) {
+    return '';
   }
-  return '';
+  let g = spad || '0';
+  let o = String(s);
+  let z = size || 2;
+  return o.length >= z ? o : o + new Array(z - o.length + 1).join(g);
 };
 
 var replaceAll = (s, a, b) => {
@@ -233,7 +224,7 @@ var template = (tpl, data) => {
         s = compile(s, item.data, item.key);
       });
     }
-    return Bella.trim(s, true);
+    return trim(s, true);
   };
   if (data && (isString(data) || isObject(data) || isArray(data))) {
     return compile(tpl, data);

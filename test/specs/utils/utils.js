@@ -12,7 +12,7 @@ import test from 'tape';
 import is from 'is';
 import sinon from 'sinon';
 
-var rootDir = '../../../dist';
+var rootDir = '../../../src';
 
 var bella = require(path.join(rootDir, 'bella'));
 
@@ -102,34 +102,6 @@ test('Testing .empty(Anything) method', (assert) => {
   assert.end();
 });
 
-// assign
-test('Testing .assign(Object target, Objects sources) method', (assert) => {
-  let a = {
-    name: 'Toto',
-    age: 30
-  };
-  let b = {
-    level: 4,
-    IQ: 140,
-    epouse: {
-      name: 'Alice',
-      age: 27
-    }
-  };
-
-  let c = {
-    age: 32
-  };
-
-  let r = bella.assign(a, b, c);
-  assert.ok(bella.hasProperty(r, 'level'), 'Result must have level');
-  assert.ok(bella.hasProperty(r, 'IQ'), 'Result must have IQ');
-  assert.ok(bella.hasProperty(r, 'epouse'), 'Result must have epouse');
-  assert.ok(bella.hasProperty(r.epouse, 'name'), 'Result epouse must have name');
-  assert.equals(r.age, 32, 'Result age must be 32');
-  assert.end();
-});
-
 // clone
 test('Testing .clone(Object target) method', (assert) => {
   let a = {
@@ -150,11 +122,12 @@ test('Testing .clone(Object target) method', (assert) => {
   assert.ok(bella.hasProperty(r, 'IQ'), 'Result must have IQ');
   assert.ok(bella.hasProperty(r, 'epouse'), 'Result must have epouse');
   assert.ok(bella.hasProperty(r, 'birthday'), 'Result must have birthday');
+  assert.error(bella.clone(), 'Clone nothing must return nothing');
   assert.end();
 });
 
-// clone
-test('Testing .clone(Object target) method', (assert) => {
+// copies
+test('Testing .copies(Object target) method', (assert) => {
   let a = {
     name: 'Toto',
     age: 30,
@@ -252,6 +225,82 @@ test('Testing .unique(Array a) method', (assert) => {
   assert.deepEquals(r.length, 8, 'Result must have items');
 
   assert.deepEquals(bella.unique(), [], 'Result must be empty array');
+  assert.end();
+});
+
+// contains
+test('Testing .contains(Anything a, String b) method', (assert) => {
+  let a1 = [
+    'Aline', 'Bach', 'Nina', 'Gravie', 'Mark',
+    1, 89, 77, 4212, 878,
+    {
+      name: 'Chris',
+      age: 22
+    },
+    new Date()
+  ];
+
+  let b1t = [
+    'Bach', 1, 'Mark', 878, [ 'name', 'Chris' ]
+  ];
+
+  b1t.forEach((item) => {
+    let k, e;
+    if (is.array(item)) {
+      k = item[0];
+      e = bella.contains(a1, k, item[1]);
+    } else {
+      k = item;
+      e = bella.contains(a1, k);
+    }
+    assert.ok(e, `Array must contain ${k}`);
+  });
+
+  let a2 = {
+    name: 'Chris',
+    age: 22,
+    country: 'Italia',
+    group: 'admin',
+    status: 1
+  };
+
+  let b2t = [
+    'name', 'country', 'status'
+  ];
+
+  b2t.forEach((k) => {
+    let e = bella.contains(a2, k);
+    assert.ok(e, `Array must contain ${k}`);
+  });
+
+
+  let a3 = 'Hello world. I have a dream.';
+
+  let b3t = [
+    'lo', 'wor', 'have'
+  ];
+
+  b3t.forEach((k) => {
+    let e = bella.contains(a3, k);
+    assert.ok(e, `Array must contain ${k}`);
+  });
+
+  assert.end();
+});
+
+// first
+test('Testing .first(Array a) method', (assert) => {
+  let a = [ 9, 77, 123, 51, 876, 124 ];
+  let e = bella.first(a);
+  assert.deepEquals(e, 9, 'First item must be 9');
+  assert.end();
+});
+
+// first
+test('Testing .last(Array a) method', (assert) => {
+  let a = [ 9, 77, 66, 51, 876, 124 ];
+  let e = bella.last(a);
+  assert.deepEquals(e, 124, 'First item must be 124');
   assert.end();
 });
 
@@ -370,6 +419,18 @@ test('Testing .pick(Array a, Number count) method', (assert) => {
 
   let r5 = bella.pick(a, -2);
   assert.ok(is.number(r5), 'bella.pick(a, -1) must return a number');
+
+  assert.end();
+});
+
+// md5
+test('Testing .md5() method', (assert) => {
+  let arr = [];
+  while (arr.length < 10) {
+    let k = bella.md5();
+    arr.push(k);
+    assert.deepEquals(k.length, 32, 'Returned value must be 32 chars');
+  }
 
   assert.end();
 });

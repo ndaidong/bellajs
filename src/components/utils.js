@@ -2,7 +2,7 @@
  * bellajs > utils
 **/
 
-/* global Bella isArray isObject isString hasProperty isObject isElement isDate */
+/* global Bella isArray isObject isString hasProperty isObject isString isElement isDate */
 
 var createId = (leng, prefix) => {
   let chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -91,25 +91,19 @@ var contains = (a, el, key) => {
         return true;
       }
     }
+  } else if (isObject(a) && isString(el)) {
+    return hasProperty(a, el);
+  } else if (isString(a) && isString(el)) {
+    return a.includes(el);
   }
   return false;
 };
 
-var assign = (target, ...sources) => {
-  sources.forEach((source) => {
-    let descriptors = Object.keys(source).reduce((_descriptors, key) => {
-      _descriptors[key] = Object.getOwnPropertyDescriptor(source, key);
-      return _descriptors;
-    }, {});
-    Object.getOwnPropertySymbols(source).forEach((sym) => {
-      let descriptor = Object.getOwnPropertyDescriptor(source, sym);
-      if (descriptor.enumerable) {
-        descriptors[sym] = descriptor;
-      }
-    });
-    Object.defineProperties(target, descriptors);
-  });
-  return target;
+var first = (a) => {
+  return a[0];
+};
+var last = (a) => {
+  return a[a.length - 1];
 };
 
 var clone = (obj) => {
@@ -140,7 +134,7 @@ var clone = (obj) => {
     }
     return copy;
   }
-  return false;
+  return obj;
 };
 
 var copies = (from, to, matched, excepts) => {
@@ -259,12 +253,13 @@ Bella.min = min;
 Bella.max = max;
 Bella.unique = unique;
 Bella.contains = contains;
+Bella.first = first;
+Bella.last = last;
 Bella.sort = sort;
 Bella.shuffle = shuffle;
 Bella.pick = pick;
 Bella.empty = empty;
 Bella.copies = copies;
 Bella.clone = clone;
-Bella.assign = assign;
 Bella.debounce = debounce;
 Bella.throttle = throttle;

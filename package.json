@@ -22,7 +22,6 @@
     "chance": "latest",
     "cheerio": "latest",
     "coveralls": "latest",
-    "gulp": "latest",
     "is": "latest",
     "jsdom": "latest",
     "mkdirp": "latest",
@@ -30,8 +29,7 @@
     "sinon": "latest",
     "tap-spec": "latest",
     "tape": "latest",
-    "traceur": "latest",
-    "uglify-js": "latest"
+    "traceur": "latest"
   },
   "keywords": [
     "detection",

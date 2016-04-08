@@ -4,40 +4,20 @@
 
 /* global ENV Bella */
 
-var tof = (v) => {
-  let ots = Object.prototype.toString;
-  let s = typeof v;
-  if (s === 'object') {
-    if (v) {
-      if (ots.call(v).indexOf('HTML') !== -1 && ots.call(v).indexOf('Element') !== -1) {
-        return 'element';
-      }
-      if (v instanceof Array ||
-        (
-          !(v instanceof Object) &&
-          ots.call(v) === '[object Array]' ||
-          typeof v.length === 'number' && typeof v.splice !== 'undefined' &&
-          typeof v.propertyIsEnumerable !== 'undefined' && !v.propertyIsEnumerable('splice')
-        )
-      ) {
-        return 'array';
-      }
-      if (!(v instanceof Object) &&
-        (ots.call(v) === '[object Function]' ||
-        typeof v.call !== 'undefined' &&
-         typeof v.propertyIsEnumerable !== 'undefined' &&
-          !v.propertyIsEnumerable('call')
-        )
-      ) {
-        return 'function';
-      }
-    }
-    return 'null';
-  } else if (s === 'function' && typeof v.call === 'undefined') {
-    return 'object';
-  }
-  return s;
-};
+'use strict';
+var Bella = {};
+
+var tof = (() => {
+  var cache = {};
+  return (obj) => {
+    var key;
+    return obj === null ? 'null'
+      : (key = typeof obj) !== 'object' ? key
+      : obj.nodeType ? 'object'
+      : cache[key = {}.toString.call(obj)]
+      || (cache[key] = key.slice(8, -1).toLowerCase());
+  };
+})();
 
 var isDef = (val) => {
   return tof(val) !== 'undefined';
@@ -68,7 +48,7 @@ var isArray = (val) => {
 };
 
 var isObject = (val) => {
-  return !isNull(val) && typeof val === 'object';
+  return !isNull(val) && tof(val) === 'object';
 };
 
 var isDate = (val) => {
@@ -87,17 +67,17 @@ var isElement = (val) => {
 };
 
 var isLetter = (val) => {
-  var re = /^[a-z]+$/i;
+  let re = /^[a-z]+$/i;
   return isString(val) && re.test(val);
 };
 
 var isEmail = (val) => {
-  var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+  let re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
   return isString(val) && re.test(val);
 };
 
 var isGeneratedKey = (val) => {
-  var re = /^[A-Z0-9]+$/i;
+  let re = /^[A-Z0-9]+$/i;
   return isString(val) && re.test(val);
 };
 
@@ -135,8 +115,8 @@ var equals = (a, b) => {
       return false;
     }
     if (a.length > 0) {
-      for (var i = 0, l = a.length; i < l; i++) {
-        if (!Bella.equals(a[i], b[i])) {
+      for (let i = 0, l = a.length; i < l; i++) {
+        if (!equals(a[i], b[i])) {
           re = false;
           break;
         }
@@ -145,7 +125,7 @@ var equals = (a, b) => {
   } else if (isObject(a) && isObject(b)) {
     let as = [], bs = [];
     for (let k1 in a) {
-      if (Bella.hasProperty(a, k1)) {
+      if (hasProperty(a, k1)) {
         as.push(k1);
       }
     }

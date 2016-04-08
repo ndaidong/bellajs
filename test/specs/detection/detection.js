@@ -12,7 +12,7 @@ import test from 'tape';
 import is from 'is';
 import cheerio from 'cheerio';
 
-var rootDir = '../../../dist';
+var rootDir = '../../../src';
 
 var bella = require(path.join(rootDir, 'bella'));
 
@@ -88,9 +88,7 @@ test('Testing .isObject(Anything) method:', (assert) => {
   [
     {},
     { a: 1, b: 0 },
-    Object.create({}),
-    [],
-    new Date()
+    Object.create({})
   ].forEach((item) => {
     let r = bella.isObject(item);
     var x = stringify(item);
@@ -103,7 +101,9 @@ test('Testing .isObject(Anything) method:', (assert) => {
     '',
     null,
     undefined,
-    0
+    0,
+    [],
+    new Date()
   ].forEach((item) => {
     let r = bella.isObject(item);
     var x = stringify(item);
@@ -139,6 +139,7 @@ test('Testing .isString(Anything) method:', (assert) => {
     var x = stringify(item);
     assert.error(r, `"${x}" must be not string.`);
   });
+
   assert.end();
 });
 
@@ -199,33 +200,6 @@ test('Testing .isDate(Anything) method:', (assert) => {
     let r = bella.isDate(item);
     var x = stringify(item);
     assert.error(r, `"${x}" must not be date.`);
-  });
-  assert.end();
-});
-
-
-// isDef
-test('Testing .isDef(Anything) method:', (assert) => {
-  let a = 1;
-  let b = null;
-  let c = 'undefined';
-  [
-    a,
-    b,
-    c
-  ].forEach((item) => {
-    let r = bella.isDef(item);
-    var x = stringify(item);
-    assert.ok(r, `"${x}" must be defined.`);
-  });
-
-  let something;
-  [
-    something
-  ].forEach((item) => {
-    let r = bella.isDef(item);
-    var x = stringify(item);
-    assert.error(r, `"${x}" must not be defined.`);
   });
   assert.end();
 });
