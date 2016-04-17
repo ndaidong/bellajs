@@ -3,16 +3,16 @@
  * @ndaidong
  */
 
+'use strict';
+
 /* eslint no-undefined: 0*/
 /* eslint no-array-constructor: 0*/
 /* eslint no-new-func: 0*/
 
-import path from 'path';
-import test from 'tape';
+var test = require('tape');
 
-var rootDir = '../../../src/';
-
-var bella = require(path.join(rootDir, 'bella'));
+var config = require('../../config');
+var bella = config.bella;
 
 // isArray
 test('Testing .compile(String s, Object date) method:', (assert) => {

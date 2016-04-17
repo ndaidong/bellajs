@@ -3,18 +3,18 @@
  * @ndaidong
  */
 
+'use strict';
+
 /* eslint no-undefined: 0*/
 /* eslint no-array-constructor: 0*/
 /* eslint no-new-func: 0*/
 
-import path from 'path';
-import test from 'tape';
-import is from 'is';
-import sinon from 'sinon';
+var test = require('tape');
+var is = require('is');
+var sinon = require('sinon');
 
-var rootDir = '../../../src';
-
-var bella = require(path.join(rootDir, 'bella'));
+var config = require('../../config');
+var bella = config.bella;
 
 var stringify = (x) => {
   if (is.array(x) || is.object(x)) {

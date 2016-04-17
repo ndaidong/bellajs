@@ -1,10 +1,5 @@
 'use strict';
 
-var traceur = require('traceur');
-traceur.require.makeDefault((filename) => {
-  return !filename.includes('node_modules');
-});
-
 var fs = require('fs');
 var path = require('path');
 
@@ -12,7 +7,10 @@ var path = require('path');
  * Import specs
  */
 
+// var dirs = [ '', 'detection', 'utils', 'string', 'date', 'scheduler' ];
+
 var dirs = [ '', 'detection', 'utils', 'string', 'date', 'scheduler' ];
+
 dirs.forEach((dir) => {
   let where = './test/specs/' + dir;
   if (fs.existsSync(where)) {

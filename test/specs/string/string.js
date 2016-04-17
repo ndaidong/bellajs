@@ -3,16 +3,16 @@
  * @ndaidong
  */
 
+'use strict';
+
 /* eslint no-undefined: 0*/
 /* eslint no-array-constructor: 0*/
 /* eslint no-new-func: 0*/
 
-import path from 'path';
-import test from 'tape';
+var test = require('tape');
 
-var rootDir = '../../../src';
-
-var bella = require(path.join(rootDir, 'bella'));
+var config = require('../../config');
+var bella = config.bella;
 
 // encode
 test('Testing .encode(String s) method', (assert) => {
@@ -144,10 +144,15 @@ test('Testing .strtoupper(String s) method', (assert) => {
 
 // ucfirst
 test('Testing .ucfirst(String s) method', (assert) => {
-  let x = 'HElLo wOrLd';
-  let a1 = bella.ucfirst(x);
+  let x1 = 'HElLo wOrLd';
+  let a1 = bella.ucfirst(x1);
   let e1 = 'Hello world';
-  assert.deepEquals(a1, e1, `bella.ucfirst('${x}') must return ${e1}`);
+  assert.deepEquals(a1, e1, `bella.ucfirst('${x1}') must return ${e1}`);
+
+  let x2 = 'a';
+  let a2 = bella.ucfirst(x2);
+  let e2 = 'A';
+  assert.deepEquals(a2, e2, `bella.ucfirst('${x2}') must return ${e2}`);
 
   assert.deepEquals(bella.ucfirst({}), '', 'bella.ucfirst({}) must return empty string');
   assert.end();
@@ -262,6 +267,22 @@ test('Testing .replaceAll(String s, String find, String replace) method', (asser
     {
       input: {
         a: 'Hello world',
+        b: 'l',
+        c: 2
+      },
+      expectation: 'He22o wor2d'
+    },
+    {
+      input: {
+        a: 798078967,
+        b: 7,
+        c: 1
+      },
+      expectation: '198018961'
+    },
+    {
+      input: {
+        a: 'Hello world',
         b: [ 'l', 'o' ],
         c: [ '2', '0' ]
       },
@@ -306,7 +327,13 @@ test('Testing .replaceAll(String s, String find, String replace) method', (asser
       input: {
         a: 10000
       },
-      expectation: ''
+      expectation: '10000'
+    },
+    {
+      input: {
+        a: 0
+      },
+      expectation: '0'
     },
     {
       input: {
@@ -340,10 +367,20 @@ test('Testing .replaceAll(String s, String find, String replace) method', (asser
 
 // stripAccent
 test('Testing .stripAccent(String s) method', (assert) => {
-  let x = 'Sur l\'année 2015 - ủ Ù ỹ Ỹ';
-  let a1 = bella.stripAccent(x);
+  let x1 = 'Sur l\'année 2015 - ủ Ù ỹ Ỹ';
+  let a1 = bella.stripAccent(x1);
   let e1 = 'Sur l\'annee 2015 - u U y Y';
-  assert.deepEquals(a1, e1, `bella.stripAccent('${x}') must return ${e1}`);
+  assert.deepEquals(a1, e1, `bella.stripAccent('${x1}') must return ${e1}`);
+
+  let x2 = 12897;
+  let a2 = bella.stripAccent(x2);
+  let e2 = '12897';
+  assert.deepEquals(a2, e2, `bella.stripAccent('${x2}') must return ${e2}`);
+
+  let x3 = {};
+  let a3 = bella.stripAccent(x3);
+  let e3 = '';
+  assert.deepEquals(a3, e3, `bella.stripAccent('${x3}') must return ${e3}`);
 
   assert.end();
 });
@@ -358,7 +395,7 @@ test('Testing .createAlias(String s) method', (assert) => {
   assert.end();
 });
 
-// stripAccent
+// compile
 test('Testing .compile(String s) method', (assert) => {
   let sample = `
     <article>
@@ -392,6 +429,9 @@ test('Testing .compile(String s) method', (assert) => {
 
   let result = bella.template(sample, data);
   assert.deepEquals(result, expectation, 'Template data must be filled to template string.');
+
+  let r2 = bella.template('ABC', 1987);
+  assert.deepEquals(r2, 'ABC', 'Return template string if no data');
 
   assert.end();
 });

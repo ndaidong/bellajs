@@ -3,18 +3,18 @@
  * @ndaidong
  */
 
+'use strict';
+
 /* eslint no-undefined: 0*/
 /* eslint no-array-constructor: 0*/
 /* eslint no-new-func: 0*/
 
-import path from 'path';
-import test from 'tape';
-import is from 'is';
-import cheerio from 'cheerio';
+var test = require('tape');
+var is = require('is');
+var cheerio = require('cheerio');
 
-var rootDir = '../../../src';
-
-var bella = require(path.join(rootDir, 'bella'));
+var config = require('../../config');
+var bella = config.bella;
 
 var stringify = (x) => {
   if (is.array(x) || is.object(x)) {
@@ -86,9 +86,11 @@ test('Testing .isArray(Anything) method:', (assert) => {
 // isObject
 test('Testing .isObject(Anything) method:', (assert) => {
   [
+    is,
     {},
     { a: 1, b: 0 },
-    Object.create({})
+    Object.create({}),
+    new Date()
   ].forEach((item) => {
     let r = bella.isObject(item);
     var x = stringify(item);
@@ -102,8 +104,7 @@ test('Testing .isObject(Anything) method:', (assert) => {
     null,
     undefined,
     0,
-    [],
-    new Date()
+    []
   ].forEach((item) => {
     let r = bella.isObject(item);
     var x = stringify(item);

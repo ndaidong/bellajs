@@ -16,20 +16,21 @@
     "test": "./node_modules/.bin/tape test/start.js | tap-spec",
     "coverage": "./node_modules/.bin/nyc tape test/start.js | tap-spec",
     "report": "npm run coverage && ./node_modules/.bin/nyc report --reporter=lcov",
-    "coveralls": "npm run report && cat ./coverage/lcov.info | ./node_modules/.bin/coveralls"
+    "coveralls": "npm run report && cat ./coverage/lcov.info | ./node_modules/.bin/coveralls",
+    "build": "node build/minify"
   },
   "devDependencies": {
     "chance": "latest",
     "cheerio": "latest",
+    "colors": "latest",
     "coveralls": "latest",
     "is": "latest",
-    "jsdom": "latest",
     "mkdirp": "latest",
     "nyc": "latest",
+    "request": "latest",
     "sinon": "latest",
     "tap-spec": "latest",
-    "tape": "latest",
-    "traceur": "latest"
+    "tape": "latest"
   },
   "keywords": [
     "detection",
