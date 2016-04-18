@@ -1,7 +1,7 @@
 bella.js
 ========
 
-BellaJS is a lightweight library with the useful functions for handling string, array/object, datetime, schedule, template and dom/event better and easier. It supports both Node.js and browser environments.
+BellaJS is a lightweight library with several helpful utils. It supports both Node.js and browser environments.
 
 [![NPM](https://badge.fury.io/js/bellajs.svg)](https://badge.fury.io/js/bellajs) ![Travis](https://travis-ci.org/ndaidong/bella.js.svg?branch=master)
 [![Coverage Status](https://coveralls.io/repos/github/ndaidong/bella.js/badge.svg?branch=master&noop)](https://coveralls.io/github/ndaidong/bella.js?branch=master)
@@ -23,11 +23,14 @@ BellaJS is a lightweight library with the useful functions for handling string, 
 
 # Changes
 
-#### v5.0.0 - Apr 18, 2016
-- Build with Google Closure compiler
+#### v5.0.1 - Apr 18, 2016
 - Refactor scheduler's features
 - Rewrite in ES6 syntax
 - Remove browser side features
+- Remove 3 methods "trace", "enableTrace" and "disableTrace"
+- Add 6 methods "first", "last", "getIndex", "getLastIndex", "debounce" and "throttle"
+- Build with Google Closure compiler
+- Switch to Tape, Sinon instead of Mocha/Chai
 
 #### v4.1.5 - Mar 18, 2016
 - Implement nyc/istanbul to check test coverage
@@ -223,7 +226,12 @@ console.log(html);
  - Bella.sort(Array a [, String order | Object option ])
  - Bella.shuffle(Array a)
  - Bella.unique(Array a)
-
+ - Bella.first(Array a)
+ - Bella.last(Array a)
+ - Bella.getIndex(String|Object element, Array a)
+ - Bella.getLastIndex(String|Object element, Array a)
+ - Bella.debounce(Function fn, Number delay, Boolean immediate)
+ - Bella.throttle(Function fn, Boolean wait)
 
 How to use Bella.sort?
 
