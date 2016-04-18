@@ -5,5 +5,7 @@ node_js:
   - "5.0"
   - "4.2"
   - "4.0"
+before_script:
+  - export TZ=Etc/GMT-7
 after_success:
 - npm run coveralls
