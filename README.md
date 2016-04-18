@@ -128,10 +128,10 @@ Assuming there is a file bella.min.js located at "/public/js/lib/", the followin
 ```
 
 
-##### Using traditional script tag
+##### CDN
 
 ```
-<script type="text/javascript" src="/public/js/lib/bella.min.js"></script>
+<script type="text/javascript" src="https://cdn.rawgit.com/ndaidong/bella.js/master/dist/bella.min.js"></script>
 ```
 
 

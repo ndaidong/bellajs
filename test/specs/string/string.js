@@ -385,7 +385,7 @@ test('Testing .stripAccent(String s) method', (assert) => {
   assert.end();
 });
 
-// stripAccent
+// createAlias
 test('Testing .createAlias(String s) method', (assert) => {
   let x = 'Sur l\'année 2015';
   let a1 = bella.createAlias(x);
