@@ -14,8 +14,8 @@
   };
 
   var tof = (v) => {
-    var ots = Object.prototype.toString;
-    var s = typeof v;
+    let ots = Object.prototype.toString;
+    let s = typeof v;
     if (s === 'object') {
       if (v) {
         if (ots.call(v).indexOf('HTML') !== -1 && ots.call(v).indexOf('Element') !== -1) {
@@ -751,7 +751,8 @@
       } else {
         input = new Date(input).getTime();
       }
-      if (!output) {
+
+      if (!output || !isString(output)) {
         output = pattern;
       }
 
@@ -767,13 +768,13 @@
       let _ord = (day) => {
         let s = day + ' ', x = s.charAt(s.length - 2);
         if (x === '1') {
-          s += 'st';
+          s = 'st';
         } else if (x === '2') {
-          s += 'nd';
+          s = 'nd';
         } else if (x === '3') {
-          s += 'rd';
+          s = 'rd';
         } else {
-          s += 'th';
+          s = 'th';
         }
         return s;
       };
@@ -815,7 +816,7 @@
         }, // 8
         S: () => {
           return _ord(f.j());
-        }, // 1st, 2nd, 3rd, 4th
+        }, // st, nd, rd, th
         j: () => {
           return d.getDate();
         }, // 3
@@ -925,7 +926,7 @@
 
   (() => {
 
-    const MAX_TIMEOUT = 2147483647; // eslint-disable-line
+    const MAX_TIMEOUT = 2147483647;
 
     var TaskList = new Map();
     var checkTimer;
@@ -1126,7 +1127,7 @@
       return true;
     };
 
-    var updateTimer = () => {  // eslint-disable-line
+    var updateTimer = () => {
       if (TaskList.size > 0) {
         let minDelay = MAX_TIMEOUT;
         let candidates = [];
@@ -1164,36 +1165,24 @@
       }
     };
 
-    var register = (t, fn, repeat) => {
-      let rep = repeat && (repeat === true || repeat === 1) || false;
+    var register = (t, fn, once) => {
+      let rep = once ? 0 : 1;
       let n = time();
-
-      let delay = getDelayTime(t, n);
-
-      if (delay < 0) {
-        throw new Error('Invalid pattern or timer');
-      } else if (delay === 0) {
-        setTimeout(fn, 0);
-      } else {
-        let id = createId(32);
-        let task = {
-          id: id,
-          fn: fn,
-          time: t,
-          repeat: rep,
-          createdAt: n,
-          lastTick: n,
-          delay: 0
-        };
-        TaskList.set(id, task);
-        updateTimer();
-      }
+      let id = createId(32);
+      let task = {
+        id: id,
+        fn: fn,
+        time: t,
+        repeat: rep,
+        createdAt: n,
+        lastTick: n,
+        delay: 0
+      };
+      TaskList.set(id, task);
+      updateTimer();
     };
 
     B.scheduler = {
-      on: (t, fn) => {
-        register(t, fn);
-      },
       yearly: (t, fn) => {
         let pt = '* ' + t;
         register(pt, fn);
@@ -1211,10 +1200,10 @@
         return register(pt, fn);
       },
       every: (t, fn) => {
-        return register(t, fn, true);
+        return register(t, fn);
       },
       once: (t, fn) => {
-        return register(t, fn);
+        return register(t, fn, 1);
       }
     };
   })();

@@ -1,5 +1,5 @@
 
-var bella = require('../src/bella');
+var bella = require('../dist/bella.min');
 
 module.exports = {
   bella: bella
