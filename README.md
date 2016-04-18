@@ -23,7 +23,7 @@ BellaJS is a lightweight library with several helpful utils. It supports both No
 
 # Changes
 
-#### v5.0.1 - Apr 18, 2016
+#### v5.0.0 - Apr 18, 2016
 - Refactor scheduler's features
 - Rewrite in ES6 syntax
 - Remove browser side features
@@ -51,28 +51,6 @@ BellaJS is a lightweight library with several helpful utils. It supports both No
 
 #### v3.7.6 - Sep 27, 2015
 - Added 3 new methods: "random", "pick" and "shuffle"
-
-#### v3.7.2 - Sep 24, 2015
-- Removed "sha256" method
-- Update pattern in Bella.scheduler
-
-#### v3.7.1 - Sep 23, 2015
-- Added 3 new methods "trace", "enableTrace" and "disableTrace"
-- Removed "detectDevice" method. Recommend to use [DeviceDetector](https://www.npmjs.com/package/device-detector) instead.
-- Removed "device" property
-
-#### v3.6.8 - Sep 17, 2015
-- Removed 'H' from date format pattern. Now it will automatically detect if the pattern contains 'a' or 'A'. If so, it will display as meridiem style. Otherwise, it would display 00-24 hour. See [DateTime](#datetime) pattern for more info.
-
-#### v3.6.6 - Sep 13, 2015
-- Added "isDate" method
-
-#### v3.6.5 - Sep 10, 2015
-- Added "equals" method
-
-#### Aug 21, 2015
-- Added "compile" as an alias for "make" method
-
 
 
 # Setup
@@ -138,45 +116,45 @@ Assuming there is a file bella.min.js located at "/public/js/lib/", the followin
 # APIs
 
 ### DataType detection
- - Bella.isArray(Anything val)
- - Bella.isBoolean(Anything val)
- - Bella.isDate(Anything val)
- - Bella.isDef(Anything val)
- - Bella.isElement(Anything val)
- - Bella.isEmail(Anything val)
- - Bella.isEmpty(Anything val)
- - Bella.isFunction(Anything val)
- - Bella.isGeneratedKey(Anything val)
- - Bella.isInteger(Anything val)
- - Bella.isLetter(Anything val)
- - Bella.isNull(Anything val)
- - Bella.isNumber(Anything val)
- - Bella.isObject(Anything val)
- - Bella.isString(Anything val)
+ - .isArray(Anything val)
+ - .isBoolean(Anything val)
+ - .isDate(Anything val)
+ - .isDef(Anything val)
+ - .isElement(Anything val)
+ - .isEmail(Anything val)
+ - .isEmpty(Anything val)
+ - .isFunction(Anything val)
+ - .isGeneratedKey(Anything val)
+ - .isInteger(Anything val)
+ - .isLetter(Anything val)
+ - .isNull(Anything val)
+ - .isNumber(Anything val)
+ - .isObject(Anything val)
+ - .isString(Anything val)
 
 ### String manipulation
- - Bella.createId(Number length [, String prefix])
- - Bella.createAlias(String s)
- - Bella.encode(String s)
- - Bella.decode(String s)
- - Bella.trim(String s)
- - Bella.strtolower(String s)
- - Bella.strtoupper(String s)
- - Bella.ucfirst(String s)
- - Bella.ucwords(String s)
- - Bella.escapeHTML(String s)
- - Bella.unescapeHTML(String s)
- - Bella.stripTags(String s)
- - Bella.stripAccent(String s)
- - Bella.truncate(String s, Number limit)
- - Bella.leftPad(String s, Number limit, String pad)
- - Bella.rightPad(String s, Number limit, String pad)
- - Bella.replaceAll(String s, String|Array search, String|Array replace)
- - Bella.md5(String s)
+ - .createId(Number length [, String prefix])
+ - .createAlias(String s)
+ - .encode(String s)
+ - .decode(String s)
+ - .trim(String s)
+ - .strtolower(String s)
+ - .strtoupper(String s)
+ - .ucfirst(String s)
+ - .ucwords(String s)
+ - .escapeHTML(String s)
+ - .unescapeHTML(String s)
+ - .stripTags(String s)
+ - .stripAccent(String s)
+ - .truncate(String s, Number limit)
+ - .leftPad(String s, Number limit, String pad)
+ - .rightPad(String s, Number limit, String pad)
+ - .replaceAll(String s, String|Array search, String|Array replace)
+ - .md5(String s)
 
 
 ### Template manipulation
- - Bella.compile(String s, Object d)
+ - .compile(String s, Object d)
 
 What does Bella.compile do?
 
@@ -212,26 +190,26 @@ console.log(html);
 
 
 ### Array & Object
- - Bella.clone(Array|Object|Date o)
- - Bella.contains(Array a, String|Object search [, String key])
- - Bella.copies(Array|Object src, Array|Object dest [, Boolean mustMatch[, Array exclude] ])
- - Bella.empty(Array|Object|Element|String o)
- - Bella.equals(Anything a, Anything b)
- - Bella.hasProperty(Array|Object o, String key)
- - Bella.inherits(Proto o)
- - Bella.max(Array a)
- - Bella.min(Array a)
- - Bella.pick(Array a [, Number count])
- - Bella.random([Number min [, Number max]])
- - Bella.sort(Array a [, String order | Object option ])
- - Bella.shuffle(Array a)
- - Bella.unique(Array a)
- - Bella.first(Array a)
- - Bella.last(Array a)
- - Bella.getIndex(String|Object element, Array a)
- - Bella.getLastIndex(String|Object element, Array a)
- - Bella.debounce(Function fn, Number delay, Boolean immediate)
- - Bella.throttle(Function fn, Boolean wait)
+ - .clone(Array|Object|Date o)
+ - .contains(Array a, String|Object search [, String key])
+ - .copies(Array|Object src, Array|Object dest [, Boolean mustMatch[, Array exclude] ])
+ - .empty(Array|Object|Element|String o)
+ - .equals(Anything a, Anything b)
+ - .hasProperty(Array|Object o, String key)
+ - .inherits(Proto o)
+ - .max(Array a)
+ - .min(Array a)
+ - .pick(Array a [, Number count])
+ - .random([Number min [, Number max]])
+ - .sort(Array a [, String order | Object option ])
+ - .shuffle(Array a)
+ - .unique(Array a)
+ - .first(Array a)
+ - .last(Array a)
+ - .getIndex(String|Object element, Array a)
+ - .getLastIndex(String|Object element, Array a)
+ - .debounce(Function fn, Number delay, Boolean immediate)
+ - .throttle(Function fn, Boolean wait)
 
 How to use Bella.sort?
 
@@ -290,11 +268,11 @@ players2.forEach(function(item){
 ```
 
 ### DateTime
- - Bella.date.format(String pattern, Date|Number|String input)
- - Bella.date.relativize(Date|Number|String input)
- - Bella.date.local(Date|Number|String input)
- - Bella.date.utc(Date|Number|String input)
- - Bella.date.strtotime(String input)
+ - .date.format(String pattern, Date|Number|String input)
+ - .date.relativize(Date|Number|String input)
+ - .date.local(Date|Number|String input)
+ - .date.utc(Date|Number|String input)
+ - .date.strtotime(String input)
 
 Default pattern is 'D, M d, Y  H:i:s A'. Without any parameter, Bella.date.format() return a string related to current time, in the format of default pattern.
 
@@ -352,12 +330,12 @@ Examples:
 ```
 
 ### Scheduler
- - Bella.scheduler.every(String pattern, Function callback)
- - Bella.scheduler.once(String pattern, Function callback)
- - Bella.scheduler.hourly(String pattern, Function callback)
- - Bella.scheduler.daily(String pattern, Function callback)
- - Bella.scheduler.monthly(String pattern, Function callback)
- - Bella.scheduler.yearly(String pattern, Function callback)
+ - .scheduler.every(String pattern, Function callback)
+ - .scheduler.once(String pattern, Function callback)
+ - .scheduler.hourly(String pattern, Function callback)
+ - .scheduler.daily(String pattern, Function callback)
+ - .scheduler.monthly(String pattern, Function callback)
+ - .scheduler.yearly(String pattern, Function callback)
 
 
 Scheduler is the best utility BellaJS provides. Almost cases you can use Bella.scheduler instead of setInterval or setTimeout, because it runs only one timer for the entire process. Regarding parameter "pattern" for Bella.scheduler.every, it may be:
