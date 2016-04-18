@@ -4,27 +4,30 @@ bella.js
 BellaJS is a lightweight library with the useful functions for handling string, array/object, datetime, schedule, template and dom/event better and easier. It supports both Node.js and browser environments.
 
 [![NPM](https://badge.fury.io/js/bellajs.svg)](https://badge.fury.io/js/bellajs) ![Travis](https://travis-ci.org/ndaidong/bella.js.svg?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/ndaidong/bella.js/badge.svg?branch=master)](https://coveralls.io/github/ndaidong/bellajs?branch=master)
+![devDependency Status](https://david-dm.org/ndaidong/bella.js.svg)
 
 # Contents
 
 * [What's new](#changes)
 * [Setup](#setup)
-* [Usage](#usage)
-  * [Methods](#methods)
-    * [DataType detection](#datatype-detection)
-    * [String manipulation](#string-manipulation)
-    * [Template manipulation](#template-manipulation)
-    * [Array & Object](#array--object)
-    * [DateTime](#datetime)
-    * [Scheduler](#scheduler)
-    * [Cookies accessing](#cookies-accessing)
-    * [DOM & Event manipulation](#dom--event-manipulation)
-    * [Other methods](#other-methods)
-  * [Properties](#properties)
+* [APIs](#apis)
+  * [DataType detection](#datatype-detection)
+  * [String manipulation](#string-manipulation)
+  * [Template manipulation](#template-manipulation)
+  * [Array & Object](#array--object)
+  * [DateTime](#datetime)
+  * [Scheduler](#scheduler)
 * [Test](#test)
 
 
 # Changes
+
+#### v5.0.0 - Apr 18, 2016
+- Build with Google Closure compiler
+- Refactor scheduler's features
+- Rewrite in ES6 syntax
+- Remove browser side features
 
 #### v4.1.5 - Mar 18, 2016
 - Implement nyc/istanbul to check test coverage
@@ -129,9 +132,7 @@ Assuming there is a file bella.min.js located at "/public/js/lib/", the followin
 ```
 
 
-# Usage
-
-## Methods
+# APIs
 
 ### DataType detection
  - Bella.isArray(Anything val)
@@ -400,120 +401,6 @@ The available units: **d** (days), **h** (hours), **m** (minutes), **s** (second
 
 Bella.scheduler.once do the same thing as Bella.scheduler.every, but just once. The 4 remain methods yearly(), monthly(), daily(), hourly() can be looked as the shortcuts of every().
 
-The following sub objects are not available in Node.js environment.
-
-### Cookies accessing
-
- - Bella.cookie.set(String name, String value, String expires, String domain, String path)
- - Bella.cookie.get(String name)
- - Bella.cookie.unset(String name)
-
-The keywords "name", "value", "expires", "domain" and "path" are steadfast.
-
-Bella.cookie.set also accepts an object. Its first two parameters are required, while the third parameter is a string in the format of "N units", such as 2d (2 days), 6h (6 hours), -30m (30 minutes ago), etc...
-
-Examples:
-
-```
-// set a cookie
-Bella.cookie.set('userid', 'A98kja8967jkqwKOL');
-
-// another way
-Bella.cookie.set({
-    name: 'userid',
-    value: 'A98kja8967jkqwKOL'
-});
-
-// get its value
-var userid = Bella.cookie.get('userid');
-
-// unset it
-Bella.cookie.unset('userid');
-
-
-```
-
-### DOM & Event manipulation
-
- - Bella.dom.ready(Function callback)
- - Bella.dom.one(String selectors)
- - Bella.dom.all(String selectors)
- - Bella.dom.get(String ID)
- - Bella.dom.add(Element|String tag [, Element parent])
- - Bella.dom.create(Element dom)
- - Bella.event.on(String|Element s, String eventName, Function callback)
- - Bella.event.off(String|Element s, String eventName, Function callback)
- - Bella.event.simulate(String|Element s, String eventName)
- - Bella.event.stop(Event e)
- - Bella.event.detect(Event e)
-
-The HTML DOM Element returned by Bella.dom's methods have several helpful functions as below:
-
- - hasClass(String className)
- - addClass(String className)
- - removeClass(String  className)
- - toggleClass(String  className)
- - html([String html])
- - empty()
- - destroy()
-
-Using native selector, BellaJS DOM is faster than many other DOM manipulation libraries: http://jsperf.com/bellajs-dom/2
-
-Examples:
-
-```
-Bella.dom.ready(function(){
-
-    // Add a new element to document.body
-    var container = Bella.dom.add('DIV');
-
-    // then add a DIV element into container
-    var div1 = Bella.dom.add('DIV', container);
-
-    // then add a class "sub-item" to child DIV
-    div1.addClass('sub-item');
-
-    // more a child DIV
-    var div2 = Bella.dom.add('DIV', container);
-
-    // also add a class "sub-item"
-    div2.addClass('sub-item');
-
-    // now, we can extract list of elements by class name:
-    var subItems = Bella.dom.all('.sub-item');
-
-    console.log(subItems);
-
-
-    // create a button
-    var btn = Bella.dom.add('BUTTON');
-
-    // set label
-    btn.html('Say Hello!');
-
-    // set an event listener
-    Bella.event.on(btn, 'click', function(){
-        alert('Hello! How it\'s going?');
-    });
-
-    // simulate a click event on there (it works as same as jQuery.trigger method)
-    Bella.event.simulate(btn, 'click');
-
-});
-```
-
-
-### Other methods
-
- - Bella.getMousePosition(event) // browser only
- - Bella.getWindowSize // browser only
-
-
-## Properties
-
- - Bella.id
- - Bella.hostname // browser only
-
 
 # Test
 
@@ -523,13 +410,8 @@ cd bella.js
 npm install
 
 // test
+npm run build
 npm test
-
-// test coverage
-npm run coverage
-
-// generate coverage report
-npm run report
 ```
 
 

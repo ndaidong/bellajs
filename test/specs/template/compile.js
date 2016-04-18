@@ -2,23 +2,20 @@
  * Testing
  * @ndaidong
  */
-/* global describe it */
+
+'use strict';
+
 /* eslint no-undefined: 0*/
 /* eslint no-array-constructor: 0*/
 /* eslint no-new-func: 0*/
 
-import path from 'path';
-import chai from 'chai';
+var test = require('tape');
 
-chai.should();
-var expect = chai.expect;
+var config = require('../../config');
+var bella = config.bella;
 
-var rootDir = '../../../src/';
-
-var bella = require(path.join(rootDir, 'bella'));
-
-describe('.compile(String s, Object date)', () => {
-
+// isArray
+test('Testing .compile(String s, Object date) method:', (assert) => {
   let sample = `
     <article>
       <a href="{link}">{title}</a>
@@ -49,14 +46,7 @@ describe('.compile(String s, Object date)', () => {
       </p>
     </article>`;
 
-  describe(' / bella.compile(sample, data)', () => {
-
-    let result = bella.compile(sample, data);
-
-    it(' should return "' + expectation + '"', () => {
-      expect(result).to.equal(expectation);
-    });
-
-  });
-
+  let result = bella.compile(sample, data);
+  assert.equal(result, bella.trim(expectation, true), 'Result must match expectation');
+  assert.end();
 });
