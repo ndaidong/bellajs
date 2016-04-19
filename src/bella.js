@@ -181,16 +181,21 @@
   B.equals = equals;
 
   var createId = (leng, prefix) => {
-    let chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    chars += chars.toLowerCase();
-    chars += '0123456789';
-    let t = chars.length;
+    let rn = () => {
+      return Math.random().toString(36).slice(2);
+    };
+    let a = [];
+    while (a.length < 10) {
+      a.push(rn());
+    }
+    let r = a.join('');
+    let t = r.length;
     let px = prefix || '';
     let ln = Math.max(leng || 32, px.length);
     let s = px;
     while (s.length < ln) {
       let k = Math.floor(Math.random() * t);
-      s += chars.charAt(k) || '';
+      s += r.charAt(k) || '';
     }
     return s;
   };
