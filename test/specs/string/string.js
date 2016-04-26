@@ -14,6 +14,15 @@ var test = require('tape');
 var config = require('../../config');
 var bella = config.bella;
 
+// repeat
+test('Testing .repeat(String s, Number times) method', (assert) => {
+  let x = 'hi';
+  let a = bella.repeat(x, 5);
+  let e = 'hihihihihi';
+  assert.deepEquals(a, e, `bella.repeat(x) must return ${e}`);
+  assert.end();
+});
+
 // encode
 test('Testing .encode(String s) method', (assert) => {
   let x = 'Hello world';

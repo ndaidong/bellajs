@@ -180,6 +180,151 @@
   B.hasProperty = hasProperty;
   B.equals = equals;
 
+  var encode = (s) => {
+    return isString(s) ? encodeURIComponent(s) : '';
+  };
+
+  var decode = (s) => {
+    return isString(s) ? decodeURIComponent(s.replace(/\+/g, ' ')) : '';
+  };
+
+  var trim = (s, all) => {
+    if (!isString(s)) {
+      return '';
+    }
+    let x = s ? s.replace(/^[\s\xa0]+|[\s\xa0]+$/g, '') : s || '';
+    if (x && all) {
+      return x.replace(/\r?\n|\r/g, ' ').replace(/\s\s+|\r/g, ' ');
+    }
+    return x;
+  };
+
+  var truncate = (s, l) => {
+    s = trim(s);
+    if (!s) {
+      return s;
+    }
+    let t = l || 140;
+    if (s.length <= t) {
+      return s;
+    }
+    let x = s.substring(0, t);
+    let a = x.split(' '), b = a.length, r = '';
+    if (b > 1) {
+      a.pop();
+      r += a.join(' ');
+      if (r.length < s.length) {
+        r += '...';
+      }
+    } else {
+      x = x.substring(0, t - 3);
+      r = x + '...';
+    }
+    return r;
+  };
+
+  var stripTags = (s) => {
+    if (!isString(s)) {
+      return '';
+    }
+    let r = s.replace(/<.*?>/gi, ' ');
+    if (r) {
+      r = trim(r.replace(/\s\s+/g, ' '));
+    }
+    return r;
+  };
+
+  var escapeHTML = (s) => {
+    if (!isString(s)) {
+      return '';
+    }
+    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  };
+
+  var unescapeHTML = (s) => {
+    if (!isString(s)) {
+      return '';
+    }
+    return s.replace(/&quot;/g, '"').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
+  };
+
+  var strtolower = (s) => {
+    return isString(s) ? s.toLowerCase() : '';
+  };
+
+  var strtoupper = (s) => {
+    return isString(s) ? s.toUpperCase() : '';
+  };
+
+  var ucfirst = (s) => {
+    if (!isString(s)) {
+      return '';
+    }
+    if (s.length === 1) {
+      return s.toUpperCase();
+    }
+    s = s.toLowerCase();
+    return s.charAt(0).toUpperCase() + s.slice(1);
+  };
+
+  var ucwords = (s) => {
+    if (!isString(s)) {
+      return '';
+    }
+    let c = s.split(' '), a = [];
+    c.forEach((w) => {
+      a.push(ucfirst(w));
+    });
+    return a.join(' ');
+  };
+
+  var leftPad = (s, size, spad) => {
+    let o = String(s);
+    let z = size || 2;
+    let g = spad || '0';
+    return o.length >= z ? o : new Array(z - o.length + 1).join(g) + o;
+  };
+
+  var rightPad = (s, size, spad) => {
+    let o = String(s);
+    let z = size || 2;
+    let g = spad || '0';
+    return o.length >= z ? o : o + new Array(z - o.length + 1).join(g);
+  };
+
+  var repeat = (s, m) => {
+    let a = [];
+    while (a.length < m) {
+      a.push(s);
+    }
+    return a.join('');
+  };
+
+  var warn = (msg) => {
+    let txt = ' WARNING: ' + msg;
+    let t = txt.length + 5;
+    let c = '\x1b[33m%s\x1b[0m ';
+    console.warn(c, repeat('*', t)); // eslint-disable-line no-console
+    console.warn(c, txt); // eslint-disable-line no-console
+    console.warn(c, repeat('*', t)); // eslint-disable-line no-console
+  };
+
+  B.encode = encode;
+  B.decode = decode;
+  B.trim = trim;
+  B.truncate = truncate;
+  B.stripTags = stripTags;
+  B.escapeHTML = escapeHTML;
+  B.unescapeHTML = unescapeHTML;
+  B.strtolower = strtolower;
+  B.strtoupper = strtoupper;
+  B.ucfirst = ucfirst;
+  B.ucwords = ucwords;
+  B.leftPad = leftPad;
+  B.rightPad = rightPad;
+  B.repeat = repeat;
+  B.warn = warn;
+
   var createId = (leng, prefix) => {
     let rn = () => {
       return Math.random().toString(36).slice(2);
@@ -287,7 +432,7 @@
     return a[a.length - 1];
   };
 
-  var getIndex = (item, arr) => {
+  var getIndex = (arr, item) => {
     let r = -1;
     for (let i = 0; i < arr.length; i++) {
       if (arr[i] === item) {
@@ -298,7 +443,7 @@
     return r;
   };
 
-  var getLastIndex = (item, arr) => {
+  var getLastIndex = (arr, item) => {
     let r = -1;
     for (let i = arr.length - 1; i >= 0; i--) {
       if (arr[i] === item) {
@@ -310,37 +455,30 @@
   };
 
   var clone = (obj) => {
-    if (!isObject(obj) && !isArray(obj) && !isDate(obj)) {
+    if (!(obj instanceof Object)) {
       return obj;
     }
-    if (isDate(obj)) {
-      let copy1 = new Date();
-      copy1.setTime(obj.getTime());
-      return copy1;
+    let output;
+    let Constructor = obj.constructor;
+    switch (Constructor) {
+      case RegExp:
+        output = new Constructor(obj);
+        break;
+      case Date:
+        output = new Constructor(obj.getTime());
+        break;
+      default:
+        output = new Constructor();
     }
-    if (isArray(obj)) {
-      let copy2 = [], arr = obj.slice(0);
-      for (let i = 0, len = arr.length; i < len; ++i) {
-        copy2[i] = clone(arr[i]);
-      }
-      return copy2;
+    for (let prop in obj) { // eslint-disable-line guard-for-in
+      output[prop] = clone(obj[prop]);
     }
-    if (isObject(obj)) {
-      let copy = {};
-      for (let attr in obj) {
-        if (attr === 'clone') {
-          continue;
-        }
-        if (obj.hasOwnProperty(attr)) {
-          copy[attr] = clone(obj[attr]);
-        }
-      }
-      return copy;
-    }
-    return obj;
+    return output;
   };
 
+
   var copies = (source, dest, matched, excepts) => {
+    warn('.copies() method is deprecated. It will be removed since May 15, 2016.');
     let mt = matched || false;
     let ex = excepts || [];
     for (let k in source) {
@@ -353,7 +491,7 @@
         if (isObject(ob) && isObject(oa) || isArray(ob) && isArray(oa)) {
           dest[k] = copies(oa, dest[k], mt, ex);
         } else {
-          dest[k] = oa;
+          dest[k] = clone(oa);
         }
       }
     }
@@ -470,118 +608,6 @@
   /** https://github.com/jbt/js-crypto */
   B.md5 = function() {for(var m=[],l=0;64>l;)m[l]=0|4294967296*Math.abs(Math.sin(++l));return function(c) {var e,g,f,a,h=[];c=unescape(encodeURI(c));for(var b=c.length,k=[e=1732584193,g=-271733879,~e,~g],d=0;d<=b;)h[d>>2]|=(c.charCodeAt(d)||128)<<8*(d++%4);h[c=16*(b+8>>6)+14]=8*b;for(d=0;d<c;d+=16) {b=k;for(a=0;64>a;)b=[f=b[3],(e=b[1]|0)+((f=b[0]+[e&(g=b[2])|~e&f,f&e|~f&g,e^g^f,g^(e|~f)][b=a>>4]+(m[a]+(h[[a,5*a+1,3*a+5,7*a][b]%16+d]|0)))<<(b=[7,12,17,22,5,9,14,20,4,11,16,23,6,10,15,21][4*b+a++%4])|f>>>32-b),e,g];for(a=4;a;)k[--a]=k[a]+b[a]}for(c="";32>a;)c+=(k[a>>3]>>4*(1^a++&7)&15).toString(16);return c}}();
   /*eslint-enable*/
-
-  var encode = (s) => {
-    return isString(s) ? encodeURIComponent(s) : '';
-  };
-
-  var decode = (s) => {
-    return isString(s) ? decodeURIComponent(s.replace(/\+/g, ' ')) : '';
-  };
-
-  var trim = (s, all) => {
-    if (!isString(s)) {
-      return '';
-    }
-    let x = s ? s.replace(/^[\s\xa0]+|[\s\xa0]+$/g, '') : s || '';
-    if (x && all) {
-      return x.replace(/\r?\n|\r/g, ' ').replace(/\s\s+|\r/g, ' ');
-    }
-    return x;
-  };
-
-  var truncate = (s, l) => {
-    s = trim(s);
-    if (!s) {
-      return s;
-    }
-    let t = l || 140;
-    if (s.length <= t) {
-      return s;
-    }
-    let x = s.substring(0, t);
-    let a = x.split(' '), b = a.length, r = '';
-    if (b > 1) {
-      a.pop();
-      r += a.join(' ');
-      if (r.length < s.length) {
-        r += '...';
-      }
-    } else {
-      x = x.substring(0, t - 3);
-      r = x + '...';
-    }
-    return r;
-  };
-
-  var stripTags = (s) => {
-    if (!isString(s)) {
-      return '';
-    }
-    let r = s.replace(/<.*?>/gi, ' ');
-    if (r) {
-      r = trim(r.replace(/\s\s+/g, ' '));
-    }
-    return r;
-  };
-
-  var escapeHTML = (s) => {
-    if (!isString(s)) {
-      return '';
-    }
-    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-  };
-
-  var unescapeHTML = (s) => {
-    if (!isString(s)) {
-      return '';
-    }
-    return s.replace(/&quot;/g, '"').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
-  };
-
-  var strtolower = (s) => {
-    return isString(s) ? s.toLowerCase() : '';
-  };
-
-  var strtoupper = (s) => {
-    return isString(s) ? s.toUpperCase() : '';
-  };
-
-  var ucfirst = (s) => {
-    if (!isString(s)) {
-      return '';
-    }
-    if (s.length === 1) {
-      return s.toUpperCase();
-    }
-    s = s.toLowerCase();
-    return s.charAt(0).toUpperCase() + s.slice(1);
-  };
-
-  var ucwords = (s) => {
-    if (!isString(s)) {
-      return '';
-    }
-    let c = s.split(' '), a = [];
-    c.forEach((w) => {
-      a.push(ucfirst(w));
-    });
-    return a.join(' ');
-  };
-
-  var leftPad = (s, size, spad) => {
-    let o = String(s);
-    let z = size || 2;
-    let g = spad || '0';
-    return o.length >= z ? o : new Array(z - o.length + 1).join(g) + o;
-  };
-
-  var rightPad = (s, size, spad) => {
-    let o = String(s);
-    let z = size || 2;
-    let g = spad || '0';
-    return o.length >= z ? o : o + new Array(z - o.length + 1).join(g);
-  };
 
   var replaceAll = (s, a, b) => {
     if (isNumber(s)) {
@@ -704,19 +730,6 @@
     return tpl;
   };
 
-  B.encode = encode;
-  B.decode = decode;
-  B.trim = trim;
-  B.truncate = truncate;
-  B.stripTags = stripTags;
-  B.escapeHTML = escapeHTML;
-  B.unescapeHTML = unescapeHTML;
-  B.strtolower = strtolower;
-  B.strtoupper = strtoupper;
-  B.ucfirst = ucfirst;
-  B.ucwords = ucwords;
-  B.leftPad = leftPad;
-  B.rightPad = rightPad;
   B.replaceAll = replaceAll;
   B.stripAccent = stripAccent;
   B.createAlias = createAlias;
