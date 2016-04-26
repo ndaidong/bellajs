@@ -23,6 +23,11 @@ BellaJS is a lightweight library with several helpful utils. It supports both No
 
 # Changes
 
+#### v5.1.1 - Apr 26, 2016
+- Add repeat(), warn() methods
+- Improve clone() method to avoid reference
+- Mark copies() method as "is deprecated".
+
 #### v5.0.0 - Apr 18, 2016
 - Refactor scheduler's features
 - Rewrite in ES6 syntax
@@ -149,6 +154,8 @@ Assuming there is a file bella.min.js located at "/public/js/lib/", the followin
  - .truncate(String s, Number limit)
  - .leftPad(String s, Number limit, String pad)
  - .rightPad(String s, Number limit, String pad)
+ - .repeat(String s, Number times)
+ - .warn(String message)
  - .replaceAll(String s, String|Array search, String|Array replace)
  - .md5(String s)
 

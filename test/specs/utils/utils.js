@@ -113,7 +113,8 @@ test('Testing .clone(Object target) method', (assert) => {
     },
     birthday: new Date(),
     a: 0,
-    clone: false
+    clone: false,
+    reg: /^\w+@\s([a-z])$/gi
   };
 
 
@@ -122,6 +123,7 @@ test('Testing .clone(Object target) method', (assert) => {
   assert.ok(bella.hasProperty(r, 'IQ'), 'Result must have IQ');
   assert.ok(bella.hasProperty(r, 'epouse'), 'Result must have epouse');
   assert.ok(bella.hasProperty(r, 'birthday'), 'Result must have birthday');
+  assert.ok(bella.hasProperty(r, 'reg'), 'Result must have reg');
   assert.error(bella.clone(), 'Clone nothing must return nothing');
   assert.end();
 });
@@ -301,6 +303,22 @@ test('Testing .last(Array a) method', (assert) => {
   let a = [ 9, 77, 66, 51, 876, 124 ];
   let e = bella.last(a);
   assert.deepEquals(e, 124, 'First item must be 124');
+  assert.end();
+});
+
+// first
+test('Testing .getIndex(Array a, Find) method', (assert) => {
+  let a = [ 9, 77, 123, 51, 876, 124, 12, 51, 99, 46 ];
+  let e = bella.getIndex(a, 51);
+  assert.deepEquals(e, 3, 'Index of 51 must be 3');
+  assert.end();
+});
+
+// first
+test('Testing .getLastIndex(Array a, Find) method', (assert) => {
+  let a = [ 9, 77, 123, 51, 876, 124, 12, 51, 99, 46 ];
+  let e = bella.getLastIndex(a, 51);
+  assert.deepEquals(e, 7, 'Last index of 51 must be 7');
   assert.end();
 });
 
