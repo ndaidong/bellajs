@@ -148,7 +148,7 @@ test('Testing .date.local(Number timestamp) method:', (assert) => {
 test('Testing .date.strtotime(String Datetime) method:', (assert) => {
   let s = 'Thu, 18 Feb 2016 15:28:20 GMT+07';
   let r = bella.date.strtotime(s);
-  let e = 1455808880000;
+  let e = 1455784100000;
   assert.deepEqual(r, e, `bella.date.strtotime('${s}') must return ${e}`);
   assert.end();
 });
