@@ -21,41 +21,9 @@ BellaJS is a lightweight library with several helpful utils. It supports both No
 * [Test](#test)
 
 
-# Changes
+# Releases and ChangeLog
 
-#### v5.1.1 - Apr 26, 2016
-- Add repeat(), warn() methods
-- Improve clone() method to avoid reference
-- Mark copies() method as "is deprecated".
-
-#### v5.0.0 - Apr 18, 2016
-- Refactor scheduler's features
-- Rewrite in ES6 syntax
-- Remove browser side features
-- Remove 3 methods "trace", "enableTrace" and "disableTrace"
-- Add 6 methods "first", "last", "getIndex", "getLastIndex", "debounce" and "throttle"
-- Build with Google Closure compiler
-- Switch to Tape, Sinon instead of Mocha/Chai
-
-#### v4.1.5 - Mar 18, 2016
-- Implement nyc/istanbul to check test coverage
-- Remove mocha.opts, move configs to package.json
-- Use local mocha only. No longer require global mocha
-- Update travis config
-
-#### v4.1.4 - Feb 18, 2016
-- Resolve issue with eslint 2.0.0 and node.js v5.6.0
-
-#### v4.1.2 - Dec 24, 2015
-- Update coding convension
-- Remove .date.pattern
-
-#### v4.0.12 - Nov 11, 2015
-- Unsupports old node.js (< 4.0.0)
-- Change test script to use Mocha instead of Jasmine
-
-#### v3.7.6 - Sep 27, 2015
-- Added 3 new methods: "random", "pick" and "shuffle"
+[View history](https://github.com/ndaidong/bella.js/releases)
 
 
 # Setup
