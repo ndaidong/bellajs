@@ -758,7 +758,7 @@
       let t = new Date().getTimezoneOffset();
       let z = Math.abs(t / 60);
       let sign = t < 0 ? '+' : '-';
-      return [ 'GMT', sign, leftPad(z, 2) ].join('');
+      return [ 'GMT', sign, leftPad(z, 4) ].join('');
     })();
 
     var format = (output, input) => {

@@ -26,7 +26,7 @@ test('Testing .date.format(String pattern, Number timestamp) method:', (assert) 
     { ouput: 'M j, Y h:i:s A', expectation: 'Feb 18, 2016 03:28:20 PM' },
     { ouput: null, expectation: 'Thu, Feb 18, 2016  03:28:20 PM' },
     { ouput: 'l, j F Y h:i:s a', expectation: 'Thursday, 18 February 2016 03:28:20 pm' },
-    { ouput: 'w D G O', expectation: '4 Thu 15 GMT+07' },
+    { ouput: 'w D G O', expectation: '4 Thu 15 GMT+0007' },
     { ouput: 'm/d/y', expectation: '02/18/16' },
     { ouput: 'm/d/y t', expectation: '02/18/16 29' },
     { ouput: 'M jS, Y', expectation: 'Feb 18th, 2016' },
@@ -139,14 +139,14 @@ test('Testing .date.utc(Number timestamp) method:', (assert) => {
 test('Testing .date.local(Number timestamp) method:', (assert) => {
   let t = 1455784100000;
   let r = bella.date.local(t);
-  let e = 'Thu, 18 Feb 2016 15:28:20 GMT+07';
+  let e = 'Thu, 18 Feb 2016 15:28:20 GMT+0007';
   assert.deepEqual(r, e, `bella.date.local(${t}) must return ${e}`);
   assert.end();
 });
 
 // .date.format
 test('Testing .date.strtotime(String Datetime) method:', (assert) => {
-  let s = 'Thu, 18 Feb 2016 15:28:20 GMT+07';
+  let s = 'Thu, 18 Feb 2016 15:28:20 GMT+0007';
   let r = bella.date.strtotime(s);
   let e = 1455808880000;
   assert.deepEqual(r, e, `bella.date.strtotime('${s}') must return ${e}`);
