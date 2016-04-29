@@ -293,6 +293,12 @@
   };
 
   var repeat = (s, m) => {
+    if (!s || !isString(s)) {
+      return '';
+    }
+    if (!isInteger(m) || m < 1) {
+      return s;
+    }
     let a = [];
     while (a.length < m) {
       a.push(s);
@@ -301,12 +307,16 @@
   };
 
   var warn = (msg) => {
+    if (!msg || !isString(msg)) {
+      return '';
+    }
     let txt = ' WARNING: ' + msg;
     let t = txt.length + 5;
     let c = '\x1b[33m%s\x1b[0m ';
     console.warn(c, repeat('*', t)); // eslint-disable-line no-console
     console.warn(c, txt); // eslint-disable-line no-console
     console.warn(c, repeat('*', t)); // eslint-disable-line no-console
+    return c;
   };
 
   B.encode = encode;
