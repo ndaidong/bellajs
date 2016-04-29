@@ -21,11 +21,6 @@ BellaJS is a lightweight library with several helpful utils. It supports both No
 * [Test](#test)
 
 
-# Releases and ChangeLog
-
-[View history](https://github.com/ndaidong/bella.js/releases)
-
-
 # Setup
 
 ### In Node.js:
@@ -374,9 +369,6 @@ npm install
 npm run build
 npm test
 ```
-
-
-
 
 # License
 
