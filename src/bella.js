@@ -306,19 +306,6 @@
     return a.join('');
   };
 
-  var warn = (msg) => {
-    if (!msg || !isString(msg)) {
-      return '';
-    }
-    let txt = ' WARNING: ' + msg;
-    let t = txt.length + 5;
-    let c = '\x1b[33m%s\x1b[0m ';
-    console.warn(c, repeat('*', t)); // eslint-disable-line no-console
-    console.warn(c, txt); // eslint-disable-line no-console
-    console.warn(c, repeat('*', t)); // eslint-disable-line no-console
-    return c;
-  };
-
   B.encode = encode;
   B.decode = decode;
   B.trim = trim;
@@ -333,7 +320,6 @@
   B.leftPad = leftPad;
   B.rightPad = rightPad;
   B.repeat = repeat;
-  B.warn = warn;
 
   var createId = (leng, prefix) => {
     let rn = () => {
@@ -488,7 +474,6 @@
 
 
   var copies = (source, dest, matched, excepts) => {
-    warn('.copies() method is deprecated. It will be removed since May 15, 2016.');
     let mt = matched || false;
     let ex = excepts || [];
     for (let k in source) {
