@@ -3,10 +3,9 @@
  * @ndaidong
  */
 
-'use strict';
-
 /* eslint no-undefined: 0*/
 /* eslint no-array-constructor: 0*/
+/* eslint no-empty-function: 0*/
 /* eslint no-new-func: 0*/
 
 var test = require('tape');
@@ -54,7 +53,7 @@ test('Testing .isElement(Anything) method:', (assert) => {
 test('Testing .isArray(Anything) method:', (assert) => {
   [
     [],
-    [ 1, 2, 3 ],
+    [1, 2, 3],
     new Array(),
     new Array(5)
   ].forEach((item) => {
@@ -88,7 +87,7 @@ test('Testing .isObject(Anything) method:', (assert) => {
   [
     is,
     {},
-    { a: 1, b: 0 },
+    {a: 1, b: 0},
     Object.create({}),
     new Date()
   ].forEach((item) => {
@@ -252,8 +251,8 @@ test('Testing .isEmpty(Anything) method:', (assert) => {
   [
     1,
     true,
-    { a: 1 },
-    [ 1, 3 ],
+    {a: 1},
+    [1, 3],
     function x() {}
   ].forEach((item) => {
     let r = bella.isEmpty(item);
@@ -278,8 +277,8 @@ test('Testing .isFunction(Anything) method:', (assert) => {
   [
     1,
     true,
-    { a: 1 },
-    [ 1, 3 ],
+    {a: 1},
+    [1, 3],
     something,
     '',
     {},
@@ -452,7 +451,7 @@ test('Tesing .hasProperty(Object o, String propertyName) method:', (assert) => {
     assert.error(bella.hasProperty(sample, k), `"${k}" must be unrecognized.`);
   }
 
-  assert.error(bella.hasProperty({ a: 1 }), 'Return false if missing k');
+  assert.error(bella.hasProperty({a: 1}), 'Return false if missing k');
   assert.error(bella.hasProperty(), 'Return false if no parameter');
   assert.end();
 });
@@ -465,7 +464,7 @@ test('Tesing .equals(Anything a, Anything b) method:', (assert) => {
     [],
     0,
     'a',
-    [ 1, 4, 6, 8 ],
+    [1, 4, 6, 8],
     {
       a: 1,
       b: 4,
@@ -478,7 +477,7 @@ test('Tesing .equals(Anything a, Anything b) method:', (assert) => {
     [],
     0,
     'a',
-    [ 1, 4, 6, 8 ],
+    [1, 4, 6, 8],
     {
       c: 6,
       b: 4,
@@ -488,7 +487,8 @@ test('Tesing .equals(Anything a, Anything b) method:', (assert) => {
   ];
 
   for (let i = 0; i < a1.length; i++) {
-    let a = a1[i], b = b1[i];
+    let a = a1[i];
+    let b = b1[i];
     let result = bella.equals(a, b);
     let as = stringify(a);
     let bs = stringify(b);
@@ -496,13 +496,14 @@ test('Tesing .equals(Anything a, Anything b) method:', (assert) => {
   }
 
 
-  let at = new Date(), bt = new Date(at.getTime() - 1000);
+  let at = new Date();
+  let bt = new Date(at.getTime() - 1000);
   let a2 = [
-    { x: 5 },
-    [ 11, 66, 'ab' ],
+    {x: 5},
+    [11, 66, 'ab'],
     0,
     'a',
-    [ 1, 4, 6, 8 ],
+    [1, 4, 6, 8],
     {
       a: 1,
       b: 4,
@@ -512,10 +513,10 @@ test('Tesing .equals(Anything a, Anything b) method:', (assert) => {
   ];
   let b2 = [
     {},
-    [ 'ab' ],
+    ['ab'],
     8,
     'b',
-    [ 1, 6, 4, 8 ],
+    [1, 6, 4, 8],
     {
       c: 6,
       b: 4,
@@ -525,7 +526,8 @@ test('Tesing .equals(Anything a, Anything b) method:', (assert) => {
   ];
 
   for (let i = 0; i < a2.length; i++) {
-    let a = a2[i], b = b2[i];
+    let a = a2[i];
+    let b = b2[i];
     let result = bella.equals(a, b);
     let as = stringify(a);
     let bs = stringify(b);

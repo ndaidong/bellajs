@@ -1,10 +1,7 @@
 language: node_js
 node_js:
-  - "6.2.0"
+  - "6.2.1"
   - "6.1.0"
   - "6.0.0"
-  - "5.5.0"
-  - "5.0.0"
-  - "4.0.0"
 before_script:
   - export TZ=Etc/GMT-7

@@ -2,13 +2,6 @@
  * Testing
  * @ndaidong
  */
-
-'use strict';
-
-/* eslint no-undefined: 0*/
-/* eslint no-array-constructor: 0*/
-/* eslint no-new-func: 0*/
-
 var test = require('tape');
 var sinon = require('sinon');
 
@@ -21,15 +14,15 @@ test('Testing .date.format(String pattern, Number timestamp) method:', (assert) 
   let atime = 1455784100752;
 
   let samples = [
-    { ouput: 'Y/m/d h:i:s', expectation: '2016/02/18 15:28:20' },
-    { ouput: 'Y/m/d h:i:s A', expectation: '2016/02/18 03:28:20 PM' },
-    { ouput: 'M j, Y h:i:s A', expectation: 'Feb 18, 2016 03:28:20 PM' },
-    { ouput: null, expectation: 'Thu, Feb 18, 2016  03:28:20 PM' },
-    { ouput: 'l, j F Y h:i:s a', expectation: 'Thursday, 18 February 2016 03:28:20 pm' },
-    { ouput: 'w D G O', expectation: '4 Thu 15 GMT+0007' },
-    { ouput: 'm/d/y', expectation: '02/18/16' },
-    { ouput: 'm/d/y t', expectation: '02/18/16 29' },
-    { ouput: 'M jS, Y', expectation: 'Feb 18th, 2016' },
+    {ouput: 'Y/m/d h:i:s', expectation: '2016/02/18 15:28:20'},
+    {ouput: 'Y/m/d h:i:s A', expectation: '2016/02/18 03:28:20 PM'},
+    {ouput: 'M j, Y h:i:s A', expectation: 'Feb 18, 2016 03:28:20 PM'},
+    {ouput: null, expectation: 'Thu, Feb 18, 2016  03:28:20 PM'},
+    {ouput: 'l, j F Y h:i:s a', expectation: 'Thursday, 18 February 2016 03:28:20 pm'},
+    {ouput: 'w D G O', expectation: '4 Thu 15 GMT+0007'},
+    {ouput: 'm/d/y', expectation: '02/18/16'},
+    {ouput: 'm/d/y t', expectation: '02/18/16 29'},
+    {ouput: 'M jS, Y', expectation: 'Feb 18th, 2016'},
     {
       ouput: 'M jS, Y',
       expectation: 'Feb 21st, 2016',

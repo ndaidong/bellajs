@@ -1,6 +1,6 @@
 
-var bella = require('../src/bella');
+var bella = require('../src/main');
 
 module.exports = {
-  bella: bella
+  bella
 };

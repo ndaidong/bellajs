@@ -3,8 +3,6 @@
  * @ndaidong
  */
 
-'use strict';
-
 /* eslint no-undefined: 0*/
 /* eslint no-array-constructor: 0*/
 /* eslint no-new-func: 0*/
@@ -72,7 +70,10 @@ test('Testing other methods:', (assert) => {
   assert.deepEquals(hourly.callCount, 2, 'Hourly task must be called 2 times');
 
   // go ahead 2 days --> 16:00:00 04/20/2016
-  // events at 14:15 04/18/2016 and 14:15 04/19/2016 and 14:15 04/20/2016
+  // events at
+  // - 14:15 04/18/2016
+  // - 14:15 04/19/2016
+  // - 14:15 04/20/2016
   clock.tick(6e4 * 60 * 24 * 2);
   assert.deepEquals(daily.callCount, 3, 'Daily task must be called 3 times');
 

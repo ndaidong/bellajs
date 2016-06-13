@@ -3,8 +3,6 @@
  * @ndaidong
  */
 
-'use strict';
-
 /* eslint no-undefined: 0*/
 /* eslint no-array-constructor: 0*/
 /* eslint no-new-func: 0*/
@@ -292,15 +290,15 @@ test('Testing .replaceAll(String s, String find, String replace) method', (asser
     {
       input: {
         a: 'Hello world',
-        b: [ 'l', 'o' ],
-        c: [ '2', '0' ]
+        b: ['l', 'o'],
+        c: ['2', '0']
       },
       expectation: 'He220 w0r2d'
     },
     {
       input: {
         a: 'Hello world',
-        b: [ 'l', 'o' ],
+        b: ['l', 'o'],
         c: '2'
       },
       expectation: 'He222 w2r2d'
@@ -308,8 +306,8 @@ test('Testing .replaceAll(String s, String find, String replace) method', (asser
     {
       input: {
         a: 'Hello world',
-        b: [ 'l' ],
-        c: [ '2', '0' ]
+        b: ['l'],
+        c: ['2', '0']
       },
       expectation: 'Hello world'
     },
@@ -354,7 +352,7 @@ test('Testing .replaceAll(String s, String find, String replace) method', (asser
     },
     {
       input: {
-        a: [ 20, 15, 0, 'T' ]
+        a: [20, 15, 0, 'T']
       },
       expectation: ''
     }

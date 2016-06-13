@@ -3,15 +3,24 @@
  * @ndaidong
 **/
 
-'use strict';
-
-(() => {
+((name, factory) => {
+  if (typeof module !== 'undefined' && module.exports) {
+    module.exports = factory();
+  } else {
+    let root = window || {};
+    if (root.define && root.define.amd) {
+      root.define([], factory);
+    } else if (root.exports) {
+      root.exports = factory();
+    } else {
+      root[name] = factory();
+    }
+  }
+})('Bella', () => { // eslint-disable-line no-invalid-this
 
   var ENV = typeof module !== 'undefined' && module.exports ? 'node' : 'browser';
 
-  var B = {
-    ENV: ENV
-  };
+  var B = {ENV};
 
   var tof = (v) => {
     let ots = Object.prototype.toString;
@@ -99,10 +108,10 @@
     return isString(val) && re.test(val);
   };
   var isEmpty = (val) => {
-    return !isDef(val) || isNull(val)
-      || isString(val) && val === ''
-      || isArray(val) && JSON.stringify(val) === '[]'
-      || isObject(val) && JSON.stringify(val) === '{}';
+    return !isDef(val) || isNull(val) ||
+      isString(val) && val === '' ||
+      isArray(val) && JSON.stringify(val) === '[]' ||
+      isObject(val) && JSON.stringify(val) === '{}';
   };
   var hasProperty = (ob, k) => {
     if (!ob || !k) {
@@ -138,7 +147,8 @@
         }
       }
     } else if (isObject(a) && isObject(b)) {
-      let as = [], bs = [];
+      let as = [];
+      let bs = [];
       for (let k1 in a) {
         if (hasProperty(a, k1)) {
           as.push(k1);
@@ -209,7 +219,9 @@
       return s;
     }
     let x = s.substring(0, t);
-    let a = x.split(' '), b = a.length, r = '';
+    let a = x.split(' ');
+    let b = a.length;
+    let r = '';
     if (b > 1) {
       a.pop();
       r += a.join(' ');
@@ -271,7 +283,8 @@
     if (!isString(s)) {
       return '';
     }
-    let c = s.split(' '), a = [];
+    let c = s.split(' ');
+    let a = [];
     c.forEach((w) => {
       a.push(ucfirst(w));
     });
@@ -478,7 +491,7 @@
     let ex = excepts || [];
     for (let k in source) {
       if (ex.length > 0 && contains(ex, k)) {
-        continue;
+        continue; // eslint-disable-line no-continue
       }
       if (!mt || mt && dest.hasOwnProperty(k)) {
         let oa = source[k];
@@ -502,11 +515,11 @@
       one = a[0];
       if (o === 1 || o === -1) {
         a.sort((m, n) => {
-          return m > n ? o : m < n ? -1 * o : 0;
+          return m > n ? o : m < n ? -1 * o : 0; // eslint-disable-line no-nested-ternary
         });
       } else if (isString(o) && hasProperty(one, o)) {
         a.sort((m, n) => {
-          return m[o] > n[o] ? 1 : m[o] < n[o] ? -1 : 0;
+          return m[o] > n[o] ? 1 : m[o] < n[o] ? -1 : 0; // eslint-disable-line no-nested-ternary
         });
       } else if (isObject(o)) {
         for (let key in o) {
@@ -526,7 +539,7 @@
 
   var shuffle = (arr) => {
     let a = clone(arr);
-    let j, x, i;
+    let i, j, x;
     for (i = a.length - 1; i >= 0; i--) {
       j = Math.floor(Math.random() * i);
       x = a[i - 1];
@@ -548,7 +561,8 @@
       let ri = random(0, arr.length - 1);
       return arr[ri];
     }
-    let ab = [], ba = clone(arr);
+    let ab = [];
+    let ba = clone(arr);
     while (ab.length < c) {
       let i = random(0, ba.length - 1);
       ab.push(ba[i]);
@@ -631,7 +645,8 @@
       let k = a.length;
       if (k > 0) {
         for (let i = 0; i < k; i++) {
-          let aaa = a[i], bb = b[i];
+          let aaa = a[i];
+          let bb = b[i];
           s = replaceAll(s, aaa, bb);
         }
       }
@@ -705,8 +720,8 @@
               data: v
             });
           } else if (isString(v)) {
-            v = replaceAll(v, [ '{', '}' ], [ '&#123;', '&#125;' ]);
-            let cns = ns.concat([ k ]);
+            v = replaceAll(v, ['{', '}'], ['&#123;', '&#125;']);
+            let cns = ns.concat([k]);
             let r = new RegExp('{' + cns.join('.') + '}', 'gi');
             s = s.replace(r, v);
           }
@@ -753,17 +768,14 @@
       let t = new Date().getTimezoneOffset();
       let z = Math.abs(t / 60);
       let sign = t < 0 ? '+' : '-';
-      return [ 'GMT', sign, leftPad(z, 4) ].join('');
+      return ['GMT', sign, leftPad(z, 4)].join('');
     })();
 
-    var format = (output, input) => {
+    var format = (output, timestamp) => {
       let meridiem = false;
-      let d, f, vchar = /\.*\\?([a-z])/gi;
-      if (!input) {
-        input = time();
-      } else {
-        input = new Date(input).getTime();
-      }
+      let d, f;
+      let vchar = /\.*\\?([a-z])/gi;
+      let input = timestamp ? new Date(timestamp).getTime() : time();
 
       if (!output || !isString(output)) {
         output = pattern;
@@ -779,7 +791,8 @@
         return String(n < 10 ? '0' + n : n);
       };
       let _ord = (day) => {
-        let s = day + ' ', x = s.charAt(s.length - 2);
+        let s = day + ' ';
+        let x = s.charAt(s.length - 2);
         if (x === '1') {
           s = 'st';
         } else if (x === '2') {
@@ -902,14 +915,14 @@
           break;
         } else {
           units = key;
-          delta = delta / conversions[key];
+          delta /= conversions[key];
         }
       }
       delta = Math.floor(delta);
       if (delta !== 1) {
         units += 's';
       }
-      return [ delta, units ].join(' ') + ' ago';
+      return [delta, units].join(' ') + ' ago';
     };
 
     let utc = (t) => {
@@ -928,11 +941,11 @@
     B.time = time;
 
     B.date = {
-      utc: utc,
-      local: local,
-      strtotime: strtotime,
-      format: format,
-      relativize: relativize
+      utc,
+      local,
+      strtotime,
+      format,
+      relativize
     };
 
   })();
@@ -984,7 +997,9 @@
       let dd = mat[1].toLowerCase();
       let ddi = getIndex(dd, wds);
 
-      let hh = 0, ii = 0, ss = 0;
+      let hh = 0;
+      let ii = 0;
+      let ss = 0;
       if (mat[2]) {
         hh = parseInt(mat[2], 10);
       }
@@ -1183,8 +1198,8 @@
       let n = time();
       let id = createId(32);
       let task = {
-        id: id,
-        fn: fn,
+        id,
+        fn,
         time: t,
         repeat: rep,
         createdAt: n,
@@ -1222,15 +1237,5 @@
   })();
 
   // exports
-  if (ENV === 'node') {
-    module.exports = B;
-  } else {
-    let root = window || {};
-    if (root.define && root.define.amd) {
-      root.define(() => {
-        return B;
-      });
-    }
-    root.Bella = B;
-  }
-})();
+  return B;
+});

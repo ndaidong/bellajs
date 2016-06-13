@@ -3,8 +3,6 @@
  * @ndaidong
  */
 
-'use strict';
-
 /* eslint no-undefined: 0*/
 /* eslint no-array-constructor: 0*/
 /* eslint no-new-func: 0*/
@@ -66,7 +64,7 @@ test('Testing .random() method', (assert) => {
 
 // max
 test('Testing .max(Array a) method', (assert) => {
-  let x = [ 1, 9, 300, 200, 8, 58, 74 ];
+  let x = [1, 9, 300, 200, 8, 58, 74];
   assert.equals(bella.max(x), 300, `bella.max(${stringify(x)}) must return 300`);
   assert.equals(bella.max(80), 80, 'bella.max(80) must return 80');
   assert.end();
@@ -74,7 +72,7 @@ test('Testing .max(Array a) method', (assert) => {
 
 // min
 test('Testing .min(Array a) method', (assert) => {
-  let x = [ 1, 9, 300, 200, 8, 58, 74 ];
+  let x = [1, 9, 300, 200, 8, 58, 74];
   assert.equals(bella.min(x), 1, `bella.min(${stringify(x)}) must return 1`);
   assert.equals(bella.min(80), 80, 'bella.min(80) must return 80');
   assert.end();
@@ -83,8 +81,8 @@ test('Testing .min(Array a) method', (assert) => {
 // empty
 test('Testing .empty(Anything) method', (assert) => {
   let a = [
-    [ 1, 5, 67, 86, 12, 79 ],
-    { name: 'olleH', age: 22 },
+    [1, 5, 67, 86, 12, 79],
+    {name: 'olleH', age: 22},
     'Hello world'
   ];
   let e = [
@@ -94,7 +92,8 @@ test('Testing .empty(Anything) method', (assert) => {
   ];
 
   for (let i = 0; i < a.length; i++) {
-    let k = a[i], r = e[i];
+    let k = a[i];
+    let r = e[i];
     let x = stringify(k);
     let y = bella.empty(k);
     assert.deepEquals(y, r, `bella.empty(${x}) must return ${stringify(r)}`);
@@ -168,7 +167,7 @@ test('Testing .copies(Object target) method', (assert) => {
     name: 'Aline',
     age: 20
   };
-  bella.copies(c, d, true, [ 'age' ]);
+  bella.copies(c, d, true, ['age']);
   assert.ok(!bella.hasProperty(d, 'gender'), 'Result must have not gender');
   assert.end();
 });
@@ -243,11 +242,11 @@ test('Testing .contains(Anything a, String b) method', (assert) => {
   ];
 
   let b1t = [
-    'Bach', 1, 'Mark', 878, [ 'name', 'Chris' ]
+    'Bach', 1, 'Mark', 878, ['name', 'Chris']
   ];
 
   b1t.forEach((item) => {
-    let k, e;
+    let e, k;
     if (is.array(item)) {
       k = item[0];
       e = bella.contains(a1, k, item[1]);
@@ -292,7 +291,7 @@ test('Testing .contains(Anything a, String b) method', (assert) => {
 
 // first
 test('Testing .first(Array a) method', (assert) => {
-  let a = [ 9, 77, 123, 51, 876, 124 ];
+  let a = [9, 77, 123, 51, 876, 124];
   let e = bella.first(a);
   assert.deepEquals(e, 9, 'First item must be 9');
   assert.end();
@@ -300,7 +299,7 @@ test('Testing .first(Array a) method', (assert) => {
 
 // first
 test('Testing .last(Array a) method', (assert) => {
-  let a = [ 9, 77, 66, 51, 876, 124 ];
+  let a = [9, 77, 66, 51, 876, 124];
   let e = bella.last(a);
   assert.deepEquals(e, 124, 'First item must be 124');
   assert.end();
@@ -308,7 +307,7 @@ test('Testing .last(Array a) method', (assert) => {
 
 // first
 test('Testing .getIndex(Array a, Find) method', (assert) => {
-  let a = [ 9, 77, 123, 51, 876, 124, 12, 51, 99, 46 ];
+  let a = [9, 77, 123, 51, 876, 124, 12, 51, 99, 46];
   let e = bella.getIndex(a, 51);
   assert.deepEquals(e, 3, 'Index of 51 must be 3');
   assert.end();
@@ -316,7 +315,7 @@ test('Testing .getIndex(Array a, Find) method', (assert) => {
 
 // first
 test('Testing .getLastIndex(Array a, Find) method', (assert) => {
-  let a = [ 9, 77, 123, 51, 876, 124, 12, 51, 99, 46 ];
+  let a = [9, 77, 123, 51, 876, 124, 12, 51, 99, 46];
   let e = bella.getLastIndex(a, 51);
   assert.deepEquals(e, 7, 'Last index of 51 must be 7');
   assert.end();
@@ -332,7 +331,7 @@ test('Testing .sort(Array a) method', (assert) => {
     5
   ];
 
-  let e1 = [ 1, 3, 5, 6, 8 ];
+  let e1 = [1, 3, 5, 6, 8];
   let r1 = bella.sort(a1);
   assert.deepEquals(r1, e1, `Result must be ${stringify(e1)}`);
 
@@ -396,7 +395,7 @@ test('Testing .sort(Array a) method', (assert) => {
     }
   ];
 
-  let r22 = bella.sort(a2, { 'age': -1 });
+  let r22 = bella.sort(a2, {age: -1});
   assert.deepEquals(r22, e22, `Result must be ${stringify(e22)}`);
   assert.end();
 });

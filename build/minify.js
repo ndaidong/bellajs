@@ -1,5 +1,3 @@
-'use strict';
-
 var fs = require('fs');
 var exec = require('child_process').execSync;
 var request = require('request');
@@ -8,11 +6,13 @@ var colors = require('colors');
 const API = 'https://closure-compiler.appspot.com/compile';
 
 const LEVEL = 'SIMPLE_OPTIMIZATIONS';
-const INFO = [ 'compiled_code', 'warnings', 'errors' ];
+const INFO = ['compiled_code', 'warnings', 'errors'];
 const OUTPUT = 'json';
 
 const SOURCE = './src/';
 const DIST = './dist/';
+
+const NAME = 'bella';
 
 var send = (source) => {
   return new Promise((resolve, reject) => {
@@ -26,10 +26,10 @@ var send = (source) => {
       ${API}?compilation_level=${LEVEL}&output_format=${OUTPUT}&${info}
     `;
     let data = {
-      'js_code': source
+      js_code: source // eslint-disable-line camelcase
     };
 
-    return request.post(target, { form: data }, (err, response, body) => {
+    return request.post(target, {form: data}, (err, response, body) => {
       if (err) {
         return reject(err);
       }
@@ -59,7 +59,7 @@ var log = {
 };
 
 var minify = () => {
-  let file = SOURCE + 'bella.js';
+  let file = SOURCE + 'main.js';
   let s = fs.readFileSync(file);
   send(s).then((json) => {
     if (json.errors) {
@@ -69,7 +69,7 @@ var minify = () => {
     } else {
       exec('rm -rf ' + DIST);
       exec('mkdir ' + DIST);
-      let fileOut = DIST + 'bella.min.js';
+      let fileOut = `${DIST}${NAME}.min.js`;
       fs.writeFileSync(fileOut, json.compiledCode, 'utf8');
       log.success('File has been minified');
     }
