@@ -3,6 +3,8 @@ var exec = require('child_process').execSync;
 var request = require('request');
 var colors = require('colors');
 
+var pack = require('../package');
+
 const API = 'https://closure-compiler.appspot.com/compile';
 
 const LEVEL = 'SIMPLE_OPTIMIZATIONS';
@@ -70,7 +72,16 @@ var minify = () => {
       exec('rm -rf ' + DIST);
       exec('mkdir ' + DIST);
       let fileOut = `${DIST}${NAME}.min.js`;
-      fs.writeFileSync(fileOut, json.compiledCode, 'utf8');
+      let x = [
+        '/**',
+        ` * ${pack.name} v${pack.version}`,
+        ` * Author by ${pack.author}`,
+        ` * Repository: ${pack.repository.url}`,
+        ` * License ${pack.license}`,
+        `**/`,
+        json.compiledCode
+      ].join('\n');
+      fs.writeFileSync(fileOut, x, 'utf8');
       log.success('File has been minified');
     }
   }).catch((err) => {

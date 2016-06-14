@@ -1,11 +1,11 @@
 {
-  "version": "5.2.1",
+  "version": "5.2.12",
   "name": "bellajs",
   "description": "A useful helper for any javascript program",
   "homepage": "http://techpush.net",
   "repository": {
     "type": "git",
-    "url": "git@github.com:ndaidong/bella.js.git"
+    "url": "https://github.com/ndaidong/bella.js"
   },
   "author": "Dong Nguyen <ndaidong@gmail.com> (https://twitter.com/ndaidong)",
   "main": "./index.js",
