@@ -822,67 +822,67 @@
 
       /*eslint-disable */
       f = {
-        Y: () => {
+        Y() {
           return d.getFullYear();
         }, // 2015
-        y: () => {
+        y() {
           return (f.Y() + '').slice(-2);
         }, // 15
-        F: () => {
+        F() {
           return mn[f.n() - 1];
         }, // August
-        M: () => {
+        M() {
           return (f.F() + '').slice(0, 3);
         }, // Aug
-        m: () => {
+        m() {
           return _num(f.n());
         }, // 08
-        n: () => {
+        n() {
           return d.getMonth() + 1;
         }, // 8
-        S: () => {
+        S() {
           return _ord(f.j());
         }, // st, nd, rd, th
-        j: () => {
+        j() {
           return d.getDate();
         }, // 3
-        d: () => {
+        d() {
           return _num(f.j());
         }, // 03
-        t: () => {
+        t() {
           return new Date(f.Y(), f.n(), 0).getDate();
         }, // date in year
-        w: () => {
+        w() {
           return d.getDay();
         }, // weekday in number
-        l: () => {
+        l() {
           return wn[f.w()];
         }, // Sunday, Monday
-        D: () => {
+        D() {
           return (f.l() + '').slice(0, 3);
         }, // Sun, Mon
-        G: () => {
+        G() {
           return d.getHours();
         }, // 0 - 24
-        g: () => {
+        g() {
           return f.G() % 12 || 12;
         }, // 0 - 12
-        h: () => {
+        h() {
           return _num(meridiem ? f.g() : f.G());
         }, // 00 - 12 or 00 - 24
-        i: () => {
+        i() {
           return _num(d.getMinutes());
         }, // 00 - 59
-        s: () => {
+        s() {
           return _num(d.getSeconds());
         }, // 00 - 59
-        a: () => {
+        a() {
           return f.G() > 11 ? 'pm' : 'am';
         }, // am, pm
-        A: () => {
+        A() {
           return f.a().toUpperCase();
         }, // AM, PM
-        O: () => {
+        O() {
           return tz;
         }
       };
@@ -1211,26 +1211,26 @@
     };
 
     B.scheduler = {
-      yearly: (t, fn) => {
+      yearly(t, fn) {
         let pt = '* ' + t;
         register(pt, fn);
       },
-      monthly: (t, fn) => {
+      monthly(t, fn) {
         let pt = '* * ' + t;
         register(pt, fn);
       },
-      daily: (t, fn) => {
+      daily(t, fn) {
         let pt = '* * * ' + t;
         register(pt, fn);
       },
-      hourly: (t, fn) => {
+      hourly(t, fn) {
         let pt = '* * * * ' + t;
         return register(pt, fn);
       },
-      every: (t, fn) => {
+      every(t, fn) {
         return register(t, fn);
       },
-      once: (t, fn) => {
+      once(t, fn) {
         return register(t, fn, 1);
       }
     };
