@@ -366,9 +366,6 @@ Bella.scheduler.once do the same thing as Bella.scheduler.every, but just once. 
 git clone https://github.com/ndaidong/bella.js.git
 cd bella.js
 npm install
-
-// test
-npm run build
 npm test
 ```
 
