@@ -1,5 +1,5 @@
 {
-  "version": "5.2.12",
+  "version": "5.2.2",
   "name": "bellajs",
   "description": "A useful helper for any javascript program",
   "homepage": "http://techpush.net",
@@ -7,7 +7,7 @@
     "type": "git",
     "url": "https://github.com/ndaidong/bella.js"
   },
-  "author": "Dong Nguyen <ndaidong@gmail.com> (https://twitter.com/ndaidong)",
+  "author": "@ndaidong",
   "main": "./index.js",
   "engines": {
     "node": ">= 6.0"
@@ -17,7 +17,7 @@
     "coverage": "./node_modules/.bin/nyc tape test/start.js | tap-spec",
     "report": "npm run coverage && ./node_modules/.bin/nyc report --reporter=lcov",
     "coveralls": "npm run report && cat ./coverage/lcov.info | ./node_modules/.bin/coveralls",
-    "build": "node build/minify",
+    "build": "./node_modules/.bin/gccmin src dist/bella.min.js",
     "snyk": "./node_modules/.bin/snyk wizard"
   },
   "devDependencies": {
@@ -25,6 +25,7 @@
     "cheerio": "latest",
     "colors": "latest",
     "coveralls": "latest",
+    "gcc-min": "latest",
     "is": "latest",
     "mkdirp": "latest",
     "nyc": "latest",
