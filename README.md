@@ -1,7 +1,7 @@
-bella.js
+BellaJS
 ========
 
-BellaJS is a lightweight library with several helpful utils. It supports both Node.js and browser environments.
+Lightweight util for handling data type, data entries, datetime and schedule in your Node.js and browser apps.
 
 [![NPM](https://badge.fury.io/js/bellajs.svg)](https://badge.fury.io/js/bellajs) ![Travis](https://travis-ci.org/ndaidong/bella.js.svg?branch=master)
 [![Coverage Status](https://coveralls.io/repos/github/ndaidong/bella.js/badge.svg?branch=master&noop)](https://coveralls.io/github/ndaidong/bella.js?branch=master)
@@ -23,64 +23,24 @@ BellaJS is a lightweight library with several helpful utils. It supports both No
 * [Test](#test)
 
 
-# Setup
 
-### In Node.js:
+## Setup
 
-```
-npm install bellajs
-```
+- Node.js
 
-And then:
+  ```
+  npm install bellajs --save
+  ```
 
-```
-    var Bella = require('bellajs');
-    console.log(Bella.date.utc());
-```
+- CDN
 
-### In the browsers
+  [bella.min.js](https://cdn.rawgit.com/ndaidong/bellajs/master/dist/bella.min.js)
 
+  ```
+  <script type="text/javascript" src="https://cdn.rawgit.com/ndaidong/bellajs/master/dist/bella.min.js"></script>
+  ```
 
-Assuming there is a file bella.min.js located at "/public/js/lib/", the following ways can be used to include BellaJS:
-
-##### Using SystemJS
-
-```
-    System.config({
-        baseURL: '/public/js/lib',
-        map: {
-            bella: 'bella.min'
-        }
-    });
-
-    System.import('bella').then(function(Bella){
-        console.log(Bella.date.utc());
-    });
-
-```
-
-##### Using RequireJS
-
-```
-    require.config({
-        baseUrl: '/public/js/lib',
-        paths: {
-            bella: 'bella.min'
-        }
-    });
-
-    requirejs('bella', function(Bella){
-        console.log(Bella.date.utc());
-    });
-
-```
-
-
-##### CDN
-
-```
-<script type="text/javascript" src="https://cdn.rawgit.com/ndaidong/bella.js/master/dist/bella.min.js"></script>
-```
+- This library also supports ES6 Module, AMD and UMD style.
 
 
 # APIs
