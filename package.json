@@ -1,11 +1,11 @@
 {
-  "version": "5.2.2",
+  "version": "5.2.21",
   "name": "bellajs",
   "description": "A useful helper for any javascript program",
-  "homepage": "http://techpush.net",
+  "homepage": "https://www.npmjs.com/package/bellajs",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ndaidong/bella.js"
+    "url": "https://github.com/ndaidong/bellajs"
   },
   "author": "@ndaidong",
   "main": "./index.js",
@@ -27,9 +27,7 @@
     "coveralls": "latest",
     "gcc-min": "latest",
     "is": "latest",
-    "mkdirp": "latest",
     "nyc": "latest",
-    "request": "latest",
     "sinon": "latest",
     "snyk": "latest",
     "tap-spec": "latest",
@@ -48,7 +46,7 @@
     "ndaidong <ndaidong@gmail.com>"
   ],
   "bugs": {
-    "url": "https://github.com/ndaidong/bella.js/issues"
+    "url": "https://github.com/ndaidong/bellajs/issues"
   },
   "directories": {
     "test": "test"

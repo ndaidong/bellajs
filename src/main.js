@@ -16,11 +16,9 @@
       root[name] = factory();
     }
   }
-})('Bella', () => { // eslint-disable-line no-invalid-this
+})('Bella', () => {
 
   var ENV = typeof module !== 'undefined' && module.exports ? 'node' : 'browser';
-
-  var B = {ENV};
 
   var tof = (v) => {
     let ots = Object.prototype.toString;
@@ -60,6 +58,7 @@
   var isDef = (val) => {
     return tof(val) !== 'undefined';
   };
+
   var isNull = (val) => {
     return tof(val) === null || val === null;
   };
@@ -67,18 +66,23 @@
   var isString = (val) => {
     return !isNull(val) && tof(val) === 'string';
   };
+
   var isNumber = (val) => {
     return val !== '' && !isNull(val) && isDef(val) && !isNaN(val) && tof(val) === 'number';
   };
+
   var isInteger = (val) => {
     return isNumber(val) && isFinite(val) && Math.floor(val) === val;
   };
+
   var isBoolean = (val) => {
     return val === true || val === false;
   };
+
   var isArray = (val) => {
     return !isNull(val) && tof(val) === 'array';
   };
+
   var isObject = (val) => {
     return !isNull(val) && tof(val) === 'object';
   };
@@ -86,33 +90,40 @@
   var isDate = (val) => {
     return val instanceof Date && !isNaN(val.valueOf());
   };
+
   var isFunction = (val) => {
     return !isNull(val) && tof(val) === 'function';
   };
+
   var isElement = (val) => {
     if (val && ENV === 'node' && val._root) {
       return true;
     }
     return !isNull(val) && tof(val) === 'element';
   };
+
   var isLetter = (val) => {
     let re = /^[a-z]+$/i;
     return isString(val) && re.test(val);
   };
+
   var isEmail = (val) => {
     let re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
     return isString(val) && re.test(val);
   };
+
   var isGeneratedKey = (val) => {
     let re = /^[A-Z0-9]+$/i;
     return isString(val) && re.test(val);
   };
+
   var isEmpty = (val) => {
     return !isDef(val) || isNull(val) ||
       isString(val) && val === '' ||
       isArray(val) && JSON.stringify(val) === '[]' ||
       isObject(val) && JSON.stringify(val) === '{}';
   };
+
   var hasProperty = (ob, k) => {
     if (!ob || !k) {
       return false;
@@ -123,6 +134,7 @@
     }
     return r;
   };
+
   var equals = (a, b) => {
     let re = true;
     if (isEmpty(a) && isEmpty(b)) {
@@ -171,24 +183,6 @@
     }
     return re;
   };
-
-  B.isDef = isDef;
-  B.isNull = isNull;
-  B.isString = isString;
-  B.isNumber = isNumber;
-  B.isInteger = isInteger;
-  B.isBoolean = isBoolean;
-  B.isArray = isArray;
-  B.isObject = isObject;
-  B.isDate = isDate;
-  B.isFunction = isFunction;
-  B.isElement = isElement;
-  B.isEmpty = isEmpty;
-  B.isLetter = isLetter;
-  B.isEmail = isEmail;
-  B.isGeneratedKey = isGeneratedKey;
-  B.hasProperty = hasProperty;
-  B.equals = equals;
 
   var encode = (s) => {
     return isString(s) ? encodeURIComponent(s) : '';
@@ -319,21 +313,6 @@
     return a.join('');
   };
 
-  B.encode = encode;
-  B.decode = decode;
-  B.trim = trim;
-  B.truncate = truncate;
-  B.stripTags = stripTags;
-  B.escapeHTML = escapeHTML;
-  B.unescapeHTML = unescapeHTML;
-  B.strtolower = strtolower;
-  B.strtoupper = strtoupper;
-  B.ucfirst = ucfirst;
-  B.ucwords = ucwords;
-  B.leftPad = leftPad;
-  B.rightPad = rightPad;
-  B.repeat = repeat;
-
   var createId = (leng, prefix) => {
     let rn = () => {
       return Math.random().toString(36).slice(2);
@@ -391,7 +370,7 @@
       a.length = 0;
     } else if (isObject(a)) {
       for (let k in a) {
-        if (B.hasProperty(a, k)) {
+        if (hasProperty(a, k)) {
           a[k] = null;
           delete a[k];
         }
@@ -593,29 +572,9 @@
     return debounce(fn, wait, true);
   };
 
-  B.id = createId();
-  B.createId = createId;
-  B.random = random;
-  B.min = min;
-  B.max = max;
-  B.unique = unique;
-  B.contains = contains;
-  B.first = first;
-  B.last = last;
-  B.getIndex = getIndex;
-  B.getLastIndex = getLastIndex;
-  B.sort = sort;
-  B.shuffle = shuffle;
-  B.pick = pick;
-  B.empty = empty;
-  B.copies = copies;
-  B.clone = clone;
-  B.debounce = debounce;
-  B.throttle = throttle;
-
   /*eslint-disable*/
   /** https://github.com/jbt/js-crypto */
-  B.md5 = function() {for(var m=[],l=0;64>l;)m[l]=0|4294967296*Math.abs(Math.sin(++l));return function(c) {var e,g,f,a,h=[];c=unescape(encodeURI(c));for(var b=c.length,k=[e=1732584193,g=-271733879,~e,~g],d=0;d<=b;)h[d>>2]|=(c.charCodeAt(d)||128)<<8*(d++%4);h[c=16*(b+8>>6)+14]=8*b;for(d=0;d<c;d+=16) {b=k;for(a=0;64>a;)b=[f=b[3],(e=b[1]|0)+((f=b[0]+[e&(g=b[2])|~e&f,f&e|~f&g,e^g^f,g^(e|~f)][b=a>>4]+(m[a]+(h[[a,5*a+1,3*a+5,7*a][b]%16+d]|0)))<<(b=[7,12,17,22,5,9,14,20,4,11,16,23,6,10,15,21][4*b+a++%4])|f>>>32-b),e,g];for(a=4;a;)k[--a]=k[a]+b[a]}for(c="";32>a;)c+=(k[a>>3]>>4*(1^a++&7)&15).toString(16);return c}}();
+  var md5 = function() {for(var m=[],l=0;64>l;)m[l]=0|4294967296*Math.abs(Math.sin(++l));return function(c) {var e,g,f,a,h=[];c=unescape(encodeURI(c));for(var b=c.length,k=[e=1732584193,g=-271733879,~e,~g],d=0;d<=b;)h[d>>2]|=(c.charCodeAt(d)||128)<<8*(d++%4);h[c=16*(b+8>>6)+14]=8*b;for(d=0;d<c;d+=16) {b=k;for(a=0;64>a;)b=[f=b[3],(e=b[1]|0)+((f=b[0]+[e&(g=b[2])|~e&f,f&e|~f&g,e^g^f,g^(e|~f)][b=a>>4]+(m[a]+(h[[a,5*a+1,3*a+5,7*a][b]%16+d]|0)))<<(b=[7,12,17,22,5,9,14,20,4,11,16,23,6,10,15,21][4*b+a++%4])|f>>>32-b),e,g];for(a=4;a;)k[--a]=k[a]+b[a]}for(c="";32>a;)c+=(k[a>>3]>>4*(1^a++&7)&15).toString(16);return c}}();
   /*eslint-enable*/
 
   var replaceAll = (s, a, b) => {
@@ -740,10 +699,6 @@
     return tpl;
   };
 
-  B.replaceAll = replaceAll;
-  B.stripAccent = stripAccent;
-  B.createAlias = createAlias;
-  B.template = template;
 
   var now = () => {
     return new Date();
@@ -753,7 +708,7 @@
     return now().getTime();
   };
 
-  (() => {
+  var date = (() => {
     var pattern = 'D, M d, Y  h:i:s A';
     var weeks = [
       'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'
@@ -937,10 +892,7 @@
       return new Date(t).getTime();
     };
 
-    B.now = now;
-    B.time = time;
-
-    B.date = {
+    return {
       utc,
       local,
       strtotime,
@@ -950,7 +902,7 @@
 
   })();
 
-  (() => {
+  var scheduler = (() => {
 
     const MAX_TIMEOUT = 2147483647;
 
@@ -1210,7 +1162,7 @@
       updateTimer();
     };
 
-    B.scheduler = {
+    return {
       yearly(t, fn) {
         let pt = '* ' + t;
         register(pt, fn);
@@ -1237,5 +1189,66 @@
   })();
 
   // exports
-  return B;
+  return {
+    ENV,
+    id: createId(),
+    isDef,
+    isNull,
+    isString,
+    isNumber,
+    isInteger,
+    isBoolean,
+    isArray,
+    isObject,
+    isDate,
+    isFunction,
+    isElement,
+    isEmpty,
+    isLetter,
+    isEmail,
+    isGeneratedKey,
+    hasProperty,
+    equals,
+    encode,
+    decode,
+    trim,
+    truncate,
+    stripTags,
+    escapeHTML,
+    unescapeHTML,
+    strtolower,
+    strtoupper,
+    ucfirst,
+    ucwords,
+    leftPad,
+    rightPad,
+    repeat,
+    replaceAll,
+    stripAccent,
+    createAlias,
+    template,
+    md5,
+    createId,
+    random,
+    min,
+    max,
+    unique,
+    contains,
+    first,
+    last,
+    getIndex,
+    getLastIndex,
+    sort,
+    shuffle,
+    pick,
+    empty,
+    copies,
+    clone,
+    debounce,
+    throttle,
+    now,
+    time,
+    date,
+    scheduler
+  };
 });
