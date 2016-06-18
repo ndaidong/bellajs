@@ -1,12 +1,12 @@
-bella.js
+BellaJS
 ========
 
-BellaJS is a lightweight library with several helpful utils. It supports both Node.js and browser environments.
+Lightweight util for handling data type, data entries, datetime and schedule in your Node.js and browser apps.
 
-[![NPM](https://badge.fury.io/js/bellajs.svg)](https://badge.fury.io/js/bellajs) ![Travis](https://travis-ci.org/ndaidong/bella.js.svg?branch=master)
-[![Coverage Status](https://coveralls.io/repos/github/ndaidong/bella.js/badge.svg?branch=master&noop)](https://coveralls.io/github/ndaidong/bella.js?branch=master)
-![devDependency Status](https://david-dm.org/ndaidong/bella.js.svg)
-[![Known Vulnerabilities](https://snyk.io/test/npm/bellajs/badge.svg)](https://snyk.io/test/npm/bellajs)
+[![NPM](https://badge.fury.io/js/bellajs.svg)](https://badge.fury.io/js/bellajs) ![Travis](https://travis-ci.org/ndaidong/bellajs.svg?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/ndaidong/bellajs/badge.svg?branch=master&noop)](https://coveralls.io/github/ndaidong/bellajs?branch=master)
+![devDependency Status](https://david-dm.org/ndaidong/bellajs.svg)
+[![Known Vulnerabilities](https://snyk.io/test/npm/bellajs/badgesvg)](https://snyk.io/test/npm/bellajs)
 
 
 # Contents
@@ -23,64 +23,23 @@ BellaJS is a lightweight library with several helpful utils. It supports both No
 * [Test](#test)
 
 
-# Setup
+## Setup
 
-### In Node.js:
+- Node.js
 
-```
-npm install bellajs
-```
+  ```
+  npm install bellajs --save
+  ```
 
-And then:
+- CDN
 
-```
-    var Bella = require('bellajs');
-    console.log(Bella.date.utc());
-```
+  [bella.min.js](https://cdn.rawgit.com/ndaidong/bellajs/master/dist/bella.min.js)
 
-### In the browsers
+  ```
+  <script type="text/javascript" src="https://cdn.rawgit.com/ndaidong/bellajs/master/dist/bella.min.js"></script>
+  ```
 
-
-Assuming there is a file bella.min.js located at "/public/js/lib/", the following ways can be used to include BellaJS:
-
-##### Using SystemJS
-
-```
-    System.config({
-        baseURL: '/public/js/lib',
-        map: {
-            bella: 'bella.min'
-        }
-    });
-
-    System.import('bella').then(function(Bella){
-        console.log(Bella.date.utc());
-    });
-
-```
-
-##### Using RequireJS
-
-```
-    require.config({
-        baseUrl: '/public/js/lib',
-        paths: {
-            bella: 'bella.min'
-        }
-    });
-
-    requirejs('bella', function(Bella){
-        console.log(Bella.date.utc());
-    });
-
-```
-
-
-##### CDN
-
-```
-<script type="text/javascript" src="https://cdn.rawgit.com/ndaidong/bella.js/master/dist/bella.min.js"></script>
-```
+- This library also supports ES6 Module, AMD and UMD style.
 
 
 # APIs
@@ -125,7 +84,7 @@ Assuming there is a file bella.min.js located at "/public/js/lib/", the followin
  - .md5(String s)
 
 
-### Template manipulation
+### Template compiler
  - .compile(String s, Object d)
 
 What does Bella.compile do?
@@ -168,7 +127,6 @@ console.log(html);
  - .empty(Array|Object|Element|String o)
  - .equals(Anything a, Anything b)
  - .hasProperty(Array|Object o, String key)
- - .inherits(Proto o)
  - .max(Array a)
  - .min(Array a)
  - .pick(Array a [, Number count])
@@ -198,43 +156,43 @@ var a2 = Bella.sort(a, -1);
 console.log(a2);
 
 var players = [
-    {
-      'name': 'Jerome Nash',
-      'age': 24
-    },
-    {
-      'name': 'Jackson Valdez',
-      'age': 21
-    },
-    {
-      'name': 'Benjamin Cole',
-      'age': 23
-    },
-    {
-      'name': 'Manuel Delgado',
-      'age': 33
-    },
-    {
-      'name': 'Caleb McKinney',
-      'age': 28
-    }
+  {
+    'name': 'Jerome Nash',
+    'age': 24
+  },
+  {
+    'name': 'Jackson Valdez',
+    'age': 21
+  },
+  {
+    'name': 'Benjamin Cole',
+    'age': 23
+  },
+  {
+    'name': 'Manuel Delgado',
+    'age': 33
+  },
+  {
+    'name': 'Caleb McKinney',
+    'age': 28
+  }
 ];
 
 console.log('\nList of players as it is:');
 players.forEach(function(item){
-    console.log([item.name, item.age].join(' | '));
+  console.log([item.name, item.age].join(' | '));
 });
 
 console.log('\nSort by age from young to old:');
 var players1 = Bella.sort(players, 'age');
 players1.forEach(function(item){
-    console.log([item.name, item.age].join(' | '));
+  console.log([item.name, item.age].join(' | '));
 });
 
 console.log('\nAnd then reverse them:');
 var players2 = Bella.sort(players, {age: -1});
 players2.forEach(function(item){
-    console.log([item.name, item.age].join(' | '));
+  console.log([item.name, item.age].join(' | '));
 });
 
 ```
@@ -275,30 +233,30 @@ BellaJS' datetime pattern is familiar with PHP developers than MomentJS. The ava
 Examples:
 
 ```
-    // default datetime (local)
-    var t = Bella.now();
-    console.log(t);
+// default datetime (local)
+var t = Bella.now();
+console.log(t);
 
-    // format it as 2015/09/25 09:44:51
-    var f = Bella.date.format('Y/m/d h:i:s', t);
-    console.log(f);
+// format it as 2015/09/25 09:44:51
+var f = Bella.date.format('Y/m/d h:i:s', t);
+console.log(f);
 
-    // this is a time in future
+// this is a time in future
 
-    var atime = 80616962585961;
-    console.log(atime);
+var atime = 80616962585961;
+console.log(atime);
 
-    // display it as your local time
-    var local = Bella.date.local(atime);
-    console.log(local);
+// display it as your local time
+var local = Bella.date.local(atime);
+console.log(local);
 
-    // display it as GMT time
-    var utc = Bella.date.utc(atime);
-    console.log(utc);
+// display it as GMT time
+var utc = Bella.date.utc(atime);
+console.log(utc);
 
-    // display it with default pattern
-    var s = Bella.date.format(false, atime);
-    console.log(s);
+// display it with default pattern
+var s = Bella.date.format(false, atime);
+console.log(s);
 ```
 
 ### Scheduler
