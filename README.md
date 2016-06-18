@@ -4,9 +4,9 @@ BellaJS
 Lightweight util for handling data type, data entries, datetime and schedule in your Node.js and browser apps.
 
 [![NPM](https://badge.fury.io/js/bellajs.svg)](https://badge.fury.io/js/bellajs) ![Travis](https://travis-ci.org/ndaidong/bellajs.svg?branch=master)
-[![Coverage Status](https://coveralls.io/repos/github/ndaidong/bellajs/badge.svg?branch=master&noop)](https://coveralls.io/github/ndaidong/bellajs?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/ndaidong/bella.js/badge.svg?branch=master)](https://coveralls.io/github/ndaidong/bella.js?branch=master)
 ![devDependency Status](https://david-dm.org/ndaidong/bellajs.svg)
-[![Known Vulnerabilities](https://snyk.io/test/npm/bellajs/badgesvg)](https://snyk.io/test/npm/bellajs)
+[![Known Vulnerabilities](https://snyk.io/test/npm/bellajs/badge.svg)](https://snyk.io/test/npm/bellajs)
 
 
 # Contents
