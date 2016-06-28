@@ -434,10 +434,10 @@ test('Testing .compile(String s) method', (assert) => {
       </p>
     </article>`, true);
 
-  let result = bella.template(sample, data);
+  let result = bella.compile(sample, data);
   assert.deepEquals(result, expectation, 'Template data must be filled to template string.');
 
-  let r2 = bella.template('ABC', 1987);
+  let r2 = bella.compile('ABC', 1987);
   assert.deepEquals(r2, 'ABC', 'Return template string if no data');
 
   assert.end();

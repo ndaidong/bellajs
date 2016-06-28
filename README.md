@@ -138,8 +138,6 @@ console.log(html);
  - .last(Array a)
  - .getIndex(String|Object element, Array a)
  - .getLastIndex(String|Object element, Array a)
- - .debounce(Function fn, Number delay, Boolean immediate)
- - .throttle(Function fn, Boolean wait)
 
 How to use Bella.sort?
 
