@@ -550,28 +550,6 @@
     return ab;
   };
 
-  var debounce = (fn, wait, immediate) => {
-    let timeout;
-    return () => {
-      let later = () => {
-        timeout = null;
-        if (!immediate) {
-          fn();
-        }
-      };
-      let callNow = immediate && !timeout;
-      clearTimeout(timeout);
-      timeout = setTimeout(later, wait || 200);
-      if (callNow) {
-        fn();
-      }
-    };
-  };
-
-  var throttle = (fn, wait) => {
-    return debounce(fn, wait, true);
-  };
-
   /*eslint-disable*/
   /** https://github.com/jbt/js-crypto */
   var md5 = function() {for(var m=[],l=0;64>l;)m[l]=0|4294967296*Math.abs(Math.sin(++l));return function(c) {var e,g,f,a,h=[];c=unescape(encodeURI(c));for(var b=c.length,k=[e=1732584193,g=-271733879,~e,~g],d=0;d<=b;)h[d>>2]|=(c.charCodeAt(d)||128)<<8*(d++%4);h[c=16*(b+8>>6)+14]=8*b;for(d=0;d<c;d+=16) {b=k;for(a=0;64>a;)b=[f=b[3],(e=b[1]|0)+((f=b[0]+[e&(g=b[2])|~e&f,f&e|~f&g,e^g^f,g^(e|~f)][b=a>>4]+(m[a]+(h[[a,5*a+1,3*a+5,7*a][b]%16+d]|0)))<<(b=[7,12,17,22,5,9,14,20,4,11,16,23,6,10,15,21][4*b+a++%4])|f>>>32-b),e,g];for(a=4;a;)k[--a]=k[a]+b[a]}for(c="";32>a;)c+=(k[a>>3]>>4*(1^a++&7)&15).toString(16);return c}}();
@@ -663,9 +641,9 @@
     return x;
   };
 
-  var template = (tpl, data) => {
+  var compile = (tpl, data) => {
     let ns = [];
-    let compile = (s, ctx, namespace) => {
+    let c = (s, ctx, namespace) => {
       if (namespace) {
         ns.push(namespace);
       }
@@ -688,13 +666,13 @@
       }
       if (a.length > 0) {
         a.forEach((item) => {
-          s = compile(s, item.data, item.key);
+          s = c(s, item.data, item.key);
         });
       }
       return trim(s, true);
     };
     if (data && (isString(data) || isObject(data) || isArray(data))) {
-      return compile(tpl, data);
+      return c(tpl, data);
     }
     return tpl;
   };
@@ -1226,7 +1204,7 @@
     replaceAll,
     stripAccent,
     createAlias,
-    template,
+    compile,
     md5,
     createId,
     random,
@@ -1244,8 +1222,6 @@
     empty,
     copies,
     clone,
-    debounce,
-    throttle,
     now,
     time,
     date,

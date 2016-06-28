@@ -9,7 +9,6 @@
 
 var test = require('tape');
 var is = require('is');
-var sinon = require('sinon');
 
 var config = require('../../config');
 var bella = config.bella;
@@ -169,40 +168,6 @@ test('Testing .copies(Object target) method', (assert) => {
   };
   bella.copies(c, d, true, ['age']);
   assert.ok(!bella.hasProperty(d, 'gender'), 'Result must have not gender');
-  assert.end();
-});
-
-// debounce
-test('Testing .debounce(Function fn, Number wait, Boolean immediate) method', (assert) => {
-  let clock = sinon.useFakeTimers();
-  let callback = sinon.spy();
-  let debounce = bella.debounce(callback, 100);
-
-  debounce();
-
-  clock.tick(99);
-  assert.ok(callback.notCalled, 'Callback must be not called');
-
-  clock.tick(1);
-  assert.ok(callback.calledOnce, 'Callback must be called');
-
-  clock.restore();
-
-  assert.end();
-});
-
-// throttle
-test('Testing .throttle(Function fn, Number wait) method', (assert) => {
-  let clock = sinon.useFakeTimers();
-  let callback = sinon.spy();
-  let throttled = bella.throttle(callback, 100);
-
-  throttled();
-
-  clock.tick(90);
-  assert.ok(callback.calledOnce, 'Callback must be called');
-
-  clock.restore();
   assert.end();
 });
 
