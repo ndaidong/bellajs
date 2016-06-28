@@ -15,9 +15,9 @@ Lightweight util for handling data type, data entries, datetime and schedule in 
 * [Setup](#setup)
 * [APIs](#apis)
   * [DataType detection](#datatype-detection)
-  * [String manipulation](#string-manipulation)
-  * [Template manipulation](#template-manipulation)
   * [Array & Object](#array--object)
+  * [String manipulation](#string-manipulation)
+  * [Template compiler](#template-compiler)
   * [DateTime](#datetime)
   * [Scheduler](#scheduler)
 * [Test](#test)
@@ -60,6 +60,84 @@ Lightweight util for handling data type, data entries, datetime and schedule in 
  - .isNumber(Anything val)
  - .isObject(Anything val)
  - .isString(Anything val)
+
+
+
+ ### Array & Object
+  - .clone(Array|Object|Date o)
+  - .contains(Array a, String|Object search [, String key])
+  - .copies(Array|Object src, Array|Object dest [, Boolean mustMatch[, Array exclude] ])
+  - .empty(Array|Object|Element|String o)
+  - .equals(Anything a, Anything b)
+  - .hasProperty(Array|Object o, String key)
+  - .max(Array a)
+  - .min(Array a)
+  - .pick(Array a [, Number count])
+  - .random([Number min [, Number max]])
+  - .sort(Array a [, String order | Object option ])
+  - .shuffle(Array a)
+  - .unique(Array a)
+  - .first(Array a)
+  - .last(Array a)
+  - .getIndex(String|Object element, Array a)
+  - .getLastIndex(String|Object element, Array a)
+
+  *How to use Bella.sort?*
+
+  ```
+  var a = [1, 5, 19, 6, 4, 11, 7, 22, 40, 3, 8];
+  console.log('Array a, default:');
+  console.log(a);
+
+  console.log('Array a, from lower to higher:');
+  var a1 = Bella.sort(a);
+  console.log(a1);
+  console.log('Array a, descendant:');
+  var a2 = Bella.sort(a, -1);
+  console.log(a2);
+
+  var players = [
+      {
+        'name': 'Jerome Nash',
+        'age': 24
+      },
+      {
+        'name': 'Jackson Valdez',
+        'age': 21
+      },
+      {
+        'name': 'Benjamin Cole',
+        'age': 23
+      },
+      {
+        'name': 'Manuel Delgado',
+        'age': 33
+      },
+      {
+        'name': 'Caleb McKinney',
+        'age': 28
+      }
+  ];
+
+  console.log('\nList of players as it is:');
+  players.forEach(function(item){
+      console.log([item.name, item.age].join(' | '));
+  });
+
+  console.log('\nSort by age from young to old:');
+  var players1 = Bella.sort(players, 'age');
+  players1.forEach(function(item){
+      console.log([item.name, item.age].join(' | '));
+  });
+
+  console.log('\nAnd then reverse them:');
+  var players2 = Bella.sort(players, {age: -1});
+  players2.forEach(function(item){
+      console.log([item.name, item.age].join(' | '));
+  });
+
+  ```
+
 
 ### String manipulation
  - .createId(Number length [, String prefix])
@@ -117,82 +195,6 @@ var data = {
 
 var html = Bella.compile(template, data);
 console.log(html);
-```
-
-
-### Array & Object
- - .clone(Array|Object|Date o)
- - .contains(Array a, String|Object search [, String key])
- - .copies(Array|Object src, Array|Object dest [, Boolean mustMatch[, Array exclude] ])
- - .empty(Array|Object|Element|String o)
- - .equals(Anything a, Anything b)
- - .hasProperty(Array|Object o, String key)
- - .max(Array a)
- - .min(Array a)
- - .pick(Array a [, Number count])
- - .random([Number min [, Number max]])
- - .sort(Array a [, String order | Object option ])
- - .shuffle(Array a)
- - .unique(Array a)
- - .first(Array a)
- - .last(Array a)
- - .getIndex(String|Object element, Array a)
- - .getLastIndex(String|Object element, Array a)
-
-How to use Bella.sort?
-
-```
-var a = [1, 5, 19, 6, 4, 11, 7, 22, 40, 3, 8];
-console.log('Array a, default:');
-console.log(a);
-
-console.log('Array a, from lower to higher:');
-var a1 = Bella.sort(a);
-console.log(a1);
-console.log('Array a, descendant:');
-var a2 = Bella.sort(a, -1);
-console.log(a2);
-
-var players = [
-  {
-    'name': 'Jerome Nash',
-    'age': 24
-  },
-  {
-    'name': 'Jackson Valdez',
-    'age': 21
-  },
-  {
-    'name': 'Benjamin Cole',
-    'age': 23
-  },
-  {
-    'name': 'Manuel Delgado',
-    'age': 33
-  },
-  {
-    'name': 'Caleb McKinney',
-    'age': 28
-  }
-];
-
-console.log('\nList of players as it is:');
-players.forEach(function(item){
-  console.log([item.name, item.age].join(' | '));
-});
-
-console.log('\nSort by age from young to old:');
-var players1 = Bella.sort(players, 'age');
-players1.forEach(function(item){
-  console.log([item.name, item.age].join(' | '));
-});
-
-console.log('\nAnd then reverse them:');
-var players2 = Bella.sort(players, {age: -1});
-players2.forEach(function(item){
-  console.log([item.name, item.age].join(' | '));
-});
-
 ```
 
 ### DateTime

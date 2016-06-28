@@ -1,5 +1,5 @@
 {
-  "version": "5.2.4",
+  "version": "5.2.41",
   "name": "bellajs",
   "description": "A useful helper for any javascript program",
   "homepage": "https://www.npmjs.com/package/bellajs",
@@ -13,12 +13,12 @@
     "node": ">= 6.0"
   },
   "scripts": {
-    "test": "./node_modules/.bin/snyk test && ./node_modules/.bin/tape test/start.js | tap-spec",
-    "coverage": "./node_modules/.bin/nyc tape test/start.js | tap-spec",
-    "report": "npm run coverage && ./node_modules/.bin/nyc report --reporter=lcov",
-    "coveralls": "npm run report && cat ./coverage/lcov.info | ./node_modules/.bin/coveralls",
-    "build": "./node_modules/.bin/gccmin src dist/bella.min.js",
-    "snyk": "./node_modules/.bin/snyk wizard"
+    "test": "snyk test && tape test/start.js | tap-spec",
+    "coverage": "nyc tape test/start.js | tap-spec",
+    "report": "npm run coverage && nyc report --reporter=lcov",
+    "coveralls": "npm run report && cat ./coverage/lcov.info | coveralls",
+    "build": "gccmin src dist/bella.min.js",
+    "snyk": "snyk wizard"
   },
   "devDependencies": {
     "chance": "latest",
