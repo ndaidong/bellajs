@@ -1,10 +1,10 @@
 BellaJS
 ========
 
-Lightweight util for handling data type, data entries, datetime and schedule in your Node.js and browser apps.
+Lightweight util for handling data type, string, data entries, datetime in your Node.js and browser apps.
 
 [![NPM](https://badge.fury.io/js/bellajs.svg)](https://badge.fury.io/js/bellajs) ![Travis](https://travis-ci.org/ndaidong/bellajs.svg?branch=master)
-[![Coverage Status](https://coveralls.io/repos/github/ndaidong/bella.js/badge.svg?branch=master)](https://coveralls.io/github/ndaidong/bella.js?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/ndaidong/bellajs/badge.svg?branch=master)](https://coveralls.io/github/ndaidong/bellajs?branch=master)
 ![devDependency Status](https://david-dm.org/ndaidong/bellajs.svg)
 [![Known Vulnerabilities](https://snyk.io/test/npm/bellajs/badge.svg)](https://snyk.io/test/npm/bellajs)
 
@@ -19,7 +19,6 @@ Lightweight util for handling data type, data entries, datetime and schedule in 
   * [String manipulation](#string-manipulation)
   * [Template compiler](#template-compiler)
   * [DateTime](#datetime)
-  * [Scheduler](#scheduler)
 * [Test](#test)
 
 
@@ -258,65 +257,6 @@ console.log(utc);
 var s = Bella.date.format(false, atime);
 console.log(s);
 ```
-
-### Scheduler
- - .scheduler.every(String pattern, Function callback)
- - .scheduler.once(String pattern, Function callback)
- - .scheduler.hourly(String pattern, Function callback)
- - .scheduler.daily(String pattern, Function callback)
- - .scheduler.monthly(String pattern, Function callback)
- - .scheduler.yearly(String pattern, Function callback)
-
-
-Scheduler is the best utility BellaJS provides. Almost cases you can use Bella.scheduler instead of setInterval or setTimeout, because it runs only one timer for the entire process. Regarding parameter "pattern" for Bella.scheduler.every, it may be:
-
-**1, A string in the format of 'Y m d h i s'.**
-
-For example:
-
-    - Bella.scheduler.every('2040 05 16 15 30 10', callback);
-       --> run callback at 15:30:10 on May 16, 2040
-    - Bella.scheduler.every('* 05 16 15 30 10', callback);
-       --> run callback at 15:30:10 on May 16 of years
-       --> similar to yearly('05 16 15 30 10', callback)
-    - Bella.scheduler.every('* * 16 15 30 10', callback);
-       --> run callback at 15:30:10 on the 16th of months
-       --> similar to monthly('16 15 30 10', callback)
-    - Bella.scheduler.every('* * * 15 30 10', callback);
-       --> run callback at 15:30:10 of days
-       --> similar to daily('15 30 10', callback)
-    - Bella.scheduler.every('* * * * 30 10', callback);
-       --> run callback at the 10th second of the 30th minute of hours
-       --> similar to hourly('30 10', callback)
-    - Bella.scheduler.every('* * * * * 10', callback);
-       --> run callback at the 10th second of minutes.
-
-**2, A string in the format of 'weekday H:i:s'.**
-
-For example:
-
-    - Bella.scheduler.every('sunday 15:30:10', callback);
-       --> run callback on Sundays at 15:30:10
-    - Bella.scheduler.every('sunday 15:30', callback);
-       --> run callback on Sundays at 15:30:00
-    - Bella.scheduler.every('sunday 15', callback);
-       --> run callback on Sundays at 15:00:00
-
-It's possible to use "sun" instead of "sunday", "mon" for "monday", and so on.
-
-**3, A string in the format of 'N unit'.**
-
-For example:
-
-    - Bella.scheduler.every('5m', callback)
-       --> call callback every 5 minutes
-    - Bella.scheduler.once('5m', callback)
-       --> call callback in 5 minutes, then stop
-
-The available units: **d** (days), **h** (hours), **m** (minutes), **s** (seconds).
-
-Bella.scheduler.once do the same thing as Bella.scheduler.every, but just once. The 4 remain methods yearly(), monthly(), daily(), hourly() can be looked as the shortcuts of every().
-
 
 # Test
 
