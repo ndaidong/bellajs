@@ -397,7 +397,7 @@ test('Testing .pick(Array a, Number count) method', (assert) => {
   assert.deepEquals(r3.length, 5, 'bella.pick(a, 5) must return array with 5 items');
 
   let r4 = bella.pick(a, 50);
-  assert.deepEquals(r4, a, 'bella.pick(a, 50) must return original array');
+  assert.deepEquals(r4.length, a.length, 'bella.pick(a, 50) must return shuffled original array');
 
   let r5 = bella.pick(a, -2);
   assert.ok(is.number(r5), 'bella.pick(a, -1) must return a number');
