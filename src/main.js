@@ -18,7 +18,9 @@
   }
 })('Bella', () => {
 
-  var ENV = typeof module !== 'undefined' && module.exports ? 'node' : 'browser';
+  const ENV = typeof module !== 'undefined' && module.exports ? 'node' : 'browser';
+
+  const MAX_NUMBER = 9007199254740991;
 
   var tof = (v) => {
     let ots = Object.prototype.toString;
@@ -313,13 +315,14 @@
     return a.join('');
   };
 
+  var genkey = () => {
+    return Math.random().toString(36).slice(2);
+  };
+
   var createId = (leng, prefix) => {
-    let rn = () => {
-      return Math.random().toString(36).slice(2);
-    };
     let a = [];
     while (a.length < 10) {
-      a.push(rn());
+      a.push(genkey());
     }
     let r = a.join('');
     let t = r.length;
@@ -338,7 +341,7 @@
       min = 0;
     }
     if (!max) {
-      max = 9007199254740991;
+      max = MAX_NUMBER;
     }
     if (min === max) {
       return max;
