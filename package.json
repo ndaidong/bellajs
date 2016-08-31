@@ -26,6 +26,7 @@
     "cheerio": "latest",
     "colors": "latest",
     "coveralls": "latest",
+    "eslint": "latest",
     "gcc-min": "latest",
     "is": "latest",
     "nyc": "latest",
