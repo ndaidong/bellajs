@@ -1,5 +1,5 @@
 {
-  "version": "5.3.0",
+  "version": "5.4.0",
   "name": "bellajs",
   "description": "A useful helper for any javascript program",
   "homepage": "https://www.npmjs.com/package/bellajs",
@@ -13,7 +13,8 @@
     "node": ">= 6.0"
   },
   "scripts": {
-    "test": "snyk test && tape test/start.js | tap-spec",
+    "lint": "eslint .",
+    "test": "snyk test && npm run lint && tape test/start.js | tap-spec",
     "coverage": "nyc tape test/start.js | tap-spec",
     "report": "npm run coverage && nyc report --reporter=lcov",
     "coveralls": "npm run report && cat ./coverage/lcov.info | coveralls",
@@ -25,6 +26,7 @@
     "cheerio": "latest",
     "colors": "latest",
     "coveralls": "latest",
+    "eslint": "latest",
     "gcc-min": "latest",
     "is": "latest",
     "nyc": "latest",

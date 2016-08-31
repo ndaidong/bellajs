@@ -18,7 +18,9 @@
   }
 })('Bella', () => {
 
-  var ENV = typeof module !== 'undefined' && module.exports ? 'node' : 'browser';
+  const ENV = typeof module !== 'undefined' && module.exports ? 'node' : 'browser';
+
+  const MAX_NUMBER = 9007199254740991;
 
   var tof = (v) => {
     let ots = Object.prototype.toString;
@@ -313,13 +315,14 @@
     return a.join('');
   };
 
+  var genkey = () => {
+    return Math.random().toString(36).slice(2);
+  };
+
   var createId = (leng, prefix) => {
-    let rn = () => {
-      return Math.random().toString(36).slice(2);
-    };
     let a = [];
     while (a.length < 10) {
-      a.push(rn());
+      a.push(genkey());
     }
     let r = a.join('');
     let t = r.length;
@@ -338,7 +341,7 @@
       min = 0;
     }
     if (!max) {
-      max = 9007199254740991;
+      max = MAX_NUMBER;
     }
     if (min === max) {
       return max;
@@ -679,7 +682,7 @@
   };
 
   var time = () => {
-    return now().getTime();
+    return Date.now();
   };
 
   var date = (() => {
@@ -694,7 +697,7 @@
     ];
 
     var tz = (() => {
-      let t = new Date().getTimezoneOffset();
+      let t = now().getTimezoneOffset();
       let z = Math.abs(t / 60);
       let sign = t < 0 ? '+' : '-';
       return ['GMT', sign, leftPad(z, 4)].join('');
@@ -821,7 +824,7 @@
 
     let relativize = (input) => {
       let t = input instanceof Date ? input : new Date(input);
-      let delta = new Date() - t;
+      let delta = now() - t;
       let nowThreshold = parseInt(t, 10);
       if (isNaN(nowThreshold)) {
         nowThreshold = 0;
