@@ -13,7 +13,8 @@
     "node": ">= 6.0"
   },
   "scripts": {
-    "test": "snyk test && tape test/start.js | tap-spec",
+    "lint": "eslint .",
+    "test": "snyk test && npm run lint && tape test/start.js | tap-spec",
     "coverage": "nyc tape test/start.js | tap-spec",
     "report": "npm run coverage && nyc report --reporter=lcov",
     "coveralls": "npm run report && cat ./coverage/lcov.info | coveralls",

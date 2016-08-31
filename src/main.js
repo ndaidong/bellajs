@@ -679,7 +679,7 @@
   };
 
   var time = () => {
-    return now().getTime();
+    return Date.now();
   };
 
   var date = (() => {
@@ -694,7 +694,7 @@
     ];
 
     var tz = (() => {
-      let t = new Date().getTimezoneOffset();
+      let t = now().getTimezoneOffset();
       let z = Math.abs(t / 60);
       let sign = t < 0 ? '+' : '-';
       return ['GMT', sign, leftPad(z, 4)].join('');
@@ -821,7 +821,7 @@
 
     let relativize = (input) => {
       let t = input instanceof Date ? input : new Date(input);
-      let delta = new Date() - t;
+      let delta = now() - t;
       let nowThreshold = parseInt(t, 10);
       if (isNaN(nowThreshold)) {
         nowThreshold = 0;
