@@ -6,7 +6,7 @@ Lightweight util for handling data type, string, data entries, datetime in your 
 [![NPM](https://badge.fury.io/js/bellajs.svg)](https://badge.fury.io/js/bellajs)
 ![Travis](https://travis-ci.org/ndaidong/bellajs.svg?branch=master)
 [![Coverage Status](https://coveralls.io/repos/github/ndaidong/bellajs/badge.svg?branch=master)](https://coveralls.io/github/ndaidong/bellajs?branch=master)
-[![Dependency Status](https://www.versioneye.com/user/projects/561e51a036d0ab002100017f/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/561e51a036d0ab002100017f)
+[![Dependency Status](https://www.versioneye.com/user/projects/561e51a036d0ab002100017f/badge.svg?style=flat)](https://www.versioneye.com/user/projects/561e51a036d0ab002100017f)
 [![Known Vulnerabilities](https://snyk.io/test/npm/bellajs/badge.svg)](https://snyk.io/test/npm/bellajs)
 
 
