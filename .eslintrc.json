@@ -50,6 +50,7 @@
       }
     ],
     "init-declarations": 0,
+    "line-comment-position": 0,
     "max-len": [
       "error",
       {
