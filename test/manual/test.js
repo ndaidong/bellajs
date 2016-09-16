@@ -3,7 +3,7 @@
  * @ndaidong
  */
 
-var bella = require('../../src/bella');
+var bella = require('../../src/main');
 
 let a = {
   name: 'x',
