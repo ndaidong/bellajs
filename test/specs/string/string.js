@@ -17,7 +17,21 @@ test('Testing .repeat(String s, Number times) method', (assert) => {
   let x = 'hi';
   let a = bella.repeat(x, 5);
   let e = 'hihihihihi';
-  assert.deepEquals(a, e, `bella.repeat(x) must return ${e}`);
+  assert.deepEquals(a, e, `bella.repeat(x) must return "${e}"`);
+  assert.end();
+});
+
+test('Testing .repeat(false, 5) method fail', (assert) => {
+  let a = bella.repeat(false, 5);
+  let e = '';
+  assert.deepEquals(a, e, `bella.repeat(false, 5) must return "${e}"`);
+  assert.end();
+});
+
+test('Testing .repeat("Hello", -1) method fail', (assert) => {
+  let a = bella.repeat('Hello', -1);
+  let e = 'Hello';
+  assert.deepEquals(a, e, `bella.repeat("Hello", -1) must return "${e}"`);
   assert.end();
 });
 
