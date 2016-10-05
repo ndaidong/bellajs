@@ -268,6 +268,13 @@ npm install
 npm test
 ```
 
+You may like to see BellaJS in action by modifying the script test/manual/test.js and then call it:
+
+```
+node test/manual/test.js
+```
+
+
 # License
 
 The MIT License (MIT)
