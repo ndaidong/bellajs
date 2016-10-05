@@ -63,24 +63,24 @@ Lightweight util for handling data type, string, data entries, datetime in your 
 
 
 
- ### Array & Object
-  - .clone(Array|Object|Date o)
-  - .contains(Array a, String|Object search [, String key])
-  - .copies(Array|Object src, Array|Object dest [, Boolean mustMatch[, Array exclude] ])
-  - .empty(Array|Object|Element|String o)
-  - .equals(Anything a, Anything b)
-  - .hasProperty(Array|Object o, String key)
-  - .max(Array a)
-  - .min(Array a)
-  - .pick(Array a [, Number count])
-  - .random([Number min [, Number max]])
-  - .sort(Array a [, String order | Object option ])
-  - .shuffle(Array a)
-  - .unique(Array a)
-  - .first(Array a)
-  - .last(Array a)
-  - .getIndex(String|Object element, Array a)
-  - .getLastIndex(String|Object element, Array a)
+### Array & Object
+- .clone(Array|Object|Date o)
+- .contains(Array a, String|Object search [, String key])
+- .copies(Array|Object src, Array|Object dest [, Boolean mustMatch[, Array exclude] ])
+- .empty(Array|Object|Element|String o)
+- .equals(Anything a, Anything b)
+- .hasProperty(Array|Object o, String key)
+- .max(Array a)
+- .min(Array a)
+- .pick(Array a [, Number count])
+- .random([Number min [, Number max]])
+- .sort(Array a [, String order | Object option ])
+- .shuffle(Array a)
+- .unique(Array a)
+- .first(Array a)
+- .last(Array a)
+- .getIndex(String|Object element, Array a)
+- .getLastIndex(String|Object element, Array a)
 
   *How to use Bella.sort?*
 
