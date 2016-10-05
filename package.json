@@ -1,5 +1,5 @@
 {
-  "version": "5.4.23",
+  "version": "5.4.24",
   "name": "bellajs",
   "description": "A useful helper for any javascript program",
   "homepage": "https://www.npmjs.com/package/bellajs",
@@ -45,14 +45,5 @@
     "datetime",
     "util"
   ],
-  "license": "MIT",
-  "maintainers": [
-    "ndaidong <ndaidong@gmail.com>"
-  ],
-  "bugs": {
-    "url": "https://github.com/ndaidong/bellajs/issues"
-  },
-  "directories": {
-    "test": "test"
-  }
+  "license": "MIT"
 }
