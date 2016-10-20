@@ -7,7 +7,7 @@
   if (typeof module !== 'undefined' && module.exports) {
     module.exports = factory();
   } else {
-    let root = window || {};
+    let root = window || global || {};
     if (root.define && root.define.amd) {
       root.define([], factory);
     } else if (root.exports) {
@@ -18,9 +18,11 @@
   }
 })('Bella', () => {
 
-  const ENV = typeof module !== 'undefined' && module.exports ? 'node' : 'browser';
-
   const MAX_NUMBER = 9007199254740991;
+
+  const UNDEF = undefined; // eslint-disable-line no-undefined
+
+  const ENV = typeof module !== UNDEF && module.exports ? 'node' : 'browser';
 
   var tof = (v) => {
     let ots = Object.prototype.toString;
@@ -34,16 +36,16 @@
           (
             !(v instanceof Object) &&
             ots.call(v) === '[object Array]' ||
-            typeof v.length === 'number' && typeof v.splice !== 'undefined' &&
-            typeof v.propertyIsEnumerable !== 'undefined' && !v.propertyIsEnumerable('splice')
+            typeof v.length === 'number' && typeof v.splice !== UNDEF &&
+            typeof v.propertyIsEnumerable !== UNDEF && !v.propertyIsEnumerable('splice')
           )
         ) {
           return 'array';
         }
         if (!(v instanceof Object) &&
           (ots.call(v) === '[object Function]' ||
-          typeof v.call !== 'undefined' &&
-           typeof v.propertyIsEnumerable !== 'undefined' &&
+          typeof v.call !== UNDEF &&
+           typeof v.propertyIsEnumerable !== UNDEF &&
             !v.propertyIsEnumerable('call')
           )
         ) {
@@ -51,14 +53,14 @@
         }
       }
       return 'object';
-    } else if (s === 'function' && typeof v.call === 'undefined') {
+    } else if (s === 'function' && typeof v.call === UNDEF) {
       return 'object';
     }
     return s;
   };
 
   var isDef = (val) => {
-    return tof(val) !== 'undefined';
+    return tof(val) !== UNDEF;
   };
 
   var isNull = (val) => {
@@ -120,7 +122,7 @@
   };
 
   var isEmpty = (val) => {
-    return !isDef(val) || isNull(val) ||
+    return !val || !isDef(val) || isNull(val) ||
       isString(val) && val === '' ||
       isArray(val) && JSON.stringify(val) === '[]' ||
       isObject(val) && JSON.stringify(val) === '{}';
@@ -130,11 +132,7 @@
     if (!ob || !k) {
       return false;
     }
-    let r = true;
-    if (!isDef(ob[k])) {
-      r = k in ob;
-    }
-    return r;
+    return Object.prototype.hasOwnProperty.call(ob, k);
   };
 
   var equals = (a, b) => {
@@ -253,7 +251,11 @@
     if (!isString(s)) {
       return '';
     }
-    return s.replace(/&quot;/g, '"').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
+    return s
+            .replace(/&quot;/g, '"')
+            .replace(/&lt;/g, '<')
+            .replace(/&gt;/g, '>')
+            .replace(/&amp;/g, '&');
   };
 
   var strtolower = (s) => {
@@ -287,18 +289,14 @@
     return a.join(' ');
   };
 
-  var leftPad = (s, size, spad) => {
+  var leftPad = (s, size = 2, pad = '0') => {
     let o = String(s);
-    let z = size || 2;
-    let g = spad || '0';
-    return o.length >= z ? o : new Array(z - o.length + 1).join(g) + o;
+    return o.length >= size ? o : new Array(size - o.length + 1).join(pad) + o;
   };
 
-  var rightPad = (s, size, spad) => {
+  var rightPad = (s, size = 2, pad = '0') => {
     let o = String(s);
-    let z = size || 2;
-    let g = spad || '0';
-    return o.length >= z ? o : o + new Array(z - o.length + 1).join(g);
+    return o.length >= size ? o : o + new Array(size - o.length + 1).join(pad);
   };
 
   var repeat = (s, m) => {
@@ -309,26 +307,23 @@
       return s;
     }
     let a = [];
-    while (a.length < m) {
-      a.push(s);
-    }
-    return a.join('');
+    a.length = m;
+    return a.fill(s, 0, m).join('');
   };
 
   var genkey = () => {
     return Math.random().toString(36).slice(2);
   };
 
-  var createId = (leng, prefix) => {
+  var createId = (leng, prefix = '') => {
     let a = [];
     while (a.length < 10) {
       a.push(genkey());
     }
     let r = a.join('');
     let t = r.length;
-    let px = prefix || '';
-    let ln = Math.max(leng || 32, px.length);
-    let s = px;
+    let ln = Math.max(leng || 32, prefix.length);
+    let s = prefix;
     while (s.length < ln) {
       let k = Math.floor(Math.random() * t);
       s += r.charAt(k) || '';
@@ -366,28 +361,23 @@
 
   var empty = (a) => {
     if (isArray(a)) {
-      for (let i = a.length - 1; i >= 0; i--) {
-        a[i] = null;
-        delete a[i];
-      }
-      a.length = 0;
-    } else if (isObject(a)) {
-      for (let k in a) {
-        if (hasProperty(a, k)) {
-          a[k] = null;
-          delete a[k];
-        }
-      }
-    } else if (isString(a)) {
-      a = '';
-    } else if (isElement(a)) {
+      return [];
+    }
+    if (isObject(a)) {
+      return {};
+    }
+    if (isString(a)) {
+      return '';
+    }
+    if (isElement(a)) {
       a.innerHTML = '';
     }
     return a;
   };
 
-  var unique = (a) => {
-    if (isArray(a)) {
+  var unique = (arr) => {
+    if (isArray(arr)) {
+      let a = [...arr];
       let r = [];
       for (let i = 0; i < a.length; i++) {
         if (r.indexOf(a[i]) === -1) {
@@ -396,90 +386,80 @@
       }
       return r;
     }
-    return a || [];
-  };
-
-  var contains = (a, el, key) => {
-    if (isArray(a)) {
-      for (let i = 0; i < a.length; i++) {
-        var val = a[i];
-        if (key && val[key] === el[key] || val === el) {
-          return true;
-        }
-      }
-    } else if (isObject(a) && isString(el)) {
-      return hasProperty(a, el);
-    } else if (isString(a) && isString(el)) {
-      return a.includes(el);
-    }
-    return false;
+    return arr || [];
   };
 
   var first = (a) => {
-    return a[0];
+    return [...a][0];
   };
 
   var last = (a) => {
-    return a[a.length - 1];
+    return [...a][a.length - 1];
   };
 
-  var getIndex = (arr, item) => {
-    let r = -1;
-    for (let i = 0; i < arr.length; i++) {
-      if (arr[i] === item) {
-        r = i;
-        break;
-      }
-    }
-    return r;
+  var pop = (a) => {
+    return a.slice(0, -1);
   };
 
-  var getLastIndex = (arr, item) => {
-    let r = -1;
-    for (let i = arr.length - 1; i >= 0; i--) {
-      if (arr[i] === item) {
-        r = i;
-        break;
-      }
-    }
-    return r;
+  var shift = (a) => {
+    a.slice(1);
+  };
+
+  var push = (a, item) => {
+    return [...a, item];
+  };
+
+  var unshift = (a, item) => {
+    return [item, ...a];
+  };
+
+  var splice = (arr, start, deleteCount, ...items) => {
+    return [...arr.slice(0, start), ...items, ...arr.slice(start + deleteCount)];
   };
 
   var clone = (obj) => {
-    if (!(obj instanceof Object)) {
-      return obj;
+
+    if (isDate(obj)) {
+      return new Date(obj.valueOf());
     }
-    let output;
-    let Constructor = obj.constructor;
-    switch (Constructor) {
-      case RegExp:
-        output = new Constructor(obj);
-        break;
-      case Date:
-        output = new Constructor(obj.getTime());
-        break;
-      default:
-        output = new Constructor();
+
+    if (isArray(obj)) {
+      return [...obj];
     }
-    for (let prop in obj) { // eslint-disable-line guard-for-in
-      output[prop] = clone(obj[prop]);
+
+    let copy = (o) => {
+      let oo = Object.create({});
+      for (let k in o) { // eslint-disable-line guard-for-in
+        let t = o[k];
+        if (isObject(t)) {
+          oo[k] = copy(t);
+        } else if (isArray(t)) {
+          oo[k] = clone(t);
+        } else {
+          oo[k] = t;
+        }
+      }
+      return oo;
+    };
+
+    if (isObject(obj)) {
+      return copy(obj);
     }
-    return output;
+
+    return obj;
   };
 
 
-  var copies = (source, dest, matched, excepts) => {
-    let mt = matched || false;
-    let ex = excepts || [];
+  var copies = (source, dest, matched = false, excepts = []) => {
     for (let k in source) {
-      if (ex.length > 0 && contains(ex, k)) {
+      if (excepts.length > 0 && excepts.includes(k)) {
         continue; // eslint-disable-line no-continue
       }
-      if (!mt || mt && dest.hasOwnProperty(k)) {
+      if (!matched || matched && dest.hasOwnProperty(k)) {
         let oa = source[k];
         let ob = dest[k];
         if (isObject(ob) && isObject(oa) || isArray(ob) && isArray(oa)) {
-          dest[k] = copies(oa, dest[k], mt, ex);
+          dest[k] = copies(oa, dest[k], matched, excepts);
         } else {
           dest[k] = clone(oa);
         }
@@ -488,27 +468,32 @@
     return dest;
   };
 
-  var sort = (arr, opts) => {
+  var isort = (arr, compareFunction) => {
+    return [...arr].sort(compareFunction);
+  };
+
+  var sort = (arr, o = 1) => {
     let a = [];
     let one = {};
-    let o = opts || 1;
     if (isArray(arr) && arr.length > 0) {
       a = clone(arr);
       one = a[0];
       if (o === 1 || o === -1) {
-        a.sort((m, n) => {
+        return isort(a, (m, n) => {
           return m > n ? o : m < n ? -1 * o : 0; // eslint-disable-line no-nested-ternary
         });
-      } else if (isString(o) && hasProperty(one, o)) {
-        a.sort((m, n) => {
+      }
+      if (isString(o) && hasProperty(one, o)) {
+        return isort(a, (m, n) => {
           return m[o] > n[o] ? 1 : m[o] < n[o] ? -1 : 0; // eslint-disable-line no-nested-ternary
         });
-      } else if (isObject(o)) {
+      }
+      if (isObject(o)) {
         for (let key in o) {
           if (hasProperty(one, key)) {
             let order = o[key] === -1 ? -1 : 1;
             /*eslint-disable*/
-            a.sort((m, n) => {
+            a = isort(a, (m, n) => {
               return (m[key] > n[key]) ? order : (m[key] < n[key] ? (-1 * order) : 0);
             });
             /*eslint-enable*/
@@ -520,11 +505,9 @@
   };
 
   var shuffle = (arr) => {
-    let a = clone(arr);
-    a.sort(() => {
+    return isort(arr, () => {
       return Math.random() - 0.5;
     });
-    return a;
   };
 
   var pick = (arr, count) => {
@@ -615,12 +598,17 @@
       y: 'ý|ỳ|ỷ|ỹ|ỵ',
       Y: 'Ý|Ỳ|Ỷ|Ỹ|Ỵ'
     };
+
+    let updateS = (ai, key) => {
+      s = replaceAll(s, ai, key);
+    };
+
     for (let key in map) {
       if (hasProperty(map, key)) {
         let a = map[key].split('|');
-        for (let i = 0; i < a.length; i++) {
-          s = replaceAll(s, a[i], key);
-        }
+        a.forEach((item) => {
+          return updateS(item, key);
+        });
       }
     }
     return s;
@@ -879,6 +867,57 @@
 
   })();
 
+  var objectify = (data = {}) => {
+
+    let o = Object.create({});
+
+    let config = {
+      enumerable: true,
+      configurable: false,
+      writable: false,
+      value: UNDEF
+    };
+
+    let setProp = (key) => {
+      let c = Object.assign({}, config);
+      c.value = data[key];
+      Object.defineProperty(o, key, c);
+    };
+
+    Object.keys(data).map(setProp);
+
+    Object.defineProperty(o, 'get', {
+      enumerable: false,
+      configurable: false,
+      writable: false,
+      value: (k) => {
+        return o[k];
+      }
+    });
+
+    Object.defineProperty(o, 'set', {
+      enumerable: false,
+      configurable: false,
+      writable: false,
+      value: (key, value = false) => {
+        let a = clone(o);
+        let _set = (k, v) => {
+          a[k] = v;
+        };
+        if (isObject(key)) {
+          Object.keys(key).forEach((k) => {
+            _set(k, key[k]);
+          });
+        } else {
+          _set(key, value);
+        }
+        return objectify(a);
+      }
+    });
+
+    return o;
+  };
+
   // exports
   return {
     ENV,
@@ -924,17 +963,20 @@
     min,
     max,
     unique,
-    contains,
     first,
     last,
-    getIndex,
-    getLastIndex,
+    pop,
+    shift,
+    push,
+    unshift,
+    splice,
     sort,
     shuffle,
     pick,
     empty,
     copies,
     clone,
+    objectify,
     now,
     time,
     date

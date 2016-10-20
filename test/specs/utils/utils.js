@@ -194,66 +194,6 @@ test('Testing .unique(Array a) method', (assert) => {
   assert.end();
 });
 
-// contains
-test('Testing .contains(Anything a, String b) method', (assert) => {
-  let a1 = [
-    'Aline', 'Bach', 'Nina', 'Gravie', 'Mark',
-    1, 89, 77, 4212, 878,
-    {
-      name: 'Chris',
-      age: 22
-    },
-    new Date()
-  ];
-
-  let b1t = [
-    'Bach', 1, 'Mark', 878, ['name', 'Chris']
-  ];
-
-  b1t.forEach((item) => {
-    let e, k;
-    if (is.array(item)) {
-      k = item[0];
-      e = bella.contains(a1, k, item[1]);
-    } else {
-      k = item;
-      e = bella.contains(a1, k);
-    }
-    assert.ok(e, `Array must contain ${k}`);
-  });
-
-  let a2 = {
-    name: 'Chris',
-    age: 22,
-    country: 'Italia',
-    group: 'admin',
-    status: 1
-  };
-
-  let b2t = [
-    'name', 'country', 'status'
-  ];
-
-  b2t.forEach((k) => {
-    let e = bella.contains(a2, k);
-    assert.ok(e, `Array must contain ${k}`);
-  });
-
-
-  let a3 = 'Hello world. I have a dream.';
-
-  let b3t = [
-    'lo', 'wor', 'have'
-  ];
-
-  b3t.forEach((k) => {
-    let e = bella.contains(a3, k);
-    assert.ok(e, `Array must contain ${k}`);
-  });
-
-  assert.end();
-});
-
 // first
 test('Testing .first(Array a) method', (assert) => {
   let a = [9, 77, 123, 51, 876, 124];
@@ -262,27 +202,11 @@ test('Testing .first(Array a) method', (assert) => {
   assert.end();
 });
 
-// first
+// last
 test('Testing .last(Array a) method', (assert) => {
   let a = [9, 77, 66, 51, 876, 124];
   let e = bella.last(a);
   assert.deepEquals(e, 124, 'First item must be 124');
-  assert.end();
-});
-
-// first
-test('Testing .getIndex(Array a, Find) method', (assert) => {
-  let a = [9, 77, 123, 51, 876, 124, 12, 51, 99, 46];
-  let e = bella.getIndex(a, 51);
-  assert.deepEquals(e, 3, 'Index of 51 must be 3');
-  assert.end();
-});
-
-// first
-test('Testing .getLastIndex(Array a, Find) method', (assert) => {
-  let a = [9, 77, 123, 51, 876, 124, 12, 51, 99, 46];
-  let e = bella.getLastIndex(a, 51);
-  assert.deepEquals(e, 7, 'Last index of 51 must be 7');
   assert.end();
 });
 
