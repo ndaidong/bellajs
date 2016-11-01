@@ -867,57 +867,6 @@
 
   })();
 
-  var objectify = (data = {}) => {
-
-    let o = Object.create({});
-
-    let config = {
-      enumerable: true,
-      configurable: false,
-      writable: false,
-      value: UNDEF
-    };
-
-    let setProp = (key) => {
-      let c = Object.assign({}, config);
-      c.value = data[key];
-      Object.defineProperty(o, key, c);
-    };
-
-    Object.keys(data).map(setProp);
-
-    Object.defineProperty(o, 'get', {
-      enumerable: false,
-      configurable: false,
-      writable: false,
-      value: (k) => {
-        return o[k];
-      }
-    });
-
-    Object.defineProperty(o, 'set', {
-      enumerable: false,
-      configurable: false,
-      writable: false,
-      value: (key, value = false) => {
-        let a = clone(o);
-        let _set = (k, v) => {
-          a[k] = v;
-        };
-        if (isObject(key)) {
-          Object.keys(key).forEach((k) => {
-            _set(k, key[k]);
-          });
-        } else {
-          _set(key, value);
-        }
-        return objectify(a);
-      }
-    });
-
-    return o;
-  };
-
   // exports
   return {
     ENV,
@@ -976,7 +925,6 @@
     empty,
     copies,
     clone,
-    objectify,
     now,
     time,
     date
