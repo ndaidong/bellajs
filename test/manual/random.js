@@ -1,9 +1,6 @@
 
 var bella = require('../src/main');
 
-var Chance = require('chance');
-var chance = new Chance();
-
 var generate = () => {
   let id = bella.random(1000000000000, 9999999999999);
   let begin = bella.leftPad(bella.random(0, 9999), 4);
@@ -41,7 +38,7 @@ var generate = () => {
 let a = [];
 for (let i = 0; i < 1000; i++) {
   a.push(generate());
-};
+}
 
 let b = bella.pick(a, 20);
 let c = [];
@@ -61,7 +58,7 @@ b.forEach((item) => {
   } = item;
 
   var s = [
-    '[' + (checked? 'x' : '') + ']',
+    '[' + (checked ? 'x' : '') + ']',
     id,
     imei,
     pro,
@@ -75,7 +72,7 @@ b.forEach((item) => {
 
   if (checked) {
     c.push(item);
-  };
+  }
   console.log(s);
 });
 
