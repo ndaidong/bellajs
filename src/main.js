@@ -24,55 +24,20 @@
 
   const ENV = typeof module !== UNDEF && module.exports ? 'node' : 'browser';
 
-  var tof = (v) => {
-    let ots = Object.prototype.toString;
-    let s = typeof v;
-    if (s === 'object') {
-      if (v) {
-        if (ots.call(v).indexOf('HTML') !== -1 && ots.call(v).indexOf('Element') !== -1) {
-          return 'element';
-        }
-        if (v instanceof Array ||
-          (
-            !(v instanceof Object) &&
-            ots.call(v) === '[object Array]' ||
-            typeof v.length === 'number' && typeof v.splice !== UNDEF &&
-            typeof v.propertyIsEnumerable !== UNDEF && !v.propertyIsEnumerable('splice')
-          )
-        ) {
-          return 'array';
-        }
-        if (!(v instanceof Object) &&
-          (ots.call(v) === '[object Function]' ||
-          typeof v.call !== UNDEF &&
-           typeof v.propertyIsEnumerable !== UNDEF &&
-            !v.propertyIsEnumerable('call')
-          )
-        ) {
-          return 'function';
-        }
-      }
-      return 'object';
-    } else if (s === 'function' && typeof v.call === UNDEF) {
-      return 'object';
-    }
-    return s;
-  };
-
-  var isDef = (val) => {
-    return tof(val) !== UNDEF;
-  };
-
   var isNull = (val) => {
-    return tof(val) === null || val === null;
+    return val === null;
+  };
+
+  var isUndefined = (val) => {
+    return typeof val === UNDEF;
   };
 
   var isString = (val) => {
-    return !isNull(val) && tof(val) === 'string';
+    return !isNull(val) && typeof val === 'string';
   };
 
   var isNumber = (val) => {
-    return val !== '' && !isNull(val) && isDef(val) && !isNaN(val) && tof(val) === 'number';
+    return val !== '' && !isNull(val) && !isUndefined(val) && !isNaN(val) && typeof val === 'number';
   };
 
   var isInteger = (val) => {
@@ -84,11 +49,11 @@
   };
 
   var isArray = (val) => {
-    return !isNull(val) && tof(val) === 'array';
+    return !isNull(val) && Array.isArray(val);
   };
 
   var isObject = (val) => {
-    return !isNull(val) && tof(val) === 'object';
+    return val !== null && typeof val === 'object' && isArray(val) === false;
   };
 
   var isDate = (val) => {
@@ -96,14 +61,16 @@
   };
 
   var isFunction = (val) => {
-    return !isNull(val) && tof(val) === 'function';
+    return typeof val === 'function';
   };
 
   var isElement = (val) => {
     if (val && ENV === 'node' && val._root) {
       return true;
     }
-    return !isNull(val) && tof(val) === 'element';
+    let ots = Object.prototype.toString;
+    let scall = ots.call(val);
+    return typeof val === 'object' && scall.includes('HTML') && scall.includes('Element');
   };
 
   var isLetter = (val) => {
@@ -122,7 +89,7 @@
   };
 
   var isEmpty = (val) => {
-    return !val || !isDef(val) || isNull(val) ||
+    return !val || isUndefined(val) || isNull(val) ||
       isString(val) && val === '' ||
       isArray(val) && JSON.stringify(val) === '[]' ||
       isObject(val) && JSON.stringify(val) === '{}';
@@ -251,19 +218,10 @@
     if (!isString(s)) {
       return '';
     }
-    return s
-            .replace(/&quot;/g, '"')
+    return s.replace(/&quot;/g, '"')
             .replace(/&lt;/g, '<')
             .replace(/&gt;/g, '>')
             .replace(/&amp;/g, '&');
-  };
-
-  var strtolower = (s) => {
-    return isString(s) ? s.toLowerCase() : '';
-  };
-
-  var strtoupper = (s) => {
-    return isString(s) ? s.toUpperCase() : '';
   };
 
   var ucfirst = (s) => {
@@ -347,190 +305,184 @@
     }
     let offset = min;
     let range = max - min + 1;
-    let rd = Math.floor(Math.random() * range) + offset;
-    return rd;
+    return Math.floor(Math.random() * range) + offset;
   };
 
-  var max = (a) => {
-    return isArray(a) ? Math.max.apply({}, a) : a;
-  };
+  var stabilize = (() => {
 
-  var min = (a) => {
-    return isArray(a) ? Math.min.apply({}, a) : a;
-  };
+    var astabilize = (data = []) => {
 
-  var empty = (a) => {
-    if (isArray(a)) {
-      return [];
-    }
-    if (isObject(a)) {
-      return {};
-    }
-    if (isString(a)) {
-      return '';
-    }
-    if (isElement(a)) {
-      a.innerHTML = '';
-    }
-    return a;
-  };
+      let a = [...data];
 
-  var unique = (arr) => {
-    if (isArray(arr)) {
-      let a = [...arr];
-      let r = [];
-      for (let i = 0; i < a.length; i++) {
-        if (r.indexOf(a[i]) === -1) {
-          r.push(a[i]);
-        }
-      }
-      return r;
-    }
-    return arr || [];
-  };
-
-  var first = (a) => {
-    return [...a][0];
-  };
-
-  var last = (a) => {
-    return [...a][a.length - 1];
-  };
-
-  var pop = (a) => {
-    return a.slice(0, -1);
-  };
-
-  var shift = (a) => {
-    a.slice(1);
-  };
-
-  var push = (a, item) => {
-    return [...a, item];
-  };
-
-  var unshift = (a, item) => {
-    return [item, ...a];
-  };
-
-  var splice = (arr, start, deleteCount, ...items) => {
-    return [...arr.slice(0, start), ...items, ...arr.slice(start + deleteCount)];
-  };
-
-  var clone = (obj) => {
-
-    if (isDate(obj)) {
-      return new Date(obj.valueOf());
-    }
-
-    if (isArray(obj)) {
-      return [...obj];
-    }
-
-    let copy = (o) => {
-      let oo = Object.create({});
-      for (let k in o) { // eslint-disable-line guard-for-in
-        let t = o[k];
-        if (isObject(t)) {
-          oo[k] = copy(t);
-        } else if (isArray(t)) {
-          oo[k] = clone(t);
-        } else {
-          oo[k] = t;
-        }
-      }
-      return oo;
-    };
-
-    if (isObject(obj)) {
-      return copy(obj);
-    }
-
-    return obj;
-  };
-
-
-  var copies = (source, dest, matched = false, excepts = []) => {
-    for (let k in source) {
-      if (excepts.length > 0 && excepts.includes(k)) {
-        continue; // eslint-disable-line no-continue
-      }
-      if (!matched || matched && dest.hasOwnProperty(k)) {
-        let oa = source[k];
-        let ob = dest[k];
-        if (isObject(ob) && isObject(oa) || isArray(ob) && isArray(oa)) {
-          dest[k] = copies(oa, dest[k], matched, excepts);
-        } else {
-          dest[k] = clone(oa);
-        }
-      }
-    }
-    return dest;
-  };
-
-  var isort = (arr, compareFunction) => {
-    return [...arr].sort(compareFunction);
-  };
-
-  var sort = (arr, o = 1) => {
-    let a = [];
-    let one = {};
-    if (isArray(arr) && arr.length > 0) {
-      a = clone(arr);
-      one = a[0];
-      if (o === 1 || o === -1) {
-        return isort(a, (m, n) => {
-          return m > n ? o : m < n ? -1 * o : 0; // eslint-disable-line no-nested-ternary
-        });
-      }
-      if (isString(o) && hasProperty(one, o)) {
-        return isort(a, (m, n) => {
-          return m[o] > n[o] ? 1 : m[o] < n[o] ? -1 : 0; // eslint-disable-line no-nested-ternary
-        });
-      }
-      if (isObject(o)) {
-        for (let key in o) {
-          if (hasProperty(one, key)) {
-            let order = o[key] === -1 ? -1 : 1;
-            /*eslint-disable*/
-            a = isort(a, (m, n) => {
-              return (m[key] > n[key]) ? order : (m[key] < n[key] ? (-1 * order) : 0);
-            });
-            /*eslint-enable*/
+      let unique = () => {
+        let arr = [...a];
+        let r = [];
+        for (let i = 0; i < arr.length; i++) {
+          if (r.indexOf(arr[i]) === -1) {
+            r.push(arr[i]);
           }
         }
-      }
-    }
-    return a;
-  };
+        return stabilize(r);
+      };
 
-  var shuffle = (arr) => {
-    return isort(arr, () => {
-      return Math.random() - 0.5;
-    });
-  };
+      let min = () => {
+        return Math.min.apply({}, a);
+      };
 
-  var pick = (arr, count) => {
-    let c = count ? Math.min(count, arr.length) : 1;
-    if (c < 1) {
-      c = 1;
-    }
-    let a = shuffle(arr);
-    if (c >= arr.length) {
+      let max = () => {
+        return Math.max.apply({}, a);
+      };
+
+      let first = () => {
+        let r = [...a][0];
+        return stabilize(r);
+      };
+
+      let last = () => {
+        let r = [...a][a.length - 1];
+        return stabilize(r);
+      };
+
+      let insert = (at = 0, ...items) => {
+        let r = [...a];
+        let p0 = r.slice(0, at);
+        let p1 = r.slice(at, r.length);
+        return stabilize([].concat(p0, ...items, p1));
+      };
+
+      let append = (...items) => {
+        return insert(a.length, items);
+      };
+
+      let remove = (start = 0, count = 0) => {
+        let r = [...a.slice(0, start), ...a.slice(start + count)];
+        return stabilize(r);
+      };
+
+      let isort = (fn) => {
+        let r = [...a].sort(fn);
+        return stabilize(r);
+      };
+
+      let ireverse = () => {
+        let r = [...a].reverse();
+        return stabilize(r);
+      };
+
+      let shuffle = () => {
+        return isort(() => {
+          return Math.random() - 0.5;
+        });
+      };
+
+      let pick = (count = 1) => {
+        let b = a.shuffle();
+        let c = Math.max(Math.min(count, b.length), 1);
+        if (c >= b.length) {
+          return b;
+        }
+
+        if (c === 1) {
+          let ri = random(0, b.length - 1);
+          return b[ri];
+        }
+
+        let d = [];
+        while (d.length < c) {
+          let i = random(0, b.length - 1);
+          d.push(b[i]);
+        }
+        return d;
+      };
+
+      let addMethods = (met) => {
+        Object.defineProperty(a, met[0], {
+          enumerable: false,
+          configurable: false,
+          writable: false,
+          value: met[1]
+        });
+      };
+
+      [
+        ['min', min],
+        ['max', max],
+        ['unique', unique],
+        ['first', first],
+        ['last', last],
+        ['pick', pick],
+        ['insert', insert],
+        ['append', append],
+        ['remove', remove],
+        ['isort', isort],
+        ['ireverse', ireverse],
+        ['shuffle', shuffle]
+      ].map(addMethods);
+
       return a;
-    }
-    if (c === 1) {
-      let ri = random(0, arr.length - 1);
-      return a[ri];
-    }
-    let b = [];
-    while (b.length < c) {
-      let i = random(0, a.length - 1);
-      b.push(a[i]);
-      a.splice(i, 1);
-    }
-    return b;
-  };
+    };
+
+    var ostabilize = (data = {}) => {
+
+      let o = Object.create({});
+
+      let config = {
+        enumerable: true,
+        configurable: false,
+        writable: false,
+        value: 'undefined'
+      };
+
+      let setProp = (key) => {
+        let c = Object.assign({}, config);
+        c.value = data[key];
+        Object.defineProperty(o, key, c);
+      };
+
+      Object.keys(data).map(setProp);
+
+      Object.defineProperty(o, 'get', {
+        enumerable: false,
+        configurable: false,
+        writable: false,
+        value: (k) => {
+          return o[k];
+        }
+      });
+
+      Object.defineProperty(o, 'set', {
+        enumerable: false,
+        configurable: false,
+        writable: false,
+        value: (key, value = false) => {
+          let a = Object.assign({}, o);
+          let _set = (k, v) => {
+            a[k] = v;
+          };
+          if (isObject(key)) {
+            Object.keys(key).forEach((k) => {
+              _set(k, key[k]);
+            });
+          } else {
+            _set(key, value);
+          }
+          return stabilize(a);
+        }
+      });
+
+      return o;
+    };
+
+    return (data) => {
+      if (isArray(data)) {
+        return astabilize(data);
+      }
+      if (isObject(data)) {
+        return ostabilize(data);
+      }
+      return data;
+    };
+  })();
 
   /*eslint-disable*/
   /** https://github.com/jbt/js-crypto */
@@ -619,7 +571,7 @@
     let x = stripAccent(s);
     if (x) {
       let d = delimiter || '-';
-      x = strtolower(x);
+      x = x.toLowerCase();
       x = trim(x);
       x = x.replace(/\W+/g, ' ');
       x = x.replace(/\s+/g, ' ');
@@ -691,19 +643,21 @@
       return ['GMT', sign, leftPad(z, 4)].join('');
     })();
 
-    var format = (output, timestamp) => {
-      let meridiem = false;
-      let d, f;
+    var format = (output, input = time()) => {
+
       let vchar = /\.*\\?([a-z])/gi;
-      let input = timestamp ? new Date(timestamp).getTime() : time();
+
+      let d = isDate(input) ? input : new Date(input);
+
+      if (!isDate(d)) {
+        return 'Invalid input!';
+      }
 
       if (!output || !isString(output)) {
         output = pattern;
       }
 
-      if (output.match(/(\.*)a{1}(\.*)*/i)) {
-        meridiem = true;
-      }
+      let meridiem = output.match(/(\.*)a{1}(\.*)*/i);
 
       let wn = weeks;
       let mn = months;
@@ -725,23 +679,8 @@
         return s;
       };
 
-      var _term = (t, s) => {
-        return f[t] ? f[t]() : s;
-      };
-
-      d = input instanceof Date ? input : new Date(input);
-
-      if (isNaN(d.getTime())) {
-        let reg = /^(\d+-\d+-\d+)\s(\d+:\d+:\d+)$/i;
-        if (reg.test(input)) {
-          d = new Date(input.replace(' ', 'T'));
-        } else {
-          return input + ' !';
-        }
-      }
-
       /*eslint-disable */
-      f = {
+      let f = {
         Y() {
           return d.getFullYear();
         }, // 2015
@@ -807,6 +746,11 @@
         }
       };
       /*eslint-enable */
+
+      var _term = (t, s) => {
+        return f[t] ? f[t]() : s;
+      };
+
       return output.replace(vchar, _term);
     };
 
@@ -871,7 +815,7 @@
   return {
     ENV,
     id: createId(),
-    isDef,
+    isUndefined,
     isNull,
     isString,
     isNumber,
@@ -895,8 +839,6 @@
     stripTags,
     escapeHTML,
     unescapeHTML,
-    strtolower,
-    strtoupper,
     ucfirst,
     ucwords,
     leftPad,
@@ -909,22 +851,7 @@
     md5,
     createId,
     random,
-    min,
-    max,
-    unique,
-    first,
-    last,
-    pop,
-    shift,
-    push,
-    unshift,
-    splice,
-    sort,
-    shuffle,
-    pick,
-    empty,
-    copies,
-    clone,
+    stabilize,
     now,
     time,
     date

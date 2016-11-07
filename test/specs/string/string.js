@@ -115,6 +115,8 @@ test('Testing .stripTags(String s) method', (assert) => {
   let a1 = bella.stripTags(x);
   let e1 = 'Hello world';
   assert.deepEquals(a1, e1, `bella.stripTags('${x}') must return ${e1}`);
+
+  assert.deepEquals(bella.stripTags(1238), '', `bella.stripTags(1238) must return empty string`);
   assert.end();
 });
 
@@ -137,29 +139,6 @@ test('Testing .unescapeHTML(String s) method', (assert) => {
   assert.deepEquals(a1, e1, `bella.unescapeHTML('${x}') must return ${e1}`);
 
   assert.deepEquals(bella.unescapeHTML({}), '', 'bella.unescapeHTML({}) must return empty string');
-  assert.end();
-});
-
-
-// strtolower
-test('Testing .strtolower(String s) method', (assert) => {
-  let x = 'HElLo wOrLd';
-  let a1 = bella.strtolower(x);
-  let e1 = 'hello world';
-  assert.deepEquals(a1, e1, `bella.strtolower('${x}') must return ${e1}`);
-
-  assert.deepEquals(bella.strtolower({}), '', 'bella.strtolower({}) must return empty string');
-  assert.end();
-});
-
-// strtoupper
-test('Testing .strtoupper(String s) method', (assert) => {
-  let x = 'HElLo wOrLd';
-  let a1 = bella.strtoupper(x);
-  let e1 = 'HELLO WORLD';
-  assert.deepEquals(a1, e1, `bella.strtoupper('${x}') must return ${e1}`);
-
-  assert.deepEquals(bella.strtoupper({}), '', 'bella.strtoupper({}) must return empty string');
   assert.end();
 });
 

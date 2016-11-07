@@ -265,6 +265,7 @@ test('Testing .isEmpty(Anything) method:', (assert) => {
 // isFunction
 test('Testing .isFunction(Anything) method:', (assert) => {
   [
+    () => {},
     function x() {},
     new Function()
   ].forEach((item) => {
