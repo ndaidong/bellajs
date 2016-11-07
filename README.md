@@ -16,7 +16,7 @@ Lightweight util for handling data type, string, data entries, datetime in your 
 * [Setup](#setup)
 * [APIs](#apis)
   * [DataType detection](#datatype-detection)
-  * [Immutable array/object](#array--object)
+  * [Immutable array/object](#immutable-array--object)
   * [String manipulation](#string-manipulation)
   * [Template compiler](#template-compiler)
   * [DateTime](#datetime)
