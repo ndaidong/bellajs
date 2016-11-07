@@ -330,7 +330,7 @@ Output:
 Return a clone of given array with shuffled elements.
 
 ```
-let shuffledUsers = sortedUsers.shuffled();
+let shuffledUsers = sortedUsers.shuffle();
 console.log(shuffledUsers);
 ```
 
