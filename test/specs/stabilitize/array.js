@@ -213,7 +213,7 @@ test('Test how it works with array', (assert) => {
 
 
   assert.comment('Check the method ".shuffle()"');
-  let arr2Shuffle = bella.stabilize([
+  let arr2Shuffle = stabilize([
     1, 4, 9, 18, 55, 64, 2, 7, 33, 8, 11, 44, 99, 15, 35, 64, 12, 27, 13, 28
   ]);
 
@@ -228,7 +228,7 @@ test('Test how it works with array', (assert) => {
   assert.notDeepEqual(r2, r1, 'r2 is not same as r1');
 
   assert.comment('Check the method ".pick()"');
-  let arr2Pick = bella.stabilize(arr2Shuffle);
+  let arr2Pick = stabilize(arr2Shuffle);
 
   let k1 = arr2Pick.pick();
   assert.ok(bella.isNumber(k1), 'arr2Pick.pick() must return a number');
