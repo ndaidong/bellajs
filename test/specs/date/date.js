@@ -63,12 +63,16 @@ test('Testing .date.format(String pattern, Number timestamp) method:', (assert) 
   assert.deepEqual(r3, e3, `Invalid timestamp must return ${e3}`);
 
   let r4 = bella.date.format('D, M d, Y  h:i:s A', 'something');
-  let e4 = 'NaN !';
+  let e4 = 'Invalid input!';
   assert.deepEqual(r4, e4, `Invalid string input must return ${e4}`);
 
   let r5 = bella.date.format('D, M d, Y  h:i:s A', '2016-04-18 13:25:05');
   let e5 = 'Mon, Apr 18, 2016  01:25:05 PM';
   assert.deepEqual(r5, e5, `With '2016-04-18 13:25:05' must return ${e5}`);
+
+  let r6 = bella.date.format('D, M d, Y  h:i:s A', '2016-04-18 13:25:XYZ');
+  let e6 = 'Invalid input!';
+  assert.deepEqual(r6, e6, `With '2016-04-18 13:25:XYZ' must return ${e6}`);
 
   assert.end();
 });

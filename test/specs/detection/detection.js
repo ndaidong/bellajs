@@ -265,6 +265,7 @@ test('Testing .isEmpty(Anything) method:', (assert) => {
 // isFunction
 test('Testing .isFunction(Anything) method:', (assert) => {
   [
+    () => {},
     function x() {},
     new Function()
   ].forEach((item) => {
@@ -432,9 +433,7 @@ test('Tesing .hasProperty(Object o, String propertyName) method:', (assert) => {
     'age',
     'group',
     'label',
-    'color',
-    '__proto__',
-    'toString'
+    'color'
   ];
   for (let i = 0; i < props.length; i++) {
     let k = props[i];
@@ -444,7 +443,9 @@ test('Tesing .hasProperty(Object o, String propertyName) method:', (assert) => {
   let fails = [
     'class',
     'year',
-    'prototype'
+    'prototype',
+    '__proto__',
+    'toString'
   ];
   for (let i = 0; i < fails.length; i++) {
     let k = fails[i];
