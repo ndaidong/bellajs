@@ -387,7 +387,7 @@
           return b[ri];
         }
 
-        return b.splice(0, c);
+        return stabilize(b.splice(0, c));
       };
 
       let addMethods = (met) => {
