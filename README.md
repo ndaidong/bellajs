@@ -304,6 +304,68 @@ Output:
   { name: 'Jim', age: 33 } ]
 ```
 
+##### .msort([Number | String | Object opt])
+
+Advanced version of .isort() that allows to sort an array by some flexible ways.
+
+```
+var points = stabilize([1, 5, 19, 6, 4, 11, 7, 22, 40, 3, 8]);
+console.log('Array points, original:');
+console.log(points);
+
+console.log('Array points, lowest to highest:');
+var a1 = points.msort(); // without parameter
+console.log(a1);
+
+console.log('Array points, descendant:');
+var a2 = points.msort(-1);
+console.log(a2);
+
+var players = stabilize([
+  {
+    name: 'Jerome Nash',
+    age: 24
+  },
+  {
+    name: 'Jackson Valdez',
+    age: 21
+  },
+  {
+    name: 'Benjamin Cole',
+    age: 23
+  },
+  {
+    name: 'Manuel Delgado',
+    age: 33
+  },
+  {
+    name: 'Caleb McKinney',
+    age: 28
+  }
+]);
+
+console.log('\nList of players as it is:');
+players.forEach((item) => {
+  console.log([item.name, item.age].join(' | '));
+});
+
+console.log('\nSort by age from youngest to oldest:');
+var players1 = players.msort('age');
+players1.forEach((item) => {
+  console.log([item.name, item.age].join(' | '));
+});
+
+console.log('\nSort by age from oldest to youngest:');
+var players2 = players.msort({age: -1});
+players2.forEach((item) => {
+  console.log([item.name, item.age].join(' | '));
+});
+```
+
+Results:
+
+![Array sorting easily](http://i.imgur.com/5n28Y6p.png)
+
 
 ##### .ireverse()
 
@@ -355,7 +417,7 @@ console.log(shuffledUsers);
  - .md5(String s)
 
 
-### Template compiler
+### Template compile
  - .compile(String s, Object d)
 
 What does Bella.compile do?

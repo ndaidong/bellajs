@@ -10,43 +10,51 @@ var bella = config.bella;
 
 var stabilize = bella.stabilize;
 
-test('Test how it works with array', (assert) => {
+var stringify = (x) => {
+  if (bella.isArray(x) || bella.isObject(x)) {
+    x = JSON.stringify(x);
+  }
+  return x;
+};
+
+let v = stabilize([
+  {
+    name: 'Alice',
+    age: 22
+  },
+  {
+    name: 'Nick',
+    age: 19
+  },
+  {
+    name: 'Tom',
+    age: 25
+  },
+  {
+    name: 'Paul',
+    age: 16
+  },
+  {
+    name: 'Tom',
+    age: 25
+  },
+  {
+    name: 'Rick',
+    age: 26
+  },
+  {
+    name: 'Mary',
+    age: 28
+  },
+  {
+    name: 'Kelly',
+    age: 21
+  }
+]);
+
+test('Test the APIs overview', (assert) => {
 
   assert.comment('Create an array using stabilize');
-  let v = stabilize([
-    {
-      name: 'Alice',
-      age: 22
-    },
-    {
-      name: 'Nick',
-      age: 19
-    },
-    {
-      name: 'Tom',
-      age: 25
-    },
-    {
-      name: 'Paul',
-      age: 16
-    },
-    {
-      name: 'Tom',
-      age: 25
-    },
-    {
-      name: 'Rick',
-      age: 26
-    },
-    {
-      name: 'Mary',
-      age: 28
-    },
-    {
-      name: 'Kelly',
-      age: 21
-    }
-  ]);
 
   assert.ok(bella.isArray(v), 'v must be an array');
   assert.ok(v.length === 8, 'v must have 8 elements');
@@ -180,7 +188,11 @@ test('Test how it works with array', (assert) => {
   assert.ok(vremoveLastItem.name === 'Rick', 'vremoveLastItem must have name = Rick');
   assert.ok(vremoveLastItem.age === 26, 'vremoveLastItem must have age = 26');
 
-  assert.comment('Check the method ".iresort()"');
+  assert.end();
+});
+
+test('Testing .isort() method', (assert) => {
+
   let visort = v.isort((a, b) => {
     let ag = a.age;
     let bg = b.age;
@@ -190,16 +202,107 @@ test('Test how it works with array', (assert) => {
     return ag < bg ? -1 : 1;
   });
   assert.ok(v.length === 8, 'v.length must be 8 (no change)');
-  assert.ok(bella.isArray(visort), 'viresort must be an array');
+  assert.ok(bella.isArray(visort), 'visort must be an array');
   assert.ok(visort.length === v.length, `visort.length must be ${v.length}`);
-  let viresortFirstItem = visort.first();
-  assert.ok(viresortFirstItem.name === 'Paul', 'viresortFirstItem must have name = Paul');
-  assert.ok(viresortFirstItem.age === 16, 'viresortFirstItem must have age = 16');
-  let viresortLastItem = visort.last();
-  assert.ok(viresortLastItem.name === 'Mary', 'viresortLastItem must have name = Mary');
-  assert.ok(viresortLastItem.age === 28, 'viresortLastItem must have age = 28');
+  let visortFirstItem = visort.first();
+  assert.ok(visortFirstItem.name === 'Paul', 'visortFirstItem must have name = Paul');
+  assert.ok(visortFirstItem.age === 16, 'visortFirstItem must have age = 16');
+  let visortLastItem = visort.last();
+  assert.ok(visortLastItem.name === 'Mary', 'visortLastItem must have name = Mary');
+  assert.ok(visortLastItem.age === 28, 'visortLastItem must have age = 28');
 
-  assert.comment('Check the method ".ireverse()"');
+  assert.end();
+});
+
+test('Testing .msort() method', (assert) => {
+  let a1 = bella.stabilize([
+    1,
+    6,
+    8,
+    3,
+    5
+  ]);
+
+  let e1 = [1, 3, 5, 6, 8];
+  let r1 = a1.msort();
+  assert.deepEquals(r1, e1, `Result must be ${stringify(e1)}`);
+
+  let a2 = bella.stabilize([
+    {
+      name: 'Aline',
+      age: 12
+    },
+    {
+      name: 'Steve',
+      age: 29
+    },
+    {
+      name: 'Nick',
+      age: 7
+    },
+    {
+      name: 'Kate',
+      age: 16
+    }
+  ]);
+
+  let e21 = [
+    {
+      name: 'Nick',
+      age: 7
+    },
+    {
+      name: 'Aline',
+      age: 12
+    },
+    {
+      name: 'Kate',
+      age: 16
+    },
+    {
+      name: 'Steve',
+      age: 29
+    }
+  ];
+
+  let r21 = a2.msort('age');
+  assert.deepEquals(r21, e21, `Result must be ${stringify(e21)}`);
+
+  let e22 = [
+    {
+      name: 'Steve',
+      age: 29
+    },
+    {
+      name: 'Kate',
+      age: 16
+    },
+    {
+      name: 'Aline',
+      age: 12
+    },
+    {
+      name: 'Nick',
+      age: 7
+    }
+  ];
+
+  let r22 = a2.msort({age: -1});
+  assert.deepEquals(r22, e22, `Result must be ${stringify(e22)}`);
+  assert.end();
+});
+
+test('Testing .ireverse() method', (assert) => {
+
+  let visort = v.isort((a, b) => {
+    let ag = a.age;
+    let bg = b.age;
+    if (ag === bg) {
+      return 0;
+    }
+    return ag < bg ? -1 : 1;
+  });
+
   let vIsortIreverse = visort.ireverse();
   assert.ok(visort.length === 8, 'visort.length must be 8 (no change)');
   assert.ok(bella.isArray(vIsortIreverse), 'vIsortIreverse must be an array');
@@ -211,8 +314,11 @@ test('Test how it works with array', (assert) => {
   assert.ok(vIsortIreverseLastItem.name === 'Paul', 'vIsortIreverseLastItem must have name = Paul');
   assert.ok(vIsortIreverseLastItem.age === 16, 'vIsortIreverseLastItem must have age = 16');
 
+  assert.end();
+});
 
-  assert.comment('Check the method ".shuffle()"');
+test('Testing .shuffle() method', (assert) => {
+
   let arr2Shuffle = stabilize([
     1, 4, 9, 18, 55, 64, 2, 7, 33, 8, 11, 44, 99, 15, 35, 64, 12, 27, 13, 28
   ]);
@@ -227,8 +333,14 @@ test('Test how it works with array', (assert) => {
   assert.deepEquals(r2.length, r1.length, 'r2.length must be equal to r1.length');
   assert.notDeepEqual(r2, r1, 'r2 is not same as r1');
 
-  assert.comment('Check the method ".pick()"');
-  let arr2Pick = stabilize(arr2Shuffle);
+  assert.end();
+});
+
+test('Testing .pick() method', (assert) => {
+
+  let arr2Pick = stabilize([
+    1, 4, 9, 18, 55, 64, 2, 7, 33, 8, 11, 44, 99, 15, 35, 64, 12, 27, 13, 28
+  ]);
 
   let k1 = arr2Pick.pick();
   assert.ok(bella.isNumber(k1), 'arr2Pick.pick() must return a number');
@@ -246,7 +358,6 @@ test('Test how it works with array', (assert) => {
 
   let k5 = arr2Pick.pick(-2);
   assert.ok(bella.isNumber(k5), 'arr2Pick.pick(-1) must return a number');
-
 
   assert.end();
 });

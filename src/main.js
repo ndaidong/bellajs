@@ -364,6 +364,34 @@
         return stabilize(r);
       };
 
+      let msort = (o = 1) => {
+        let r = [...a];
+        let one = r[0];
+        if (o === 1 || o === -1) {
+          r.sort((m, n) => {
+            return m > n ? o : m < n ? -1 * o : 0; // eslint-disable-line no-nested-ternary
+          });
+        }
+        if (isString(o) && hasProperty(one, o)) {
+          r.sort((m, n) => {
+            return m[o] > n[o] ? 1 : m[o] < n[o] ? -1 : 0; // eslint-disable-line no-nested-ternary
+          });
+        }
+        if (isObject(o)) {
+          for (let key in o) {
+            if (hasProperty(one, key)) {
+              let order = o[key] === -1 ? -1 : 1;
+              /*eslint-disable*/
+              r.sort((m, n) => {
+                return (m[key] > n[key]) ? order : (m[key] < n[key] ? (-1 * order) : 0);
+              });
+              /*eslint-enable*/
+            }
+          }
+        }
+        return stabilize(r);
+      };
+
       let ireverse = () => {
         let r = [...a].reverse();
         return stabilize(r);
@@ -410,6 +438,7 @@
         ['append', append],
         ['remove', remove],
         ['isort', isort],
+        ['msort', msort],
         ['ireverse', ireverse],
         ['shuffle', shuffle]
       ].map(addMethods);
