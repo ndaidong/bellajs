@@ -387,13 +387,7 @@
           return b[ri];
         }
 
-        let d = [];
-        while (d.length < c) {
-          let i = random(0, b.length - 1);
-          d.push(b[i]);
-          b = b.splice(i, 1);
-        }
-        return d;
+        return b.splice(0, c);
       };
 
       let addMethods = (met) => {
