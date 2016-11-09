@@ -1,8 +1,8 @@
 language: node_js
 node_js:
-  - "7.0"
-  - "6.7"
-  - "6.4"
+  - "7.1"
+  - "6.8"
+  - "6.5"
   - "6.0"
 before_script:
   - export TZ=Etc/GMT-7
