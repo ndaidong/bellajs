@@ -152,12 +152,26 @@ console.log(tesla);
 stabilize(Array a);
 ```
 
-Return an immutable array that has the new methods: *unique*, *first*, *last*, *insert*, *append*, *remove*, *isort* and *ireverse*. All these methods return the immutable data.
+Return an immutable array that has the following methods:
+
+- [.unique](#unique)
+- [.min](#min)
+- [.max](#max)
+- [.first](#first)
+- [.last](#last)
+- [.pick](#pick)
+- [.insert](#insert)
+- [.append](#append)
+- [.remove](#remove)
+- [.isort](#isort)
+- [.msort](#msort)
+- [.ireverse](#ireverse)
+- [.shuffle](#shuffle)
 
 Because the returned array is standard array, so you can still use the built-in methods in [Array.prototype](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array) as normal.
 
 
-##### .unique(key)
+##### .unique()
 
 Return a new array with no duplicate elements.
 
