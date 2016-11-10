@@ -88,8 +88,7 @@ test('Testing .isObject(Anything) method:', (assert) => {
     is,
     {},
     {a: 1, b: 0},
-    Object.create({}),
-    new Date()
+    Object.create({})
   ].forEach((item) => {
     let r = bella.isObject(item);
     var x = stringify(item);
@@ -103,7 +102,8 @@ test('Testing .isObject(Anything) method:', (assert) => {
     null,
     undefined,
     0,
-    []
+    [],
+    new Date()
   ].forEach((item) => {
     let r = bella.isObject(item);
     var x = stringify(item);

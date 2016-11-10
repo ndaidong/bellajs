@@ -18,59 +18,61 @@
   }
 })('Bella', () => {
 
-  const MAX_NUMBER = 9007199254740991;
+  const MAX_NUMBER = Number.MAX_SAFE_INTEGER;
 
   const UNDEF = undefined; // eslint-disable-line no-undefined
 
   const ENV = typeof module !== UNDEF && module.exports ? 'node' : 'browser';
 
+  var ob2Str = (val) => {
+    return {}.toString.call(val);
+  };
+
   var isNull = (val) => {
-    return val === null;
+    return ob2Str(val) === '[object Null]';
   };
 
   var isUndefined = (val) => {
-    return typeof val === UNDEF;
+    return ob2Str(val) === '[object Undefined]';
+  };
+
+  var isFunction = (val) => {
+    return ob2Str(val) === '[object Function]';
   };
 
   var isString = (val) => {
-    return !isNull(val) && typeof val === 'string';
+    return ob2Str(val) === '[object String]';
   };
 
   var isNumber = (val) => {
-    return val !== '' && !isNull(val) && !isUndefined(val) && !isNaN(val) && typeof val === 'number';
+    return ob2Str(val) === '[object Number]';
   };
 
   var isInteger = (val) => {
-    return isNumber(val) && isFinite(val) && Math.floor(val) === val;
+    return Number.isInteger(val);
+  };
+
+  var isArray = (val) => {
+    return Array.isArray(val);
+  };
+
+  var isObject = (val) => {
+    return ob2Str(val) === '[object Object]' && !isArray(val);
   };
 
   var isBoolean = (val) => {
     return val === true || val === false;
   };
 
-  var isArray = (val) => {
-    return !isNull(val) && Array.isArray(val);
-  };
-
-  var isObject = (val) => {
-    return val !== null && typeof val === 'object' && isArray(val) === false;
-  };
-
   var isDate = (val) => {
     return val instanceof Date && !isNaN(val.valueOf());
-  };
-
-  var isFunction = (val) => {
-    return typeof val === 'function';
   };
 
   var isElement = (val) => {
     if (val && ENV === 'node' && val._root) {
       return true;
     }
-    let ots = Object.prototype.toString;
-    let scall = ots.call(val);
-    return typeof val === 'object' && scall.includes('HTML') && scall.includes('Element');
+    return ob2Str(val).match(/^\[object HTML\w*Element]$/);
   };
 
   var isLetter = (val) => {
