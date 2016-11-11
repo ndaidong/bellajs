@@ -413,8 +413,6 @@ console.log(shuffledUsers);
 
 
 ### String manipulation
- - .createId(Number length [, String prefix])
- - .createAlias(String s)
  - .encode(String s)
  - .decode(String s)
  - .trim(String s)
@@ -429,7 +427,6 @@ console.log(shuffledUsers);
  - .rightPad(String s, Number limit, String pad)
  - .repeat(String s, Number times)
  - .replaceAll(String s, String|Array search, String|Array replace)
- - .md5(String s)
 
 
 ### Template compile
@@ -620,6 +617,12 @@ Output:
   age: 30
 }
 ```
+
+##### .createId([Number length [, String prefix]])
+##### .createAlias(String s)
+##### .equals(Anything a, Anything b)
+##### .md5(String s)
+##### .random([Number min [, Number max]]):
 
 
 # Test
