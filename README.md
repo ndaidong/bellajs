@@ -563,7 +563,7 @@ What you get is still:
 }
 ```
 
- - .copies(Object source, Object target[[, Boolean requireMatching], Array excepts]):
+##### .copies(Object source, Object target[[, Boolean requireMatching], Array excepts]):
 
 Copy the properties from *source* to *target*.
 
