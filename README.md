@@ -20,6 +20,7 @@ Lightweight util for handling data type, string, data entries, datetime in your 
   * [String manipulation](#string-manipulation)
   * [Template compiler](#template-compiler)
   * [DateTime](#datetime)
+  * [Other utils](#other-utils)
 * [Test](#test)
 
 
@@ -528,6 +529,99 @@ var s = Bella.date.format(false, atime);
 console.log(s);
 ```
 
+### Other utils
+
+##### .clone(Anything val):
+
+Return a copy of val.
+
+```
+let b = [
+  1, 5, 0, 'a', -10, '-10', '',
+  {
+    a: 1,
+    b: 'Awesome'
+  }
+];
+
+let cb = bella.clone(b);
+console.log(cb);
+```
+
+*cb* now has the same values as *b*, while the properties are standalone, not reference. So that:
+
+```
+cb[7].a = 2;
+cb[7].b = 'Noop';
+
+console.log(b[7]);
+```
+
+What you get is still:
+
+```
+{
+  a: 1,
+  b: 'Awesome'
+}
+```
+
+ - .copies(Object source, Object target[[, Boolean requireMatching], Array excepts]):
+
+Copy the properties from *source* to *target*.
+
+- *requireMatching*: if true, BellaJS only copies the properties that are already exist in *target*.
+- *excepts*: array of the properties properties in *source* that you don't want to copy.
+
+Example:
+
+```
+let a = {
+  name: 'Toto',
+  age: 30,
+  level: 8,
+  nationality: {
+    name: 'America'
+  }
+};
+let b = {
+  level: 4,
+  IQ: 140,
+  epouse: {
+    name: 'Alice',
+    age: 27
+  },
+  nationality: {
+    long: '18123.123123.12312',
+    lat: '98984771.134231.1234'
+  }
+};
+
+bella.copies(a, b);
+console.log(b);
+```
+
+Output:
+
+```
+{
+  level: 8,
+  IQ: 140,
+  epouse: {
+    name: 'Alice',
+    age: 27
+  },
+  nationality: {
+    long: '18123.123123.12312',
+    lat: '98984771.134231.1234',
+    name: 'America'
+  },
+  name: 'Toto',
+  age: 30
+}
+```
+
+
 # Test
 
 ```
@@ -535,12 +629,6 @@ git clone https://github.com/ndaidong/bellajs.git
 cd bellajs
 npm install
 npm test
-```
-
-You may like to see BellaJS in action by modifying the script test/manual/test.js and then call it:
-
-```
-node test/manual/test.js
 ```
 
 
