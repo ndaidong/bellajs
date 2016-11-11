@@ -39,7 +39,14 @@ test('Testing .clone(Object target) method', (assert) => {
     {
       a: 1,
       b: 'Awesome'
-    }
+    },
+    [
+      5, 6, 8,
+      {
+        name: 'Lys',
+        age: 11
+      }
+    ]
   ];
 
   let cb = bella.clone(b);

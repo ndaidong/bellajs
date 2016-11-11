@@ -373,7 +373,7 @@
 
   var stabilize = (() => {
 
-    var astabilize = (data = []) => {
+    var astabilize = (data) => {
 
       let a = clone(data);
 
@@ -509,7 +509,7 @@
       return a;
     };
 
-    var ostabilize = (data = {}) => {
+    var ostabilize = (data) => {
 
       let o = Object.create({});
 
