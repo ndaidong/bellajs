@@ -310,11 +310,72 @@
     return Math.floor(Math.random() * range) + offset;
   };
 
+  var clone = (val) => {
+
+    if (isDate(val)) {
+      return new Date(val.valueOf());
+    }
+
+    let copyObject = (o) => {
+      let oo = Object.create({});
+      for (let k in o) {
+        if (hasProperty(o, k)) {
+          oo[k] = clone(o[k]);
+        }
+      }
+      return oo;
+    };
+
+    let copyArray = (a) => {
+      let aa = [...a];
+      let ba = [];
+      aa.forEach((e) => {
+        if (isArray(e)) {
+          ba.push(copyArray(e));
+        } else if (isObject(e)) {
+          ba.push(copyObject(e));
+        } else {
+          ba.push(clone(e));
+        }
+      });
+      return ba;
+    };
+
+    if (isArray(val)) {
+      return copyArray(val);
+    }
+
+    if (isObject(val)) {
+      return copyObject(val);
+    }
+
+    return val;
+  };
+
+
+  var copies = (source, dest, matched = false, excepts = []) => {
+    for (let k in source) {
+      if (excepts.length > 0 && excepts.includes(k)) {
+        continue; // eslint-disable-line no-continue
+      }
+      if (!matched || matched && dest.hasOwnProperty(k)) {
+        let oa = source[k];
+        let ob = dest[k];
+        if (isObject(ob) && isObject(oa) || isArray(ob) && isArray(oa)) {
+          dest[k] = copies(oa, dest[k], matched, excepts);
+        } else {
+          dest[k] = clone(oa);
+        }
+      }
+    }
+    return dest;
+  };
+
   var stabilize = (() => {
 
     var astabilize = (data = []) => {
 
-      let a = [...data];
+      let a = clone(data);
 
       let unique = () => {
         let arr = [...a];
@@ -877,6 +938,8 @@
     md5,
     createId,
     random,
+    copies,
+    clone,
     stabilize,
     now,
     time,
