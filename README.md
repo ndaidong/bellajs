@@ -34,8 +34,8 @@ Lightweight util for handling data type, string, data entries, datetime in your 
 
 - CDN
 
-  [bella.js](https://cdn.rawgit.com/ndaidong/bellajs/master/dist/bella.js)
-  [bella.min.js](https://cdn.rawgit.com/ndaidong/bellajs/master/dist/bella.min.js)
+  - [bella.js](https://cdn.rawgit.com/ndaidong/bellajs/master/dist/bella.js)
+  - [bella.min.js](https://cdn.rawgit.com/ndaidong/bellajs/master/dist/bella.min.js)
 
 - This library also supports ES6 Module, AMD and UMD style.
 

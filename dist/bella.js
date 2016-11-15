@@ -1,7 +1,7 @@
 /**
  * bellajs
- * v6.3.21
- * built: Tue, 15 Nov 2016 15:32:19 GMT
+ * v6.3.22
+ * built: Tue, 15 Nov 2016 16:00:29 GMT
  * git: https://github.com/ndaidong/bellajs
  * author: @ndaidong
  * License: MIT
