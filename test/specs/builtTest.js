@@ -7,8 +7,7 @@ var fs = require('fs');
 var test = require('tape');
 
 var pkgFake = require('../../package.json');
-var proFile = './dist/bella.min.js';
-
+var proFile = './dist/bella.js';
 
 test('Testing minified result', (assert) => {
   assert.ok(fs.existsSync(proFile), 'Production file must be generated');
