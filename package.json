@@ -1,5 +1,5 @@
 {
-  "version": "6.3.0",
+  "version": "6.3.2",
   "name": "bellajs",
   "description": "A useful helper for any javascript program",
   "homepage": "https://www.npmjs.com/package/bellajs",
@@ -21,7 +21,7 @@
     "test": "npm run tape",
     "posttest": "npm run report",
     "coveralls": "npm test && cat ./coverage/lcov.info | coveralls",
-    "build": "gccmin src dist/bella.min.js"
+    "build": "gccmin"
   },
   "devDependencies": {
     "chance": "latest",
@@ -47,5 +47,11 @@
     "datetime",
     "util"
   ],
+  "gccmin": {
+    "source": "src",
+    "target": "dist",
+    "filename": "bella",
+    "globalVar": "Bella"
+  },
   "license": "MIT"
 }
