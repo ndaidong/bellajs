@@ -12,7 +12,6 @@ Lightweight util for handling data type, string, data entries, datetime in your 
 
 # Contents
 
-* [What's new](#changes)
 * [Setup](#setup)
 * [APIs](#apis)
   * [DataType detection](#datatype-detection)
@@ -22,6 +21,7 @@ Lightweight util for handling data type, string, data entries, datetime in your 
   * [DateTime](#datetime)
   * [Other utils](#other-utils)
 * [Test](#test)
+* [License](#license)
 
 
 ## Setup
@@ -34,11 +34,8 @@ Lightweight util for handling data type, string, data entries, datetime in your 
 
 - CDN
 
+  [bella.js](https://cdn.rawgit.com/ndaidong/bellajs/master/dist/bella.js)
   [bella.min.js](https://cdn.rawgit.com/ndaidong/bellajs/master/dist/bella.min.js)
-
-  ```
-  <script type="text/javascript" src="https://cdn.rawgit.com/ndaidong/bellajs/master/dist/bella.min.js"></script>
-  ```
 
 - This library also supports ES6 Module, AMD and UMD style.
 
@@ -160,12 +157,12 @@ Return an immutable array that has the following methods:
 - [.max](#max)
 - [.first](#first)
 - [.last](#last)
-- [.pick](#pick)
-- [.insert](#insert)
-- [.append](#append)
-- [.remove](#remove)
-- [.isort](#isort)
-- [.msort](#msort)
+- [.pick](#pickcount)
+- [.insert](#insertat-element1-element2-elementn)
+- [.append](#appendelement1-element2-elementn)
+- [.remove](#removestart-count)
+- [.isort](#isortcomparefunction)
+- [.msort](#msortnumber--string--object-opt)
 - [.ireverse](#ireverse)
 - [.shuffle](#shuffle)
 
