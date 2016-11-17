@@ -5,7 +5,8 @@ var path = require('path');
  * Import specs
  */
 
-var dirs = ['', 'detection', 'utils', 'stabilitize', 'string', 'date', 'scheduler'];
+var dirs = ['', 'detection', 'utils', 'string', 'template', 'stabilitize', 'date'];
+var dirs = ['string'];
 
 dirs.forEach((dir) => {
   let where = './test/specs/' + dir;

@@ -19,7 +19,7 @@ Lightweight util for handling data type, string, data entries, datetime in your 
     * [Stabilize an object](#stabilize-an-object)
     * [Stabilize an array](#stabilize-an-array)
   * [String manipulation](#string-manipulation)
-  * [Template compiler](#template-compiler)
+  * [Template](#template)
   * [DateTime](#datetime)
   * [Other utils](#other-utils)
 * [Test](#test)
@@ -428,17 +428,15 @@ console.log(shuffledUsers);
  - .replaceAll(String s, String|Array search, String|Array replace)
 
 
-### Template compile
- - .compile(String s, Object d)
+### Template
+ - .template(String tpl)
 
-What does Bella.compile do?
+Returns an object with .compile() method
 
-This is a simple template engine that allows to quickly assign the values from object "d" to the template string "s".
-
-Here is an example:
+Example:
 
 ```
-var template = [
+var tpl = [
   '<article>',
     '<a href="{link}">{title}</a>',
     '<p>{content}</p>',
@@ -459,20 +457,34 @@ var data = {
   }
 }
 
-var html = Bella.compile(template, data);
+var html = Bella.template(tpl).compile(data);
 console.log(html);
+
 ```
 
 ### DateTime
- - .date.format(String pattern, Date|Number|String input)
- - .date.relativize(Date|Number|String input)
- - .date.local(Date|Number|String input)
- - .date.utc(Date|Number|String input)
- - .date.strtotime(String input)
 
-Default pattern is 'D, M d, Y  H:i:s A'. Without any parameter, Bella.date.format() return a string related to current time, in the format of default pattern.
+ - .now() return current date time
+ - .time() return timestamp value at present
+ - .date([Date | Number]) return an object with the following methods:
+   - .format([String pattern])
+   - .relativize()
+   - .local()
+   - .utc()
 
-BellaJS' datetime pattern is familiar with PHP developers than MomentJS. The available characters in the pattern are:
+Example:
+
+```
+let d = bella.date(1479374694886);
+d.local(); //=> Thu, 17 Nov 2016 16:24:54 GMT+0007
+d.utc(); //=> Thu, 17 Nov 2016 09:24:54 GMT
+d.relativize(); //=> 2 minutes ago
+d.format('Y/m/d h:i:s'); //=> 2016/02/18 15:28:20
+```
+
+Default BellaJS DateTime pattern is 'D, M d, Y  H:i:s A'.
+
+Here are the available characters:
 
     - Y: full year, ex: 2050
     - y: short year, ex: 50
@@ -496,34 +508,6 @@ BellaJS' datetime pattern is familiar with PHP developers than MomentJS. The ava
     - A: AM, PM
     - O: timezone
 
-Examples:
-
-```
-// default datetime (local)
-var t = Bella.now();
-console.log(t);
-
-// format it as 2015/09/25 09:44:51
-var f = Bella.date.format('Y/m/d h:i:s', t);
-console.log(f);
-
-// this is a time in future
-
-var atime = 80616962585961;
-console.log(atime);
-
-// display it as your local time
-var local = Bella.date.local(atime);
-console.log(local);
-
-// display it as GMT time
-var utc = Bella.date.utc(atime);
-console.log(utc);
-
-// display it with default pattern
-var s = Bella.date.format(false, atime);
-console.log(s);
-```
 
 ### Other utils
 
