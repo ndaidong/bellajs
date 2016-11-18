@@ -863,6 +863,8 @@ var date = (input = time()) => {
   };
 };
 
+// exports
+
 let B = Object.create({});
 let exp = {
   ENV,
@@ -914,10 +916,12 @@ let exp = {
 };
 
 var setProp = (k) => {
-  def(B, k, exp[k]);
+  def(B, k, exp[k], {
+    enumerable: true,
+    configurable: true
+  });
 };
 
 Object.keys(exp).map(setProp);
 
-// exports
 module.exports = B;

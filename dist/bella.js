@@ -1,7 +1,7 @@
 /**
  * bellajs
- * v6.4.0
- * built: Fri, 18 Nov 2016 03:50:42 GMT
+ * v6.4.1
+ * built: Fri, 18 Nov 2016 04:32:51 GMT
  * git: https://github.com/ndaidong/bellajs
  * author: @ndaidong
  * License: MIT
@@ -969,7 +969,10 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
   };
 
   var setProp = function setProp(k) {
-    def(B, k, exp[k]);
+    def(B, k, exp[k], {
+      enumerable: true,
+      configurable: true
+    });
   };
 
   Object.keys(exp).map(setProp);

@@ -412,19 +412,20 @@ console.log(shuffledUsers);
 
 
 ### String manipulation
+ - .createAlias(String s)
  - .encode(String s)
  - .decode(String s)
- - .trim(String s)
  - .ucfirst(String s)
  - .ucwords(String s)
  - .escapeHTML(String s)
  - .unescapeHTML(String s)
  - .stripTags(String s)
  - .stripAccent(String s)
+ - .trim(String s [, Boolean nospace])
  - .truncate(String s, Number limit)
+ - .repeat(String s, Number times)
  - .leftPad(String s, Number limit, String pad)
  - .rightPad(String s, Number limit, String pad)
- - .repeat(String s, Number times)
  - .replaceAll(String s, String|Array search, String|Array replace)
 
 
@@ -602,7 +603,6 @@ Output:
 ```
 
 ##### .createId([Number length [, String prefix]])
-##### .createAlias(String s)
 ##### .equals(Anything a, Anything b)
 ##### .md5(String s)
 ##### .random([Number min [, Number max]]):
