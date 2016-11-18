@@ -4,6 +4,7 @@
 **/
 
 const MAX_NUMBER = Number.MAX_SAFE_INTEGER;
+const MAX_STRING = 1 << 28; // eslint-disable-line no-bitwise
 
 const UNDEF = undefined; // eslint-disable-line no-undefined
 
@@ -138,42 +139,63 @@ var equals = (a, b) => {
   return re;
 };
 
+var def = (o, key, val = UNDEF, opt = {}) => {
+  let {
+    enumerable = false,
+    configurable = false,
+    writable = false,
+    value = val
+  } = opt;
+  Object.defineProperty(o, key, {
+    enumerable,
+    configurable,
+    writable,
+    value
+  });
+  return o;
+};
+
+var toString = (input) => {
+  let s = isNumber(input) ? String(input) : input;
+  if (!isString(s)) {
+    throw new Error('InvalidInput: String required.');
+  }
+  return s;
+};
+
 var encode = (s) => {
-  return isString(s) ? encodeURIComponent(s) : '';
+  let x = toString(s);
+  return encodeURIComponent(x);
 };
 
 var decode = (s) => {
-  return isString(s) ? decodeURIComponent(s.replace(/\+/g, ' ')) : '';
+  let x = toString(s);
+  return decodeURIComponent(x.replace(/\+/g, ' '));
 };
 
-var trim = (s, all) => {
-  if (!isString(s)) {
-    return '';
-  }
-  let x = s ? s.replace(/^[\s\xa0]+|[\s\xa0]+$/g, '') : s || '';
+var trim = (s, all = false) => {
+  let x = toString(s);
+  x = x.replace(/^[\s\xa0]+|[\s\xa0]+$/g, '');
   if (x && all) {
-    return x.replace(/\r?\n|\r/g, ' ').replace(/\s\s+|\r/g, ' ');
+    x = x.replace(/\r?\n|\r/g, ' ').replace(/\s\s+|\r/g, ' ');
   }
   return x;
 };
 
 var truncate = (s, l) => {
-  s = trim(s);
-  if (!s) {
-    return s;
-  }
+  let o = toString(s);
   let t = l || 140;
-  if (s.length <= t) {
-    return s;
+  if (o.length <= t) {
+    return o;
   }
-  let x = s.substring(0, t);
+  let x = o.substring(0, t);
   let a = x.split(' ');
   let b = a.length;
   let r = '';
   if (b > 1) {
     a.pop();
     r += a.join(' ');
-    if (r.length < s.length) {
+    if (r.length < o.length) {
       r += '...';
     }
   } else {
@@ -184,49 +206,38 @@ var truncate = (s, l) => {
 };
 
 var stripTags = (s) => {
-  if (!isString(s)) {
-    return '';
-  }
-  let r = s.replace(/<.*?>/gi, ' ');
-  if (r) {
-    r = trim(r.replace(/\s\s+/g, ' '));
-  }
-  return r;
+  let x = toString(s);
+  return trim(x.replace(/<.*?>/gi, ' ').replace(/\s\s+/g, ' '));
 };
 
 var escapeHTML = (s) => {
-  if (!isString(s)) {
-    return '';
-  }
-  return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  let x = toString(s);
+  return x.replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;');
 };
 
 var unescapeHTML = (s) => {
-  if (!isString(s)) {
-    return '';
-  }
-  return s.replace(/&quot;/g, '"')
+  let x = toString(s);
+  return x.replace(/&quot;/g, '"')
           .replace(/&lt;/g, '<')
           .replace(/&gt;/g, '>')
           .replace(/&amp;/g, '&');
 };
 
 var ucfirst = (s) => {
-  if (!isString(s)) {
-    return '';
+  let x = toString(s);
+  if (x.length === 1) {
+    return x.toUpperCase();
   }
-  if (s.length === 1) {
-    return s.toUpperCase();
-  }
-  s = s.toLowerCase();
-  return s.charAt(0).toUpperCase() + s.slice(1);
+  x = x.toLowerCase();
+  return x.charAt(0).toUpperCase() + x.slice(1);
 };
 
 var ucwords = (s) => {
-  if (!isString(s)) {
-    return '';
-  }
-  let c = s.split(' ');
+  let x = toString(s);
+  let c = x.split(' ');
   let a = [];
   c.forEach((w) => {
     a.push(ucfirst(w));
@@ -235,25 +246,156 @@ var ucwords = (s) => {
 };
 
 var leftPad = (s, size = 2, pad = '0') => {
-  let o = String(s);
-  return o.length >= size ? o : new Array(size - o.length + 1).join(pad) + o;
+  let x = toString(s);
+  return x.length >= size ? x : new Array(size - x.length + 1).join(pad) + x;
 };
 
 var rightPad = (s, size = 2, pad = '0') => {
-  let o = String(s);
-  return o.length >= size ? o : o + new Array(size - o.length + 1).join(pad);
+  let x = toString(s);
+  return x.length >= size ? x : x + new Array(size - x.length + 1).join(pad);
 };
 
 var repeat = (s, m) => {
-  if (!s || !isString(s)) {
-    return '';
-  }
+  let x = toString(s);
   if (!isInteger(m) || m < 1) {
-    return s;
+    return x;
+  }
+  if (x.length * m >= MAX_STRING) {
+    throw new RangeError(`Repeat count must not overflow maximum string size.`);
   }
   let a = [];
   a.length = m;
-  return a.fill(s, 0, m).join('');
+  return a.fill(x, 0, m).join('');
+};
+
+var replaceAll = (s, a, b) => {
+
+  let x = toString(s);
+
+  if (isNumber(a)) {
+    a = String(a);
+  }
+  if (isNumber(b)) {
+    b = String(b);
+  }
+
+  if (isString(a) && isString(b)) {
+    let aa = x.split(a);
+    x = aa.join(b);
+  } else if (isArray(a) && isString(b)) {
+    a.forEach((v) => {
+      x = replaceAll(x, v, b);
+    });
+  } else if (isArray(a) && isArray(b) && a.length === b.length) {
+    let k = a.length;
+    if (k > 0) {
+      for (let i = 0; i < k; i++) {
+        let aaa = a[i];
+        let bb = b[i];
+        x = replaceAll(x, aaa, bb);
+      }
+    }
+  }
+  return x;
+};
+
+var stripAccent = (s) => {
+
+  let x = toString(s);
+
+  let map = {
+    a: 'á|à|ả|ã|ạ|ă|ắ|ặ|ằ|ẳ|ẵ|â|ấ|ầ|ẩ|ẫ|ậ|ä',
+    A: 'Á|À|Ả|Ã|Ạ|Ă|Ắ|Ặ|Ằ|Ẳ|Ẵ|Â|Ấ|Ầ|Ẩ|Ẫ|Ậ|Ä',
+    c: 'ç',
+    C: 'Ç',
+    d: 'đ',
+    D: 'Đ',
+    e: 'é|è|ẻ|ẽ|ẹ|ê|ế|ề|ể|ễ|ệ|ë',
+    E: 'É|È|Ẻ|Ẽ|Ẹ|Ê|Ế|Ề|Ể|Ễ|Ệ|Ë',
+    i: 'í|ì|ỉ|ĩ|ị|ï|î',
+    I: 'Í|Ì|Ỉ|Ĩ|Ị|Ï|Î',
+    o: 'ó|ò|ỏ|õ|ọ|ô|ố|ồ|ổ|ỗ|ộ|ơ|ớ|ờ|ở|ỡ|ợ|ö',
+    O: 'Ó|Ò|Ỏ|Õ|Ọ|Ô|Ố|Ồ|Ổ|Ô|Ộ|Ơ|Ớ|Ờ|Ở|Ỡ|Ợ|Ö',
+    u: 'ú|ù|ủ|ũ|ụ|ư|ứ|ừ|ử|ữ|ự|û',
+    U: 'Ú|Ù|Ủ|Ũ|Ụ|Ư|Ứ|Ừ|Ử|Ữ|Ự|Û',
+    y: 'ý|ỳ|ỷ|ỹ|ỵ',
+    Y: 'Ý|Ỳ|Ỷ|Ỹ|Ỵ'
+  };
+
+  let updateS = (ai, key) => {
+    x = replaceAll(x, ai, key);
+  };
+
+  for (let key in map) {
+    if (hasProperty(map, key)) {
+      let a = map[key].split('|');
+      a.forEach((item) => {
+        return updateS(item, key);
+      });
+    }
+  }
+  return x;
+};
+
+var createAlias = (s, delimiter) => {
+  let x = trim(stripAccent(s));
+  let d = delimiter || '-';
+  return x.toLowerCase()
+        .replace(/\W+/g, ' ')
+        .replace(/\s+/g, ' ')
+        .replace(/\s/g, d);
+};
+
+
+/*eslint-disable*/
+/** https://github.com/jbt/js-crypto */
+var md5 = function() {for(var m=[],l=0;64>l;)m[l]=0|4294967296*Math.abs(Math.sin(++l));return function(c) {var e,g,f,a,h=[];c=unescape(encodeURI(c));for(var b=c.length,k=[e=1732584193,g=-271733879,~e,~g],d=0;d<=b;)h[d>>2]|=(c.charCodeAt(d)||128)<<8*(d++%4);h[c=16*(b+8>>6)+14]=8*b;for(d=0;d<c;d+=16) {b=k;for(a=0;64>a;)b=[f=b[3],(e=b[1]|0)+((f=b[0]+[e&(g=b[2])|~e&f,f&e|~f&g,e^g^f,g^(e|~f)][b=a>>4]+(m[a]+(h[[a,5*a+1,3*a+5,7*a][b]%16+d]|0)))<<(b=[7,12,17,22,5,9,14,20,4,11,16,23,6,10,15,21][4*b+a++%4])|f>>>32-b),e,g];for(a=4;a;)k[--a]=k[a]+b[a]}for(c="";32>a;)c+=(k[a>>3]>>4*(1^a++&7)&15).toString(16);return c}}();
+/*eslint-enable*/
+
+
+// bella.template
+var compile = (tpl, data) => {
+  let ns = [];
+  let c = (s, ctx, namespace) => {
+    if (namespace) {
+      ns.push(namespace);
+    }
+    let a = [];
+    for (let k in ctx) {
+      if (hasProperty(ctx, k)) {
+        let v = ctx[k];
+        if (isObject(v) || isArray(v)) {
+          a.push({
+            key: k,
+            data: v
+          });
+        } else if (isString(v)) {
+          v = replaceAll(v, ['{', '}'], ['&#123;', '&#125;']);
+          let cns = ns.concat([k]);
+          let r = new RegExp('{' + cns.join('.') + '}', 'gi');
+          s = s.replace(r, v);
+        }
+      }
+    }
+    if (a.length > 0) {
+      a.forEach((item) => {
+        s = c(s, item.data, item.key);
+      });
+    }
+    return trim(s, true);
+  };
+  if (data && (isString(data) || isObject(data) || isArray(data))) {
+    return c(tpl, data);
+  }
+  return tpl;
+};
+
+var template = (tpl) => {
+  return {
+    compile: (data) => {
+      return compile(tpl, data);
+    }
+  };
 };
 
 var genkey = () => {
@@ -467,12 +609,7 @@ var stabilize = (() => {
     };
 
     let addMethods = (met) => {
-      Object.defineProperty(a, met[0], {
-        enumerable: false,
-        configurable: false,
-        writable: false,
-        value: met[1]
-      });
+      def(a, met[0], met[1]);
     };
 
     [
@@ -498,48 +635,31 @@ var stabilize = (() => {
 
     let o = Object.create({});
 
-    let config = {
-      enumerable: true,
-      configurable: false,
-      writable: false,
-      value: 'undefined'
-    };
-
     let setProp = (key) => {
-      let c = Object.assign({}, config);
-      c.value = data[key];
-      Object.defineProperty(o, key, c);
+      def(o, key, data[key], {
+        enumerable: true
+      });
     };
 
     Object.keys(data).map(setProp);
 
-    Object.defineProperty(o, 'get', {
-      enumerable: false,
-      configurable: false,
-      writable: false,
-      value: (k) => {
-        return o[k];
-      }
+    def(o, 'get', (k) => {
+      return o[k];
     });
 
-    Object.defineProperty(o, 'set', {
-      enumerable: false,
-      configurable: false,
-      writable: false,
-      value: (key, value = false) => {
-        let a = Object.assign({}, o);
-        let _set = (k, v) => {
-          a[k] = v;
-        };
-        if (isObject(key)) {
-          Object.keys(key).forEach((k) => {
-            _set(k, key[k]);
-          });
-        } else {
-          _set(key, value);
-        }
-        return stabilize(a);
+    def(o, 'set', (key, value = false) => {
+      let a = Object.assign({}, o);
+      let _set = (k, v) => {
+        a[k] = v;
+      };
+      if (isObject(key)) {
+        Object.keys(key).forEach((k) => {
+          _set(k, key[k]);
+        });
+      } else {
+        _set(key, value);
       }
+      return stabilize(a);
     });
 
     return o;
@@ -556,139 +676,6 @@ var stabilize = (() => {
   };
 })();
 
-/*eslint-disable*/
-/** https://github.com/jbt/js-crypto */
-var md5 = function() {for(var m=[],l=0;64>l;)m[l]=0|4294967296*Math.abs(Math.sin(++l));return function(c) {var e,g,f,a,h=[];c=unescape(encodeURI(c));for(var b=c.length,k=[e=1732584193,g=-271733879,~e,~g],d=0;d<=b;)h[d>>2]|=(c.charCodeAt(d)||128)<<8*(d++%4);h[c=16*(b+8>>6)+14]=8*b;for(d=0;d<c;d+=16) {b=k;for(a=0;64>a;)b=[f=b[3],(e=b[1]|0)+((f=b[0]+[e&(g=b[2])|~e&f,f&e|~f&g,e^g^f,g^(e|~f)][b=a>>4]+(m[a]+(h[[a,5*a+1,3*a+5,7*a][b]%16+d]|0)))<<(b=[7,12,17,22,5,9,14,20,4,11,16,23,6,10,15,21][4*b+a++%4])|f>>>32-b),e,g];for(a=4;a;)k[--a]=k[a]+b[a]}for(c="";32>a;)c+=(k[a>>3]>>4*(1^a++&7)&15).toString(16);return c}}();
-/*eslint-enable*/
-
-var replaceAll = (s, a, b) => {
-  if (isNumber(s)) {
-    s = String(s);
-  }
-
-  if (!s || !isString(s)) {
-    return '';
-  }
-
-  if (isNumber(a)) {
-    a = String(a);
-  }
-  if (isNumber(b)) {
-    b = String(b);
-  }
-
-  if (isString(a) && isString(b)) {
-    let aa = s.split(a);
-    s = aa.join(b);
-  } else if (isArray(a) && isString(b)) {
-    a.forEach((v) => {
-      s = replaceAll(s, v, b);
-    });
-  } else if (isArray(a) && isArray(b) && a.length === b.length) {
-    let k = a.length;
-    if (k > 0) {
-      for (let i = 0; i < k; i++) {
-        let aaa = a[i];
-        let bb = b[i];
-        s = replaceAll(s, aaa, bb);
-      }
-    }
-  }
-  return s;
-};
-
-var stripAccent = (s) => {
-  if (isNumber(s)) {
-    return String(s);
-  }
-  if (!isString(s)) {
-    return '';
-  }
-  let map = {
-    a: 'á|à|ả|ã|ạ|ă|ắ|ặ|ằ|ẳ|ẵ|â|ấ|ầ|ẩ|ẫ|ậ|ä',
-    A: 'Á|À|Ả|Ã|Ạ|Ă|Ắ|Ặ|Ằ|Ẳ|Ẵ|Â|Ấ|Ầ|Ẩ|Ẫ|Ậ|Ä',
-    c: 'ç',
-    C: 'Ç',
-    d: 'đ',
-    D: 'Đ',
-    e: 'é|è|ẻ|ẽ|ẹ|ê|ế|ề|ể|ễ|ệ|ë',
-    E: 'É|È|Ẻ|Ẽ|Ẹ|Ê|Ế|Ề|Ể|Ễ|Ệ|Ë',
-    i: 'í|ì|ỉ|ĩ|ị|ï|î',
-    I: 'Í|Ì|Ỉ|Ĩ|Ị|Ï|Î',
-    o: 'ó|ò|ỏ|õ|ọ|ô|ố|ồ|ổ|ỗ|ộ|ơ|ớ|ờ|ở|ỡ|ợ|ö',
-    O: 'Ó|Ò|Ỏ|Õ|Ọ|Ô|Ố|Ồ|Ổ|Ô|Ộ|Ơ|Ớ|Ờ|Ở|Ỡ|Ợ|Ö',
-    u: 'ú|ù|ủ|ũ|ụ|ư|ứ|ừ|ử|ữ|ự|û',
-    U: 'Ú|Ù|Ủ|Ũ|Ụ|Ư|Ứ|Ừ|Ử|Ữ|Ự|Û',
-    y: 'ý|ỳ|ỷ|ỹ|ỵ',
-    Y: 'Ý|Ỳ|Ỷ|Ỹ|Ỵ'
-  };
-
-  let updateS = (ai, key) => {
-    s = replaceAll(s, ai, key);
-  };
-
-  for (let key in map) {
-    if (hasProperty(map, key)) {
-      let a = map[key].split('|');
-      a.forEach((item) => {
-        return updateS(item, key);
-      });
-    }
-  }
-  return s;
-};
-
-var createAlias = (s, delimiter) => {
-  s = String(s);
-  let x = stripAccent(s);
-  if (x) {
-    let d = delimiter || '-';
-    x = x.toLowerCase();
-    x = trim(x);
-    x = x.replace(/\W+/g, ' ');
-    x = x.replace(/\s+/g, ' ');
-    x = x.replace(/\s/g, d);
-  }
-  return x;
-};
-
-var compile = (tpl, data) => {
-  let ns = [];
-  let c = (s, ctx, namespace) => {
-    if (namespace) {
-      ns.push(namespace);
-    }
-    let a = [];
-    for (let k in ctx) {
-      if (hasProperty(ctx, k)) {
-        let v = ctx[k];
-        if (isObject(v) || isArray(v)) {
-          a.push({
-            key: k,
-            data: v
-          });
-        } else if (isString(v)) {
-          v = replaceAll(v, ['{', '}'], ['&#123;', '&#125;']);
-          let cns = ns.concat([k]);
-          let r = new RegExp('{' + cns.join('.') + '}', 'gi');
-          s = s.replace(r, v);
-        }
-      }
-    }
-    if (a.length > 0) {
-      a.forEach((item) => {
-        s = c(s, item.data, item.key);
-      });
-    }
-    return trim(s, true);
-  };
-  if (data && (isString(data) || isObject(data) || isArray(data))) {
-    return c(tpl, data);
-  }
-  return tpl;
-};
-
-
 var now = () => {
   return new Date();
 };
@@ -697,45 +684,45 @@ var time = () => {
   return Date.now();
 };
 
-var date = (() => {
-  var pattern = 'D, M d, Y  h:i:s A';
-  var weeks = [
-    'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'
-  ];
-  var months = [
-    'January', 'February', 'March', 'April',
-    'May', 'June', 'July', 'August',
-    'September', 'October', 'November', 'December'
-  ];
+const PATTERN = 'D, M d, Y  h:i:s A';
+const WEEKDAYS = [
+  'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'
+];
+const MONTHS = [
+  'January', 'February', 'March', 'April',
+  'May', 'June', 'July', 'August',
+  'September', 'October', 'November', 'December'
+];
 
-  var tz = (() => {
-    let t = now().getTimezoneOffset();
-    let z = Math.abs(t / 60);
-    let sign = t < 0 ? '+' : '-';
-    return ['GMT', sign, leftPad(z, 4)].join('');
-  })();
+var tz = (() => {
+  let t = now().getTimezoneOffset();
+  let z = Math.abs(t / 60);
+  let sign = t < 0 ? '+' : '-';
+  return ['GMT', sign, leftPad(z, 4)].join('');
+})();
 
-  var format = (output, input = time()) => {
+var date = (input = time()) => {
+  let d = isDate(input) ? input : new Date(input);
+  if (!isDate(d)) {
+    throw new Error('InvalidInput: Number or Date required.');
+  }
+
+  var format = (output = PATTERN) => {
+
+    if (!isString(output)) {
+      throw new Error('Invalid output pattern.');
+    }
 
     let vchar = /\.*\\?([a-z])/gi;
-
-    let d = isDate(input) ? input : new Date(input);
-
-    if (!isDate(d)) {
-      return 'Invalid input!';
-    }
-
-    if (!output || !isString(output)) {
-      output = pattern;
-    }
-
     let meridiem = output.match(/(\.*)a{1}(\.*)*/i);
 
-    let wn = weeks;
-    let mn = months;
+    let wn = WEEKDAYS;
+    let mn = MONTHS;
+
     let _num = (n) => {
       return String(n < 10 ? '0' + n : n);
     };
+
     let _ord = (day) => {
       let s = day + ' ';
       let x = s.charAt(s.length - 2);
@@ -819,17 +806,16 @@ var date = (() => {
     };
     /*eslint-enable */
 
-    var _term = (t, s) => {
+    let _term = (t, s) => {
       return f[t] ? f[t]() : s;
     };
 
     return output.replace(vchar, _term);
   };
 
-  let relativize = (input) => {
-    let t = input instanceof Date ? input : new Date(input);
-    let delta = now() - t;
-    let nowThreshold = parseInt(t, 10);
+  let relativize = () => {
+    let delta = now() - d;
+    let nowThreshold = parseInt(d, 10);
     if (isNaN(nowThreshold)) {
       nowThreshold = 0;
     }
@@ -861,31 +847,27 @@ var date = (() => {
     return [delta, units].join(' ') + ' ago';
   };
 
-  let utc = (t) => {
-    return new Date(t || now()).toUTCString();
+  let utc = () => {
+    return new Date(d).toUTCString();
   };
 
-  let local = (t) => {
-    return format('D, j M Y h:i:s O', t);
-  };
-
-  let strtotime = (t) => {
-    return new Date(t).getTime();
+  let local = () => {
+    return format('D, j M Y h:i:s O', d);
   };
 
   return {
     utc,
     local,
-    strtotime,
     format,
     relativize
   };
+};
 
-})();
-
-// exports
-module.exports = {
+let B = Object.create({});
+let exp = {
   ENV,
+  MAX_NUMBER,
+  MAX_STRING,
   id: createId(),
   isUndefined,
   isNull,
@@ -904,29 +886,38 @@ module.exports = {
   isGeneratedKey,
   hasProperty,
   equals,
+  createId,
+  md5,
+  random,
+  copies,
+  clone,
+  now,
+  time,
+  date,
   encode,
   decode,
-  trim,
-  truncate,
-  stripTags,
-  escapeHTML,
-  unescapeHTML,
+  repeat,
   ucfirst,
   ucwords,
   leftPad,
   rightPad,
-  repeat,
-  replaceAll,
-  stripAccent,
   createAlias,
-  compile,
-  md5,
-  createId,
-  random,
-  copies,
-  clone,
+  trim,
+  truncate,
+  stripTags,
+  stripAccent,
+  escapeHTML,
+  unescapeHTML,
+  replaceAll,
   stabilize,
-  now,
-  time,
-  date
+  template
 };
+
+var setProp = (k) => {
+  def(B, k, exp[k]);
+};
+
+Object.keys(exp).map(setProp);
+
+// exports
+module.exports = B;

@@ -12,26 +12,55 @@ var test = require('tape');
 var config = require('../../config');
 var bella = config.bella;
 
+test('With well-format string input:', (assert) => {
+
+  let methods = [
+    'encode',
+    'decode',
+    'repeat',
+    'ucfirst',
+    'ucwords',
+    'leftPad',
+    'rightPad',
+    'createAlias',
+    'trim',
+    'truncate',
+    'stripTags',
+    'stripAccent',
+    'escapeHTML',
+    'unescapeHTML',
+    'replaceAll'
+  ];
+
+  methods.forEach((m) => {
+    assert.ok(bella.isFunction(bella[m]), `It must have the method .${m}()`);
+  });
+
+  assert.end();
+});
+
+test('With invalid string input:', (assert) => {
+  assert.throws(() => {
+    bella.repeat(new Function(), 5);
+  }, new Error('InvalidInput: String required.'), 'It must throw an error.');
+
+  assert.end();
+});
+
 // repeat
 test('Testing .repeat(String s, Number times) method', (assert) => {
   let x = 'hi';
   let a = bella.repeat(x, 5);
   let e = 'hihihihihi';
-  assert.deepEquals(a, e, `bella.repeat(x) must return "${e}"`);
-  assert.end();
-});
+  assert.deepEquals(a, e, `bella.repeat(x, 5) must return "${e}"`);
 
-test('Testing .repeat(false, 5) method fail', (assert) => {
-  let a = bella.repeat(false, 5);
-  let e = '';
-  assert.deepEquals(a, e, `bella.repeat(false, 5) must return "${e}"`);
-  assert.end();
-});
+  assert.deepEquals(bella.repeat(x), x, `bella.repeat(x) must return "${e}"`);
 
-test('Testing .repeat("Hello", -1) method fail', (assert) => {
-  let a = bella.repeat('Hello', -1);
-  let e = 'Hello';
-  assert.deepEquals(a, e, `bella.repeat("Hello", -1) must return "${e}"`);
+  assert.throws(() => {
+    bella.repeat(x, 268435456);
+  },
+  new RangeError(`Repeat count must not overflow maximum string size.`),
+  `bella.repeat(x, 268435456) must return RangeError`);
   assert.end();
 });
 
@@ -64,9 +93,6 @@ test('Testing .trim(String s) method', (assert) => {
   let e2 = 'Hello world. This is my dog.';
   assert.deepEquals(a2, e2, `bella.trim(x, true) must return ${e2}`);
 
-
-  assert.deepEquals(bella.trim(), '', 'bella.trim() must return empty string');
-  assert.deepEquals(bella.trim(100), '', 'bella.trim({}) must return empty string');
   assert.end();
 });
 
@@ -104,8 +130,6 @@ test('Testing .truncate(String s) method', (assert) => {
   let a3 = bella.truncate(x3, 120);
   assert.deepEquals(a3, x3, `bella.truncate('${x3}', 120) must return "${a3}"`);
 
-  assert.deepEquals(bella.truncate(String('')), '', 'bella.truncate(String(\'\')) must return ""');
-  assert.deepEquals(bella.truncate('     '), '', 'bella.truncate(\'    \') must return ""');
   assert.end();
 });
 
@@ -116,7 +140,7 @@ test('Testing .stripTags(String s) method', (assert) => {
   let e1 = 'Hello world';
   assert.deepEquals(a1, e1, `bella.stripTags('${x}') must return ${e1}`);
 
-  assert.deepEquals(bella.stripTags(1238), '', `bella.stripTags(1238) must return empty string`);
+  assert.deepEquals(bella.stripTags(1238), '1238', `bella.stripTags(1238) must return "1238"`);
   assert.end();
 });
 
@@ -126,8 +150,6 @@ test('Testing .escapeHTML(String s) method', (assert) => {
   let a1 = bella.escapeHTML(x);
   let e1 = '&lt;a&gt;Hello &lt;b&gt;world&lt;/b&gt;&lt;/a&gt;';
   assert.deepEquals(a1, e1, `bella.escapeHTML('${x}') must return ${e1}`);
-
-  assert.deepEquals(bella.escapeHTML({}), '', 'bella.escapeHTML({}) must return empty string');
   assert.end();
 });
 
@@ -137,8 +159,6 @@ test('Testing .unescapeHTML(String s) method', (assert) => {
   let a1 = bella.unescapeHTML(x);
   let e1 = '<a>Hello <b>world</b></a>';
   assert.deepEquals(a1, e1, `bella.unescapeHTML('${x}') must return ${e1}`);
-
-  assert.deepEquals(bella.unescapeHTML({}), '', 'bella.unescapeHTML({}) must return empty string');
   assert.end();
 });
 
@@ -154,7 +174,6 @@ test('Testing .ucfirst(String s) method', (assert) => {
   let e2 = 'A';
   assert.deepEquals(a2, e2, `bella.ucfirst('${x2}') must return ${e2}`);
 
-  assert.deepEquals(bella.ucfirst({}), '', 'bella.ucfirst({}) must return empty string');
   assert.end();
 });
 
@@ -164,8 +183,6 @@ test('Testing .ucwords(String s) method', (assert) => {
   let a1 = bella.ucwords(x);
   let e1 = 'Hello World';
   assert.deepEquals(a1, e1, `bella.ucwords('${x}') must return ${e1}`);
-
-  assert.deepEquals(bella.ucwords({}), '', 'bella.ucwords({}) must return empty string');
   assert.end();
 });
 
@@ -319,12 +336,6 @@ test('Testing .replaceAll(String s, String find, String replace) method', (asser
     },
     {
       input: {
-        a: false
-      },
-      expectation: ''
-    },
-    {
-      input: {
         a: 10000
       },
       expectation: '10000'
@@ -334,20 +345,6 @@ test('Testing .replaceAll(String s, String find, String replace) method', (asser
         a: 0
       },
       expectation: '0'
-    },
-    {
-      input: {
-        a: {
-          q: 97
-        }
-      },
-      expectation: ''
-    },
-    {
-      input: {
-        a: [20, 15, 0, 'T']
-      },
-      expectation: ''
     }
   ];
 
@@ -377,11 +374,6 @@ test('Testing .stripAccent(String s) method', (assert) => {
   let e2 = '12897';
   assert.deepEquals(a2, e2, `bella.stripAccent('${x2}') must return ${e2}`);
 
-  let x3 = {};
-  let a3 = bella.stripAccent(x3);
-  let e3 = '';
-  assert.deepEquals(a3, e3, `bella.stripAccent('${x3}') must return ${e3}`);
-
   assert.end();
 });
 
@@ -391,47 +383,6 @@ test('Testing .createAlias(String s) method', (assert) => {
   let a1 = bella.createAlias(x);
   let e1 = 'sur-l-annee-2015';
   assert.deepEquals(a1, e1, `bella.createAlias('${x}') must return ${e1}`);
-
-  assert.end();
-});
-
-// compile
-test('Testing .compile(String s) method', (assert) => {
-  let sample = `
-    <article>
-      <a href="{link}">{title}</a>
-      <p>{content}</p>
-      <p>
-        <span>{author.name}</span>
-        <span>{author.email}</span>
-      </p>
-    </article>`;
-
-  let data = {
-    title: 'Hello world',
-    link: 'http://google.com',
-    content: 'This is an interesting thing, is that right?',
-    author: {
-      name: 'Dong Nguyen',
-      email: 'ndaidong@gmail.com'
-    }
-  };
-
-  let expectation = bella.trim(`
-    <article>
-      <a href="http://google.com">Hello world</a>
-      <p>This is an interesting thing, is that right?</p>
-      <p>
-        <span>Dong Nguyen</span>
-        <span>ndaidong@gmail.com</span>
-      </p>
-    </article>`, true);
-
-  let result = bella.compile(sample, data);
-  assert.deepEquals(result, expectation, 'Template data must be filled to template string.');
-
-  let r2 = bella.compile('ABC', 1987);
-  assert.deepEquals(r2, 'ABC', 'Return template string if no data');
 
   assert.end();
 });
