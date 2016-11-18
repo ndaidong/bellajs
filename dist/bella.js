@@ -1,7 +1,7 @@
 /**
  * bellajs
- * v7.0.0
- * built: Thu, 17 Nov 2016 07:43:06 GMT
+ * v6.4.0
+ * built: Fri, 18 Nov 2016 03:50:42 GMT
  * git: https://github.com/ndaidong/bellajs
  * author: @ndaidong
  * License: MIT
@@ -27,6 +27,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 })('Bella', function () {
 
   var MAX_NUMBER = Number.MAX_SAFE_INTEGER;
+  var MAX_STRING = 1 << 28;
 
   var UNDEF = undefined;
 
@@ -158,42 +159,70 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
     return re;
   };
 
+  var def = function def(o, key) {
+    var val = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : UNDEF;
+    var opt = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
+    var _opt$enumerable = opt.enumerable,
+        enumerable = _opt$enumerable === undefined ? false : _opt$enumerable,
+        _opt$configurable = opt.configurable,
+        configurable = _opt$configurable === undefined ? false : _opt$configurable,
+        _opt$writable = opt.writable,
+        writable = _opt$writable === undefined ? false : _opt$writable,
+        _opt$value = opt.value,
+        value = _opt$value === undefined ? val : _opt$value;
+
+    Object.defineProperty(o, key, {
+      enumerable: enumerable,
+      configurable: configurable,
+      writable: writable,
+      value: value
+    });
+    return o;
+  };
+
+  var toString = function toString(input) {
+    var s = isNumber(input) ? String(input) : input;
+    if (!isString(s)) {
+      throw new Error('InvalidInput: String required.');
+    }
+    return s;
+  };
+
   var encode = function encode(s) {
-    return isString(s) ? encodeURIComponent(s) : '';
+    var x = toString(s);
+    return encodeURIComponent(x);
   };
 
   var decode = function decode(s) {
-    return isString(s) ? decodeURIComponent(s.replace(/\+/g, ' ')) : '';
+    var x = toString(s);
+    return decodeURIComponent(x.replace(/\+/g, ' '));
   };
 
-  var trim = function trim(s, all) {
-    if (!isString(s)) {
-      return '';
-    }
-    var x = s ? s.replace(/^[\s\xa0]+|[\s\xa0]+$/g, '') : s || '';
+  var trim = function trim(s) {
+    var all = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+
+    var x = toString(s);
+    x = x.replace(/^[\s\xa0]+|[\s\xa0]+$/g, '');
     if (x && all) {
-      return x.replace(/\r?\n|\r/g, ' ').replace(/\s\s+|\r/g, ' ');
+      x = x.replace(/\r?\n|\r/g, ' ').replace(/\s\s+|\r/g, ' ');
     }
     return x;
   };
 
   var truncate = function truncate(s, l) {
-    s = trim(s);
-    if (!s) {
-      return s;
-    }
+    var o = toString(s);
     var t = l || 140;
-    if (s.length <= t) {
-      return s;
+    if (o.length <= t) {
+      return o;
     }
-    var x = s.substring(0, t);
+    var x = o.substring(0, t);
     var a = x.split(' ');
     var b = a.length;
     var r = '';
     if (b > 1) {
       a.pop();
       r += a.join(' ');
-      if (r.length < s.length) {
+      if (r.length < o.length) {
         r += '...';
       }
     } else {
@@ -204,46 +233,32 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
   };
 
   var stripTags = function stripTags(s) {
-    if (!isString(s)) {
-      return '';
-    }
-    var r = s.replace(/<.*?>/gi, ' ');
-    if (r) {
-      r = trim(r.replace(/\s\s+/g, ' '));
-    }
-    return r;
+    var x = toString(s);
+    return trim(x.replace(/<.*?>/gi, ' ').replace(/\s\s+/g, ' '));
   };
 
   var escapeHTML = function escapeHTML(s) {
-    if (!isString(s)) {
-      return '';
-    }
-    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    var x = toString(s);
+    return x.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
   };
 
   var unescapeHTML = function unescapeHTML(s) {
-    if (!isString(s)) {
-      return '';
-    }
-    return s.replace(/&quot;/g, '"').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
+    var x = toString(s);
+    return x.replace(/&quot;/g, '"').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
   };
 
   var ucfirst = function ucfirst(s) {
-    if (!isString(s)) {
-      return '';
+    var x = toString(s);
+    if (x.length === 1) {
+      return x.toUpperCase();
     }
-    if (s.length === 1) {
-      return s.toUpperCase();
-    }
-    s = s.toLowerCase();
-    return s.charAt(0).toUpperCase() + s.slice(1);
+    x = x.toLowerCase();
+    return x.charAt(0).toUpperCase() + x.slice(1);
   };
 
   var ucwords = function ucwords(s) {
-    if (!isString(s)) {
-      return '';
-    }
-    var c = s.split(' ');
+    var x = toString(s);
+    var c = x.split(' ');
     var a = [];
     c.forEach(function (w) {
       a.push(ucfirst(w));
@@ -255,28 +270,174 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
     var size = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 2;
     var pad = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '0';
 
-    var o = String(s);
-    return o.length >= size ? o : new Array(size - o.length + 1).join(pad) + o;
+    var x = toString(s);
+    return x.length >= size ? x : new Array(size - x.length + 1).join(pad) + x;
   };
 
   var rightPad = function rightPad(s) {
     var size = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 2;
     var pad = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '0';
 
-    var o = String(s);
-    return o.length >= size ? o : o + new Array(size - o.length + 1).join(pad);
+    var x = toString(s);
+    return x.length >= size ? x : x + new Array(size - x.length + 1).join(pad);
   };
 
   var repeat = function repeat(s, m) {
-    if (!s || !isString(s)) {
-      return '';
-    }
+    var x = toString(s);
     if (!isInteger(m) || m < 1) {
-      return s;
+      return x;
+    }
+    if (x.length * m >= MAX_STRING) {
+      throw new RangeError('Repeat count must not overflow maximum string size.');
     }
     var a = [];
     a.length = m;
-    return a.fill(s, 0, m).join('');
+    return a.fill(x, 0, m).join('');
+  };
+
+  var replaceAll = function replaceAll(s, a, b) {
+
+    var x = toString(s);
+
+    if (isNumber(a)) {
+      a = String(a);
+    }
+    if (isNumber(b)) {
+      b = String(b);
+    }
+
+    if (isString(a) && isString(b)) {
+      var aa = x.split(a);
+      x = aa.join(b);
+    } else if (isArray(a) && isString(b)) {
+      a.forEach(function (v) {
+        x = replaceAll(x, v, b);
+      });
+    } else if (isArray(a) && isArray(b) && a.length === b.length) {
+      var k = a.length;
+      if (k > 0) {
+        for (var i = 0; i < k; i++) {
+          var aaa = a[i];
+          var bb = b[i];
+          x = replaceAll(x, aaa, bb);
+        }
+      }
+    }
+    return x;
+  };
+
+  var stripAccent = function stripAccent(s) {
+
+    var x = toString(s);
+
+    var map = {
+      a: 'á|à|ả|ã|ạ|ă|ắ|ặ|ằ|ẳ|ẵ|â|ấ|ầ|ẩ|ẫ|ậ|ä',
+      A: 'Á|À|Ả|Ã|Ạ|Ă|Ắ|Ặ|Ằ|Ẳ|Ẵ|Â|Ấ|Ầ|Ẩ|Ẫ|Ậ|Ä',
+      c: 'ç',
+      C: 'Ç',
+      d: 'đ',
+      D: 'Đ',
+      e: 'é|è|ẻ|ẽ|ẹ|ê|ế|ề|ể|ễ|ệ|ë',
+      E: 'É|È|Ẻ|Ẽ|Ẹ|Ê|Ế|Ề|Ể|Ễ|Ệ|Ë',
+      i: 'í|ì|ỉ|ĩ|ị|ï|î',
+      I: 'Í|Ì|Ỉ|Ĩ|Ị|Ï|Î',
+      o: 'ó|ò|ỏ|õ|ọ|ô|ố|ồ|ổ|ỗ|ộ|ơ|ớ|ờ|ở|ỡ|ợ|ö',
+      O: 'Ó|Ò|Ỏ|Õ|Ọ|Ô|Ố|Ồ|Ổ|Ô|Ộ|Ơ|Ớ|Ờ|Ở|Ỡ|Ợ|Ö',
+      u: 'ú|ù|ủ|ũ|ụ|ư|ứ|ừ|ử|ữ|ự|û',
+      U: 'Ú|Ù|Ủ|Ũ|Ụ|Ư|Ứ|Ừ|Ử|Ữ|Ự|Û',
+      y: 'ý|ỳ|ỷ|ỹ|ỵ',
+      Y: 'Ý|Ỳ|Ỷ|Ỹ|Ỵ'
+    };
+
+    var updateS = function updateS(ai, key) {
+      x = replaceAll(x, ai, key);
+    };
+
+    var _loop = function _loop(key) {
+      if (hasProperty(map, key)) {
+        var a = map[key].split('|');
+        a.forEach(function (item) {
+          return updateS(item, key);
+        });
+      }
+    };
+
+    for (var key in map) {
+      _loop(key);
+    }
+    return x;
+  };
+
+  var createAlias = function createAlias(s, delimiter) {
+    var x = trim(stripAccent(s));
+    var d = delimiter || '-';
+    return x.toLowerCase().replace(/\W+/g, ' ').replace(/\s+/g, ' ').replace(/\s/g, d);
+  };
+
+  var md5 = function () {
+    for (var m = [], l = 0; 64 > l;) {
+      m[l] = 0 | 4294967296 * Math.abs(Math.sin(++l));
+    }return function (c) {
+      var e,
+          g,
+          f,
+          a,
+          h = [];c = unescape(encodeURI(c));for (var b = c.length, k = [e = 1732584193, g = -271733879, ~e, ~g], d = 0; d <= b;) {
+        h[d >> 2] |= (c.charCodeAt(d) || 128) << 8 * (d++ % 4);
+      }h[c = 16 * (b + 8 >> 6) + 14] = 8 * b;for (d = 0; d < c; d += 16) {
+        b = k;for (a = 0; 64 > a;) {
+          b = [f = b[3], (e = b[1] | 0) + ((f = b[0] + [e & (g = b[2]) | ~e & f, f & e | ~f & g, e ^ g ^ f, g ^ (e | ~f)][b = a >> 4] + (m[a] + (h[[a, 5 * a + 1, 3 * a + 5, 7 * a][b] % 16 + d] | 0))) << (b = [7, 12, 17, 22, 5, 9, 14, 20, 4, 11, 16, 23, 6, 10, 15, 21][4 * b + a++ % 4]) | f >>> 32 - b), e, g];
+        }for (a = 4; a;) {
+          k[--a] = k[a] + b[a];
+        }
+      }for (c = ""; 32 > a;) {
+        c += (k[a >> 3] >> 4 * (1 ^ a++ & 7) & 15).toString(16);
+      }return c;
+    };
+  }();
+
+  var _compile = function _compile(tpl, data) {
+    var ns = [];
+    var c = function c(s, ctx, namespace) {
+      if (namespace) {
+        ns.push(namespace);
+      }
+      var a = [];
+      for (var k in ctx) {
+        if (hasProperty(ctx, k)) {
+          var v = ctx[k];
+          if (isObject(v) || isArray(v)) {
+            a.push({
+              key: k,
+              data: v
+            });
+          } else if (isString(v)) {
+            v = replaceAll(v, ['{', '}'], ['&#123;', '&#125;']);
+            var cns = ns.concat([k]);
+            var r = new RegExp('{' + cns.join('.') + '}', 'gi');
+            s = s.replace(r, v);
+          }
+        }
+      }
+      if (a.length > 0) {
+        a.forEach(function (item) {
+          s = c(s, item.data, item.key);
+        });
+      }
+      return trim(s, true);
+    };
+    if (data && (isString(data) || isObject(data) || isArray(data))) {
+      return c(tpl, data);
+    }
+    return tpl;
+  };
+
+  var template = function template(tpl) {
+    return {
+      compile: function compile(data) {
+        return _compile(tpl, data);
+      }
+    };
   };
 
   var genkey = function genkey() {
@@ -470,7 +631,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
           });
         }
         if (isObject(o)) {
-          var _loop = function _loop(key) {
+          var _loop2 = function _loop2(key) {
             if (hasProperty(one, key)) {
               (function () {
                 var order = o[key] === -1 ? -1 : 1;
@@ -483,7 +644,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
           };
 
           for (var key in o) {
-            _loop(key);
+            _loop2(key);
           }
         }
         return stabilize(r);
@@ -518,12 +679,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
       };
 
       var addMethods = function addMethods(met) {
-        Object.defineProperty(a, met[0], {
-          enumerable: false,
-          configurable: false,
-          writable: false,
-          value: met[1]
-        });
+        def(a, met[0], met[1]);
       };
 
       [['min', min], ['max', max], ['unique', unique], ['first', first], ['last', last], ['pick', pick], ['insert', insert], ['append', append], ['remove', remove], ['isort', isort], ['msort', msort], ['ireverse', ireverse], ['shuffle', shuffle]].map(addMethods);
@@ -535,50 +691,33 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
       var o = Object.create({});
 
-      var config = {
-        enumerable: true,
-        configurable: false,
-        writable: false,
-        value: 'undefined'
-      };
-
       var setProp = function setProp(key) {
-        var c = Object.assign({}, config);
-        c.value = data[key];
-        Object.defineProperty(o, key, c);
+        def(o, key, data[key], {
+          enumerable: true
+        });
       };
 
       Object.keys(data).map(setProp);
 
-      Object.defineProperty(o, 'get', {
-        enumerable: false,
-        configurable: false,
-        writable: false,
-        value: function value(k) {
-          return o[k];
-        }
+      def(o, 'get', function (k) {
+        return o[k];
       });
 
-      Object.defineProperty(o, 'set', {
-        enumerable: false,
-        configurable: false,
-        writable: false,
-        value: function value(key) {
-          var _value = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+      def(o, 'set', function (key) {
+        var value = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
 
-          var a = Object.assign({}, o);
-          var _set = function _set(k, v) {
-            a[k] = v;
-          };
-          if (isObject(key)) {
-            Object.keys(key).forEach(function (k) {
-              _set(k, key[k]);
-            });
-          } else {
-            _set(key, _value);
-          }
-          return stabilize(a);
+        var a = Object.assign({}, o);
+        var _set = function _set(k, v) {
+          a[k] = v;
+        };
+        if (isObject(key)) {
+          Object.keys(key).forEach(function (k) {
+            _set(k, key[k]);
+          });
+        } else {
+          _set(key, value);
         }
+        return stabilize(a);
       });
 
       return o;
@@ -595,160 +734,6 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
     };
   }();
 
-  var md5 = function () {
-    for (var m = [], l = 0; 64 > l;) {
-      m[l] = 0 | 4294967296 * Math.abs(Math.sin(++l));
-    }return function (c) {
-      var e,
-          g,
-          f,
-          a,
-          h = [];c = unescape(encodeURI(c));for (var b = c.length, k = [e = 1732584193, g = -271733879, ~e, ~g], d = 0; d <= b;) {
-        h[d >> 2] |= (c.charCodeAt(d) || 128) << 8 * (d++ % 4);
-      }h[c = 16 * (b + 8 >> 6) + 14] = 8 * b;for (d = 0; d < c; d += 16) {
-        b = k;for (a = 0; 64 > a;) {
-          b = [f = b[3], (e = b[1] | 0) + ((f = b[0] + [e & (g = b[2]) | ~e & f, f & e | ~f & g, e ^ g ^ f, g ^ (e | ~f)][b = a >> 4] + (m[a] + (h[[a, 5 * a + 1, 3 * a + 5, 7 * a][b] % 16 + d] | 0))) << (b = [7, 12, 17, 22, 5, 9, 14, 20, 4, 11, 16, 23, 6, 10, 15, 21][4 * b + a++ % 4]) | f >>> 32 - b), e, g];
-        }for (a = 4; a;) {
-          k[--a] = k[a] + b[a];
-        }
-      }for (c = ""; 32 > a;) {
-        c += (k[a >> 3] >> 4 * (1 ^ a++ & 7) & 15).toString(16);
-      }return c;
-    };
-  }();
-
-
-  var replaceAll = function replaceAll(s, a, b) {
-    if (isNumber(s)) {
-      s = String(s);
-    }
-
-    if (!s || !isString(s)) {
-      return '';
-    }
-
-    if (isNumber(a)) {
-      a = String(a);
-    }
-    if (isNumber(b)) {
-      b = String(b);
-    }
-
-    if (isString(a) && isString(b)) {
-      var aa = s.split(a);
-      s = aa.join(b);
-    } else if (isArray(a) && isString(b)) {
-      a.forEach(function (v) {
-        s = replaceAll(s, v, b);
-      });
-    } else if (isArray(a) && isArray(b) && a.length === b.length) {
-      var k = a.length;
-      if (k > 0) {
-        for (var i = 0; i < k; i++) {
-          var aaa = a[i];
-          var bb = b[i];
-          s = replaceAll(s, aaa, bb);
-        }
-      }
-    }
-    return s;
-  };
-
-  var stripAccent = function stripAccent(s) {
-    if (isNumber(s)) {
-      return String(s);
-    }
-    if (!isString(s)) {
-      return '';
-    }
-    var map = {
-      a: 'á|à|ả|ã|ạ|ă|ắ|ặ|ằ|ẳ|ẵ|â|ấ|ầ|ẩ|ẫ|ậ|ä',
-      A: 'Á|À|Ả|Ã|Ạ|Ă|Ắ|Ặ|Ằ|Ẳ|Ẵ|Â|Ấ|Ầ|Ẩ|Ẫ|Ậ|Ä',
-      c: 'ç',
-      C: 'Ç',
-      d: 'đ',
-      D: 'Đ',
-      e: 'é|è|ẻ|ẽ|ẹ|ê|ế|ề|ể|ễ|ệ|ë',
-      E: 'É|È|Ẻ|Ẽ|Ẹ|Ê|Ế|Ề|Ể|Ễ|Ệ|Ë',
-      i: 'í|ì|ỉ|ĩ|ị|ï|î',
-      I: 'Í|Ì|Ỉ|Ĩ|Ị|Ï|Î',
-      o: 'ó|ò|ỏ|õ|ọ|ô|ố|ồ|ổ|ỗ|ộ|ơ|ớ|ờ|ở|ỡ|ợ|ö',
-      O: 'Ó|Ò|Ỏ|Õ|Ọ|Ô|Ố|Ồ|Ổ|Ô|Ộ|Ơ|Ớ|Ờ|Ở|Ỡ|Ợ|Ö',
-      u: 'ú|ù|ủ|ũ|ụ|ư|ứ|ừ|ử|ữ|ự|û',
-      U: 'Ú|Ù|Ủ|Ũ|Ụ|Ư|Ứ|Ừ|Ử|Ữ|Ự|Û',
-      y: 'ý|ỳ|ỷ|ỹ|ỵ',
-      Y: 'Ý|Ỳ|Ỷ|Ỹ|Ỵ'
-    };
-
-    var updateS = function updateS(ai, key) {
-      s = replaceAll(s, ai, key);
-    };
-
-    var _loop2 = function _loop2(key) {
-      if (hasProperty(map, key)) {
-        var a = map[key].split('|');
-        a.forEach(function (item) {
-          return updateS(item, key);
-        });
-      }
-    };
-
-    for (var key in map) {
-      _loop2(key);
-    }
-    return s;
-  };
-
-  var createAlias = function createAlias(s, delimiter) {
-    s = String(s);
-    var x = stripAccent(s);
-    if (x) {
-      var d = delimiter || '-';
-      x = x.toLowerCase();
-      x = trim(x);
-      x = x.replace(/\W+/g, ' ');
-      x = x.replace(/\s+/g, ' ');
-      x = x.replace(/\s/g, d);
-    }
-    return x;
-  };
-
-  var compile = function compile(tpl, data) {
-    var ns = [];
-    var c = function c(s, ctx, namespace) {
-      if (namespace) {
-        ns.push(namespace);
-      }
-      var a = [];
-      for (var k in ctx) {
-        if (hasProperty(ctx, k)) {
-          var v = ctx[k];
-          if (isObject(v) || isArray(v)) {
-            a.push({
-              key: k,
-              data: v
-            });
-          } else if (isString(v)) {
-            v = replaceAll(v, ['{', '}'], ['&#123;', '&#125;']);
-            var cns = ns.concat([k]);
-            var r = new RegExp('{' + cns.join('.') + '}', 'gi');
-            s = s.replace(r, v);
-          }
-        }
-      }
-      if (a.length > 0) {
-        a.forEach(function (item) {
-          s = c(s, item.data, item.key);
-        });
-      }
-      return trim(s, true);
-    };
-    if (data && (isString(data) || isObject(data) || isArray(data))) {
-      return c(tpl, data);
-    }
-    return tpl;
-  };
-
   var now = function now() {
     return new Date();
   };
@@ -757,41 +742,43 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
     return Date.now();
   };
 
-  var date = function () {
-    var pattern = 'D, M d, Y  h:i:s A';
-    var weeks = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-    var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  var PATTERN = 'D, M d, Y  h:i:s A';
+  var WEEKDAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  var MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
-    var tz = function () {
-      var t = now().getTimezoneOffset();
-      var z = Math.abs(t / 60);
-      var sign = t < 0 ? '+' : '-';
-      return ['GMT', sign, leftPad(z, 4)].join('');
-    }();
+  var tz = function () {
+    var t = now().getTimezoneOffset();
+    var z = Math.abs(t / 60);
+    var sign = t < 0 ? '+' : '-';
+    return ['GMT', sign, leftPad(z, 4)].join('');
+  }();
 
-    var format = function format(output) {
-      var input = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : time();
+  var date = function date() {
+    var input = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : time();
 
+    var d = isDate(input) ? input : new Date(input);
+    if (!isDate(d)) {
+      throw new Error('InvalidInput: Number or Date required.');
+    }
+
+    var format = function format() {
+      var output = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : PATTERN;
+
+
+      if (!isString(output)) {
+        throw new Error('Invalid output pattern.');
+      }
 
       var vchar = /\.*\\?([a-z])/gi;
-
-      var d = isDate(input) ? input : new Date(input);
-
-      if (!isDate(d)) {
-        return 'Invalid input!';
-      }
-
-      if (!output || !isString(output)) {
-        output = pattern;
-      }
-
       var meridiem = output.match(/(\.*)a{1}(\.*)*/i);
 
-      var wn = weeks;
-      var mn = months;
+      var wn = WEEKDAYS;
+      var mn = MONTHS;
+
       var _num = function _num(n) {
         return String(n < 10 ? '0' + n : n);
       };
+
       var _ord = function _ord(day) {
         var s = day + ' ';
         var x = s.charAt(s.length - 2);
@@ -881,10 +868,9 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
       return output.replace(vchar, _term);
     };
 
-    var relativize = function relativize(input) {
-      var t = input instanceof Date ? input : new Date(input);
-      var delta = now() - t;
-      var nowThreshold = parseInt(t, 10);
+    var relativize = function relativize() {
+      var delta = now() - d;
+      var nowThreshold = parseInt(d, 10);
       if (isNaN(nowThreshold)) {
         nowThreshold = 0;
       }
@@ -916,29 +902,27 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
       return [delta, units].join(' ') + ' ago';
     };
 
-    var utc = function utc(t) {
-      return new Date(t || now()).toUTCString();
+    var utc = function utc() {
+      return new Date(d).toUTCString();
     };
 
-    var local = function local(t) {
-      return format('D, j M Y h:i:s O', t);
-    };
-
-    var strtotime = function strtotime(t) {
-      return new Date(t).getTime();
+    var local = function local() {
+      return format('D, j M Y h:i:s O', d);
     };
 
     return {
       utc: utc,
       local: local,
-      strtotime: strtotime,
       format: format,
       relativize: relativize
     };
-  }();
+  };
 
-  return {
+  var B = Object.create({});
+  var exp = {
     ENV: ENV,
+    MAX_NUMBER: MAX_NUMBER,
+    MAX_STRING: MAX_STRING,
     id: createId(),
     isUndefined: isUndefined,
     isNull: isNull,
@@ -957,30 +941,38 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
     isGeneratedKey: isGeneratedKey,
     hasProperty: hasProperty,
     equals: equals,
+    createId: createId,
+    md5: md5,
+    random: random,
+    copies: copies,
+    clone: clone,
+    now: now,
+    time: time,
+    date: date,
     encode: encode,
     decode: decode,
-    trim: trim,
-    truncate: truncate,
-    stripTags: stripTags,
-    escapeHTML: escapeHTML,
-    unescapeHTML: unescapeHTML,
+    repeat: repeat,
     ucfirst: ucfirst,
     ucwords: ucwords,
     leftPad: leftPad,
     rightPad: rightPad,
-    repeat: repeat,
-    replaceAll: replaceAll,
-    stripAccent: stripAccent,
     createAlias: createAlias,
-    compile: compile,
-    md5: md5,
-    createId: createId,
-    random: random,
-    copies: copies,
-    clone: clone,
+    trim: trim,
+    truncate: truncate,
+    stripTags: stripTags,
+    stripAccent: stripAccent,
+    escapeHTML: escapeHTML,
+    unescapeHTML: unescapeHTML,
+    replaceAll: replaceAll,
     stabilize: stabilize,
-    now: now,
-    time: time,
-    date: date
+    template: template
   };
+
+  var setProp = function setProp(k) {
+    def(B, k, exp[k]);
+  };
+
+  Object.keys(exp).map(setProp);
+
+  return B;
 });

@@ -12,7 +12,7 @@ var test = require('tape');
 var config = require('../../config');
 var bella = config.bella;
 
-test('With well-format date time input:', (assert) => {
+test('With well-format string input:', (assert) => {
 
   let methods = [
     'encode',
@@ -32,13 +32,17 @@ test('With well-format date time input:', (assert) => {
     'replaceAll'
   ];
 
-  let d = bella.string('Hello world');
-
-  assert.ok(bella.isObject(d), 'It must return object.');
-
   methods.forEach((m) => {
-    assert.ok(bella.isFunction(d[m]), `It must have the method .${m}()`);
+    assert.ok(bella.isFunction(bella[m]), `It must have the method .${m}()`);
   });
+
+  assert.end();
+});
+
+test('With invalid string input:', (assert) => {
+  assert.throws(() => {
+    bella.repeat(new Function(), 5);
+  }, new Error('InvalidInput: String required.'), 'It must throw an error.');
 
   assert.end();
 });
@@ -46,17 +50,24 @@ test('With well-format date time input:', (assert) => {
 // repeat
 test('Testing .repeat(String s, Number times) method', (assert) => {
   let x = 'hi';
-  let d = bella.string(x);
-  let a = d.repeat(5);
+  let a = bella.repeat(x, 5);
   let e = 'hihihihihi';
-  assert.deepEquals(a, e, `bella.repeat(x) must return "${e}"`);
+  assert.deepEquals(a, e, `bella.repeat(x, 5) must return "${e}"`);
+
+  assert.deepEquals(bella.repeat(x), x, `bella.repeat(x) must return "${e}"`);
+
+  assert.throws(() => {
+    bella.repeat(x, 268435456);
+  },
+  new RangeError(`Repeat count must not overflow maximum string size.`),
+  `bella.repeat(x, 268435456) must return RangeError`);
   assert.end();
 });
 
 // encode
 test('Testing .encode(String s) method', (assert) => {
   let x = 'Hello world';
-  let a = bella.string(x).encode();
+  let a = bella.encode(x);
   let e = 'Hello%20world';
   assert.deepEquals(a, e, `bella.encode(x) must return ${e}`);
   assert.end();
@@ -65,7 +76,7 @@ test('Testing .encode(String s) method', (assert) => {
 // decode
 test('Testing .decode(String s) method', (assert) => {
   let x = 'Hello%20world';
-  let a = bella.string(x).decode();
+  let a = bella.decode(x);
   let e = 'Hello world';
   assert.deepEquals(a, e, `bella.decode(x) must return ${e}`);
   assert.end();
@@ -74,11 +85,11 @@ test('Testing .decode(String s) method', (assert) => {
 // trim
 test('Testing .trim(String s) method', (assert) => {
   let x = ' Hello    world. This is   my  dog.  ';
-  let a1 = bella.string(x).trim();
+  let a1 = bella.trim(x);
   let e1 = 'Hello    world. This is   my  dog.';
   assert.deepEquals(a1, e1, `bella.trim(x) must return ${e1}`);
 
-  let a2 = bella.string(x).trim(true);
+  let a2 = bella.trim(x, true);
   let e2 = 'Hello world. This is my dog.';
   assert.deepEquals(a2, e2, `bella.trim(x, true) must return ${e2}`);
 
@@ -89,10 +100,10 @@ test('Testing .trim(String s) method', (assert) => {
 test('Testing .truncate(String s) method', (assert) => {
 
   let x = 'If a property is non-configurable, its writable attribute can only be changed to false.';
-  let a = bella.string(x).truncate(60);
+  let a = bella.truncate(x, 60);
   let e = 'If a property is non-configurable, its writable attribute...';
   assert.deepEquals(a, e, `bella.truncate('${x}', 60) must return "${e}"`);
-  assert.deepEquals(bella.string(x).truncate(200), x, `bella.truncate('${x}', 200) must return "${x}"`);
+  assert.deepEquals(bella.truncate(x, 200), x, `bella.truncate('${x}', 200) must return "${x}"`);
 
   let x1 = [
     'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
@@ -101,7 +112,7 @@ test('Testing .truncate(String s) method', (assert) => {
     'type and scrambled it to make a type specimen book.'
   ].join(' ');
 
-  let a1 = bella.string(x1).truncate();
+  let a1 = bella.truncate(x1);
   let e1 = [
     'Lorem Ipsum is simply dummy text of the printing and typesetting',
     'industry. Lorem Ipsum has been the industry\'s standard dummy text ever...'
@@ -111,12 +122,12 @@ test('Testing .truncate(String s) method', (assert) => {
 
 
   let x2 = 'uyyiyirwqyiyiyrihklhkjhskdjfhkahfiusayiyfiudyiyqwiyriuqyiouroiuyi';
-  let a2 = bella.string(x2).truncate(20);
+  let a2 = bella.truncate(x2, 20);
   let e2 = 'uyyiyirwqyiyiyrih...';
   assert.deepEquals(a2, e2, `bella.truncate('${x2}', 20) must return "${e2}"`);
 
   let x3 = 'Lorem Ipsum is simply dummy text';
-  let a3 = bella.string(x3).truncate(120);
+  let a3 = bella.truncate(x3, 120);
   assert.deepEquals(a3, x3, `bella.truncate('${x3}', 120) must return "${a3}"`);
 
   assert.end();
@@ -125,23 +136,20 @@ test('Testing .truncate(String s) method', (assert) => {
 // stripTags
 test('Testing .stripTags(String s) method', (assert) => {
   let x = '<a>Hello <b>world</b></a>';
-  let a1 = bella.string(x).stripTags();
+  let a1 = bella.stripTags(x);
   let e1 = 'Hello world';
   assert.deepEquals(a1, e1, `bella.stripTags('${x}') must return ${e1}`);
 
-  assert.deepEquals(bella.string(1238).stripTags(), '', `bella.stripTags(1238) must return empty string`);
+  assert.deepEquals(bella.stripTags(1238), '1238', `bella.stripTags(1238) must return "1238"`);
   assert.end();
 });
 
-/*
 // escapeHTML
 test('Testing .escapeHTML(String s) method', (assert) => {
   let x = '<a>Hello <b>world</b></a>';
   let a1 = bella.escapeHTML(x);
   let e1 = '&lt;a&gt;Hello &lt;b&gt;world&lt;/b&gt;&lt;/a&gt;';
   assert.deepEquals(a1, e1, `bella.escapeHTML('${x}') must return ${e1}`);
-
-  assert.deepEquals(bella.escapeHTML({}), '', 'bella.escapeHTML({}) must return empty string');
   assert.end();
 });
 
@@ -151,8 +159,6 @@ test('Testing .unescapeHTML(String s) method', (assert) => {
   let a1 = bella.unescapeHTML(x);
   let e1 = '<a>Hello <b>world</b></a>';
   assert.deepEquals(a1, e1, `bella.unescapeHTML('${x}') must return ${e1}`);
-
-  assert.deepEquals(bella.unescapeHTML({}), '', 'bella.unescapeHTML({}) must return empty string');
   assert.end();
 });
 
@@ -168,7 +174,6 @@ test('Testing .ucfirst(String s) method', (assert) => {
   let e2 = 'A';
   assert.deepEquals(a2, e2, `bella.ucfirst('${x2}') must return ${e2}`);
 
-  assert.deepEquals(bella.ucfirst({}), '', 'bella.ucfirst({}) must return empty string');
   assert.end();
 });
 
@@ -178,8 +183,6 @@ test('Testing .ucwords(String s) method', (assert) => {
   let a1 = bella.ucwords(x);
   let e1 = 'Hello World';
   assert.deepEquals(a1, e1, `bella.ucwords('${x}') must return ${e1}`);
-
-  assert.deepEquals(bella.ucwords({}), '', 'bella.ucwords({}) must return empty string');
   assert.end();
 });
 
@@ -333,12 +336,6 @@ test('Testing .replaceAll(String s, String find, String replace) method', (asser
     },
     {
       input: {
-        a: false
-      },
-      expectation: ''
-    },
-    {
-      input: {
         a: 10000
       },
       expectation: '10000'
@@ -348,20 +345,6 @@ test('Testing .replaceAll(String s, String find, String replace) method', (asser
         a: 0
       },
       expectation: '0'
-    },
-    {
-      input: {
-        a: {
-          q: 97
-        }
-      },
-      expectation: ''
-    },
-    {
-      input: {
-        a: [20, 15, 0, 'T']
-      },
-      expectation: ''
     }
   ];
 
@@ -391,11 +374,6 @@ test('Testing .stripAccent(String s) method', (assert) => {
   let e2 = '12897';
   assert.deepEquals(a2, e2, `bella.stripAccent('${x2}') must return ${e2}`);
 
-  let x3 = {};
-  let a3 = bella.stripAccent(x3);
-  let e3 = '';
-  assert.deepEquals(a3, e3, `bella.stripAccent('${x3}') must return ${e3}`);
-
   assert.end();
 });
 
@@ -408,5 +386,3 @@ test('Testing .createAlias(String s) method', (assert) => {
 
   assert.end();
 });
-
-*/

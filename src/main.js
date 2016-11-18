@@ -139,231 +139,213 @@ var equals = (a, b) => {
   return re;
 };
 
-var string = (input = '') => {
+var def = (o, key, val = UNDEF, opt = {}) => {
+  let {
+    enumerable = false,
+    configurable = false,
+    writable = false,
+    value = val
+  } = opt;
+  Object.defineProperty(o, key, {
+    enumerable,
+    configurable,
+    writable,
+    value
+  });
+  return o;
+};
 
-  let s = String(input);
+var toString = (input) => {
+  let s = isNumber(input) ? String(input) : input;
   if (!isString(s)) {
     throw new Error('InvalidInput: String required.');
   }
+  return s;
+};
 
-  if (s.length >= MAX_STRING) {
-    throw new RangeError(`Overflow maximum string size (${MAX_STRING})`);
+var encode = (s) => {
+  let x = toString(s);
+  return encodeURIComponent(x);
+};
+
+var decode = (s) => {
+  let x = toString(s);
+  return decodeURIComponent(x.replace(/\+/g, ' '));
+};
+
+var trim = (s, all = false) => {
+  let x = toString(s);
+  x = x.replace(/^[\s\xa0]+|[\s\xa0]+$/g, '');
+  if (x && all) {
+    x = x.replace(/\r?\n|\r/g, ' ').replace(/\s\s+|\r/g, ' ');
+  }
+  return x;
+};
+
+var truncate = (s, l) => {
+  let o = toString(s);
+  let t = l || 140;
+  if (o.length <= t) {
+    return o;
+  }
+  let x = o.substring(0, t);
+  let a = x.split(' ');
+  let b = a.length;
+  let r = '';
+  if (b > 1) {
+    a.pop();
+    r += a.join(' ');
+    if (r.length < o.length) {
+      r += '...';
+    }
+  } else {
+    x = x.substring(0, t - 3);
+    r = x + '...';
+  }
+  return r;
+};
+
+var stripTags = (s) => {
+  let x = toString(s);
+  return trim(x.replace(/<.*?>/gi, ' ').replace(/\s\s+/g, ' '));
+};
+
+var escapeHTML = (s) => {
+  let x = toString(s);
+  return x.replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;');
+};
+
+var unescapeHTML = (s) => {
+  let x = toString(s);
+  return x.replace(/&quot;/g, '"')
+          .replace(/&lt;/g, '<')
+          .replace(/&gt;/g, '>')
+          .replace(/&amp;/g, '&');
+};
+
+var ucfirst = (s) => {
+  let x = toString(s);
+  if (x.length === 1) {
+    return x.toUpperCase();
+  }
+  x = x.toLowerCase();
+  return x.charAt(0).toUpperCase() + x.slice(1);
+};
+
+var ucwords = (s) => {
+  let x = toString(s);
+  let c = x.split(' ');
+  let a = [];
+  c.forEach((w) => {
+    a.push(ucfirst(w));
+  });
+  return a.join(' ');
+};
+
+var leftPad = (s, size = 2, pad = '0') => {
+  let x = toString(s);
+  return x.length >= size ? x : new Array(size - x.length + 1).join(pad) + x;
+};
+
+var rightPad = (s, size = 2, pad = '0') => {
+  let x = toString(s);
+  return x.length >= size ? x : x + new Array(size - x.length + 1).join(pad);
+};
+
+var repeat = (s, m) => {
+  let x = toString(s);
+  if (!isInteger(m) || m < 1) {
+    return x;
+  }
+  if (x.length * m >= MAX_STRING) {
+    throw new RangeError(`Repeat count must not overflow maximum string size.`);
+  }
+  let a = [];
+  a.length = m;
+  return a.fill(x, 0, m).join('');
+};
+
+var replaceAll = (s, a, b) => {
+
+  let x = toString(s);
+
+  if (isNumber(a)) {
+    a = String(a);
+  }
+  if (isNumber(b)) {
+    b = String(b);
   }
 
-  var encode = () => {
-    let x = String(s);
-    return encodeURIComponent(x);
-  };
-
-  var decode = () => {
-    let x = String(s);
-    return decodeURIComponent(x.replace(/\+/g, ' '));
-  };
-
-  var trim = (all = false) => {
-    let x = String(s);
-    x = x.replace(/^[\s\xa0]+|[\s\xa0]+$/g, '');
-    if (x && all) {
-      x = x.replace(/\r?\n|\r/g, ' ').replace(/\s\s+|\r/g, ' ');
-    }
-    return x;
-  };
-
-  var truncate = (l) => {
-    let o = String(s);
-    let t = l || 140;
-    if (o.length <= t) {
-      return o;
-    }
-    let x = o.substring(0, t);
-    let a = x.split(' ');
-    let b = a.length;
-    let r = '';
-    if (b > 1) {
-      a.pop();
-      r += a.join(' ');
-      if (r.length < o.length) {
-        r += '...';
-      }
-    } else {
-      x = x.substring(0, t - 3);
-      r = x + '...';
-    }
-    return r;
-  };
-
-  var stripTags = () => {
-    let x = String(s);
-    let o = x.replace(/<.*?>/gi, ' ');
-    if (o) {
-      o = trim(x.replace(/\s\s+/g, ' '));
-    }
-    return o;
-  };
-
-  var escapeHTML = () => {
-    let x = String(s);
-    let o = x.replace(/&/g, '&amp;')
-            .replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;')
-            .replace(/"/g, '&quot;');
-    return o;
-  };
-
-  var unescapeHTML = () => {
-    let x = String(s);
-    let o = x.replace(/&quot;/g, '"')
-            .replace(/&lt;/g, '<')
-            .replace(/&gt;/g, '>')
-            .replace(/&amp;/g, '&');
-    return o;
-  };
-
-  var ucfirst = () => {
-    let x = String(s);
-    if (x.length === 1) {
-      return x.toUpperCase();
-    }
-    x = x.toLowerCase();
-    let o = x.charAt(0).toUpperCase() + x.slice(1);
-    return o;
-  };
-
-  var ucwords = () => {
-    let x = String(s);
-    let c = x.split(' ');
-    let a = [];
-    c.forEach((w) => {
-      let v = string(w);
-      a.push(v.ucfirst());
+  if (isString(a) && isString(b)) {
+    let aa = x.split(a);
+    x = aa.join(b);
+  } else if (isArray(a) && isString(b)) {
+    a.forEach((v) => {
+      x = replaceAll(x, v, b);
     });
-    let o = a.join(' ');
-    return o;
-  };
-
-  var leftPad = (size = 2, pad = '0') => {
-    let x = String(s);
-    let o = x.length >= size ? x : new Array(size - x.length + 1).join(pad) + x;
-    return o;
-  };
-
-  var rightPad = (size = 2, pad = '0') => {
-    let x = String(s);
-    let o = x.length >= size ? x : x + new Array(size - x.length + 1).join(pad);
-    return o;
-  };
-
-  var repeat = (m) => {
-    let x = String(s);
-    if (!isInteger(m) || m < 1) {
-      return x;
-    }
-    if (x.length * m >= MAX_STRING) {
-      throw new RangeError(`Repeat count must not overflow maximum string size.`);
-    }
-    let a = [];
-    a.length = m;
-    let o = a.fill(x, 0, m).join('');
-    return o;
-  };
-
-  var replaceAll = (a, b) => {
-
-    let x = String(s);
-
-    if (isNumber(a)) {
-      a = String(a);
-    }
-    if (isNumber(b)) {
-      b = String(b);
-    }
-
-    if (isString(a) && isString(b)) {
-      let aa = s.split(a);
-      x = aa.join(b);
-    } else if (isArray(a) && isString(b)) {
-      a.forEach((v) => {
-        x = replaceAll(x, v, b);
-      });
-    } else if (isArray(a) && isArray(b) && a.length === b.length) {
-      let k = a.length;
-      if (k > 0) {
-        for (let i = 0; i < k; i++) {
-          let aaa = a[i];
-          let bb = b[i];
-          x = replaceAll(x, aaa, bb);
-        }
+  } else if (isArray(a) && isArray(b) && a.length === b.length) {
+    let k = a.length;
+    if (k > 0) {
+      for (let i = 0; i < k; i++) {
+        let aaa = a[i];
+        let bb = b[i];
+        x = replaceAll(x, aaa, bb);
       }
     }
-    return x;
-  };
-
-  var stripAccent = () => {
-    let map = {
-      a: 'á|à|ả|ã|ạ|ă|ắ|ặ|ằ|ẳ|ẵ|â|ấ|ầ|ẩ|ẫ|ậ|ä',
-      A: 'Á|À|Ả|Ã|Ạ|Ă|Ắ|Ặ|Ằ|Ẳ|Ẵ|Â|Ấ|Ầ|Ẩ|Ẫ|Ậ|Ä',
-      c: 'ç',
-      C: 'Ç',
-      d: 'đ',
-      D: 'Đ',
-      e: 'é|è|ẻ|ẽ|ẹ|ê|ế|ề|ể|ễ|ệ|ë',
-      E: 'É|È|Ẻ|Ẽ|Ẹ|Ê|Ế|Ề|Ể|Ễ|Ệ|Ë',
-      i: 'í|ì|ỉ|ĩ|ị|ï|î',
-      I: 'Í|Ì|Ỉ|Ĩ|Ị|Ï|Î',
-      o: 'ó|ò|ỏ|õ|ọ|ô|ố|ồ|ổ|ỗ|ộ|ơ|ớ|ờ|ở|ỡ|ợ|ö',
-      O: 'Ó|Ò|Ỏ|Õ|Ọ|Ô|Ố|Ồ|Ổ|Ô|Ộ|Ơ|Ớ|Ờ|Ở|Ỡ|Ợ|Ö',
-      u: 'ú|ù|ủ|ũ|ụ|ư|ứ|ừ|ử|ữ|ự|û',
-      U: 'Ú|Ù|Ủ|Ũ|Ụ|Ư|Ứ|Ừ|Ử|Ữ|Ự|Û',
-      y: 'ý|ỳ|ỷ|ỹ|ỵ',
-      Y: 'Ý|Ỳ|Ỷ|Ỹ|Ỵ'
-    };
-
-    let x = String(s);
-
-    let updateS = (ai, key) => {
-      x = replaceAll(x, ai, key);
-    };
-
-    for (let key in map) {
-      if (hasProperty(map, key)) {
-        let a = map[key].split('|');
-        a.forEach((item) => {
-          return updateS(item, key);
-        });
-      }
-    }
-    return x;
-  };
-
-  var createAlias = (delimiter) => {
-    let x = stripAccent();
-    let d = delimiter || '-';
-    x = x.toLowerCase();
-    x = trim(x);
-    x = x.replace(/\W+/g, ' ');
-    x = x.replace(/\s+/g, ' ');
-    x = x.replace(/\s/g, d);
-    return x;
-  };
-
-  return {
-    encode,
-    decode,
-    repeat,
-    ucfirst,
-    ucwords,
-    leftPad,
-    rightPad,
-    createAlias,
-    trim,
-    truncate,
-    stripTags,
-    stripAccent,
-    escapeHTML,
-    unescapeHTML,
-    replaceAll
-  };
+  }
+  return x;
 };
+
+var stripAccent = (s) => {
+
+  let x = toString(s);
+
+  let map = {
+    a: 'á|à|ả|ã|ạ|ă|ắ|ặ|ằ|ẳ|ẵ|â|ấ|ầ|ẩ|ẫ|ậ|ä',
+    A: 'Á|À|Ả|Ã|Ạ|Ă|Ắ|Ặ|Ằ|Ẳ|Ẵ|Â|Ấ|Ầ|Ẩ|Ẫ|Ậ|Ä',
+    c: 'ç',
+    C: 'Ç',
+    d: 'đ',
+    D: 'Đ',
+    e: 'é|è|ẻ|ẽ|ẹ|ê|ế|ề|ể|ễ|ệ|ë',
+    E: 'É|È|Ẻ|Ẽ|Ẹ|Ê|Ế|Ề|Ể|Ễ|Ệ|Ë',
+    i: 'í|ì|ỉ|ĩ|ị|ï|î',
+    I: 'Í|Ì|Ỉ|Ĩ|Ị|Ï|Î',
+    o: 'ó|ò|ỏ|õ|ọ|ô|ố|ồ|ổ|ỗ|ộ|ơ|ớ|ờ|ở|ỡ|ợ|ö',
+    O: 'Ó|Ò|Ỏ|Õ|Ọ|Ô|Ố|Ồ|Ổ|Ô|Ộ|Ơ|Ớ|Ờ|Ở|Ỡ|Ợ|Ö',
+    u: 'ú|ù|ủ|ũ|ụ|ư|ứ|ừ|ử|ữ|ự|û',
+    U: 'Ú|Ù|Ủ|Ũ|Ụ|Ư|Ứ|Ừ|Ử|Ữ|Ự|Û',
+    y: 'ý|ỳ|ỷ|ỹ|ỵ',
+    Y: 'Ý|Ỳ|Ỷ|Ỹ|Ỵ'
+  };
+
+  let updateS = (ai, key) => {
+    x = replaceAll(x, ai, key);
+  };
+
+  for (let key in map) {
+    if (hasProperty(map, key)) {
+      let a = map[key].split('|');
+      a.forEach((item) => {
+        return updateS(item, key);
+      });
+    }
+  }
+  return x;
+};
+
+var createAlias = (s, delimiter) => {
+  let x = trim(stripAccent(s));
+  let d = delimiter || '-';
+  return x.toLowerCase()
+        .replace(/\W+/g, ' ')
+        .replace(/\s+/g, ' ')
+        .replace(/\s/g, d);
+};
+
 
 /*eslint-disable*/
 /** https://github.com/jbt/js-crypto */
@@ -388,7 +370,7 @@ var compile = (tpl, data) => {
             data: v
           });
         } else if (isString(v)) {
-          v = string(v).replaceAll(['{', '}'], ['&#123;', '&#125;']);
+          v = replaceAll(v, ['{', '}'], ['&#123;', '&#125;']);
           let cns = ns.concat([k]);
           let r = new RegExp('{' + cns.join('.') + '}', 'gi');
           s = s.replace(r, v);
@@ -400,7 +382,7 @@ var compile = (tpl, data) => {
         s = c(s, item.data, item.key);
       });
     }
-    return string(s).trim(true);
+    return trim(s, true);
   };
   if (data && (isString(data) || isObject(data) || isArray(data))) {
     return c(tpl, data);
@@ -627,12 +609,7 @@ var stabilize = (() => {
     };
 
     let addMethods = (met) => {
-      Object.defineProperty(a, met[0], {
-        enumerable: false,
-        configurable: false,
-        writable: false,
-        value: met[1]
-      });
+      def(a, met[0], met[1]);
     };
 
     [
@@ -658,48 +635,31 @@ var stabilize = (() => {
 
     let o = Object.create({});
 
-    let config = {
-      enumerable: true,
-      configurable: false,
-      writable: false,
-      value: 'undefined'
-    };
-
     let setProp = (key) => {
-      let c = Object.assign({}, config);
-      c.value = data[key];
-      Object.defineProperty(o, key, c);
+      def(o, key, data[key], {
+        enumerable: true
+      });
     };
 
     Object.keys(data).map(setProp);
 
-    Object.defineProperty(o, 'get', {
-      enumerable: false,
-      configurable: false,
-      writable: false,
-      value: (k) => {
-        return o[k];
-      }
+    def(o, 'get', (k) => {
+      return o[k];
     });
 
-    Object.defineProperty(o, 'set', {
-      enumerable: false,
-      configurable: false,
-      writable: false,
-      value: (key, value = false) => {
-        let a = Object.assign({}, o);
-        let _set = (k, v) => {
-          a[k] = v;
-        };
-        if (isObject(key)) {
-          Object.keys(key).forEach((k) => {
-            _set(k, key[k]);
-          });
-        } else {
-          _set(key, value);
-        }
-        return stabilize(a);
+    def(o, 'set', (key, value = false) => {
+      let a = Object.assign({}, o);
+      let _set = (k, v) => {
+        a[k] = v;
+      };
+      if (isObject(key)) {
+        Object.keys(key).forEach((k) => {
+          _set(k, key[k]);
+        });
+      } else {
+        _set(key, value);
       }
+      return stabilize(a);
     });
 
     return o;
@@ -738,7 +698,7 @@ var tz = (() => {
   let t = now().getTimezoneOffset();
   let z = Math.abs(t / 60);
   let sign = t < 0 ? '+' : '-';
-  return ['GMT', sign, string(z).leftPad(4)].join('');
+  return ['GMT', sign, leftPad(z, 4)].join('');
 })();
 
 var date = (input = time()) => {
@@ -903,9 +863,11 @@ var date = (input = time()) => {
   };
 };
 
-// exports
-module.exports = {
+let B = Object.create({});
+let exp = {
   ENV,
+  MAX_NUMBER,
+  MAX_STRING,
   id: createId(),
   isUndefined,
   isNull,
@@ -932,7 +894,30 @@ module.exports = {
   now,
   time,
   date,
-  string,
+  encode,
+  decode,
+  repeat,
+  ucfirst,
+  ucwords,
+  leftPad,
+  rightPad,
+  createAlias,
+  trim,
+  truncate,
+  stripTags,
+  stripAccent,
+  escapeHTML,
+  unescapeHTML,
+  replaceAll,
   stabilize,
   template
 };
+
+var setProp = (k) => {
+  def(B, k, exp[k]);
+};
+
+Object.keys(exp).map(setProp);
+
+// exports
+module.exports = B;

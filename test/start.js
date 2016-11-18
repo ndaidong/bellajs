@@ -6,7 +6,6 @@ var path = require('path');
  */
 
 var dirs = ['', 'detection', 'utils', 'string', 'template', 'stabilitize', 'date'];
-var dirs = ['string'];
 
 dirs.forEach((dir) => {
   let where = './test/specs/' + dir;
