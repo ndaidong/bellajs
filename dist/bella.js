@@ -1,7 +1,7 @@
 /**
  * bellajs
- * v6.4.1
- * built: Fri, 18 Nov 2016 06:24:55 GMT
+ * v6.4.2
+ * built: Sat, 03 Dec 2016 15:20:17 GMT
  * git: https://github.com/ndaidong/bellajs
  * author: @ndaidong
  * License: MIT
@@ -29,9 +29,9 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
   var MAX_NUMBER = Number.MAX_SAFE_INTEGER;
   var MAX_STRING = 1 << 28;
 
-  var UNDEF = undefined;
+  var UNDEF = 'undefined';
 
-  var ENV = (typeof module === 'undefined' ? 'undefined' : _typeof(module)) !== UNDEF && module.exports ? 'node' : 'browser';
+  var ENV = UNDEF !== (typeof module === 'undefined' ? 'undefined' : _typeof(module)) && module.exports ? 'node' : 'browser';
 
   var ob2Str = function ob2Str(val) {
     return {}.toString.call(val);
