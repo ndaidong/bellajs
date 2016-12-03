@@ -1,5 +1,5 @@
 /**
- * Package: bellajs
+ * bellajs
  * @ndaidong
 **/
 
