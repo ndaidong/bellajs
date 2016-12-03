@@ -6,9 +6,9 @@
 const MAX_NUMBER = Number.MAX_SAFE_INTEGER;
 const MAX_STRING = 1 << 28; // eslint-disable-line no-bitwise
 
-const UNDEF = undefined; // eslint-disable-line no-undefined
+const UNDEF = 'undefined';
 
-const ENV = typeof module !== UNDEF && module.exports ? 'node' : 'browser';
+const ENV = UNDEF !== typeof module && module.exports ? 'node' : 'browser';
 
 var ob2Str = (val) => {
   return {}.toString.call(val);
@@ -353,7 +353,7 @@ var md5 = function() {for(var m=[],l=0;64>l;)m[l]=0|4294967296*Math.abs(Math.sin
 /*eslint-enable*/
 
 
-// bella.template
+// Define bella.template
 var compile = (tpl, data) => {
   let ns = [];
   let c = (s, ctx, namespace) => {
