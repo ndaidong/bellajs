@@ -364,6 +364,9 @@ var compile = (tpl, data) => {
     for (let k in ctx) {
       if (hasProperty(ctx, k)) {
         let v = ctx[k];
+        if (isNumber(v)) {
+          v = String(v);
+        }
         if (isObject(v) || isArray(v)) {
           a.push({
             key: k,
