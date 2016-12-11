@@ -1,7 +1,7 @@
 /**
  * bellajs
- * v6.4.2
- * built: Sat, 03 Dec 2016 15:20:17 GMT
+ * v6.4.3
+ * built: Sun, 11 Dec 2016 15:33:07 GMT
  * git: https://github.com/ndaidong/bellajs
  * author: @ndaidong
  * License: MIT
@@ -406,6 +406,9 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
       for (var k in ctx) {
         if (hasProperty(ctx, k)) {
           var v = ctx[k];
+          if (isNumber(v)) {
+            v = String(v);
+          }
           if (isObject(v) || isArray(v)) {
             a.push({
               key: k,
