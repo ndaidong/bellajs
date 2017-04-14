@@ -401,26 +401,6 @@ var template = (tpl) => {
   };
 };
 
-var genkey = () => {
-  return Math.random().toString(36).slice(2);
-};
-
-var createId = (leng, prefix = '') => {
-  let a = [];
-  while (a.length < 10) {
-    a.push(genkey());
-  }
-  let r = a.join('');
-  let t = r.length;
-  let ln = Math.max(leng || 32, prefix.length);
-  let s = prefix;
-  while (s.length < ln) {
-    let k = Math.floor(Math.random() * t);
-    s += r.charAt(k) || '';
-  }
-  return s;
-};
-
 var random = (min, max) => {
   if (!min || min < 0) {
     min = 0;
@@ -438,6 +418,25 @@ var random = (min, max) => {
   let offset = min;
   let range = max - min + 1;
   return Math.floor(Math.random() * range) + offset;
+};
+
+
+var createId = (leng, prefix = '') => {
+  let lc = 'abcdefghijklmnopqrstuvwxyz';
+  let uc = lc.toUpperCase();
+  let nb = '0123456789';
+  let cand = [lc, uc, nb].join('').split('').sort(() => {
+    return Math.random() > 0.5;
+  }).join('');
+
+  let t = cand.length;
+  let ln = Math.max(leng || 32, prefix.length);
+  let s = prefix;
+  while (s.length < ln) {
+    let k = random(0, t);
+    s += cand.charAt(k) || '';
+  }
+  return s;
 };
 
 var clone = (val) => {
