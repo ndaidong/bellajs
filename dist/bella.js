@@ -1,7 +1,7 @@
 /**
  * bellajs
- * v6.4.3
- * built: Sun, 11 Dec 2016 15:33:07 GMT
+ * v6.4.4
+ * built: Fri, 14 Apr 2017 15:20:14 GMT
  * git: https://github.com/ndaidong/bellajs
  * author: @ndaidong
  * License: MIT
@@ -443,28 +443,6 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
     };
   };
 
-  var genkey = function genkey() {
-    return Math.random().toString(36).slice(2);
-  };
-
-  var createId = function createId(leng) {
-    var prefix = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
-
-    var a = [];
-    while (a.length < 10) {
-      a.push(genkey());
-    }
-    var r = a.join('');
-    var t = r.length;
-    var ln = Math.max(leng || 32, prefix.length);
-    var s = prefix;
-    while (s.length < ln) {
-      var k = Math.floor(Math.random() * t);
-      s += r.charAt(k) || '';
-    }
-    return s;
-  };
-
   var random = function random(min, max) {
     if (!min || min < 0) {
       min = 0;
@@ -482,6 +460,26 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
     var offset = min;
     var range = max - min + 1;
     return Math.floor(Math.random() * range) + offset;
+  };
+
+  var createId = function createId(leng) {
+    var prefix = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
+
+    var lc = 'abcdefghijklmnopqrstuvwxyz';
+    var uc = lc.toUpperCase();
+    var nb = '0123456789';
+    var cand = [lc, uc, nb].join('').split('').sort(function () {
+      return Math.random() > 0.5;
+    }).join('');
+
+    var t = cand.length;
+    var ln = Math.max(leng || 32, prefix.length);
+    var s = prefix;
+    while (s.length < ln) {
+      var k = random(0, t);
+      s += cand.charAt(k) || '';
+    }
+    return s;
   };
 
   var clone = function clone(val) {
@@ -636,13 +634,11 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
         if (isObject(o)) {
           var _loop2 = function _loop2(key) {
             if (hasProperty(one, key)) {
-              (function () {
-                var order = o[key] === -1 ? -1 : 1;
+              var order = o[key] === -1 ? -1 : 1;
 
-                r.sort(function (m, n) {
-                  return m[key] > n[key] ? order : m[key] < n[key] ? -1 * order : 0;
-                });
-              })();
+              r.sort(function (m, n) {
+                return m[key] > n[key] ? order : m[key] < n[key] ? -1 * order : 0;
+              });
             }
           };
 
