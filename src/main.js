@@ -423,18 +423,14 @@ export let clone = (val) => {
   };
 
   let copyArray = (a) => {
-    let aa = [...a];
-    let ba = [];
-    aa.forEach((e) => {
+    return [...a].map((e) => {
       if (isArray(e)) {
-        ba.push(copyArray(e));
+        return copyArray(e);
       } else if (isObject(e)) {
-        ba.push(copyObject(e));
-      } else {
-        ba.push(clone(e));
+        return copyObject(e);
       }
+      return clone(e);
     });
-    return ba;
   };
 
   if (isArray(val)) {

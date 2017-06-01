@@ -1,7 +1,7 @@
 BellaJS
 ========
 
-Lightweight util for handling data type, string, data entries, datetime in your Node.js and browser apps.
+Lightweight util for handling data type, string... in your Node.js and browser apps.
 
 [![NPM](https://badge.fury.io/js/bellajs.svg)](https://badge.fury.io/js/bellajs)
 [![Build Status](https://travis-ci.org/ndaidong/bellajs.svg?branch=master)](https://travis-ci.org/ndaidong/bellajs)
