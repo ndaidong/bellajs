@@ -45,7 +45,7 @@ var release = (output) => {
   }
 
   if (output.map) {
-    writeFile(`${OUTPUT_DIR}/${GLOBAL_NAME}.js.map`, output.map);
+    writeFile(`${OUTPUT_DIR}/${GLOBAL_NAME}.min.map`, output.map);
   }
 };
 
