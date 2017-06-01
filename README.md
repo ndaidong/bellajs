@@ -1,7 +1,7 @@
 BellaJS
 ========
 
-Lightweight util for handling data type, string, data entries, datetime in your Node.js and browser apps.
+Lightweight util for handling data type, string... in your Node.js and browser apps.
 
 [![NPM](https://badge.fury.io/js/bellajs.svg)](https://badge.fury.io/js/bellajs)
 [![Build Status](https://travis-ci.org/ndaidong/bellajs.svg?branch=master)](https://travis-ci.org/ndaidong/bellajs)
@@ -38,7 +38,30 @@ Lightweight util for handling data type, string, data entries, datetime in your 
 - This library also supports ES6 Module, AMD and UMD style.
 
 
-# APIs
+### Usage
+
+```
+var bella = require('bellajs');
+
+// or:
+import bella from 'bellajs';
+
+// or import several methods only
+import {
+  isArray,
+  isString
+} from 'bellajs';
+
+// similar:
+var {
+  isArray,
+  isString
+} = require('bellajs');
+
+```
+
+
+## APIs
 
 ### DataType detection
  - .isArray(Anything val): check if val is Array
@@ -86,7 +109,7 @@ var data = {
   }
 }
 
-var html = Bella.template(tpl).compile(data);
+var html = bella.template(tpl).compile(data);
 console.log(html);
 
 ```
@@ -189,7 +212,7 @@ Output:
 ##### .random([Number min [, Number max]]):
 
 
-# Test
+## Test
 
 ```
 git clone https://github.com/ndaidong/bellajs.git

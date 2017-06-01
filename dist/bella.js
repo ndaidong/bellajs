@@ -1,7 +1,7 @@
 /**
  * bellajs
  * v7.0.0
- * built: Thu, 01 Jun 2017 13:23:33 GMT
+ * built: Thu, 01 Jun 2017 13:54:43 GMT
  * git: https://github.com/ndaidong/bellajs
  * author: @ndaidong
  * License: MIT
@@ -404,18 +404,14 @@
       return oo;
     };
     var copyArray = function copyArray(a) {
-      var aa = [].concat(toConsumableArray(a));
-      var ba = [];
-      aa.forEach(function (e) {
+      return [].concat(toConsumableArray(a)).map(function (e) {
         if (isArray(e)) {
-          ba.push(copyArray(e));
+          return copyArray(e);
         } else if (isObject(e)) {
-          ba.push(copyObject(e));
-        } else {
-          ba.push(clone(e));
+          return copyObject(e);
         }
+        return clone(e);
       });
-      return ba;
     };
     if (isArray(val)) {
       return copyArray(val);
