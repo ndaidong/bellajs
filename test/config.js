@@ -1,6 +1,7 @@
 
-var bella = require('../src/main');
+var bellaFull = require('../dist/bella');
+var bellaMin = require('../dist/bella.min');
 
 module.exports = {
-  bella
+  bellas: [bellaFull, bellaMin]
 };
