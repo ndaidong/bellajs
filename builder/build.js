@@ -23,11 +23,10 @@ let minHeader = `// ${name}@${version}, by ${author} - built on ${releaseAt} - p
 
 let fullHeader = [
   `/**`,
-  ` * ${name}`,
-  ` * v${version}`,
-  ` * built: ${releaseAt}`,
-  ` * ${repository.type}: ${repository.url}`,
-  ` * author: ${author}`,
+  ` * ${name}@${version}`,
+  ` * built on: ${releaseAt}`,
+  ` * repository: ${repository.url}`,
+  ` * maintainer: ${author}`,
   ` * License: ${license}`,
   `**/`
 ].join('\n');
