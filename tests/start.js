@@ -8,7 +8,7 @@ var path = require('path');
 var dirs = ['', 'detection', 'utils', 'string', 'template'];
 
 dirs.forEach((dir) => {
-  let where = './test/specs/' + dir;
+  let where = './tests/specs/' + dir;
   if (fs.existsSync(where)) {
     fs.readdirSync(where).forEach((file) => {
       if (path.extname(file) === '.js') {

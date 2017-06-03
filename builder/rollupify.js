@@ -12,6 +12,7 @@ var {minify} = require('uglify-js');
 const ENV = process.env.NODE_ENV || 'development'; // eslint-disable-line
 
 var jsminify = (source = '') => {
+  console.log('Minifying...');
   return minify(source, {sourceMap: true});
 };
 
@@ -19,25 +20,21 @@ let removeBr = (s) => {
   return s.replace(/(\r\n+|\n+|\r+)/gm, '\n');
 };
 
-var rollupify = (entry, gname) => {
+var rollupify = (entry, name) => {
   console.log('Rollup start...');
   return rollup.rollup({
     entry,
     plugins: [
       nodeResolve({
+        module: true,
         jsnext: true,
-        main: true,
         extensions: [
-          '.js',
-          '.json'
+          '.js'
         ]
       }),
-      commonjs({
-        include: 'node_modules/**'
-      }),
+      commonjs(),
       babel({
         babelrc: false,
-        exclude: 'node_modules/**',
         presets: [
           'es2015-rollup'
         ],
@@ -52,9 +49,11 @@ var rollupify = (entry, gname) => {
     let result = bundle.generate({
       format: 'umd',
       indent: true,
-      moduleName: gname
+      moduleId: name,
+      moduleName: name
     });
     console.log('Rolling finished.');
+
     let {code} = result;
 
     let output = {
@@ -68,10 +67,15 @@ var rollupify = (entry, gname) => {
         output.map = min.map;
       }
     }
+
+    console.log('Rollupified JS source.');
     return output;
   }).catch((err) => {
     console.log(err);
   });
 };
 
-module.exports = rollupify;
+module.exports = async (entry, name) => {
+  let output = await rollupify(entry, name);
+  return output;
+};
