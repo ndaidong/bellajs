@@ -470,4 +470,3 @@ export let now = () => {
 export let time = () => {
   return Date.now();
 };
-
