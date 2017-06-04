@@ -1,5 +1,5 @@
 {
-  "version": "7.0.3",
+  "version": "7.0.4",
   "name": "bellajs",
   "description": "A useful helper for any javascript program",
   "homepage": "https://www.npmjs.com/package/bellajs",
@@ -39,7 +39,7 @@
     "jsdom": "11.x.x",
     "jsdom-global": "3.x.x",
     "nsp": "2.x.x",
-    "nyc": "10.x.x",
+    "nyc": "11.x.x",
     "tap-spec": "4.x.x",
     "tape": "4.x.x"
   },

@@ -10,18 +10,6 @@ Lightweight util for handling data type, string... in your Node.js and browser a
 [![NSP Status](https://nodesecurity.io/orgs/techpush/projects/63f808aa-af9a-44ea-b744-3d6356d5e268/badge)](https://nodesecurity.io/orgs/techpush/projects/63f808aa-af9a-44ea-b744-3d6356d5e268)
 
 
-# Contents
-
-* [Setup](#setup)
-* [APIs](#apis)
-  * [DataType detection](#datatype-detection)
-  * [String manipulation](#string-manipulation)
-  * [Template](#template)
-  * [Other utils](#other-utils)
-* [Test](#test)
-* [License](#license)
-
-
 ## Setup
 
 - Node.js
