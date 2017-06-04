@@ -13,6 +13,7 @@ var dirs = [
 ];
 
 var files = [
+  'yarn.lock',
   'package-lock.json',
   'coverage.lcov'
 ];
