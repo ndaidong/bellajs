@@ -27,7 +27,7 @@ Lightweight util for handling data type, string... in your Node.js and browser a
 - Node.js
 
   ```
-  npm install bellajs --save
+  npm install bellajs
   ```
 
 - CDN
