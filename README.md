@@ -212,6 +212,16 @@ Output:
 ##### .random([Number min [, Number max]]):
 
 
+## Note
+
+Some parts of `bella` have been split to separate modules, including:
+
+- bella.stabilize: [stabilize.js](https://www.npmjs.com/package/stabilize.js)
+- bella.date: [bella-date](https://www.npmjs.com/package/bella-date)
+- bella.scheduler: [bella-scheduler](https://www.npmjs.com/package/bella-scheduler)
+- bella.detector: [device-detector](https://www.npmjs.com/package/device-detector)
+
+
 ## Test
 
 ```

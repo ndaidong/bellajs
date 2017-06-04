@@ -1,5 +1,5 @@
 {
-  "version": "7.0.2",
+  "version": "7.0.3",
   "name": "bellajs",
   "description": "A useful helper for any javascript program",
   "homepage": "https://www.npmjs.com/package/bellajs",
@@ -16,7 +16,7 @@
     "node": ">= 6.0"
   },
   "scripts": {
-    "lint": "eslint ./builder ./tests",
+    "lint": "eslint src tests",
     "nsp": "nsp check --output checkstyle",
     "tape": "nyc babel-node node_modules/.bin/tape tests/start.js | tap-spec",
     "report": "nyc report --reporter=lcov > coverage.lcov && codecov",
@@ -29,6 +29,7 @@
   },
   "devDependencies": {
     "babel-cli": "6.x.x",
+    "babel-plugin-transform-remove-strict-mode": "0.x.x",
     "babel-preset-env": "1.x.x",
     "codecov": "2.x.x",
     "eslint": "3.x.x",
@@ -53,6 +54,11 @@
             ]
           }
         }
+      ]
+    ],
+    "plugins": [
+      [
+        "transform-remove-strict-mode"
       ]
     ]
   },
