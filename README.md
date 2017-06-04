@@ -36,7 +36,7 @@ Lightweight util for handling data type, string... in your Node.js and browser a
   - [bella.min.js](https://cdn.rawgit.com/ndaidong/bellajs/master/dist/bella.min.js)
   - [bella.min.map](https://cdn.rawgit.com/ndaidong/bellajs/master/dist/bella.min.map)
 
-- Also supports ES6 Module, AMD and UMD style.
+- Also supports ES6 Module, CommonJS, AMD and UMD style.
 
 
 ### Usage
