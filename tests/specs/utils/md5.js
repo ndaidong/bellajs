@@ -23,4 +23,3 @@ let checkMD5 = (bella) => {
 };
 
 bellas.map(checkMD5);
-
