@@ -5,7 +5,13 @@ var path = require('path');
  * Import specs
  */
 
-var dirs = ['', 'detection', 'utils', 'string', 'template'];
+var dirs = [
+  '',
+  'detection',
+  'utils',
+  'string',
+  'template'
+];
 
 dirs.forEach((dir) => {
   let where = './tests/specs/' + dir;

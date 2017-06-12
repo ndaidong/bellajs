@@ -1,5 +1,5 @@
 {
-  "version": "7.0.4",
+  "version": "7.0.41",
   "name": "bellajs",
   "description": "A useful helper for any javascript program",
   "homepage": "https://www.npmjs.com/package/bellajs",
@@ -32,7 +32,7 @@
     "babel-plugin-transform-remove-strict-mode": "0.x.x",
     "babel-preset-env": "1.x.x",
     "codecov": "2.x.x",
-    "eslint": "3.x.x",
+    "eslint": "4.x.x",
     "eslint-config-ggc": "1.x.x",
     "gcc-min": "5.x.x",
     "is": "3.x.x",

@@ -56,7 +56,11 @@ let checkDetection = (bella) => {
   test('Testing .isArray(Anything) method:', (assert) => {
     [
       [],
-      [1, 2, 3],
+      [
+        1,
+        2,
+        3
+      ],
       new Array(),
       new Array(5)
     ].forEach((item) => {
@@ -179,9 +183,7 @@ let checkDetection = (bella) => {
 
   // isDate
   test('Testing .isDate(Anything) method:', (assert) => {
-    [
-      new Date()
-    ].forEach((item) => {
+    [new Date()].forEach((item) => {
       let r = bella.isDate(item);
       var x = stringify(item);
       assert.ok(r, `"${x}" must be date.`);
@@ -255,7 +257,10 @@ let checkDetection = (bella) => {
       1,
       true,
       {a: 1},
-      [1, 3],
+      [
+        1,
+        3
+      ],
       function x() {}
     ].forEach((item) => {
       let r = bella.isEmpty(item);
@@ -282,7 +287,10 @@ let checkDetection = (bella) => {
       1,
       true,
       {a: 1},
-      [1, 3],
+      [
+        1,
+        3
+      ],
       something,
       '',
       {},
@@ -439,7 +447,12 @@ let checkDetection = (bella) => {
       [],
       0,
       'a',
-      [1, 4, 6, 8],
+      [
+        1,
+        4,
+        6,
+        8
+      ],
       {
         a: 1,
         b: 4,
@@ -452,7 +465,12 @@ let checkDetection = (bella) => {
       [],
       0,
       'a',
-      [1, 4, 6, 8],
+      [
+        1,
+        4,
+        6,
+        8
+      ],
       {
         c: 6,
         b: 4,
@@ -475,10 +493,19 @@ let checkDetection = (bella) => {
     let bt = new Date(at.getTime() - 1000);
     let a2 = [
       {x: 5},
-      [11, 66, 'ab'],
+      [
+        11,
+        66,
+        'ab'
+      ],
       0,
       'a',
-      [1, 4, 6, 8],
+      [
+        1,
+        4,
+        6,
+        8
+      ],
       {
         a: 1,
         b: 4,
@@ -491,7 +518,12 @@ let checkDetection = (bella) => {
       ['ab'],
       8,
       'b',
-      [1, 6, 4, 8],
+      [
+        1,
+        6,
+        4,
+        8
+      ],
       {
         c: 6,
         b: 4,
@@ -515,4 +547,3 @@ let checkDetection = (bella) => {
 };
 
 bellas.map(checkDetection);
-
