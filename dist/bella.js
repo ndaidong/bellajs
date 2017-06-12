@@ -1,6 +1,6 @@
 /**
- * bellajs@7.0.41
- * built on: Mon, 12 Jun 2017 08:51:11 GMT
+ * bellajs@7.0.5
+ * built on: Mon, 12 Jun 2017 10:40:14 GMT
  * repository: https://github.com/ndaidong/bellajs
  * maintainer: @ndaidong
  * License: MIT
@@ -439,6 +439,10 @@
     }
     return dest;
   };
+  var unique = function unique() {
+    var arr = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+    return [].concat(toConsumableArray(new Set(arr)));
+  };
   var now = function now() {
     return new Date();
   };
@@ -482,6 +486,7 @@
   exports.createId = createId;
   exports.clone = clone;
   exports.copies = copies;
+  exports.unique = unique;
   exports.now = now;
   exports.time = time;
   exports.md5 = md5;
