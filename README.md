@@ -69,7 +69,7 @@ var {
  - .isUndefined(Anything val)
 
 
- ### String manipulation
+### String manipulation
   - .createAlias(String s)
   - .encode(String s)
   - .decode(String s)
