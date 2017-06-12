@@ -473,6 +473,10 @@ export let copies = (source, dest, matched = false, excepts = []) => {
   return dest;
 };
 
+export let unique = (arr = []) => {
+  return [...new Set(arr)];
+};
+
 export let now = () => {
   return new Date();
 };
