@@ -36,13 +36,21 @@ let checkClone = (bella) => {
 
     assert.comment('Clone array');
     let b = [
-      1, 5, 0, 'a', -10, '-10', '',
+      1,
+      5,
+      0,
+      'a',
+      -10,
+      '-10',
+      '',
       {
         a: 1,
         b: 'Awesome'
       },
       [
-        5, 6, 8,
+        5,
+        6,
+        8,
         {
           name: 'Lys',
           age: 11

@@ -53,21 +53,38 @@ var {
 ## APIs
 
 ### DataType detection
- - .isArray(Anything val): check if val is Array
- - .isBoolean(Anything val): check if val is Boolean
- - .isDate(Anything val): check if val is Date
- - .isElement(Anything val): check if val is likely a DOM element
- - .isEmail(Anything val): check if val is well-format email address
- - .isEmpty(Anything val): check if val is [], {} or ''
- - .isFunction(Anything val): check if val is Function
- - .isInteger(Anything val): check if val is an integer
- - .isLetter(Anything val): check if val is letter
- - .isNull(Anything val): check if val is null
- - .isNumber(Anything val): check if val is Number
- - .isObject(Anything val): check if val is Object
- - .isString(Anything val): check if val is String
- - .isUndefined(Anything val): check if val is Undefined
+ - .isArray(Anything val)
+ - .isBoolean(Anything val)
+ - .isDate(Anything val)
+ - .isElement(Anything val)
+ - .isEmail(Anything val)
+ - .isEmpty(Anything val)
+ - .isFunction(Anything val)
+ - .isInteger(Anything val)
+ - .isLetter(Anything val)
+ - .isNull(Anything val)
+ - .isNumber(Anything val)
+ - .isObject(Anything val)
+ - .isString(Anything val)
+ - .isUndefined(Anything val)
 
+
+### String manipulation
+  - .createAlias(String s)
+  - .encode(String s)
+  - .decode(String s)
+  - .ucfirst(String s)
+  - .ucwords(String s)
+  - .escapeHTML(String s)
+  - .unescapeHTML(String s)
+  - .stripTags(String s)
+  - .stripAccent(String s)
+  - .trim(String s [, Boolean nospace])
+  - .truncate(String s, Number limit)
+  - .repeat(String s, Number times)
+  - .leftPad(String s, Number limit, String pad)
+  - .rightPad(String s, Number limit, String pad)
+  - .replaceAll(String s, String|Array search, String|Array replace)
 
 ### Template
  - .template(String tpl)
@@ -198,8 +215,8 @@ Output:
 ##### .createId([Number length [, String prefix]])
 ##### .equals(Anything a, Anything b)
 ##### .md5(String s)
-##### .random([Number min [, Number max]]):
-
+##### .random([Number min [, Number max]])
+##### .unique(Array a)
 
 ## Note
 

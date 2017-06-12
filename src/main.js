@@ -187,17 +187,17 @@ export let stripTags = (s) => {
 export let escapeHTML = (s) => {
   let x = toString(s);
   return x.replace(/&/g, '&amp;')
-          .replace(/</g, '&lt;')
-          .replace(/>/g, '&gt;')
-          .replace(/"/g, '&quot;');
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
 };
 
 export let unescapeHTML = (s) => {
   let x = toString(s);
   return x.replace(/&quot;/g, '"')
-          .replace(/&lt;/g, '<')
-          .replace(/&gt;/g, '>')
-          .replace(/&amp;/g, '&');
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&amp;/g, '&');
 };
 
 export let ucfirst = (s) => {
@@ -315,9 +315,9 @@ export let createAlias = (s, delimiter) => {
   let x = trim(stripAccent(s));
   let d = delimiter || '-';
   return x.toLowerCase()
-        .replace(/\W+/g, ' ')
-        .replace(/\s+/g, ' ')
-        .replace(/\s/g, d);
+    .replace(/\W+/g, ' ')
+    .replace(/\s+/g, ' ')
+    .replace(/\s/g, d);
 };
 
 // Define bella.template
@@ -340,7 +340,13 @@ var compile = (tpl, data) => {
             data: v
           });
         } else if (isString(v)) {
-          v = replaceAll(v, ['{', '}'], ['&#123;', '&#125;']);
+          v = replaceAll(v, [
+            '{',
+            '}'
+          ], [
+            '&#123;',
+            '&#125;'
+          ]);
           let cns = ns.concat([k]);
           let r = new RegExp('{' + cns.join('.') + '}', 'gi');
           s = s.replace(r, v);
@@ -392,7 +398,11 @@ export let createId = (leng, prefix = '') => {
   let lc = 'abcdefghijklmnopqrstuvwxyz';
   let uc = lc.toUpperCase();
   let nb = '0123456789';
-  let cand = [lc, uc, nb].join('').split('').sort(() => {
+  let cand = [
+    lc,
+    uc,
+    nb
+  ].join('').split('').sort(() => {
     return Math.random() > 0.5;
   }).join('');
 
@@ -461,6 +471,10 @@ export let copies = (source, dest, matched = false, excepts = []) => {
     }
   }
   return dest;
+};
+
+export let unique = (arr = []) => {
+  return [...new Set(arr)];
 };
 
 export let now = () => {
