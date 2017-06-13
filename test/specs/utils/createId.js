@@ -12,7 +12,7 @@ var bellas = config.bellas;
 let checkCreateId = (bella) => {
   test('Testing .createId() method', (assert) => {
     let arr = [];
-    while (arr.length < 10000) {
+    while (arr.length < 1000) {
       let key = bella.createId();
       assert.deepEquals(key.length, 32, 'key must be a string with 32 chars');
       arr.push(key);

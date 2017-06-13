@@ -10,6 +10,28 @@ Lightweight util for handling data type, string... in your Node.js and browser a
 [![NSP Status](https://nodesecurity.io/orgs/techpush/projects/63f808aa-af9a-44ea-b744-3d6356d5e268/badge)](https://nodesecurity.io/orgs/techpush/projects/63f808aa-af9a-44ea-b744-3d6356d5e268)
 
 
+# Contents
+
+* [Setup](#setup)
+* [APIs](#apis)
+  * [DataType detection](#datatype-detection)
+  * [String manipulation](#string-manipulation)
+  * [Template](#template)
+  * [Other utils](#other-utils)
+    * [clone](#cloneanything-val)
+    * [copies](#copiesobject-source-object-target-boolean-requirematching-array-excepts)
+    * [createId](#createidnumber-length--string-prefix)
+    * [equals](#equalsanything-a-anything-b)
+    * [md5](#md5string-s)
+    * [random](#randomnumber-min--number-max)
+    * [unique](#uniquearray-a)
+    * [curry](#curryfn)
+    * [compose](#composef1-f2-fn)
+    * [pipe](#pipef1-f2-fn)
+* [Test](#test)
+* [License](#license)
+
+
 ## Setup
 
 - Node.js
@@ -69,7 +91,7 @@ var {
  - .isUndefined(Anything val)
 
 
- ### String manipulation
+### String manipulation
   - .createAlias(String s)
   - .encode(String s)
   - .decode(String s)
@@ -213,10 +235,134 @@ Output:
 ```
 
 ##### .createId([Number length [, String prefix]])
+
+```
+import {createId} from 'bellajs';
+
+createId(); // => random 32 chars
+createId(16); // => random 16 chars
+createId(5); // => random 5 chars
+createId(5, 'X_'); // => X_{random 3 chars}
+```
+
 ##### .equals(Anything a, Anything b)
+
+```
+import {equals} from 'bellajs';
+
+equals({}, {}); // => true
+equals(0, 1); // => false
+```
+
 ##### .md5(String s)
+
+```
+import {md5} from 'bellajs';
+
+md5('abc'); // => 900150983cd24fb0d6963f7d28e17f72
+```
+
 ##### .random([Number min [, Number max]])
+
+```
+import {random} from 'bellajs';
+
+random(); // => a random integer
+random(1, 5); // => a random integer between 3 and 5, including 1 and 5
+```
+
+
 ##### .unique(Array a)
+
+```
+import {unique} from 'bellajs';
+
+unique([1, 2, 3, 2, 3, 1, 5]); // => [ 1, 2, 3, 5 ]
+```
+
+##### .curry(fn)
+
+```
+import {curry} from 'bellajs';
+
+let sum = curry((a, b, c) => {
+  return a + b + c;
+});
+
+sum(3)(2)(1) // => 6
+sum(1)(2)(3) // => 6
+sum(1, 2)(3) // => 6
+sum(1)(2, 3) // => 6
+sum(1, 2, 3) // => 6
+```
+
+##### .compose(f1, f2, ...fN)
+
+Performs right-to-left function composition.
+
+```
+import {compose} from 'bellajs';
+
+let f1 = (name) => {
+  return `f1 ${name}`;
+};
+let f2 = (name) => {
+  return `f2 ${name}`;
+};
+let f3 = (name) => {
+  return `f3 ${name}`;
+};
+
+let addF = compose(f1, f2, f3);
+
+addF('Hello') // => 'f1 f2 f3 Hello'
+
+let add1 = (num) => {
+  return num + 1;
+};
+
+let mult2 = (num) => {
+  return num * 2;
+};
+
+let add1AndMult2 = compose(add1, mult2);
+add1AndMult2(3) // => 7
+// because multiple to 2 first, then add 1 late => 3 * 2 + 1
+```
+
+##### .pipe(f1, f2, ...fN)
+
+Performs left-to-right function composition.
+
+```
+import {pipe} from 'bellajs';
+
+let f1 = (name) => {
+  return `f1 ${name}`;
+};
+let f2 = (name) => {
+  return `f2 ${name}`;
+};
+let f3 = (name) => {
+  return `f3 ${name}`;
+};
+
+let addF = pipe(f1, f2, f3);
+
+addF('Hello') // => 'f3 f2 f1 Hello'
+
+let add1 = (num) => {
+  return num + 1;
+};
+
+let mult2 = (num) => {
+  return num * 2;
+};
+
+let add1AndMult2 = pipe(add1, mult2);
+add1AndMult2(3) // => 8
+// because add 1 first, then multiple to 2 late => (3 + 1) * 2
+```
 
 ## Note
 
