@@ -1,6 +1,6 @@
 /**
  * bellajs@7.0.51
- * built on: Tue, 13 Jun 2017 03:40:31 GMT
+ * built on: Tue, 13 Jun 2017 09:00:09 GMT
  * repository: https://github.com/ndaidong/bellajs
  * maintainer: @ndaidong
  * License: MIT
@@ -446,17 +446,33 @@
   var curry = function curry(fn) {
     var totalArguments = fn.length;
     var next = function next(argumentLength, rest) {
-      if (argumentLength === 0) {
-        return fn.apply(undefined, toConsumableArray(rest));
+      if (argumentLength > 0) {
+        return function () {
+          for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+            args[_key] = arguments[_key];
+          }
+          return next(argumentLength - args.length, [].concat(toConsumableArray(rest), args));
+        };
       }
-      return function () {
-        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-          args[_key] = arguments[_key];
-        }
-        return next(argumentLength - args.length, [].concat(toConsumableArray(rest), args));
-      };
+      return fn.apply(undefined, toConsumableArray(rest));
     };
     return next(totalArguments, []);
+  };
+  var compose = function compose() {
+    for (var _len2 = arguments.length, fns = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+      fns[_key2] = arguments[_key2];
+    }
+    return fns.reduce(function (prev, curr) {
+      return function (x) {
+        return prev(curr(x));
+      };
+    });
+  };
+  var pipe = function pipe() {
+    for (var _len3 = arguments.length, fns = Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
+      fns[_key3] = arguments[_key3];
+    }
+    return compose.apply(null, fns.reverse());
   };
   var now = function now() {
     return new Date();
@@ -503,6 +519,8 @@
   exports.copies = copies;
   exports.unique = unique;
   exports.curry = curry;
+  exports.compose = compose;
+  exports.pipe = pipe;
   exports.now = now;
   exports.time = time;
   exports.md5 = md5;
