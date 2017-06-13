@@ -477,6 +477,18 @@ export let unique = (arr = []) => {
   return [...new Set(arr)];
 };
 
+export let compose = (...fns) => {
+  return fns.reduce((prev, curr) => {
+    return (x) => {
+      return prev(curr(x));
+    };
+  });
+};
+
+export let pipe = (...fns) => {
+  return compose.apply(null, fns.reverse());
+};
+
 export let curry = (fn) => {
   let totalArguments = fn.length;
   let next = (argumentLength, rest) => {
@@ -488,18 +500,6 @@ export let curry = (fn) => {
     return fn(...rest);
   };
   return next(totalArguments, []);
-};
-
-export let compose = (...fns) => {
-  return fns.reduce((prev, curr) => {
-    return (x) => {
-      return prev(curr(x));
-    };
-  });
-};
-
-export let pipe = (...fns) => {
-  return compose.apply(null, fns.reverse());
 };
 
 export let now = () => {

@@ -1,6 +1,6 @@
 /**
  * bellajs@7.0.51
- * built on: Tue, 13 Jun 2017 09:00:09 GMT
+ * built on: Tue, 13 Jun 2017 09:11:38 GMT
  * repository: https://github.com/ndaidong/bellajs
  * maintainer: @ndaidong
  * License: MIT
@@ -443,24 +443,9 @@
     var arr = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
     return [].concat(toConsumableArray(new Set(arr)));
   };
-  var curry = function curry(fn) {
-    var totalArguments = fn.length;
-    var next = function next(argumentLength, rest) {
-      if (argumentLength > 0) {
-        return function () {
-          for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-            args[_key] = arguments[_key];
-          }
-          return next(argumentLength - args.length, [].concat(toConsumableArray(rest), args));
-        };
-      }
-      return fn.apply(undefined, toConsumableArray(rest));
-    };
-    return next(totalArguments, []);
-  };
   var compose = function compose() {
-    for (var _len2 = arguments.length, fns = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-      fns[_key2] = arguments[_key2];
+    for (var _len = arguments.length, fns = Array(_len), _key = 0; _key < _len; _key++) {
+      fns[_key] = arguments[_key];
     }
     return fns.reduce(function (prev, curr) {
       return function (x) {
@@ -469,10 +454,25 @@
     });
   };
   var pipe = function pipe() {
-    for (var _len3 = arguments.length, fns = Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
-      fns[_key3] = arguments[_key3];
+    for (var _len2 = arguments.length, fns = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+      fns[_key2] = arguments[_key2];
     }
     return compose.apply(null, fns.reverse());
+  };
+  var curry = function curry(fn) {
+    var totalArguments = fn.length;
+    var next = function next(argumentLength, rest) {
+      if (argumentLength > 0) {
+        return function () {
+          for (var _len3 = arguments.length, args = Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
+            args[_key3] = arguments[_key3];
+          }
+          return next(argumentLength - args.length, [].concat(toConsumableArray(rest), args));
+        };
+      }
+      return fn.apply(undefined, toConsumableArray(rest));
+    };
+    return next(totalArguments, []);
   };
   var now = function now() {
     return new Date();
@@ -518,9 +518,9 @@
   exports.clone = clone;
   exports.copies = copies;
   exports.unique = unique;
-  exports.curry = curry;
   exports.compose = compose;
   exports.pipe = pipe;
+  exports.curry = curry;
   exports.now = now;
   exports.time = time;
   exports.md5 = md5;
