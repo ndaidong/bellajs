@@ -1,6 +1,6 @@
 /**
  * bellajs@7.0.5
- * built on: Mon, 12 Jun 2017 10:40:14 GMT
+ * built on: Mon, 12 Jun 2017 15:31:42 GMT
  * repository: https://github.com/ndaidong/bellajs
  * maintainer: @ndaidong
  * License: MIT
@@ -443,6 +443,18 @@
     var arr = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
     return [].concat(toConsumableArray(new Set(arr)));
   };
+  var curry = function curry(fn) {
+    var _this = this;
+    for (var _len = arguments.length, rest = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+      rest[_key - 1] = arguments[_key];
+    }
+    return function () {
+      for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+        args[_key2] = arguments[_key2];
+      }
+      return fn.apply(_this, args.concat(rest));
+    };
+  };
   var now = function now() {
     return new Date();
   };
@@ -487,6 +499,7 @@
   exports.clone = clone;
   exports.copies = copies;
   exports.unique = unique;
+  exports.curry = curry;
   exports.now = now;
   exports.time = time;
   exports.md5 = md5;
