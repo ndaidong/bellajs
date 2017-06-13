@@ -477,33 +477,18 @@ export let unique = (arr = []) => {
   return [...new Set(arr)];
 };
 
-export let curry = function (fn, ...rest) {
-  let currParam = rest.shift();
-  if (isFunction(currParam)) {
-    return () => {
-      return fn(curry(currParam, rest));
+export let curry = (fn) => {
+  let totalArguments = fn.length;
+  let next = (argumentLength, rest) => {
+    if (argumentLength === 0) {
+      return fn (...rest);
+    }
+    return (x) => {
+      return next (argumentLength - 1, [...rest, x]);
     };
-  }
-  return () => {
-    return fn(currParam);
   };
+  return next(totalArguments, []);
 };
-
-var sequence = (start, end) => {
-  let results = [];
-  for (let i = start; i <= end; i++) {
-    results.push(i);
-  }
-  return results;
-};
-
-let seq5 = curry(sequence, 1);
-console.log(seq5.toString());
-console.log(seq5());
-let s5 = seq5(5);
-console.log(s5);
-console.log(s5.toString());
-console.log(s5);
 
 export let now = () => {
   return new Date();
