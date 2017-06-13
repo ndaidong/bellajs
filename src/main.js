@@ -481,10 +481,10 @@ export let curry = (fn) => {
   let totalArguments = fn.length;
   let next = (argumentLength, rest) => {
     if (argumentLength === 0) {
-      return fn (...rest);
+      return fn(...rest);
     }
-    return (x) => {
-      return next (argumentLength - 1, [...rest, x]);
+    return (...args) => {
+      return next(argumentLength - args.length, [...rest, ...args]);
     };
   };
   return next(totalArguments, []);

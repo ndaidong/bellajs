@@ -7,10 +7,10 @@ var path = require('path');
 
 var dirs = [
   '',
-  'detection',
+  //'detection',
   'utils',
-  'string',
-  'template'
+  // 'string',
+  // 'template'
 ];
 
 dirs.forEach((dir) => {

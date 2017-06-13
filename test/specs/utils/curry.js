@@ -26,6 +26,9 @@ let checkCurry = (bella) => {
 
     assert.deepEquals(sum3(3)(2)(1), 6, `sum3(3)(2)(1) must return 6`);
     assert.deepEquals(sum3(1)(2)(3), 6, `sum3(1)(2)(3) must return 6`);
+    assert.deepEquals(sum3(1, 2)(3), 6, `sum3(1, 2)(3) must return 6`);
+    assert.deepEquals(sum3(1)(2, 3), 6, `sum3(1)(2, 3) must return 6`);
+    assert.deepEquals(sum3(1, 2, 3), 6, `sum3(1, 2, 3) must return 6`);
     assert.end();
   });
 };

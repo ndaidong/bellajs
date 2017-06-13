@@ -1,6 +1,6 @@
 /**
  * bellajs@7.0.51
- * built on: Tue, 13 Jun 2017 02:34:45 GMT
+ * built on: Tue, 13 Jun 2017 03:40:31 GMT
  * repository: https://github.com/ndaidong/bellajs
  * maintainer: @ndaidong
  * License: MIT
@@ -449,8 +449,11 @@
       if (argumentLength === 0) {
         return fn.apply(undefined, toConsumableArray(rest));
       }
-      return function (x) {
-        return next(argumentLength - 1, [].concat(toConsumableArray(rest), [x]));
+      return function () {
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+          args[_key] = arguments[_key];
+        }
+        return next(argumentLength - args.length, [].concat(toConsumableArray(rest), args));
       };
     };
     return next(totalArguments, []);
