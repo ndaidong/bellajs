@@ -1,6 +1,6 @@
 /**
- * bellajs@7.1.0
- * built on: Tue, 13 Jun 2017 09:53:49 GMT
+ * bellajs@7.1.1
+ * built on: Wed, 14 Jun 2017 02:23:27 GMT
  * repository: https://github.com/ndaidong/bellajs
  * maintainer: @ndaidong
  * License: MIT
@@ -462,9 +462,9 @@
     for (var _len2 = arguments.length, fns = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
       fns[_key2] = arguments[_key2];
     }
-    return fns.reduce(function (prev, curr) {
+    return fns.reduce(function (f, g) {
       return function (x) {
-        return prev(curr(x));
+        return f(g(x));
       };
     });
   };
@@ -472,7 +472,11 @@
     for (var _len3 = arguments.length, fns = Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
       fns[_key3] = arguments[_key3];
     }
-    return compose.apply(null, fns.reverse());
+    return fns.reduce(function (f, g) {
+      return function (x) {
+        return g(f(x));
+      };
+    });
   };
   var now = function now() {
     return new Date();
