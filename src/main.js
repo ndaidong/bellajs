@@ -12,75 +12,75 @@ var ob2Str = (val) => {
   return {}.toString.call(val);
 };
 
-export let isNull = (val) => {
+export const isNull = (val) => {
   return ob2Str(val) === '[object Null]';
 };
 
-export let isUndefined = (val) => {
+export const isUndefined = (val) => {
   return ob2Str(val) === '[object Undefined]';
 };
 
-export let isFunction = (val) => {
+export const isFunction = (val) => {
   return ob2Str(val) === '[object Function]';
 };
 
-export let isString = (val) => {
+export const isString = (val) => {
   return ob2Str(val) === '[object String]';
 };
 
-export let isNumber = (val) => {
+export const isNumber = (val) => {
   return ob2Str(val) === '[object Number]';
 };
 
-export let isInteger = (val) => {
+export const isInteger = (val) => {
   return Number.isInteger(val);
 };
 
-export let isArray = (val) => {
+export const isArray = (val) => {
   return Array.isArray(val);
 };
 
-export let isObject = (val) => {
+export const isObject = (val) => {
   return ob2Str(val) === '[object Object]' && !isArray(val);
 };
 
-export let isBoolean = (val) => {
+export const isBoolean = (val) => {
   return val === true || val === false;
 };
 
-export let isDate = (val) => {
+export const isDate = (val) => {
   return val instanceof Date && !isNaN(val.valueOf());
 };
 
-export let isElement = (v) => {
+export const isElement = (v) => {
   return ob2Str(v).match(/^\[object HTML\w*Element]$/);
 };
 
-export let isLetter = (val) => {
+export const isLetter = (val) => {
   let re = /^[a-z]+$/i;
   return isString(val) && re.test(val);
 };
 
-export let isEmail = (val) => {
+export const isEmail = (val) => {
   let re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
   return isString(val) && re.test(val);
 };
 
-export let isEmpty = (val) => {
+export const isEmpty = (val) => {
   return !val || isUndefined(val) || isNull(val) ||
     isString(val) && val === '' ||
     isArray(val) && JSON.stringify(val) === '[]' ||
     isObject(val) && JSON.stringify(val) === '{}';
 };
 
-export let hasProperty = (ob, k) => {
+export const hasProperty = (ob, k) => {
   if (!ob || !k) {
     return false;
   }
   return Object.prototype.hasOwnProperty.call(ob, k);
 };
 
-export let equals = (a, b) => {
+export const equals = (a, b) => {
   let re = true;
   if (isEmpty(a) && isEmpty(b)) {
     return true;
@@ -129,7 +129,7 @@ export let equals = (a, b) => {
   return re;
 };
 
-export let toString = (input) => {
+export const toString = (input) => {
   let s = isNumber(input) ? String(input) : input;
   if (!isString(s)) {
     throw new Error('InvalidInput: String required.');
@@ -137,17 +137,17 @@ export let toString = (input) => {
   return s;
 };
 
-export let encode = (s) => {
+export const encode = (s) => {
   let x = toString(s);
   return encodeURIComponent(x);
 };
 
-export let decode = (s) => {
+export const decode = (s) => {
   let x = toString(s);
   return decodeURIComponent(x.replace(/\+/g, ' '));
 };
 
-export let trim = (s, all = false) => {
+export const trim = (s, all = false) => {
   let x = toString(s);
   x = x.replace(/^[\s\xa0]+|[\s\xa0]+$/g, '');
   if (x && all) {
@@ -156,7 +156,7 @@ export let trim = (s, all = false) => {
   return x;
 };
 
-export let truncate = (s, l) => {
+export const truncate = (s, l) => {
   let o = toString(s);
   let t = l || 140;
   if (o.length <= t) {
@@ -179,12 +179,12 @@ export let truncate = (s, l) => {
   return r;
 };
 
-export let stripTags = (s) => {
+export const stripTags = (s) => {
   let x = toString(s);
   return trim(x.replace(/<.*?>/gi, ' ').replace(/\s\s+/g, ' '));
 };
 
-export let escapeHTML = (s) => {
+export const escapeHTML = (s) => {
   let x = toString(s);
   return x.replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
@@ -192,7 +192,7 @@ export let escapeHTML = (s) => {
     .replace(/"/g, '&quot;');
 };
 
-export let unescapeHTML = (s) => {
+export const unescapeHTML = (s) => {
   let x = toString(s);
   return x.replace(/&quot;/g, '"')
     .replace(/&lt;/g, '<')
@@ -200,7 +200,7 @@ export let unescapeHTML = (s) => {
     .replace(/&amp;/g, '&');
 };
 
-export let ucfirst = (s) => {
+export const ucfirst = (s) => {
   let x = toString(s);
   if (x.length === 1) {
     return x.toUpperCase();
@@ -209,7 +209,7 @@ export let ucfirst = (s) => {
   return x.charAt(0).toUpperCase() + x.slice(1);
 };
 
-export let ucwords = (s) => {
+export const ucwords = (s) => {
   let x = toString(s);
   let c = x.split(' ');
   let a = [];
@@ -219,17 +219,17 @@ export let ucwords = (s) => {
   return a.join(' ');
 };
 
-export let leftPad = (s, size = 2, pad = '0') => {
+export const leftPad = (s, size = 2, pad = '0') => {
   let x = toString(s);
   return x.length >= size ? x : new Array(size - x.length + 1).join(pad) + x;
 };
 
-export let rightPad = (s, size = 2, pad = '0') => {
+export const rightPad = (s, size = 2, pad = '0') => {
   let x = toString(s);
   return x.length >= size ? x : x + new Array(size - x.length + 1).join(pad);
 };
 
-export let repeat = (s, m) => {
+export const repeat = (s, m) => {
   let x = toString(s);
   if (!isInteger(m) || m < 1) {
     return x;
@@ -242,7 +242,7 @@ export let repeat = (s, m) => {
   return a.fill(x, 0, m).join('');
 };
 
-export let replaceAll = (s, a, b) => {
+export const replaceAll = (s, a, b) => {
 
   let x = toString(s);
 
@@ -273,7 +273,7 @@ export let replaceAll = (s, a, b) => {
   return x;
 };
 
-export let stripAccent = (s) => {
+export const stripAccent = (s) => {
 
   let x = toString(s);
 
@@ -311,7 +311,7 @@ export let stripAccent = (s) => {
   return x;
 };
 
-export let createAlias = (s, delimiter) => {
+export const createAlias = (s, delimiter) => {
   let x = trim(stripAccent(s));
   let d = delimiter || '-';
   return x.toLowerCase()
@@ -366,7 +366,7 @@ var compile = (tpl, data) => {
   return tpl;
 };
 
-export let template = (tpl) => {
+export const template = (tpl) => {
   return {
     compile: (data) => {
       return compile(tpl, data);
@@ -374,7 +374,7 @@ export let template = (tpl) => {
   };
 };
 
-export let random = (min, max) => {
+export const random = (min, max) => {
   if (!min || min < 0) {
     min = 0;
   }
@@ -394,7 +394,7 @@ export let random = (min, max) => {
 };
 
 
-export let createId = (leng, prefix = '') => {
+export const createId = (leng, prefix = '') => {
   let lc = 'abcdefghijklmnopqrstuvwxyz';
   let uc = lc.toUpperCase();
   let nb = '0123456789';
@@ -416,7 +416,7 @@ export let createId = (leng, prefix = '') => {
   return s;
 };
 
-export let clone = (val) => {
+export const clone = (val) => {
 
   if (isDate(val)) {
     return new Date(val.valueOf());
@@ -455,7 +455,7 @@ export let clone = (val) => {
 };
 
 
-export let copies = (source, dest, matched = false, excepts = []) => {
+export const copies = (source, dest, matched = false, excepts = []) => {
   for (let k in source) {
     if (excepts.length > 0 && excepts.includes(k)) {
       continue; // eslint-disable-line no-continue
@@ -473,11 +473,11 @@ export let copies = (source, dest, matched = false, excepts = []) => {
   return dest;
 };
 
-export let unique = (arr = []) => {
+export const unique = (arr = []) => {
   return [...new Set(arr)];
 };
 
-export let curry = (fn) => {
+export const curry = (fn) => {
   let totalArguments = fn.length;
   let next = (argumentLength, rest) => {
     if (argumentLength > 0) {
@@ -490,22 +490,18 @@ export let curry = (fn) => {
   return next(totalArguments, []);
 };
 
-export let compose = (...fns) => {
-  return fns.reduce((prev, curr) => {
-    return (x) => {
-      return prev(curr(x));
-    };
-  });
+export const compose = (...fns) => {
+  return fns.reduce((f, g) => x => f(g(x)));
 };
 
-export let pipe = (...fns) => {
-  return compose.apply(null, fns.reverse());
+export const pipe = (...fns) => {
+  return fns.reduce((f, g) => x => g(f(x)));
 };
 
-export let now = () => {
+export const now = () => {
   return new Date();
 };
 
-export let time = () => {
+export const time = () => {
   return Date.now();
 };
