@@ -1,6 +1,6 @@
 /**
- * bellajs@7.1.1
- * built on: Wed, 14 Jun 2017 02:23:27 GMT
+ * bellajs@7.1.2
+ * built on: Mon, 07 Aug 2017 06:41:40 GMT
  * repository: https://github.com/ndaidong/bellajs
  * maintainer: @ndaidong
  * License: MIT
@@ -8,7 +8,7 @@
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
   typeof define === 'function' && define.amd ? define(['exports'], factory) :
-  (factory((global.bella = global.bella || {})));
+  (factory((global.bella = {})));
 }(this, (function (exports) { 'use strict';
   var md5 = function () {
     for (var m = [], l = 0; 64 > l;) {

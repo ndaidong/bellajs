@@ -1,5 +1,5 @@
 {
-  "version": "7.1.1",
+  "version": "7.1.2",
   "name": "bellajs",
   "description": "A useful helper for any javascript program",
   "homepage": "https://www.npmjs.com/package/bellajs",
@@ -16,7 +16,7 @@
     "node": ">= 6.0"
   },
   "scripts": {
-    "lint": "eslint src tests",
+    "lint": "eslint .",
     "nsp": "nsp check --output checkstyle",
     "tape": "nyc babel-node node_modules/.bin/tape test/start.js | tap-spec",
     "report": "nyc report --reporter=lcov > coverage.lcov && codecov",
@@ -34,7 +34,7 @@
     "codecov": "2.x.x",
     "eslint": "4.x.x",
     "eslint-config-ggc": "1.x.x",
-    "gcc-min": "5.x.x",
+    "gcc-min": "6.x.x",
     "is": "3.x.x",
     "jsdom": "11.x.x",
     "jsdom-global": "3.x.x",
