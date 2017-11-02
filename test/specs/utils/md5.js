@@ -5,8 +5,7 @@
 
 var test = require('tape');
 
-var config = require('../../config');
-var bellas = config.bellas;
+var {variants} = require('../../config');
 
 // md5
 let checkMD5 = (bella) => {
@@ -22,4 +21,4 @@ let checkMD5 = (bella) => {
   });
 };
 
-bellas.map(checkMD5);
+variants.map(checkMD5);

@@ -5,8 +5,7 @@
 
 var test = require('tape');
 
-var config = require('../../config');
-var bellas = config.bellas;
+var {variants} = require('../../config');
 
 // copies
 let checkCopies = (bella) => {
@@ -58,4 +57,4 @@ let checkCopies = (bella) => {
   });
 };
 
-bellas.map(checkCopies);
+variants.map(checkCopies);

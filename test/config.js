@@ -3,5 +3,5 @@ var fullBella = require('../dist/bella');
 var minBella = require('../dist/bella.min');
 
 module.exports = {
-  bellas: [es6Bella, fullBella, minBella]
+  variants: [es6Bella, fullBella, minBella]
 };
