@@ -158,7 +158,7 @@ var checkDateMethods = (date) => {
   test('Testing .utc(Number timestamp) method:', (assert) => {
     let t = 1455784100752;
     let r = utc(t);
-    let e = 'Thu, 18 Feb 2016 08:28:20 GMT+0007';
+    let e = 'Thu, 18 Feb 2016 08:28:20 GMT+0000';
     assert.deepEqual(r, e, `.utc(${t}) must return ${e}`);
 
     assert.throws(() => {
