@@ -13,8 +13,7 @@ require('jsdom-global')();
 var test = require('tape');
 var is = require('is');
 
-var config = require('../../config');
-var bellas = config.bellas;
+var {variants} = require('../../config');
 
 var stringify = (x) => {
   if (is.array(x) || is.object(x)) {
@@ -546,4 +545,4 @@ let checkDetection = (bella) => {
 
 };
 
-bellas.map(checkDetection);
+variants.map(checkDetection);

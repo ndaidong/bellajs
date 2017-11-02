@@ -5,8 +5,7 @@
 
 var test = require('tape');
 
-var config = require('../../config');
-var bellas = config.bellas;
+var {variants} = require('../../config');
 
 let checkStringMethods = (bella) => {
 
@@ -388,4 +387,4 @@ let checkStringMethods = (bella) => {
 
 };
 
-bellas.map(checkStringMethods);
+variants.map(checkStringMethods);

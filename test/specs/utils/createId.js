@@ -5,8 +5,7 @@
 
 var test = require('tape');
 
-var config = require('../../config');
-var bellas = config.bellas;
+var {variants} = require('../../config');
 
 // createId
 let checkCreateId = (bella) => {
@@ -31,4 +30,4 @@ let checkCreateId = (bella) => {
   });
 };
 
-bellas.map(checkCreateId);
+variants.map(checkCreateId);

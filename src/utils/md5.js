@@ -1,3 +1,5 @@
+// utils / md5
+
 // https://github.com/jbt/js-crypto
 // Modified by @ndaidong
 

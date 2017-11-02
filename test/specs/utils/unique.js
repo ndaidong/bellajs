@@ -5,8 +5,7 @@
 
 var test = require('tape');
 
-var config = require('../../config');
-var bellas = config.bellas;
+var {variants} = require('../../config');
 
 // unique
 let checkUnique = (bella) => {
@@ -20,4 +19,4 @@ let checkUnique = (bella) => {
   });
 };
 
-bellas.map(checkUnique);
+variants.map(checkUnique);

@@ -1,6 +1,6 @@
 /**
- * bellajs@7.1.3
- * built on: Thu, 02 Nov 2017 10:47:26 GMT
+ * bellajs@7.2.0
+ * built on: Thu, 02 Nov 2017 13:10:05 GMT
  * repository: https://github.com/ndaidong/bellajs
  * maintainer: @ndaidong
  * License: MIT
@@ -10,144 +10,6 @@
   typeof define === 'function' && define.amd ? define(['exports'], factory) :
   (factory((global.bella = {})));
 }(this, (function (exports) { 'use strict';
-  var md5 = function md5(str) {
-    var k = [],
-        i = 0;
-    for (; i < 64;) {
-      k[i] = 0 | Math.abs(Math.sin(++i)) * 4294967296;
-    }
-    var b,
-        c,
-        d,
-        j,
-        x = [],
-        str2 = unescape(encodeURI(str)),
-        a = str2.length,
-        h = [b = 1732584193, c = -271733879, ~b, ~c],
-        i = 0;
-    for (; i <= a;) {
-      x[i >> 2] |= (str2.charCodeAt(i) || 128) << 8 * (i++ % 4);
-    }x[str = (a + 8 >> 6) * 16 + 14] = a * 8;
-    i = 0;
-    for (; i < str; i += 16) {
-      a = h;j = 0;
-      for (; j < 64;) {
-        a = [d = a[3], (b = a[1] | 0) + ((d = a[0] + [b & (c = a[2]) | ~b & d, d & b | ~d & c, b ^ c ^ d, c ^ (b | ~d)][a = j >> 4] + (k[j] + (x[[j, 5 * j + 1, 3 * j + 5, 7 * j][a] % 16 + i] | 0))) << (a = [7, 12, 17, 22, 5, 9, 14, 20, 4, 11, 16, 23, 6, 10, 15, 21][4 * a + j++ % 4]) | d >>> 32 - a), b, c];
-      }
-      for (j = 4; j;) {
-        h[--j] = h[j] + a[j];
-      }
-    }
-    str = '';
-    for (; j < 32;) {
-      str += (h[j >> 3] >> (1 ^ j++ & 7) * 4 & 15).toString(16);
-    }return str;
-  };
-  var asyncGenerator = function () {
-    function AwaitValue(value) {
-      this.value = value;
-    }
-    function AsyncGenerator(gen) {
-      var front, back;
-      function send(key, arg) {
-        return new Promise(function (resolve, reject) {
-          var request = {
-            key: key,
-            arg: arg,
-            resolve: resolve,
-            reject: reject,
-            next: null
-          };
-          if (back) {
-            back = back.next = request;
-          } else {
-            front = back = request;
-            resume(key, arg);
-          }
-        });
-      }
-      function resume(key, arg) {
-        try {
-          var result = gen[key](arg);
-          var value = result.value;
-          if (value instanceof AwaitValue) {
-            Promise.resolve(value.value).then(function (arg) {
-              resume("next", arg);
-            }, function (arg) {
-              resume("throw", arg);
-            });
-          } else {
-            settle(result.done ? "return" : "normal", result.value);
-          }
-        } catch (err) {
-          settle("throw", err);
-        }
-      }
-      function settle(type, value) {
-        switch (type) {
-          case "return":
-            front.resolve({
-              value: value,
-              done: true
-            });
-            break;
-          case "throw":
-            front.reject(value);
-            break;
-          default:
-            front.resolve({
-              value: value,
-              done: false
-            });
-            break;
-        }
-        front = front.next;
-        if (front) {
-          resume(front.key, front.arg);
-        } else {
-          back = null;
-        }
-      }
-      this._invoke = send;
-      if (typeof gen.return !== "function") {
-        this.return = undefined;
-      }
-    }
-    if (typeof Symbol === "function" && Symbol.asyncIterator) {
-      AsyncGenerator.prototype[Symbol.asyncIterator] = function () {
-        return this;
-      };
-    }
-    AsyncGenerator.prototype.next = function (arg) {
-      return this._invoke("next", arg);
-    };
-    AsyncGenerator.prototype.throw = function (arg) {
-      return this._invoke("throw", arg);
-    };
-    AsyncGenerator.prototype.return = function (arg) {
-      return this._invoke("return", arg);
-    };
-    return {
-      wrap: function (fn) {
-        return function () {
-          return new AsyncGenerator(fn.apply(this, arguments));
-        };
-      },
-      await: function (value) {
-        return new AwaitValue(value);
-      }
-    };
-  }();
-  var toConsumableArray = function (arr) {
-    if (Array.isArray(arr)) {
-      for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) arr2[i] = arr[i];
-      return arr2;
-    } else {
-      return Array.from(arr);
-    }
-  };
-  var MAX_NUMBER = Number.MAX_SAFE_INTEGER;
-  var MAX_STRING = 1 << 28;
   var ob2Str = function ob2Str(val) {
     return {}.toString.call(val);
   };
@@ -249,6 +111,26 @@
     }
     return re;
   };
+  var MAX_NUMBER = Number.MAX_SAFE_INTEGER;
+  var random = function random(min, max) {
+    if (!min || min < 0) {
+      min = 0;
+    }
+    if (!max) {
+      max = MAX_NUMBER;
+    }
+    if (min === max) {
+      return max;
+    }
+    if (min > max) {
+      min = Math.min(min, max);
+      max = Math.max(min, max);
+    }
+    var offset = min;
+    var range = max - min + 1;
+    return Math.floor(Math.random() * range) + offset;
+  };
+  var MAX_STRING = 1 << 28;
   var toString = function toString(input) {
     var s = isNumber(input) ? String(input) : input;
     if (!isString(s)) {
@@ -411,6 +293,23 @@
     }
     return x;
   };
+  var createId = function createId(leng) {
+    var prefix = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
+    var lc = 'abcdefghijklmnopqrstuvwxyz';
+    var uc = lc.toUpperCase();
+    var nb = '0123456789';
+    var cand = [lc, uc, nb].join('').split('').sort(function () {
+      return Math.random() > 0.5;
+    }).join('');
+    var t = cand.length;
+    var ln = Math.max(leng || 32, prefix.length);
+    var s = prefix;
+    while (s.length < ln) {
+      var k = random(0, t);
+      s += cand.charAt(k) || '';
+    }
+    return s;
+  };
   var createAlias = function createAlias(s, delimiter) {
     var x = trim(stripAccent(s));
     var d = delimiter || '-';
@@ -461,40 +360,348 @@
       }
     };
   };
-  var random = function random(min, max) {
-    if (!min || min < 0) {
-      min = 0;
-    }
-    if (!max) {
-      max = MAX_NUMBER;
-    }
-    if (min === max) {
-      return max;
-    }
-    if (min > max) {
-      min = Math.min(min, max);
-      max = Math.max(min, max);
-    }
-    var offset = min;
-    var range = max - min + 1;
-    return Math.floor(Math.random() * range) + offset;
+  var PATTERN = 'D, M d, Y  h:i:s A';
+  var WEEKDAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  var MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  var now = function now() {
+    return new Date();
   };
-  var createId = function createId(leng) {
-    var prefix = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
-    var lc = 'abcdefghijklmnopqrstuvwxyz';
-    var uc = lc.toUpperCase();
-    var nb = '0123456789';
-    var cand = [lc, uc, nb].join('').split('').sort(function () {
-      return Math.random() > 0.5;
-    }).join('');
-    var t = cand.length;
-    var ln = Math.max(leng || 32, prefix.length);
-    var s = prefix;
-    while (s.length < ln) {
-      var k = random(0, t);
-      s += cand.charAt(k) || '';
+  var time = function time() {
+    return Date.now();
+  };
+  var tzone = now().getTimezoneOffset();
+  var tz = function () {
+    var z = Math.abs(tzone / 60);
+    var sign = tzone < 0 ? '+' : '-';
+    return ['GMT', sign, leftPad(z, 4)].join('');
+  }();
+  var _num = function _num(n) {
+    return String(n < 10 ? '0' + n : n);
+  };
+  var _ord = function _ord(day) {
+    var s = day + ' ';
+    var x = s.charAt(s.length - 2);
+    if (x === '1') {
+      s = 'st';
+    } else if (x === '2') {
+      s = 'nd';
+    } else if (x === '3') {
+      s = 'rd';
+    } else {
+      s = 'th';
     }
     return s;
+  };
+  var format = function format(input) {
+    var output = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : PATTERN;
+    var d = isDate(input) ? input : new Date(input);
+    if (!isDate(d)) {
+      throw new Error('InvalidInput: Number or Date required.');
+    }
+    if (!isString(output)) {
+      throw new Error('Invalid output pattern.');
+    }
+    var vchar = /\.*\\?([a-z])/gi;
+    var meridiem = output.match(/(\.*)a{1}(\.*)*/i);
+    var wn = WEEKDAYS;
+    var mn = MONTHS;
+    var f = {
+      Y: function Y() {
+        return d.getFullYear();
+      },
+      y: function y() {
+        return (f.Y() + '').slice(-2);
+      },
+      F: function F() {
+        return mn[f.n() - 1];
+      },
+      M: function M() {
+        return (f.F() + '').slice(0, 3);
+      },
+      m: function m() {
+        return _num(f.n());
+      },
+      n: function n() {
+        return d.getMonth() + 1;
+      },
+      S: function S() {
+        return _ord(f.j());
+      },
+      j: function j() {
+        return d.getDate();
+      },
+      d: function d() {
+        return _num(f.j());
+      },
+      t: function t() {
+        return new Date(f.Y(), f.n(), 0).getDate();
+      },
+      w: function w() {
+        return d.getDay();
+      },
+      l: function l() {
+        return wn[f.w()];
+      },
+      D: function D() {
+        return (f.l() + '').slice(0, 3);
+      },
+      G: function G() {
+        return d.getHours();
+      },
+      g: function g() {
+        return f.G() % 12 || 12;
+      },
+      h: function h() {
+        return _num(meridiem ? f.g() : f.G());
+      },
+      i: function i() {
+        return _num(d.getMinutes());
+      },
+      s: function s() {
+        return _num(d.getSeconds());
+      },
+      a: function a() {
+        return f.G() > 11 ? 'pm' : 'am';
+      },
+      A: function A() {
+        return f.a().toUpperCase();
+      },
+      O: function O() {
+        return tz;
+      }
+    };
+    var _term = function _term(t, s) {
+      return f[t] ? f[t]() : s;
+    };
+    return output.replace(vchar, _term);
+  };
+  var relativize = function relativize() {
+    var input = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : time();
+    var d = isDate(input) ? input : new Date(input);
+    if (!isDate(d)) {
+      throw new Error('InvalidInput: Number or Date required.');
+    }
+    var delta = now() - d;
+    var nowThreshold = parseInt(d, 10);
+    if (isNaN(nowThreshold)) {
+      nowThreshold = 0;
+    }
+    if (delta <= nowThreshold) {
+      return 'Just now';
+    }
+    var units = null;
+    var conversions = {
+      millisecond: 1,
+      second: 1000,
+      minute: 60,
+      hour: 60,
+      day: 24,
+      month: 30,
+      year: 12
+    };
+    for (var key in conversions) {
+      if (delta < conversions[key]) {
+        break;
+      } else {
+        units = key;
+        delta /= conversions[key];
+      }
+    }
+    delta = Math.floor(delta);
+    if (delta !== 1) {
+      units += 's';
+    }
+    return [delta, units].join(' ') + ' ago';
+  };
+  var utc = function utc() {
+    var input = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : time();
+    var d = isDate(input) ? input : new Date(input);
+    if (!isDate(d)) {
+      throw new Error('InvalidInput: Number or Date required.');
+    }
+    var dMinutes = d.getMinutes();
+    var dClone = new Date(d);
+    dClone.setMinutes(dMinutes + tzone);
+    return format(dClone, 'D, j M Y h:i:s') + ' GMT+0000';
+  };
+  var local = function local() {
+    var input = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : time();
+    var d = isDate(input) ? input : new Date(input);
+    if (!isDate(d)) {
+      throw new Error('InvalidInput: Number or Date required.');
+    }
+    return format(d, 'D, j M Y h:i:s O');
+  };
+  var md5 = function md5(str) {
+    var k = [],
+        i = 0;
+    for (; i < 64;) {
+      k[i] = 0 | Math.abs(Math.sin(++i)) * 4294967296;
+    }
+    var b,
+        c,
+        d,
+        j,
+        x = [],
+        str2 = unescape(encodeURI(str)),
+        a = str2.length,
+        h = [b = 1732584193, c = -271733879, ~b, ~c],
+        i = 0;
+    for (; i <= a;) {
+      x[i >> 2] |= (str2.charCodeAt(i) || 128) << 8 * (i++ % 4);
+    }x[str = (a + 8 >> 6) * 16 + 14] = a * 8;
+    i = 0;
+    for (; i < str; i += 16) {
+      a = h;j = 0;
+      for (; j < 64;) {
+        a = [d = a[3], (b = a[1] | 0) + ((d = a[0] + [b & (c = a[2]) | ~b & d, d & b | ~d & c, b ^ c ^ d, c ^ (b | ~d)][a = j >> 4] + (k[j] + (x[[j, 5 * j + 1, 3 * j + 5, 7 * j][a] % 16 + i] | 0))) << (a = [7, 12, 17, 22, 5, 9, 14, 20, 4, 11, 16, 23, 6, 10, 15, 21][4 * a + j++ % 4]) | d >>> 32 - a), b, c];
+      }
+      for (j = 4; j;) {
+        h[--j] = h[j] + a[j];
+      }
+    }
+    str = '';
+    for (; j < 32;) {
+      str += (h[j >> 3] >> (1 ^ j++ & 7) * 4 & 15).toString(16);
+    }return str;
+  };
+  var asyncGenerator = function () {
+    function AwaitValue(value) {
+      this.value = value;
+    }
+    function AsyncGenerator(gen) {
+      var front, back;
+      function send(key, arg) {
+        return new Promise(function (resolve, reject) {
+          var request = {
+            key: key,
+            arg: arg,
+            resolve: resolve,
+            reject: reject,
+            next: null
+          };
+          if (back) {
+            back = back.next = request;
+          } else {
+            front = back = request;
+            resume(key, arg);
+          }
+        });
+      }
+      function resume(key, arg) {
+        try {
+          var result = gen[key](arg);
+          var value = result.value;
+          if (value instanceof AwaitValue) {
+            Promise.resolve(value.value).then(function (arg) {
+              resume("next", arg);
+            }, function (arg) {
+              resume("throw", arg);
+            });
+          } else {
+            settle(result.done ? "return" : "normal", result.value);
+          }
+        } catch (err) {
+          settle("throw", err);
+        }
+      }
+      function settle(type, value) {
+        switch (type) {
+          case "return":
+            front.resolve({
+              value: value,
+              done: true
+            });
+            break;
+          case "throw":
+            front.reject(value);
+            break;
+          default:
+            front.resolve({
+              value: value,
+              done: false
+            });
+            break;
+        }
+        front = front.next;
+        if (front) {
+          resume(front.key, front.arg);
+        } else {
+          back = null;
+        }
+      }
+      this._invoke = send;
+      if (typeof gen.return !== "function") {
+        this.return = undefined;
+      }
+    }
+    if (typeof Symbol === "function" && Symbol.asyncIterator) {
+      AsyncGenerator.prototype[Symbol.asyncIterator] = function () {
+        return this;
+      };
+    }
+    AsyncGenerator.prototype.next = function (arg) {
+      return this._invoke("next", arg);
+    };
+    AsyncGenerator.prototype.throw = function (arg) {
+      return this._invoke("throw", arg);
+    };
+    AsyncGenerator.prototype.return = function (arg) {
+      return this._invoke("return", arg);
+    };
+    return {
+      wrap: function (fn) {
+        return function () {
+          return new AsyncGenerator(fn.apply(this, arguments));
+        };
+      },
+      await: function (value) {
+        return new AwaitValue(value);
+      }
+    };
+  }();
+  var toConsumableArray = function (arr) {
+    if (Array.isArray(arr)) {
+      for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) arr2[i] = arr[i];
+      return arr2;
+    } else {
+      return Array.from(arr);
+    }
+  };
+  var curry = function curry(fn) {
+    var totalArguments = fn.length;
+    var next = function next(argumentLength, rest) {
+      if (argumentLength > 0) {
+        return function () {
+          for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+            args[_key] = arguments[_key];
+          }
+          return next(argumentLength - args.length, [].concat(toConsumableArray(rest), args));
+        };
+      }
+      return fn.apply(undefined, toConsumableArray(rest));
+    };
+    return next(totalArguments, []);
+  };
+  var compose = function compose() {
+    for (var _len2 = arguments.length, fns = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+      fns[_key2] = arguments[_key2];
+    }
+    return fns.reduce(function (f, g) {
+      return function (x) {
+        return f(g(x));
+      };
+    });
+  };
+  var pipe = function pipe() {
+    for (var _len3 = arguments.length, fns = Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
+      fns[_key3] = arguments[_key3];
+    }
+    return fns.reduce(function (f, g) {
+      return function (x) {
+        return g(f(x));
+      };
+    });
   };
   var clone = function clone(val) {
     if (isDate(val)) {
@@ -550,47 +757,12 @@
     var arr = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
     return [].concat(toConsumableArray(new Set(arr)));
   };
-  var curry = function curry(fn) {
-    var totalArguments = fn.length;
-    var next = function next(argumentLength, rest) {
-      if (argumentLength > 0) {
-        return function () {
-          for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-            args[_key] = arguments[_key];
-          }
-          return next(argumentLength - args.length, [].concat(toConsumableArray(rest), args));
-        };
-      }
-      return fn.apply(undefined, toConsumableArray(rest));
-    };
-    return next(totalArguments, []);
-  };
-  var compose = function compose() {
-    for (var _len2 = arguments.length, fns = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-      fns[_key2] = arguments[_key2];
-    }
-    return fns.reduce(function (f, g) {
-      return function (x) {
-        return f(g(x));
-      };
-    });
-  };
-  var pipe = function pipe() {
-    for (var _len3 = arguments.length, fns = Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
-      fns[_key3] = arguments[_key3];
-    }
-    return fns.reduce(function (f, g) {
-      return function (x) {
-        return g(f(x));
-      };
-    });
-  };
-  var now = function now() {
-    return new Date();
-  };
-  var time = function time() {
-    return Date.now();
-  };
+  exports.curry = curry;
+  exports.compose = compose;
+  exports.pipe = pipe;
+  exports.clone = clone;
+  exports.copies = copies;
+  exports.unique = unique;
   exports.isNull = isNull;
   exports.isUndefined = isUndefined;
   exports.isFunction = isFunction;
@@ -607,7 +779,6 @@
   exports.isEmpty = isEmpty;
   exports.hasProperty = hasProperty;
   exports.equals = equals;
-  exports.toString = toString;
   exports.encode = encode;
   exports.decode = decode;
   exports.trim = trim;
@@ -622,18 +793,16 @@
   exports.repeat = repeat;
   exports.replaceAll = replaceAll;
   exports.stripAccent = stripAccent;
+  exports.createId = createId;
   exports.createAlias = createAlias;
   exports.template = template;
   exports.random = random;
-  exports.createId = createId;
-  exports.clone = clone;
-  exports.copies = copies;
-  exports.unique = unique;
-  exports.curry = curry;
-  exports.compose = compose;
-  exports.pipe = pipe;
   exports.now = now;
   exports.time = time;
+  exports.format = format;
+  exports.relativize = relativize;
+  exports.utc = utc;
+  exports.local = local;
   exports.md5 = md5;
   Object.defineProperty(exports, '__esModule', { value: true });
 })));

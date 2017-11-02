@@ -6,8 +6,7 @@
 var test = require('tape');
 var is = require('is');
 
-var config = require('../../config');
-var bellas = config.bellas;
+var {variants} = require('../../config');
 
 // random
 let checkRandom = (bella) => {
@@ -53,4 +52,4 @@ let checkRandom = (bella) => {
 
 };
 
-bellas.map(checkRandom);
+variants.map(checkRandom);

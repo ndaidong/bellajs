@@ -17,6 +17,7 @@ Lightweight util for handling data type, string... in your Node.js and browser a
   * [DataType detection](#datatype-detection)
   * [String manipulation](#string-manipulation)
   * [Template](#template)
+  * [Date format](#date-format)
   * [Other utils](#other-utils)
     * [clone](#cloneanything-val)
     * [copies](#copiesobject-source-object-target-boolean-requirematching-array-excepts)
@@ -141,6 +142,59 @@ var html = bella.template(tpl).compile(data);
 console.log(html);
 
 ```
+
+### Date format
+  - .relativize([Date | Timestamp])
+  - .format([Date | Timestamp] [, String pattern])
+  - .local([Date | Timestamp])
+  - .utc([Date | Timestamp])
+
+Default pattern for `.format()` method is `D, M d, Y  H:i:s A`.
+
+Pattern for `.local()` and `.utc()` is `D, j M Y h:i:s O`.
+
+Here are the available characters:
+
+  - Y: full year, ex: 2050
+  - y: short year, ex: 50
+  - F: full month name, ex: August
+  - M: short month name, ex: Aug
+  - m: month index with zero, ex: 08 (in 08/24/2050)
+  - n: short month name with no zero, ex: 8 (in 8/24/2050)
+  - S: the ordering subfix for date, ext: 1st, 2nd, 3rd, 4th
+  - j: day of the month, with no zero, ex: 3 (in 18/3/2050)
+  - d: day of the month, with zero, ex: 03 (in 18/03/2050)
+  - t: date in year
+  - w: weekday in number
+  - l: long name of weekday, ex: Sunday
+  - D: short name of weekday, ex: Sun
+  - G: hour, with no zero: 0 - 24
+  - g: hour, with no zero: 0 - 12
+  - h: hour, with zero:  00 - 24
+  - i: minute:  00 - 59
+  - s: second:  00 - 59
+  - a: am, pm
+  - A: AM, PM
+  - O: timezone
+
+Example:
+
+```
+import {
+  relativize,
+  format,
+  local,
+  utc
+} from 'bellajs';
+
+let t = 1509628030108;
+
+relativize(t); //=> 2 seconds ago
+format(t, 'Y/m/d h:i:s'); //=> 2017/11/02 20:07:10
+local(t); //=> Thu, 2 Nov 2017 20:07:10 GMT+0007
+utc(t); //=> Thu, 2 Nov 2017 13:07:10 GMT+0000
+```
+
 
 ### Other utils
 
@@ -369,7 +423,6 @@ add1AndMult2(3) // => 8
 Some parts of `bella` have been split to separate modules, including:
 
 - bella.stabilize: [stabilize.js](https://www.npmjs.com/package/stabilize.js)
-- bella.date: [bella-date](https://www.npmjs.com/package/bella-date)
 - bella.scheduler: [bella-scheduler](https://www.npmjs.com/package/bella-scheduler)
 - bella.detector: [device-detector](https://www.npmjs.com/package/device-detector)
 
