@@ -17,7 +17,7 @@ Lightweight util for handling data type, string... in your Node.js and browser a
   * [DataType detection](#datatype-detection)
   * [String manipulation](#string-manipulation)
   * [Template](#template)
-  * [Date](#date)
+  * [Date format](#date-format)
   * [Other utils](#other-utils)
     * [clone](#cloneanything-val)
     * [copies](#copiesobject-source-object-target-boolean-requirematching-array-excepts)
@@ -143,7 +143,7 @@ console.log(html);
 
 ```
 
-### Date manipulation
+### Date format
   - .relativize([Date | Timestamp])
   - .format([Date | Timestamp] [, String pattern])
   - .local([Date | Timestamp])
