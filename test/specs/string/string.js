@@ -3,14 +3,12 @@
  * @ndaidong
  */
 
-var test = require('tape');
+const test = require('tape');
 
-var {variants} = require('../../config');
+const {variants} = require('../../config');
 
 let checkStringMethods = (bella) => {
-
   test('With well-format string input:', (assert) => {
-
     let methods = [
       'encode',
       'decode',
@@ -26,7 +24,7 @@ let checkStringMethods = (bella) => {
       'stripAccent',
       'escapeHTML',
       'unescapeHTML',
-      'replaceAll'
+      'replaceAll',
     ];
 
     methods.forEach((m) => {
@@ -95,7 +93,6 @@ let checkStringMethods = (bella) => {
 
   // truncate
   test('Testing .truncate(String s) method', (assert) => {
-
     let x = 'If a property is non-configurable, its writable attribute can only be changed to false.';
     let a = bella.truncate(x, 60);
     let e = 'If a property is non-configurable, its writable attribute...';
@@ -106,13 +103,13 @@ let checkStringMethods = (bella) => {
       'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
       'Lorem Ipsum has been the industry\'s standard dummy text ever since',
       'the 1500s, when an unknown printer took a galley of',
-      'type and scrambled it to make a type specimen book.'
+      'type and scrambled it to make a type specimen book.',
     ].join(' ');
 
     let a1 = bella.truncate(x1);
     let e1 = [
       'Lorem Ipsum is simply dummy text of the printing and typesetting',
-      'industry. Lorem Ipsum has been the industry\'s standard dummy text ever...'
+      'industry. Lorem Ipsum has been the industry\'s standard dummy text ever...',
     ].join(' ');
 
     assert.deepEquals(a1, e1, `bella.truncate('${x}') must return "${e1}"`);
@@ -190,26 +187,26 @@ let checkStringMethods = (bella) => {
         s: 7,
         limit: 4,
         pad: '0',
-        expect: '0007'
+        expect: '0007',
       },
       {
         s: 123456,
         limit: 5,
         pad: '0',
-        expect: '123456'
+        expect: '123456',
       },
       {
         s: 123456,
         limit: 6,
         pad: '0',
-        expect: '123456'
+        expect: '123456',
       },
       {
         s: 123456,
         limit: 7,
         pad: '0',
-        expect: '0123456'
-      }
+        expect: '0123456',
+      },
     ];
 
     data.forEach((item) => {
@@ -232,26 +229,26 @@ let checkStringMethods = (bella) => {
         s: 7,
         limit: 4,
         pad: '0',
-        expect: '7000'
+        expect: '7000',
       },
       {
         s: 123456,
         limit: 5,
         pad: '0',
-        expect: '123456'
+        expect: '123456',
       },
       {
         s: 123456,
         limit: 6,
         pad: '0',
-        expect: '123456'
+        expect: '123456',
       },
       {
         s: 123456,
         limit: 7,
         pad: '0',
-        expect: '1234560'
-      }
+        expect: '1234560',
+      },
     ];
 
     data.forEach((item) => {
@@ -274,75 +271,75 @@ let checkStringMethods = (bella) => {
         input: {
           a: 'Hello world',
           b: 'l',
-          c: '2'
+          c: '2',
         },
-        expectation: 'He22o wor2d'
+        expectation: 'He22o wor2d',
       },
       {
         input: {
           a: 'Hello world',
           b: 'l',
-          c: 2
+          c: 2,
         },
-        expectation: 'He22o wor2d'
+        expectation: 'He22o wor2d',
       },
       {
         input: {
           a: 798078967,
           b: 7,
-          c: 1
+          c: 1,
         },
-        expectation: '198018961'
+        expectation: '198018961',
       },
       {
         input: {
           a: 'Hello world',
           b: ['l', 'o'],
-          c: ['2', '0']
+          c: ['2', '0'],
         },
-        expectation: 'He220 w0r2d'
+        expectation: 'He220 w0r2d',
       },
       {
         input: {
           a: 'Hello world',
           b: ['l', 'o'],
-          c: '2'
+          c: '2',
         },
-        expectation: 'He222 w2r2d'
+        expectation: 'He222 w2r2d',
       },
       {
         input: {
           a: 'Hello world',
           b: ['l'],
-          c: ['2', '0']
+          c: ['2', '0'],
         },
-        expectation: 'Hello world'
+        expectation: 'Hello world',
       },
       {
         input: {
           a: 'Hello world',
-          b: 'l'
+          b: 'l',
         },
-        expectation: 'Hello world'
+        expectation: 'Hello world',
       },
       {
         input: {
-          a: 'Hello world'
+          a: 'Hello world',
         },
-        expectation: 'Hello world'
+        expectation: 'Hello world',
       },
       {
         input: {
-          a: 10000
+          a: 10000,
         },
-        expectation: '10000'
+        expectation: '10000',
       },
       {
         input: {
-          a: 0
+          a: 0,
         },
-        expectation: '0'
-      }
+        expectation: '0',
+      },
     ];
 
     data.forEach((useCase) => {
@@ -383,8 +380,6 @@ let checkStringMethods = (bella) => {
 
     assert.end();
   });
-
-
 };
 
 variants.map(checkStringMethods);

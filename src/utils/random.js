@@ -20,3 +20,4 @@ export const random = (min, max) => {
   let range = max - min + 1;
   return Math.floor(Math.random() * range) + offset;
 };
+

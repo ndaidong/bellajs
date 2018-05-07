@@ -10,12 +10,12 @@
 
 require('jsdom-global')();
 
-var test = require('tape');
-var is = require('is');
+const test = require('tape');
+const is = require('is');
 
-var {variants} = require('../../config');
+const {variants} = require('../../config');
 
-var stringify = (x) => {
+const stringify = (x) => {
   if (is.array(x) || is.object(x)) {
     x = JSON.stringify(x);
   }
@@ -41,10 +41,10 @@ let checkDetection = (bella) => {
       Math.PI,
       null,
       undefined,
-      function x() {}
+      function x() {},
     ].forEach((item) => {
       let r = bella.isElement(item);
-      var x = stringify(item);
+      let x = stringify(item);
       assert.error(r, `"${x}" must be not element.`);
     });
     assert.end();
@@ -58,13 +58,13 @@ let checkDetection = (bella) => {
       [
         1,
         2,
-        3
+        3,
       ],
       new Array(),
-      new Array(5)
+      new Array(5),
     ].forEach((item) => {
       let r = bella.isArray(item);
-      var x = stringify(item);
+      let x = stringify(item);
       assert.ok(r, `"${x}" must be an array.`);
     });
 
@@ -79,10 +79,10 @@ let checkDetection = (bella) => {
       Math.PI,
       null,
       undefined,
-      function x() {}
+      function x() {},
     ].forEach((item) => {
       let r = bella.isArray(item);
-      var x = stringify(item);
+      let x = stringify(item);
       assert.error(r, `"${x}" must be not array.`);
     });
     assert.end();
@@ -94,10 +94,10 @@ let checkDetection = (bella) => {
       is,
       {},
       {a: 1, b: 0},
-      Object.create({})
+      Object.create({}),
     ].forEach((item) => {
       let r = bella.isObject(item);
-      var x = stringify(item);
+      let x = stringify(item);
       assert.ok(r, `"${x}" must be an object.`);
     });
 
@@ -109,10 +109,10 @@ let checkDetection = (bella) => {
       undefined,
       0,
       [],
-      new Date()
+      new Date(),
     ].forEach((item) => {
       let r = bella.isObject(item);
-      var x = stringify(item);
+      let x = stringify(item);
       assert.error(r, `"${x}" must be not object.`);
     });
     assert.end();
@@ -126,10 +126,10 @@ let checkDetection = (bella) => {
       '10000',
       '',
       'undefined',
-      String(1000)
+      String(1000),
     ].forEach((item) => {
       let r = bella.isString(item);
-      var x = stringify(item);
+      let x = stringify(item);
       assert.ok(r, `"${x}" must be an string.`);
     });
 
@@ -139,10 +139,10 @@ let checkDetection = (bella) => {
       null,
       undefined,
       Number('1000'),
-      0
+      0,
     ].forEach((item) => {
       let r = bella.isString(item);
-      var x = stringify(item);
+      let x = stringify(item);
       assert.error(r, `"${x}" must be not string.`);
     });
 
@@ -153,10 +153,10 @@ let checkDetection = (bella) => {
   test('Testing .isBoolean(Anything) method:', (assert) => {
     [
       true,
-      2 - 1 === 1
+      2 - 1 === 1,
     ].forEach((item) => {
       let r = bella.isBoolean(item);
-      var x = stringify(item);
+      let x = stringify(item);
       assert.ok(r, `"${x}" must be true.`);
     });
 
@@ -171,10 +171,10 @@ let checkDetection = (bella) => {
       Math.PI,
       null,
       undefined,
-      function x() {}
+      function x() {},
     ].forEach((item) => {
       let r = bella.isBoolean(item);
-      var x = stringify(item);
+      let x = stringify(item);
       assert.error(r, `"${x}" must be false.`);
     });
     assert.end();
@@ -184,7 +184,7 @@ let checkDetection = (bella) => {
   test('Testing .isDate(Anything) method:', (assert) => {
     [new Date()].forEach((item) => {
       let r = bella.isDate(item);
-      var x = stringify(item);
+      let x = stringify(item);
       assert.ok(r, `"${x}" must be date.`);
     });
 
@@ -199,10 +199,10 @@ let checkDetection = (bella) => {
       Math.PI,
       null,
       undefined,
-      function x() {}
+      function x() {},
     ].forEach((item) => {
       let r = bella.isDate(item);
-      var x = stringify(item);
+      let x = stringify(item);
       assert.error(r, `"${x}" must not be date.`);
     });
     assert.end();
@@ -213,10 +213,10 @@ let checkDetection = (bella) => {
     [
       'ndaidong@gmail.com',
       'bob.nany@live.com',
-      'bob.nany@live.com.vn'
+      'bob.nany@live.com.vn',
     ].forEach((item) => {
       let r = bella.isEmail(item);
-      var x = stringify(item);
+      let x = stringify(item);
       assert.ok(r, `"${x}" must be email.`);
     });
 
@@ -227,10 +227,10 @@ let checkDetection = (bella) => {
       '.bob.nany@live@com',
       '',
       undefined,
-      0
+      0,
     ].forEach((item) => {
       let r = bella.isEmail(item);
-      var x = stringify(item);
+      let x = stringify(item);
       assert.error(r, `"${x}" must not be email.`);
     });
     assert.end();
@@ -245,10 +245,10 @@ let checkDetection = (bella) => {
       '',
       {},
       [],
-      Object.create({})
+      Object.create({}),
     ].forEach((item) => {
       let r = bella.isEmpty(item);
-      var x = stringify(item);
+      let x = stringify(item);
       assert.ok(r, `"${x}" must be empty.`);
     });
 
@@ -258,12 +258,12 @@ let checkDetection = (bella) => {
       {a: 1},
       [
         1,
-        3
+        3,
       ],
-      function x() {}
+      function x() {},
     ].forEach((item) => {
       let r = bella.isEmpty(item);
-      var x = stringify(item);
+      let x = stringify(item);
       assert.error(r, `"${x}" must not be empty.`);
     });
     assert.end();
@@ -274,10 +274,10 @@ let checkDetection = (bella) => {
     [
       () => {},
       function x() {},
-      new Function()
+      new Function(),
     ].forEach((item) => {
       let r = bella.isFunction(item);
-      var x = stringify(item);
+      let x = stringify(item);
       assert.ok(r, `"${x}" must be function.`);
     });
 
@@ -288,16 +288,16 @@ let checkDetection = (bella) => {
       {a: 1},
       [
         1,
-        3
+        3,
       ],
       something,
       '',
       {},
       [],
-      Object.create({})
+      Object.create({}),
     ].forEach((item) => {
       let r = bella.isFunction(item);
-      var x = stringify(item);
+      let x = stringify(item);
       assert.error(r, `"${x}" must not be function.`);
     });
     assert.end();
@@ -309,10 +309,10 @@ let checkDetection = (bella) => {
     [
       6e4,
       9,
-      0
+      0,
     ].forEach((item) => {
       let r = bella.isInteger(item);
-      var x = stringify(item);
+      let x = stringify(item);
       assert.ok(r, `"${x}" must be integer.`);
     });
 
@@ -324,10 +324,10 @@ let checkDetection = (bella) => {
       3 / 5,
       Math.PI,
       null,
-      undefined
+      undefined,
     ].forEach((item) => {
       let r = bella.isInteger(item);
-      var x = stringify(item);
+      let x = stringify(item);
       assert.error(r, `"${x}" must not be integer.`);
     });
     assert.end();
@@ -339,10 +339,10 @@ let checkDetection = (bella) => {
     [
       'abc',
       'ABC',
-      'AbCd'
+      'AbCd',
     ].forEach((item) => {
       let r = bella.isLetter(item);
-      var x = stringify(item);
+      let x = stringify(item);
       assert.ok(r, `"${x}" must be letter.`);
     });
 
@@ -359,10 +359,10 @@ let checkDetection = (bella) => {
       3 / 5,
       Math.PI,
       null,
-      undefined
+      undefined,
     ].forEach((item) => {
       let r = bella.isLetter(item);
-      var x = stringify(item);
+      let x = stringify(item);
       assert.error(r, `"${x}" must not be letter.`);
     });
     assert.end();
@@ -377,10 +377,10 @@ let checkDetection = (bella) => {
       6e4,
       Math.PI,
       9,
-      0
+      0,
     ].forEach((item) => {
       let r = bella.isNumber(item);
-      var x = stringify(item);
+      let x = stringify(item);
       assert.ok(r, `"${x}" must be number.`);
     });
 
@@ -390,10 +390,10 @@ let checkDetection = (bella) => {
       '100',
       null,
       undefined,
-      new Function()
+      new Function(),
     ].forEach((item) => {
       let r = bella.isNumber(item);
-      var x = stringify(item);
+      let x = stringify(item);
       assert.error(r, `"${x}" must not be number.`);
     });
     assert.end();
@@ -406,7 +406,7 @@ let checkDetection = (bella) => {
       age: 15,
       group: null,
       label: 'undefined',
-      color: 0
+      color: 0,
     };
 
     let props = [
@@ -414,7 +414,7 @@ let checkDetection = (bella) => {
       'age',
       'group',
       'label',
-      'color'
+      'color',
     ];
     for (let i = 0; i < props.length; i++) {
       let k = props[i];
@@ -426,7 +426,7 @@ let checkDetection = (bella) => {
       'year',
       'prototype',
       '__proto__',
-      'toString'
+      'toString',
     ];
     for (let i = 0; i < fails.length; i++) {
       let k = fails[i];
@@ -450,14 +450,14 @@ let checkDetection = (bella) => {
         1,
         4,
         6,
-        8
+        8,
       ],
       {
         a: 1,
         b: 4,
-        c: 6
+        c: 6,
       },
-      t
+      t,
     ];
     let b1 = [
       {},
@@ -468,14 +468,14 @@ let checkDetection = (bella) => {
         1,
         4,
         6,
-        8
+        8,
       ],
       {
         c: 6,
         b: 4,
-        a: 1
+        a: 1,
       },
-      t
+      t,
     ];
 
     for (let i = 0; i < a1.length; i++) {
@@ -495,7 +495,7 @@ let checkDetection = (bella) => {
       [
         11,
         66,
-        'ab'
+        'ab',
       ],
       0,
       'a',
@@ -503,14 +503,14 @@ let checkDetection = (bella) => {
         1,
         4,
         6,
-        8
+        8,
       ],
       {
         a: 1,
         b: 4,
-        c: 6
+        c: 6,
       },
-      at
+      at,
     ];
     let b2 = [
       {},
@@ -521,14 +521,14 @@ let checkDetection = (bella) => {
         1,
         6,
         4,
-        8
+        8,
       ],
       {
         c: 6,
         b: 4,
-        a: 2
+        a: 2,
       },
-      bt
+      bt,
     ];
 
     for (let i = 0; i < a2.length; i++) {
@@ -542,7 +542,6 @@ let checkDetection = (bella) => {
 
     assert.end();
   });
-
 };
 
 variants.map(checkDetection);

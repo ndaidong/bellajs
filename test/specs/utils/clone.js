@@ -3,26 +3,25 @@
  * @ndaidong
  */
 
-var test = require('tape');
+const test = require('tape');
 
-var {variants} = require('../../config');
+const {variants} = require('../../config');
 
 // clone
 let checkClone = (bella) => {
   test('Testing .clone(Object target) method', (assert) => {
-
     assert.comment('Clone object');
     let a = {
       level: 4,
       IQ: 140,
       epouse: {
         name: 'Alice',
-        age: 27
+        age: 27,
       },
       birthday: new Date(),
       a: 0,
       clone: false,
-      reg: /^\w+@\s([a-z])$/gi
+      reg: /^\w+@\s([a-z])$/gi,
     };
 
     let ca = bella.clone(a);
@@ -44,7 +43,7 @@ let checkClone = (bella) => {
       '',
       {
         a: 1,
-        b: 'Awesome'
+        b: 'Awesome',
       },
       [
         5,
@@ -52,9 +51,9 @@ let checkClone = (bella) => {
         8,
         {
           name: 'Lys',
-          age: 11
-        }
-      ]
+          age: 11,
+        },
+      ],
     ];
 
     let cb = bella.clone(b);

@@ -67,4 +67,4 @@ export let md5 = (str) => {
   return str;
 }
 
-/*eslint-enable*/
+/* eslint-enable*/

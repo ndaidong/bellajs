@@ -3,10 +3,10 @@
  * @ndaidong
  */
 
-var test = require('tape');
-var is = require('is');
+const test = require('tape');
+const is = require('is');
 
-var {variants} = require('../../config');
+const {variants} = require('../../config');
 
 // random
 let checkRandom = (bella) => {
@@ -49,7 +49,6 @@ let checkRandom = (bella) => {
     assert.equals(70, x, 'bella.random(70, 70): R must be 70');
     assert.end();
   });
-
 };
 
 variants.map(checkRandom);

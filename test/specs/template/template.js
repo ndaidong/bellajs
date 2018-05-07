@@ -3,9 +3,9 @@
  * @ndaidong
  */
 
-var test = require('tape');
+const test = require('tape');
 
-var {variants} = require('../../config');
+const {variants} = require('../../config');
 
 // compile
 let checkCompile = (bella) => {
@@ -26,8 +26,8 @@ let checkCompile = (bella) => {
       content: 'This is an interesting thing, is that right?',
       author: {
         name: 'Dong Nguyen',
-        email: 'ndaidong@gmail.com'
-      }
+        email: 'ndaidong@gmail.com',
+      },
     };
 
     let expectation = bella.trim(`

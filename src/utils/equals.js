@@ -7,7 +7,7 @@ import {
   isString,
   isNumber,
   isDate,
-  hasProperty
+  hasProperty,
 } from './detection';
 
 export const equals = (a, b) => {

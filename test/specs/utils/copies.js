@@ -3,9 +3,9 @@
  * @ndaidong
  */
 
-var test = require('tape');
+const test = require('tape');
 
-var {variants} = require('../../config');
+const {variants} = require('../../config');
 
 // copies
 let checkCopies = (bella) => {
@@ -15,21 +15,21 @@ let checkCopies = (bella) => {
       age: 30,
       level: 8,
       nationality: {
-        name: 'America'
-      }
+        name: 'America',
+      },
     };
     let b = {
       level: 4,
       IQ: 140,
       epouse: {
         name: 'Alice',
-        age: 27
+        age: 27,
       },
       nationality: {
         name: 'Congo',
         long: '18123.123123.12312',
-        lat: '98984771.134231.1234'
-      }
+        lat: '98984771.134231.1234',
+      },
     };
 
     bella.copies(a, b);
@@ -41,15 +41,14 @@ let checkCopies = (bella) => {
     assert.ok(bella.hasProperty(b, 'epouse'), 'Result must have epouse');
     assert.equals(b.level, 8, 'Level must be 8');
 
-
     let c = {
       name: 'Kiwi',
       age: 16,
-      gender: 'male'
+      gender: 'male',
     };
     let d = {
       name: 'Aline',
-      age: 20
+      age: 20,
     };
     bella.copies(c, d, true, ['age']);
     assert.ok(!bella.hasProperty(d, 'gender'), 'Result must have not gender');

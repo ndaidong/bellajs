@@ -2,27 +2,26 @@
  * Testing
  * @ndaidong
  */
-var test = require('tape');
-var sinon = require('sinon');
+const test = require('tape');
+const sinon = require('sinon');
 
-var {
+const {
   time,
-  now
+  now,
 } = require('bellajs');
 
-var {variants} = require('../../config');
+const {variants} = require('../../config');
 
 let isSameTimes = (t1, t2) => {
   return Math.abs(t1 - t2) < 5;
 };
 
-var checkDateMethods = (date) => {
-
+const checkDateMethods = (date) => {
   let {
     format,
     relativize,
     local,
-    utc
+    utc,
   } = date;
 
   test('Testing .time() method', (assert) => {
@@ -40,7 +39,6 @@ var checkDateMethods = (date) => {
   });
 
   test('With invalid date time input:', (assert) => {
-
     let check = (t) => {
       let err = new Error('InvalidInput: Number or Date required.');
       assert.throws(() => {
@@ -55,14 +53,13 @@ var checkDateMethods = (date) => {
       '4 Thu 15 GMT+0007',
       () => {
         return false;
-      }
+      },
     ].map(check);
 
     assert.end();
   });
 
   test('Testing .format(Number timestamp, String pattern) method:', (assert) => {
-
     let atime = 1455784100752;
 
     let samples = [
@@ -77,18 +74,18 @@ var checkDateMethods = (date) => {
       {
         ouput: 'M jS, Y',
         expectation: 'Feb 21st, 2016',
-        input: atime + 3 * 24 * 60 * 6e4
+        input: atime + 3 * 24 * 60 * 6e4,
       },
       {
         ouput: 'M jS, Y',
         expectation: 'Feb 22nd, 2016',
-        input: atime + 4 * 24 * 60 * 6e4
+        input: atime + 4 * 24 * 60 * 6e4,
       },
       {
         ouput: 'M jS, Y',
         expectation: 'Feb 23rd, 2016',
-        input: atime + 5 * 24 * 60 * 6e4
-      }
+        input: atime + 5 * 24 * 60 * 6e4,
+      },
     ];
 
     samples.forEach((sample) => {
@@ -107,7 +104,6 @@ var checkDateMethods = (date) => {
   });
 
   test('Testing .relativize(Number timestamp) method:', (assert) => {
-
     let t = time();
     let clock = sinon.useFakeTimers(t);
 
