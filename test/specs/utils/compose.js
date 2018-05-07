@@ -3,9 +3,9 @@
  * @ndaidong
  */
 
-var test = require('tape');
+const test = require('tape');
 
-var {variants} = require('../../config');
+const {variants} = require('../../config');
 
 let checkCompose = (bella) => {
   let {compose} = bella;
@@ -41,7 +41,6 @@ let checkCompose = (bella) => {
   let calculate = compose(sub5, div2, mul6, add3);
 
   test('Testing .compose() method', (assert) => {
-
     let ex = 'f1 f2 f3 Alice';
     assert.deepEquals(addDashes('Alice'), ex, `addDashes('Alice') must return "${ex}"`);
 

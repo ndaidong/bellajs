@@ -2,23 +2,23 @@
 
 import {
   isDate,
-  isString
+  isString,
 } from './detection';
 
 import {
-  leftPad
+  leftPad,
 } from './string';
 
 
 const PATTERN = 'D, M d, Y  h:i:s A';
 const WEEKDAYS = [
-  'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'
+  'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday',
 ];
 
 const MONTHS = [
   'January', 'February', 'March', 'April',
   'May', 'June', 'July', 'August',
-  'September', 'October', 'November', 'December'
+  'September', 'October', 'November', 'December',
 ];
 
 export const now = () => {
@@ -31,7 +31,7 @@ export const time = () => {
 
 const tzone = now().getTimezoneOffset();
 
-var tz = (() => {
+const tz = (() => {
   let z = Math.abs(tzone / 60);
   let sign = tzone < 0 ? '+' : '-';
   return ['GMT', sign, leftPad(z, 4)].join('');
@@ -58,7 +58,6 @@ let _ord = (day) => {
 };
 
 export let format = (input, output = PATTERN) => {
-
   let d = isDate(input) ? input : new Date(input);
   if (!isDate(d)) {
     throw new Error('InvalidInput: Number or Date required.');
@@ -140,7 +139,7 @@ export let format = (input, output = PATTERN) => {
       return tz;
     }
   };
-  /*eslint-enable */
+  /* eslint-enable */
 
   let _term = (t, s) => {
     return f[t] ? f[t]() : s;
@@ -150,7 +149,6 @@ export let format = (input, output = PATTERN) => {
 };
 
 export let relativize = (input = time()) => {
-
   let d = isDate(input) ? input : new Date(input);
   if (!isDate(d)) {
     throw new Error('InvalidInput: Number or Date required.');
@@ -172,7 +170,7 @@ export let relativize = (input = time()) => {
     hour: 60,
     day: 24,
     month: 30,
-    year: 12
+    year: 12,
   };
   for (let key in conversions) {
     if (delta < conversions[key]) {

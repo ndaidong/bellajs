@@ -6,7 +6,7 @@ import {
   isString,
   isNumber,
   isInteger,
-  hasProperty
+  hasProperty,
 } from './detection';
 
 import {random} from './random';
@@ -127,7 +127,6 @@ export const repeat = (s, m) => {
 };
 
 export const replaceAll = (s, a, b) => {
-
   let x = toString(s);
 
   if (isNumber(a)) {
@@ -158,7 +157,6 @@ export const replaceAll = (s, a, b) => {
 };
 
 export const stripAccent = (s) => {
-
   let x = toString(s);
 
   let map = {
@@ -177,7 +175,7 @@ export const stripAccent = (s) => {
     u: 'ú|ù|ủ|ũ|ụ|ư|ứ|ừ|ử|ữ|ự|û',
     U: 'Ú|Ù|Ủ|Ũ|Ụ|Ư|Ứ|Ừ|Ử|Ữ|Ự|Û',
     y: 'ý|ỳ|ỷ|ỹ|ỵ',
-    Y: 'Ý|Ỳ|Ỷ|Ỹ|Ỵ'
+    Y: 'Ý|Ỳ|Ỷ|Ỹ|Ỵ',
   };
 
   let updateS = (ai, key) => {
@@ -202,7 +200,7 @@ export const createId = (leng, prefix = '') => {
   let cand = [
     lc,
     uc,
-    nb
+    nb,
   ].join('').split('').sort(() => {
     return Math.random() > 0.5;
   }).join('');
@@ -227,7 +225,7 @@ export const createAlias = (s, delimiter) => {
 };
 
 // Define bella.template
-var compile = (tpl, data) => {
+const compile = (tpl, data) => {
   let ns = [];
   let c = (s, ctx, namespace) => {
     if (namespace) {
@@ -243,15 +241,15 @@ var compile = (tpl, data) => {
         if (isObject(v) || isArray(v)) {
           a.push({
             key: k,
-            data: v
+            data: v,
           });
         } else if (isString(v)) {
           v = replaceAll(v, [
             '{',
-            '}'
+            '}',
           ], [
             '&#123;',
-            '&#125;'
+            '&#125;',
           ]);
           let cns = ns.concat([k]);
           let r = new RegExp('{' + cns.join('.') + '}', 'gi');
@@ -276,6 +274,6 @@ export const template = (tpl) => {
   return {
     compile: (data) => {
       return compile(tpl, data);
-    }
+    },
   };
 };

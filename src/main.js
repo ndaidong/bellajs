@@ -7,7 +7,7 @@ import {
   isObject,
   isArray,
   isDate,
-  hasProperty
+  hasProperty,
 } from './utils/detection';
 
 export const curry = (fn) => {
@@ -24,16 +24,15 @@ export const curry = (fn) => {
 };
 
 export const compose = (...fns) => {
-  return fns.reduce((f, g) => x => f(g(x)));
+  return fns.reduce((f, g) => (x) => f(g(x)));
 };
 
 export const pipe = (...fns) => {
-  return fns.reduce((f, g) => x => g(f(x)));
+  return fns.reduce((f, g) => (x) => g(f(x)));
 };
 
 
 export const clone = (val) => {
-
   if (isDate(val)) {
     return new Date(val.valueOf());
   }

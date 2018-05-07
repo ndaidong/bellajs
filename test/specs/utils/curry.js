@@ -3,9 +3,9 @@
  * @ndaidong
  */
 
-var test = require('tape');
+const test = require('tape');
 
-var {variants} = require('../../config');
+const {variants} = require('../../config');
 
 let checkCurry = (bella) => {
   let curry = bella.curry;
@@ -29,7 +29,7 @@ let checkCurry = (bella) => {
     assert.deepEquals(sum3(1)(2, 3), 6, `sum3(1)(2, 3) must return 6`);
     assert.deepEquals(sum3(1, 2, 3), 6, `sum3(1, 2, 3) must return 6`);
 
-    assert.ok(bella.isFunction(sum3(1, 2)),  `sum3(1, 2) must be a function`);
+    assert.ok(bella.isFunction(sum3(1, 2)), `sum3(1, 2) must be a function`);
     assert.end();
   });
 };

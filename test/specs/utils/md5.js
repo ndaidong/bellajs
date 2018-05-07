@@ -3,9 +3,9 @@
  * @ndaidong
  */
 
-var test = require('tape');
+const test = require('tape');
 
-var {variants} = require('../../config');
+const {variants} = require('../../config');
 
 // md5
 let checkMD5 = (bella) => {

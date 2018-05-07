@@ -1,6 +1,6 @@
 // utils / detection
 
-var ob2Str = (val) => {
+const ob2Str = (val) => {
   return {}.toString.call(val);
 };
 

@@ -3,9 +3,9 @@
  * @ndaidong
  */
 
-var test = require('tape');
+const test = require('tape');
 
-var {variants} = require('../../config');
+const {variants} = require('../../config');
 
 let checkPipe = (bella) => {
   let {pipe} = bella;
@@ -41,7 +41,6 @@ let checkPipe = (bella) => {
   let calculate = pipe(add3, mul6, div2, sub5);
 
   test('Testing .pipe() method', (assert) => {
-
     let ex = 'f3 f2 f1 Alice';
     assert.deepEquals(addDashes('Alice'), ex, `addDashes('Alice') must return "${ex}"`);
 
