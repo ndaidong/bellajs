@@ -6,7 +6,7 @@ Lightweight util for handling data type, string... in your Node.js and browser a
 [![NPM](https://badge.fury.io/js/bellajs.svg)](https://badge.fury.io/js/bellajs)
 [![Build Status](https://travis-ci.org/ndaidong/bellajs.svg?branch=master)](https://travis-ci.org/ndaidong/bellajs)
 [![codecov](https://codecov.io/gh/ndaidong/bellajs/branch/master/graph/badge.svg)](https://codecov.io/gh/ndaidong/bellajs)
-[![Dependency Status](https://gemnasium.com/badges/github.com/ndaidong/bellajs.svg)](https://gemnasium.com/github.com/ndaidong/bellajs)
+![Dependency Status](https://david-dm.org/ndaidong/bellajs.svg)
 [![NSP Status](https://nodesecurity.io/orgs/techpush/projects/63f808aa-af9a-44ea-b744-3d6356d5e268/badge)](https://nodesecurity.io/orgs/techpush/projects/63f808aa-af9a-44ea-b744-3d6356d5e268)
 
 
