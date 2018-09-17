@@ -2,7 +2,7 @@
  * Testing
  * @ndaidong
  */
-const test = require('tape');
+const test = require('tap').test;
 const sinon = require('sinon');
 
 const {
@@ -98,7 +98,7 @@ const checkDateMethods = (date) => {
 
     assert.throws(() => {
       format(atime, null);
-    }, new Error('InvalidInput: Number or Date required.'), 'Throw error if invalid pattern');
+    }, new Error('Invalid output pattern.'), 'Throw error if invalid pattern');
 
     assert.end();
   });
