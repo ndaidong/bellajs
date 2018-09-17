@@ -3,7 +3,7 @@
  * @ndaidong
  */
 
-const test = require('tape');
+const test = require('tap').test;
 
 const {variants} = require('../../config');
 
