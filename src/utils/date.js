@@ -5,10 +5,6 @@ import {
   isString,
 } from './detection';
 
-import {
-  leftPad,
-} from './string';
-
 
 const PATTERN = 'D, M d, Y  h:i:s A';
 const WEEKDAYS = [
@@ -32,19 +28,19 @@ export const time = () => {
 const tzone = now().getTimezoneOffset();
 
 const tz = (() => {
-  let z = Math.abs(tzone / 60);
-  let sign = tzone < 0 ? '+' : '-';
-  return ['GMT', sign, leftPad(z, 4)].join('');
+  const z = Math.abs(tzone / 60);
+  const sign = tzone < 0 ? '+' : '-';
+  return ['GMT', sign, String(z).padStart(4, '0')].join('');
 })();
 
 
-let _num = (n) => {
+const _num = (n) => {
   return String(n < 10 ? '0' + n : n);
 };
 
-let _ord = (day) => {
+const _ord = (day) => {
   let s = day + ' ';
-  let x = s.charAt(s.length - 2);
+  const x = s.charAt(s.length - 2);
   if (x === '1') {
     s = 'st';
   } else if (x === '2') {
@@ -57,8 +53,8 @@ let _ord = (day) => {
   return s;
 };
 
-export let format = (input, output = PATTERN) => {
-  let d = isDate(input) ? input : new Date(input);
+export const format = (input, output = PATTERN) => {
+  const d = isDate(input) ? input : new Date(input);
   if (!isDate(d)) {
     throw new Error('InvalidInput: Number or Date required.');
   }
@@ -67,11 +63,11 @@ export let format = (input, output = PATTERN) => {
     throw new Error('Invalid output pattern.');
   }
 
-  let vchar = /\.*\\?([a-z])/gi;
-  let meridiem = output.match(/(\.*)a{1}(\.*)*/i);
+  const vchar = /\.*\\?([a-z])/gi;
+  const meridiem = output.match(/(\.*)a{1}(\.*)*/i);
 
-  let wn = WEEKDAYS;
-  let mn = MONTHS;
+  const wn = WEEKDAYS;
+  const mn = MONTHS;
 
   /*eslint-disable */
   let f = {
@@ -141,15 +137,15 @@ export let format = (input, output = PATTERN) => {
   };
   /* eslint-enable */
 
-  let _term = (t, s) => {
+  const _term = (t, s) => {
     return f[t] ? f[t]() : s;
   };
 
   return output.replace(vchar, _term);
 };
 
-export let relativize = (input = time()) => {
-  let d = isDate(input) ? input : new Date(input);
+export const relativize = (input = time()) => {
+  const d = isDate(input) ? input : new Date(input);
   if (!isDate(d)) {
     throw new Error('InvalidInput: Number or Date required.');
   }
@@ -163,7 +159,7 @@ export let relativize = (input = time()) => {
     return 'Just now';
   }
   let units = null;
-  let conversions = {
+  const conversions = {
     millisecond: 1,
     second: 1000,
     minute: 60,
@@ -172,7 +168,7 @@ export let relativize = (input = time()) => {
     month: 30,
     year: 12,
   };
-  for (let key in conversions) {
+  for (const key in conversions) {
     if (delta < conversions[key]) {
       break;
     } else {
@@ -187,19 +183,19 @@ export let relativize = (input = time()) => {
   return [delta, units].join(' ') + ' ago';
 };
 
-export let utc = (input = time()) => {
-  let d = isDate(input) ? input : new Date(input);
+export const utc = (input = time()) => {
+  const d = isDate(input) ? input : new Date(input);
   if (!isDate(d)) {
     throw new Error('InvalidInput: Number or Date required.');
   }
-  let dMinutes = d.getMinutes();
-  let dClone = new Date(d);
+  const dMinutes = d.getMinutes();
+  const dClone = new Date(d);
   dClone.setMinutes(dMinutes + tzone);
   return `${format(dClone, 'D, j M Y h:i:s')} GMT+0000`;
 };
 
-export let local = (input = time()) => {
-  let d = isDate(input) ? input : new Date(input);
+export const local = (input = time()) => {
+  const d = isDate(input) ? input : new Date(input);
   if (!isDate(d)) {
     throw new Error('InvalidInput: Number or Date required.');
   }

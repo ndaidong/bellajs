@@ -11,8 +11,8 @@ import {
 } from './utils/detection';
 
 export const curry = (fn) => {
-  let totalArguments = fn.length;
-  let next = (argumentLength, rest) => {
+  const totalArguments = fn.length;
+  const next = (argumentLength, rest) => {
     if (argumentLength > 0) {
       return (...args) => {
         return next(argumentLength - args.length, [...rest, ...args]);
@@ -37,9 +37,9 @@ export const clone = (val) => {
     return new Date(val.valueOf());
   }
 
-  let copyObject = (o) => {
-    let oo = Object.create({});
-    for (let k in o) {
+  const copyObject = (o) => {
+    const oo = Object.create({});
+    for (const k in o) {
       if (hasProperty(o, k)) {
         oo[k] = clone(o[k]);
       }
@@ -47,7 +47,7 @@ export const clone = (val) => {
     return oo;
   };
 
-  let copyArray = (a) => {
+  const copyArray = (a) => {
     return [...a].map((e) => {
       if (isArray(e)) {
         return copyArray(e);
@@ -71,13 +71,13 @@ export const clone = (val) => {
 
 
 export const copies = (source, dest, matched = false, excepts = []) => {
-  for (let k in source) {
+  for (const k in source) {
     if (excepts.length > 0 && excepts.includes(k)) {
       continue; // eslint-disable-line no-continue
     }
     if (!matched || matched && dest.hasOwnProperty(k)) {
-      let oa = source[k];
-      let ob = dest[k];
+      const oa = source[k];
+      const ob = dest[k];
       if (isObject(ob) && isObject(oa) || isArray(ob) && isArray(oa)) {
         dest[k] = copies(oa, dest[k], matched, excepts);
       } else {
@@ -90,6 +90,29 @@ export const copies = (source, dest, matched = false, excepts = []) => {
 
 export const unique = (arr = []) => {
   return [...new Set(arr)];
+};
+
+export const sort = (fn, arr = []) => {
+  return [...arr].sort(fn);
+};
+
+export const sortBy = (key, order = 1, arr = []) => {
+  return sort(arr, (m, n) => {
+    return m[key] > n[key] ? order : (m[key] < n[key] ? (-1 * order) : 0);
+  });
+};
+
+export const shuffle = (arr = []) => {
+  return sort(() => {
+    return Math.random() > 0.5;
+  }, [...arr]);
+};
+
+export const pick = (count = 1, arr = []) => {
+  const a = shuffle([...arr]);
+  const mc = Math.max(1, count);
+  const c = Math.min(mc, a.length - 1);
+  return a.splice(0, c);
 };
 
 export * from './utils/detection';

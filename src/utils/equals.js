@@ -34,14 +34,14 @@ export const equals = (a, b) => {
       }
     }
   } else if (isObject(a) && isObject(b)) {
-    let as = [];
-    let bs = [];
-    for (let k1 in a) {
+    const as = [];
+    const bs = [];
+    for (const k1 in a) {
       if (hasProperty(a, k1)) {
         as.push(k1);
       }
     }
-    for (let k2 in b) {
+    for (const k2 in b) {
       if (hasProperty(b, k2)) {
         bs.push(k2);
       }
@@ -49,7 +49,7 @@ export const equals = (a, b) => {
     if (as.length !== bs.length) {
       return false;
     }
-    for (let k in a) {
+    for (const k in a) {
       if (!hasProperty(b, k) || !equals(a[k], b[k])) {
         re = false;
         break;

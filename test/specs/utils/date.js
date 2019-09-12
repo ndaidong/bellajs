@@ -12,12 +12,12 @@ const {
 
 const {variants} = require('../../config');
 
-let isSameTimes = (t1, t2) => {
+const isSameTimes = (t1, t2) => {
   return Math.abs(t1 - t2) < 5;
 };
 
 const checkDateMethods = (date) => {
-  let {
+  const {
     format,
     relativize,
     local,
@@ -25,22 +25,22 @@ const checkDateMethods = (date) => {
   } = date;
 
   test('Testing .time() method', (assert) => {
-    let t = (new Date()).getTime();
-    let b = time();
+    const t = (new Date()).getTime();
+    const b = time();
     assert.ok(isSameTimes(t, b), 'Time must be the same');
     assert.end();
   });
 
   test('Testing .date() method', (assert) => {
-    let t = new Date();
-    let b = now();
+    const t = new Date();
+    const b = now();
     assert.ok(isSameTimes(t.getTime(), b.getTime()), 'Date must be the same');
     assert.end();
   });
 
   test('With invalid date time input:', (assert) => {
-    let check = (t) => {
-      let err = new Error('InvalidInput: Number or Date required.');
+    const check = (t) => {
+      const err = new Error('InvalidInput: Number or Date required.');
       assert.throws(() => {
         console.log(format(t)); // eslint-disable-line no-console
       }, err, 'It must throw error if invalid input.');
@@ -60,9 +60,9 @@ const checkDateMethods = (date) => {
   });
 
   test('Testing .format(Number timestamp, String pattern) method:', (assert) => {
-    let atime = 1455784100752;
+    const atime = 1455784100752;
 
-    let samples = [
+    const samples = [
       {ouput: 'Y/m/d h:i:s', expectation: '2016/02/18 15:28:20'},
       {ouput: 'Y/m/d h:i:s A', expectation: '2016/02/18 03:28:20 PM'},
       {ouput: 'M j, Y h:i:s A', expectation: 'Feb 18, 2016 03:28:20 PM'},
@@ -89,10 +89,10 @@ const checkDateMethods = (date) => {
     ];
 
     samples.forEach((sample) => {
-      let tpl = sample.ouput;
-      let exp = sample.expectation;
-      let input = sample.input || atime;
-      let result = format(input, tpl);
+      const tpl = sample.ouput;
+      const exp = sample.expectation;
+      const input = sample.input || atime;
+      const result = format(input, tpl);
       assert.deepEqual(result, exp, `"${tpl}" must return ${exp}`);
     });
 
@@ -104,41 +104,41 @@ const checkDateMethods = (date) => {
   });
 
   test('Testing .relativize(Number timestamp) method:', (assert) => {
-    let t = time();
-    let clock = sinon.useFakeTimers(t);
+    const t = time();
+    const clock = sinon.useFakeTimers(t);
 
     // Just now
     setTimeout(() => {
-      let r = relativize(t);
-      let e = 'Just now';
+      const r = relativize(t);
+      const e = 'Just now';
       assert.deepEqual(r, e, `At the begin it must return ${e}`);
     }, 0);
 
     // next 3 seconds
     setTimeout(() => {
-      let r = relativize(t);
-      let e = '3 seconds ago';
+      const r = relativize(t);
+      const e = '3 seconds ago';
       assert.deepEqual(r, e, `After 3 seconds must return ${e}`);
     }, 3000);
 
     // next 2 minutes
     setTimeout(() => {
-      let r = relativize(t);
-      let e = '2 minutes ago';
+      const r = relativize(t);
+      const e = '2 minutes ago';
       assert.deepEqual(r, e, `Next 2 minutes must return ${e}`);
     }, 2 * 6e4);
 
     // next 6 hours
     setTimeout(() => {
-      let r = relativize(t);
-      let e = '6 hours ago';
+      const r = relativize(t);
+      const e = '6 hours ago';
       assert.deepEqual(r, e, `Next 6 hours must return ${e}`);
     }, 6 * 60 * 6e4);
 
     // next 2 days
     setTimeout(() => {
-      let r = relativize(t);
-      let e = '2 days ago';
+      const r = relativize(t);
+      const e = '2 days ago';
       assert.deepEqual(r, e, `Next 2 days must return ${e}`);
     }, 2 * 24 * 60 * 6e4);
 
@@ -152,9 +152,9 @@ const checkDateMethods = (date) => {
   });
 
   test('Testing .utc(Number timestamp) method:', (assert) => {
-    let t = 1455784100752;
-    let r = utc(t);
-    let e = 'Thu, 18 Feb 2016 08:28:20 GMT+0000';
+    const t = 1455784100752;
+    const r = utc(t);
+    const e = 'Thu, 18 Feb 2016 08:28:20 GMT+0000';
     assert.deepEqual(r, e, `.utc(${t}) must return ${e}`);
 
     assert.throws(() => {
@@ -165,9 +165,9 @@ const checkDateMethods = (date) => {
 
 
   test('Testing .local(Number timestamp) method:', (assert) => {
-    let t = 1455784100000;
-    let r = local(t);
-    let e = 'Thu, 18 Feb 2016 15:28:20 GMT+0007';
+    const t = 1455784100000;
+    const r = local(t);
+    const e = 'Thu, 18 Feb 2016 15:28:20 GMT+0007';
     assert.deepEqual(r, e, `.local(${t}) must return ${e}`);
 
     assert.throws(() => {

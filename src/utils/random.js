@@ -2,7 +2,7 @@
 
 const MAX_NUMBER = Number.MAX_SAFE_INTEGER;
 
-export const random = (min, max) => {
+export const randint = (min, max) => {
   if (!min || min < 0) {
     min = 0;
   }
@@ -16,8 +16,8 @@ export const random = (min, max) => {
     min = Math.min(min, max);
     max = Math.max(min, max);
   }
-  let offset = min;
-  let range = max - min + 1;
+  const offset = min;
+  const range = max - min + 1;
   return Math.floor(Math.random() * range) + offset;
 };
 

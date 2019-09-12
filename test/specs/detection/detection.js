@@ -22,12 +22,12 @@ const stringify = (x) => {
   return x;
 };
 
-let checkDetection = (bella) => {
+const checkDetection = (bella) => {
   // isElement
   test('Testing .isElement(Anything) method:', (assert) => {
-    let doc = window.document;
-    let el = doc.createElement('DIV');
-    let ra = bella.isElement(el);
+    const doc = window.document;
+    const el = doc.createElement('DIV');
+    const ra = bella.isElement(el);
     assert.ok(ra, 'Fragment must be an element.');
 
     [
@@ -43,8 +43,8 @@ let checkDetection = (bella) => {
       undefined,
       function x() {},
     ].forEach((item) => {
-      let r = bella.isElement(item);
-      let x = stringify(item);
+      const r = bella.isElement(item);
+      const x = stringify(item);
       assert.error(r, `"${x}" must be not element.`);
     });
     assert.end();
@@ -63,8 +63,8 @@ let checkDetection = (bella) => {
       new Array(),
       new Array(5),
     ].forEach((item) => {
-      let r = bella.isArray(item);
-      let x = stringify(item);
+      const r = bella.isArray(item);
+      const x = stringify(item);
       assert.ok(r, `"${x}" must be an array.`);
     });
 
@@ -81,8 +81,8 @@ let checkDetection = (bella) => {
       undefined,
       function x() {},
     ].forEach((item) => {
-      let r = bella.isArray(item);
-      let x = stringify(item);
+      const r = bella.isArray(item);
+      const x = stringify(item);
       assert.error(r, `"${x}" must be not array.`);
     });
     assert.end();
@@ -96,8 +96,8 @@ let checkDetection = (bella) => {
       {a: 1, b: 0},
       Object.create({}),
     ].forEach((item) => {
-      let r = bella.isObject(item);
-      let x = stringify(item);
+      const r = bella.isObject(item);
+      const x = stringify(item);
       assert.ok(r, `"${x}" must be an object.`);
     });
 
@@ -111,8 +111,8 @@ let checkDetection = (bella) => {
       [],
       new Date(),
     ].forEach((item) => {
-      let r = bella.isObject(item);
-      let x = stringify(item);
+      const r = bella.isObject(item);
+      const x = stringify(item);
       assert.error(r, `"${x}" must be not object.`);
     });
     assert.end();
@@ -128,8 +128,8 @@ let checkDetection = (bella) => {
       'undefined',
       String(1000),
     ].forEach((item) => {
-      let r = bella.isString(item);
-      let x = stringify(item);
+      const r = bella.isString(item);
+      const x = stringify(item);
       assert.ok(r, `"${x}" must be an string.`);
     });
 
@@ -141,8 +141,8 @@ let checkDetection = (bella) => {
       Number('1000'),
       0,
     ].forEach((item) => {
-      let r = bella.isString(item);
-      let x = stringify(item);
+      const r = bella.isString(item);
+      const x = stringify(item);
       assert.error(r, `"${x}" must be not string.`);
     });
 
@@ -155,8 +155,8 @@ let checkDetection = (bella) => {
       true,
       2 - 1 === 1,
     ].forEach((item) => {
-      let r = bella.isBoolean(item);
-      let x = stringify(item);
+      const r = bella.isBoolean(item);
+      const x = stringify(item);
       assert.ok(r, `"${x}" must be true.`);
     });
 
@@ -173,8 +173,8 @@ let checkDetection = (bella) => {
       undefined,
       function x() {},
     ].forEach((item) => {
-      let r = bella.isBoolean(item);
-      let x = stringify(item);
+      const r = bella.isBoolean(item);
+      const x = stringify(item);
       assert.error(r, `"${x}" must be false.`);
     });
     assert.end();
@@ -183,8 +183,8 @@ let checkDetection = (bella) => {
   // isDate
   test('Testing .isDate(Anything) method:', (assert) => {
     [new Date()].forEach((item) => {
-      let r = bella.isDate(item);
-      let x = stringify(item);
+      const r = bella.isDate(item);
+      const x = stringify(item);
       assert.ok(r, `"${x}" must be date.`);
     });
 
@@ -201,8 +201,8 @@ let checkDetection = (bella) => {
       undefined,
       function x() {},
     ].forEach((item) => {
-      let r = bella.isDate(item);
-      let x = stringify(item);
+      const r = bella.isDate(item);
+      const x = stringify(item);
       assert.error(r, `"${x}" must not be date.`);
     });
     assert.end();
@@ -215,8 +215,8 @@ let checkDetection = (bella) => {
       'bob.nany@live.com',
       'bob.nany@live.com.vn',
     ].forEach((item) => {
-      let r = bella.isEmail(item);
-      let x = stringify(item);
+      const r = bella.isEmail(item);
+      const x = stringify(item);
       assert.ok(r, `"${x}" must be email.`);
     });
 
@@ -229,8 +229,8 @@ let checkDetection = (bella) => {
       undefined,
       0,
     ].forEach((item) => {
-      let r = bella.isEmail(item);
-      let x = stringify(item);
+      const r = bella.isEmail(item);
+      const x = stringify(item);
       assert.error(r, `"${x}" must not be email.`);
     });
     assert.end();
@@ -247,8 +247,8 @@ let checkDetection = (bella) => {
       [],
       Object.create({}),
     ].forEach((item) => {
-      let r = bella.isEmpty(item);
-      let x = stringify(item);
+      const r = bella.isEmpty(item);
+      const x = stringify(item);
       assert.ok(r, `"${x}" must be empty.`);
     });
 
@@ -262,8 +262,8 @@ let checkDetection = (bella) => {
       ],
       function x() {},
     ].forEach((item) => {
-      let r = bella.isEmpty(item);
-      let x = stringify(item);
+      const r = bella.isEmpty(item);
+      const x = stringify(item);
       assert.error(r, `"${x}" must not be empty.`);
     });
     assert.end();
@@ -276,8 +276,8 @@ let checkDetection = (bella) => {
       function x() {},
       new Function(),
     ].forEach((item) => {
-      let r = bella.isFunction(item);
-      let x = stringify(item);
+      const r = bella.isFunction(item);
+      const x = stringify(item);
       assert.ok(r, `"${x}" must be function.`);
     });
 
@@ -296,8 +296,8 @@ let checkDetection = (bella) => {
       [],
       Object.create({}),
     ].forEach((item) => {
-      let r = bella.isFunction(item);
-      let x = stringify(item);
+      const r = bella.isFunction(item);
+      const x = stringify(item);
       assert.error(r, `"${x}" must not be function.`);
     });
     assert.end();
@@ -311,8 +311,8 @@ let checkDetection = (bella) => {
       9,
       0,
     ].forEach((item) => {
-      let r = bella.isInteger(item);
-      let x = stringify(item);
+      const r = bella.isInteger(item);
+      const x = stringify(item);
       assert.ok(r, `"${x}" must be integer.`);
     });
 
@@ -326,8 +326,8 @@ let checkDetection = (bella) => {
       null,
       undefined,
     ].forEach((item) => {
-      let r = bella.isInteger(item);
-      let x = stringify(item);
+      const r = bella.isInteger(item);
+      const x = stringify(item);
       assert.error(r, `"${x}" must not be integer.`);
     });
     assert.end();
@@ -341,8 +341,8 @@ let checkDetection = (bella) => {
       'ABC',
       'AbCd',
     ].forEach((item) => {
-      let r = bella.isLetter(item);
-      let x = stringify(item);
+      const r = bella.isLetter(item);
+      const x = stringify(item);
       assert.ok(r, `"${x}" must be letter.`);
     });
 
@@ -361,8 +361,8 @@ let checkDetection = (bella) => {
       null,
       undefined,
     ].forEach((item) => {
-      let r = bella.isLetter(item);
-      let x = stringify(item);
+      const r = bella.isLetter(item);
+      const x = stringify(item);
       assert.error(r, `"${x}" must not be letter.`);
     });
     assert.end();
@@ -379,8 +379,8 @@ let checkDetection = (bella) => {
       9,
       0,
     ].forEach((item) => {
-      let r = bella.isNumber(item);
-      let x = stringify(item);
+      const r = bella.isNumber(item);
+      const x = stringify(item);
       assert.ok(r, `"${x}" must be number.`);
     });
 
@@ -392,8 +392,8 @@ let checkDetection = (bella) => {
       undefined,
       new Function(),
     ].forEach((item) => {
-      let r = bella.isNumber(item);
-      let x = stringify(item);
+      const r = bella.isNumber(item);
+      const x = stringify(item);
       assert.error(r, `"${x}" must not be number.`);
     });
     assert.end();
@@ -401,7 +401,7 @@ let checkDetection = (bella) => {
 
   // hasProperty
   test('Tesing .hasProperty(Object o, String propertyName) method:', (assert) => {
-    let sample = {
+    const sample = {
       name: 'lemond',
       age: 15,
       group: null,
@@ -409,7 +409,7 @@ let checkDetection = (bella) => {
       color: 0,
     };
 
-    let props = [
+    const props = [
       'name',
       'age',
       'group',
@@ -417,11 +417,11 @@ let checkDetection = (bella) => {
       'color',
     ];
     for (let i = 0; i < props.length; i++) {
-      let k = props[i];
+      const k = props[i];
       assert.ok(bella.hasProperty(sample, k), `"${k}" must be recognized.`);
     }
 
-    let fails = [
+    const fails = [
       'class',
       'year',
       'prototype',
@@ -429,7 +429,7 @@ let checkDetection = (bella) => {
       'toString',
     ];
     for (let i = 0; i < fails.length; i++) {
-      let k = fails[i];
+      const k = fails[i];
       assert.error(bella.hasProperty(sample, k), `"${k}" must be unrecognized.`);
     }
 
@@ -440,8 +440,8 @@ let checkDetection = (bella) => {
 
   // equals
   test('Tesing .equals(Anything a, Anything b) method:', (assert) => {
-    let t = new Date();
-    let a1 = [
+    const t = new Date();
+    const a1 = [
       {},
       [],
       0,
@@ -459,7 +459,7 @@ let checkDetection = (bella) => {
       },
       t,
     ];
-    let b1 = [
+    const b1 = [
       {},
       [],
       0,
@@ -479,18 +479,18 @@ let checkDetection = (bella) => {
     ];
 
     for (let i = 0; i < a1.length; i++) {
-      let a = a1[i];
-      let b = b1[i];
-      let result = bella.equals(a, b);
-      let as = stringify(a);
-      let bs = stringify(b);
+      const a = a1[i];
+      const b = b1[i];
+      const result = bella.equals(a, b);
+      const as = stringify(a);
+      const bs = stringify(b);
       assert.ok(result, `"${as}" must be equal to ${bs}.`);
     }
 
 
-    let at = new Date();
-    let bt = new Date(at.getTime() - 1000);
-    let a2 = [
+    const at = new Date();
+    const bt = new Date(at.getTime() - 1000);
+    const a2 = [
       {x: 5},
       [
         11,
@@ -512,7 +512,7 @@ let checkDetection = (bella) => {
       },
       at,
     ];
-    let b2 = [
+    const b2 = [
       {},
       ['ab'],
       8,
@@ -532,11 +532,11 @@ let checkDetection = (bella) => {
     ];
 
     for (let i = 0; i < a2.length; i++) {
-      let a = a2[i];
-      let b = b2[i];
-      let result = bella.equals(a, b);
-      let as = stringify(a);
-      let bs = stringify(b);
+      const a = a2[i];
+      const b = b2[i];
+      const result = bella.equals(a, b);
+      const as = stringify(a);
+      const bs = stringify(b);
       assert.error(result, `"${as}" must be not equal to ${bs}.`);
     }
 

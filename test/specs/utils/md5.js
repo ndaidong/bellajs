@@ -8,11 +8,11 @@ const test = require('tap').test;
 const {variants} = require('../../config');
 
 // md5
-let checkMD5 = (bella) => {
+const checkMD5 = (bella) => {
   test('Testing .md5() method', (assert) => {
-    let arr = [];
+    const arr = [];
     while (arr.length < 10) {
-      let k = bella.md5();
+      const k = bella.md5();
       arr.push(k);
       assert.deepEquals(k.length, 32, 'Returned value must be 32 chars');
     }
