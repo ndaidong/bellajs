@@ -19,7 +19,7 @@
   "scripts": {
     "lint": "eslint src test/specs",
     "pretest": "npm run lint && npm run build",
-    "test": "COVERALLS_REPO_TOKEN=Tl5oBwZaxoIDd9uRqe0bl6xMfmorjPuAP tap test/start.js --coverage --reporter=spec",
+    "test": "COVERALLS_REPO_TOKEN=Tl5oBwZaxoIDd9uRqe0bl6xMfmorjPuAP TZ=Asia/Ho_Chi_Minh tap test/start.js --coverage --reporter=spec",
     "build": "gccmin -e src/main.js -n bella -o dist -p package.json",
     "reset": "node reset"
   },
