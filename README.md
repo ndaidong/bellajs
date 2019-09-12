@@ -204,6 +204,46 @@ What you get is still:
 }
 ```
 
+#### compose
+
+Performs right-to-left function composition.
+
+```js
+compose(f1, f2, ...fN)
+```
+
+Examples:
+
+```js
+import {compose} from 'bellajs';
+
+let f1 = (name) => {
+  return `f1 ${name}`;
+};
+let f2 = (name) => {
+  return `f2 ${name}`;
+};
+let f3 = (name) => {
+  return `f3 ${name}`;
+};
+
+let addF = compose(f1, f2, f3);
+
+addF('Hello') // => 'f1 f2 f3 Hello'
+
+let add1 = (num) => {
+  return num + 1;
+};
+
+let mult2 = (num) => {
+  return num * 2;
+};
+
+let add1AndMult2 = compose(add1, mult2);
+add1AndMult2(3) // => 7
+// because multiple to 2 first, then add 1 late => 3 * 2 + 1
+```
+
 #### copies
 
 Copy the properties from *source* to *target*.
@@ -261,6 +301,28 @@ Output:
   name: 'Toto',
   age: 30
 }
+```
+
+#### curry
+
+```js
+curry(fn)
+```
+
+Examples:
+
+```js
+import {curry} from 'bellajs';
+
+let sum = curry((a, b, c) => {
+  return a + b + c;
+});
+
+sum(3)(2)(1) // => 6
+sum(1)(2)(3) // => 6
+sum(1, 2)(3) // => 6
+sum(1)(2, 3) // => 6
+sum(1, 2, 3) // => 6
 ```
 
 #### equals
@@ -328,6 +390,45 @@ pick(arr, 2);  // --> [3, 5]
 pick(arr, 2);  // --> [8, 1]
 ```
 
+#### pipe
+
+Performs left-to-right function composition.
+
+```js
+pipe(f1, f2, ...fN)
+```
+
+Examples:
+
+```js
+import {pipe} from 'bellajs';
+
+let f1 = (name) => {
+  return `f1 ${name}`;
+};
+let f2 = (name) => {
+  return `f2 ${name}`;
+};
+let f3 = (name) => {
+  return `f3 ${name}`;
+};
+
+let addF = pipe(f1, f2, f3);
+
+addF('Hello') // => 'f3 f2 f1 Hello'
+
+let add1 = (num) => {
+  return num + 1;
+};
+
+let mult2 = (num) => {
+  return num * 2;
+};
+
+let add1AndMult2 = pipe(add1, mult2);
+add1AndMult2(3) // => 8
+// because add 1 first, then multiple to 2 late => (3 + 1) * 2
+```
 
 #### randint
 
@@ -430,115 +531,12 @@ import {unique} from 'bellajs';
 unique([1, 2, 3, 2, 3, 1, 5]); // => [ 1, 2, 3, 5 ]
 ```
 
-#### curry
-
-```js
-curry(fn)
-```
-
-Examples:
-
-```js
-import {curry} from 'bellajs';
-
-let sum = curry((a, b, c) => {
-  return a + b + c;
-});
-
-sum(3)(2)(1) // => 6
-sum(1)(2)(3) // => 6
-sum(1, 2)(3) // => 6
-sum(1)(2, 3) // => 6
-sum(1, 2, 3) // => 6
-```
-
-#### compose
-
-Performs right-to-left function composition.
-
-```js
-compose(f1, f2, ...fN)
-```
-
-Examples:
-
-```js
-import {compose} from 'bellajs';
-
-let f1 = (name) => {
-  return `f1 ${name}`;
-};
-let f2 = (name) => {
-  return `f2 ${name}`;
-};
-let f3 = (name) => {
-  return `f3 ${name}`;
-};
-
-let addF = compose(f1, f2, f3);
-
-addF('Hello') // => 'f1 f2 f3 Hello'
-
-let add1 = (num) => {
-  return num + 1;
-};
-
-let mult2 = (num) => {
-  return num * 2;
-};
-
-let add1AndMult2 = compose(add1, mult2);
-add1AndMult2(3) // => 7
-// because multiple to 2 first, then add 1 late => 3 * 2 + 1
-```
-
-#### pipe
-
-Performs left-to-right function composition.
-
-```js
-pipe(f1, f2, ...fN)
-```
-
-Examples:
-
-```js
-import {pipe} from 'bellajs';
-
-let f1 = (name) => {
-  return `f1 ${name}`;
-};
-let f2 = (name) => {
-  return `f2 ${name}`;
-};
-let f3 = (name) => {
-  return `f3 ${name}`;
-};
-
-let addF = pipe(f1, f2, f3);
-
-addF('Hello') // => 'f3 f2 f1 Hello'
-
-let add1 = (num) => {
-  return num + 1;
-};
-
-let mult2 = (num) => {
-  return num * 2;
-};
-
-let add1AndMult2 = pipe(add1, mult2);
-add1AndMult2(3) // => 8
-// because add 1 first, then multiple to 2 late => (3 + 1) * 2
-```
-
-
 ## Test
 
 ```bash
 git clone https://github.com/ndaidong/bellajs.git
 cd bellajs
-npm i
+npm install
 npm test
 ```
 
