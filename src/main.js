@@ -75,7 +75,7 @@ export const copies = (source, dest, matched = false, excepts = []) => {
     if (excepts.length > 0 && excepts.includes(k)) {
       continue; // eslint-disable-line no-continue
     }
-    if (!matched || matched && dest.hasOwnProperty(k)) {
+    if (!matched || matched && hasProperty(dest, k)) {
       const oa = source[k];
       const ob = dest[k];
       if (isObject(ob) && isObject(oa) || isArray(ob) && isArray(oa)) {
