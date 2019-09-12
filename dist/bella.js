@@ -1,6 +1,6 @@
 /**
  * bellajs@8.0.0rc1
- * built on: Thu, 12 Sep 2019 17:41:17 GMT
+ * built on: Thu, 12 Sep 2019 17:50:53 GMT
  * repository: https://github.com/ndaidong/bellajs
  * maintainer: @ndaidong
  * License: MIT
@@ -64,7 +64,7 @@
     if (!ob || !k) {
       return false;
     }
-    return Object.prototype.hasOwnProperty.call(ob, k);
+    return ob.hasOwnProperty(k);
   };
 
   const equals = (a, b) => {

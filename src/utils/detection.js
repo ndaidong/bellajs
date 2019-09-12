@@ -69,5 +69,5 @@ export const hasProperty = (ob, k) => {
   if (!ob || !k) {
     return false;
   }
-  return Object.prototype.hasOwnProperty.call(ob, k);
+  return ob.hasOwnProperty(k);
 };
