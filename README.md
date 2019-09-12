@@ -7,6 +7,8 @@ Lightweight util for handling data type, string... in your Node.js and browser a
 [![Build Status](https://travis-ci.org/ndaidong/bellajs.svg?branch=master)](https://travis-ci.org/ndaidong/bellajs)
 [![Coverage Status](https://coveralls.io/repos/github/ndaidong/bellajs/badge.svg?branch=master)](https://coveralls.io/github/ndaidong/bellajs?branch=master)
 
+You may be interested in [BellaPy](https://github.com/ndaidong/bellapy) too.
+
 # Contents
 
 * [Setup](#setup)
