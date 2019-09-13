@@ -1,5 +1,5 @@
 {
-  "version": "7.5.0",
+  "version": "8.0.0rc1",
   "name": "bellajs",
   "description": "A useful helper for any javascript program",
   "homepage": "https://www.npmjs.com/package/bellajs",
@@ -8,6 +8,7 @@
     "url": "https://github.com/ndaidong/bellajs"
   },
   "author": "@ndaidong",
+  "type": "module",
   "main": "./dist/bella.js",
   "module": "./src/main",
   "jsnext:main": "./src/main",
@@ -18,20 +19,20 @@
   "scripts": {
     "lint": "eslint src test/specs",
     "pretest": "npm run lint && npm run build",
-    "test": "COVERALLS_REPO_TOKEN=Tl5oBwZaxoIDd9uRqe0bl6xMfmorjPuAP tap test/start.js --coverage --reporter=spec",
+    "test": "COVERALLS_REPO_TOKEN=Tl5oBwZaxoIDd9uRqe0bl6xMfmorjPuAP TZ=Asia/Ho_Chi_Minh tap test/start.js --coverage --reporter=spec",
     "build": "gccmin -e src/main.js -n bella -o dist -p package.json",
     "reset": "node reset"
   },
   "devDependencies": {
-    "coveralls": "^3.0.2",
-    "eslint": "^5.6.0",
-    "eslint-config-goes": "^1.0.0",
-    "gcc-min": "^7.0.1",
-    "is": "^3.2.1",
-    "jsdom": "^12.0.0",
+    "coveralls": "^3.0.6",
+    "eslint": "^6.3.0",
+    "eslint-config-goes": "^1.1.6",
+    "gcc-min": "^7.1.0",
+    "is": "^3.3.0",
+    "jsdom": "^15.1.1",
     "jsdom-global": "^3.0.2",
-    "sinon": "^6.3.3",
-    "tap": "^12.0.1"
+    "sinon": "^7.4.2",
+    "tap": "^14.6.2"
   },
   "keywords": [
     "detection",

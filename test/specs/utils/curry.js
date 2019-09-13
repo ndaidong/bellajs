@@ -7,20 +7,20 @@ const test = require('tap').test;
 
 const {variants} = require('../../config');
 
-let checkCurry = (bella) => {
-  let curry = bella.curry;
-  let isGreaterThan = curry((limit, value) => {
+const checkCurry = (bella) => {
+  const curry = bella.curry;
+  const isGreaterThan = curry((limit, value) => {
     return value > limit;
   });
 
-  let sum3 = curry((a, b, c) => {
+  const sum3 = curry((a, b, c) => {
     return a + b + c;
   });
 
   test('Testing .curry() method', (assert) => {
     assert.deepEquals(isGreaterThan(10)(20), true, `isGreaterThan(10)(20) must return true`);
     assert.deepEquals(isGreaterThan(30)(20), false, `isGreaterThan(30)(20) must return false`);
-    let greaterThanTen = isGreaterThan(10);
+    const greaterThanTen = isGreaterThan(10);
     assert.deepEquals(greaterThanTen(20), true, `greaterThanTen(20) must return true`);
 
     assert.deepEquals(sum3(3)(2)(1), 6, `sum3(3)(2)(1) must return 6`);

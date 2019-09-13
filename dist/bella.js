@@ -1,6 +1,6 @@
 /**
- * bellajs@7.5.0
- * built on: Mon, 17 Sep 2018 08:14:14 GMT
+ * bellajs@8.0.0rc1
+ * built on: Thu, 12 Sep 2019 23:48:47 GMT
  * repository: https://github.com/ndaidong/bellajs
  * maintainer: @ndaidong
  * License: MIT
@@ -8,8 +8,8 @@
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
   typeof define === 'function' && define.amd ? define(['exports'], factory) :
-  (factory((global.bella = {})));
-}(this, (function (exports) { 'use strict';
+  (global = global || self, factory(global.bella = {}));
+}(this, function (exports) {
   const ob2Str = (val) => {
     return {}.toString.call(val);
   };
@@ -47,11 +47,11 @@
     return ob2Str(v).match(/^\[object HTML\w*Element]$/);
   };
   const isLetter = (val) => {
-    let re = /^[a-z]+$/i;
+    const re = /^[a-z]+$/i;
     return isString(val) && re.test(val);
   };
   const isEmail = (val) => {
-    let re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+    const re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
     return isString(val) && re.test(val);
   };
   const isEmpty = (val) => {
@@ -66,6 +66,7 @@
     }
     return Object.prototype.hasOwnProperty.call(ob, k);
   };
+
   const equals = (a, b) => {
     let re = true;
     if (isEmpty(a) && isEmpty(b)) {
@@ -90,14 +91,14 @@
         }
       }
     } else if (isObject(a) && isObject(b)) {
-      let as = [];
-      let bs = [];
-      for (let k1 in a) {
+      const as = [];
+      const bs = [];
+      for (const k1 in a) {
         if (hasProperty(a, k1)) {
           as.push(k1);
         }
       }
-      for (let k2 in b) {
+      for (const k2 in b) {
         if (hasProperty(b, k2)) {
           bs.push(k2);
         }
@@ -105,7 +106,7 @@
       if (as.length !== bs.length) {
         return false;
       }
-      for (let k in a) {
+      for (const k in a) {
         if (!hasProperty(b, k) || !equals(a[k], b[k])) {
           re = false;
           break;
@@ -114,8 +115,9 @@
     }
     return re;
   };
+
   const MAX_NUMBER = Number.MAX_SAFE_INTEGER;
-  const random = (min, max) => {
+  const randint = (min, max) => {
     if (!min || min < 0) {
       min = 0;
     }
@@ -129,43 +131,27 @@
       min = Math.min(min, max);
       max = Math.max(min, max);
     }
-    let offset = min;
-    let range = max - min + 1;
+    const offset = min;
+    const range = max - min + 1;
     return Math.floor(Math.random() * range) + offset;
   };
-  const MAX_STRING = 1 << 28;
+
   const toString = (input) => {
-    let s = isNumber(input) ? String(input) : input;
+    const s = isNumber(input) ? String(input) : input;
     if (!isString(s)) {
       throw new Error('InvalidInput: String required.');
     }
     return s;
   };
-  const encode = (s) => {
-    let x = toString(s);
-    return encodeURIComponent(x);
-  };
-  const decode = (s) => {
-    let x = toString(s);
-    return decodeURIComponent(x.replace(/\+/g, ' '));
-  };
-  const trim = (s, all = false) => {
-    let x = toString(s);
-    x = x.replace(/^[\s\xa0]+|[\s\xa0]+$/g, '');
-    if (x && all) {
-      x = x.replace(/\r?\n|\r/g, ' ').replace(/\s\s+|\r/g, ' ');
-    }
-    return x;
-  };
   const truncate = (s, l) => {
-    let o = toString(s);
-    let t = l || 140;
+    const o = toString(s);
+    const t = l || 140;
     if (o.length <= t) {
       return o;
     }
     let x = o.substring(0, t);
-    let a = x.split(' ');
-    let b = a.length;
+    const a = x.split(' ');
+    const b = a.length;
     let r = '';
     if (b > 1) {
       a.pop();
@@ -180,18 +166,18 @@
     return r;
   };
   const stripTags = (s) => {
-    let x = toString(s);
-    return trim(x.replace(/<.*?>/gi, ' ').replace(/\s\s+/g, ' '));
+    const x = toString(s);
+    return x.replace(/<.*?>/gi, ' ').replace(/\s\s+/g, ' ').trim();
   };
   const escapeHTML = (s) => {
-    let x = toString(s);
+    const x = toString(s);
     return x.replace(/&/g, '&amp;')
       .replace(/</g, '&lt;')
       .replace(/>/g, '&gt;')
       .replace(/"/g, '&quot;');
   };
   const unescapeHTML = (s) => {
-    let x = toString(s);
+    const x = toString(s);
     return x.replace(/&quot;/g, '"')
       .replace(/&lt;/g, '<')
       .replace(/&gt;/g, '>')
@@ -206,33 +192,13 @@
     return x.charAt(0).toUpperCase() + x.slice(1);
   };
   const ucwords = (s) => {
-    let x = toString(s);
-    let c = x.split(' ');
-    let a = [];
+    const x = toString(s);
+    const c = x.split(' ');
+    const a = [];
     c.forEach((w) => {
       a.push(ucfirst(w));
     });
     return a.join(' ');
-  };
-  const leftPad = (s, size = 2, pad = '0') => {
-    let x = toString(s);
-    return x.length >= size ? x : new Array(size - x.length + 1).join(pad) + x;
-  };
-  const rightPad = (s, size = 2, pad = '0') => {
-    let x = toString(s);
-    return x.length >= size ? x : x + new Array(size - x.length + 1).join(pad);
-  };
-  const repeat = (s, m) => {
-    let x = toString(s);
-    if (!isInteger(m) || m < 1) {
-      return x;
-    }
-    if (x.length * m >= MAX_STRING) {
-      throw new RangeError(`Repeat count must not overflow maximum string size.`);
-    }
-    let a = [];
-    a.length = m;
-    return a.fill(x, 0, m).join('');
   };
   const replaceAll = (s, a, b) => {
     let x = toString(s);
@@ -243,18 +209,18 @@
       b = String(b);
     }
     if (isString(a) && isString(b)) {
-      let aa = x.split(a);
+      const aa = x.split(a);
       x = aa.join(b);
     } else if (isArray(a) && isString(b)) {
       a.forEach((v) => {
         x = replaceAll(x, v, b);
       });
     } else if (isArray(a) && isArray(b) && a.length === b.length) {
-      let k = a.length;
+      const k = a.length;
       if (k > 0) {
         for (let i = 0; i < k; i++) {
-          let aaa = a[i];
-          let bb = b[i];
+          const aaa = a[i];
+          const bb = b[i];
           x = replaceAll(x, aaa, bb);
         }
       }
@@ -263,7 +229,7 @@
   };
   const stripAccent = (s) => {
     let x = toString(s);
-    let map = {
+    const map = {
       a: 'á|à|ả|ã|ạ|ă|ắ|ặ|ằ|ẳ|ẵ|â|ấ|ầ|ẩ|ẫ|ậ|ä',
       A: 'Á|À|Ả|Ã|Ạ|Ă|Ắ|Ặ|Ằ|Ẳ|Ẵ|Â|Ấ|Ầ|Ẩ|Ẫ|Ậ|Ä',
       c: 'ç',
@@ -281,12 +247,12 @@
       y: 'ý|ỳ|ỷ|ỹ|ỵ',
       Y: 'Ý|Ỳ|Ỷ|Ỹ|Ỵ',
     };
-    let updateS = (ai, key) => {
+    const updateS = (ai, key) => {
       x = replaceAll(x, ai, key);
     };
-    for (let key in map) {
+    for (const key in map) {
       if (hasProperty(map, key)) {
-        let a = map[key].split('|');
+        const a = map[key].split('|');
         a.forEach((item) => {
           return updateS(item, key);
         });
@@ -294,85 +260,35 @@
     }
     return x;
   };
-  const createId = (leng, prefix = '') => {
-    let lc = 'abcdefghijklmnopqrstuvwxyz';
-    let uc = lc.toUpperCase();
-    let nb = '0123456789';
-    let cand = [
+  const genid = (leng, prefix = '') => {
+    const lc = 'abcdefghijklmnopqrstuvwxyz';
+    const uc = lc.toUpperCase();
+    const nb = '0123456789';
+    const cand = [
       lc,
       uc,
       nb,
     ].join('').split('').sort(() => {
       return Math.random() > 0.5;
     }).join('');
-    let t = cand.length;
-    let ln = Math.max(leng || 32, prefix.length);
+    const t = cand.length;
+    const ln = Math.max(leng || 32, prefix.length);
     let s = prefix;
     while (s.length < ln) {
-      let k = random(0, t);
+      const k = randint(0, t);
       s += cand.charAt(k) || '';
     }
     return s;
   };
-  const createAlias = (s, delimiter) => {
-    let x = trim(stripAccent(s));
-    let d = delimiter || '-';
+  const slugify = (s, delimiter) => {
+    const x = stripAccent(s).trim();
+    const d = delimiter || '-';
     return x.toLowerCase()
       .replace(/\W+/g, ' ')
       .replace(/\s+/g, ' ')
       .replace(/\s/g, d);
   };
-  const compile = (tpl, data) => {
-    let ns = [];
-    let c = (s, ctx, namespace) => {
-      if (namespace) {
-        ns.push(namespace);
-      }
-      let a = [];
-      for (let k in ctx) {
-        if (hasProperty(ctx, k)) {
-          let v = ctx[k];
-          if (isNumber(v)) {
-            v = String(v);
-          }
-          if (isObject(v) || isArray(v)) {
-            a.push({
-              key: k,
-              data: v,
-            });
-          } else if (isString(v)) {
-            v = replaceAll(v, [
-              '{',
-              '}',
-            ], [
-              '&#123;',
-              '&#125;',
-            ]);
-            let cns = ns.concat([k]);
-            let r = new RegExp('{' + cns.join('.') + '}', 'gi');
-            s = s.replace(r, v);
-          }
-        }
-      }
-      if (a.length > 0) {
-        a.forEach((item) => {
-          s = c(s, item.data, item.key);
-        });
-      }
-      return trim(s, true);
-    };
-    if (data && (isString(data) || isObject(data) || isArray(data))) {
-      return c(tpl, data);
-    }
-    return tpl;
-  };
-  const template = (tpl) => {
-    return {
-      compile: (data) => {
-        return compile(tpl, data);
-      },
-    };
-  };
+
   const PATTERN = 'D, M d, Y  h:i:s A';
   const WEEKDAYS = [
     'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday',
@@ -390,16 +306,16 @@
   };
   const tzone = now().getTimezoneOffset();
   const tz = (() => {
-    let z = Math.abs(tzone / 60);
-    let sign = tzone < 0 ? '+' : '-';
-    return ['GMT', sign, leftPad(z, 4)].join('');
+    const z = Math.abs(tzone / 60);
+    const sign = tzone < 0 ? '+' : '-';
+    return ['GMT', sign, String(z).padStart(4, '0')].join('');
   })();
-  let _num = (n) => {
+  const _num = (n) => {
     return String(n < 10 ? '0' + n : n);
   };
-  let _ord = (day) => {
+  const _ord = (day) => {
     let s = day + ' ';
-    let x = s.charAt(s.length - 2);
+    const x = s.charAt(s.length - 2);
     if (x === '1') {
       s = 'st';
     } else if (x === '2') {
@@ -411,18 +327,18 @@
     }
     return s;
   };
-  let format = (input, output = PATTERN) => {
-    let d = isDate(input) ? input : new Date(input);
+  const format = (input, output = PATTERN) => {
+    const d = isDate(input) ? input : new Date(input);
     if (!isDate(d)) {
       throw new Error('InvalidInput: Number or Date required.');
     }
     if (!isString(output)) {
       throw new Error('Invalid output pattern.');
     }
-    let vchar = /\.*\\?([a-z])/gi;
-    let meridiem = output.match(/(\.*)a{1}(\.*)*/i);
-    let wn = WEEKDAYS;
-    let mn = MONTHS;
+    const vchar = /\.*\\?([a-z])/gi;
+    const meridiem = output.match(/(\.*)a{1}(\.*)*/i);
+    const wn = WEEKDAYS;
+    const mn = MONTHS;
     let f = {
       Y() {
         return d.getFullYear();
@@ -488,13 +404,13 @@
         return tz;
       }
     };
-    let _term = (t, s) => {
+    const _term = (t, s) => {
       return f[t] ? f[t]() : s;
     };
     return output.replace(vchar, _term);
   };
-  let relativize = (input = time()) => {
-    let d = isDate(input) ? input : new Date(input);
+  const relativize = (input = time()) => {
+    const d = isDate(input) ? input : new Date(input);
     if (!isDate(d)) {
       throw new Error('InvalidInput: Number or Date required.');
     }
@@ -507,7 +423,7 @@
       return 'Just now';
     }
     let units = null;
-    let conversions = {
+    const conversions = {
       millisecond: 1,
       second: 1000,
       minute: 60,
@@ -516,7 +432,7 @@
       month: 30,
       year: 12,
     };
-    for (let key in conversions) {
+    for (const key in conversions) {
       if (delta < conversions[key]) {
         break;
       } else {
@@ -530,23 +446,24 @@
     }
     return [delta, units].join(' ') + ' ago';
   };
-  let utc = (input = time()) => {
-    let d = isDate(input) ? input : new Date(input);
+  const utc = (input = time()) => {
+    const d = isDate(input) ? input : new Date(input);
     if (!isDate(d)) {
       throw new Error('InvalidInput: Number or Date required.');
     }
-    let dMinutes = d.getMinutes();
-    let dClone = new Date(d);
+    const dMinutes = d.getMinutes();
+    const dClone = new Date(d);
     dClone.setMinutes(dMinutes + tzone);
     return `${format(dClone, 'D, j M Y h:i:s')} GMT+0000`;
   };
-  let local = (input = time()) => {
-    let d = isDate(input) ? input : new Date(input);
+  const local = (input = time()) => {
+    const d = isDate(input) ? input : new Date(input);
     if (!isDate(d)) {
       throw new Error('InvalidInput: Number or Date required.');
     }
     return format(d, 'D, j M Y h:i:s O');
   };
+
   let md5 = (str) => {
     var k = [], i = 0;
     for(; i < 64; ){
@@ -601,9 +518,10 @@
     for(; j < 32; ) str += ((h[j >> 3] >> ((1 ^ j++ & 7) * 4)) & 15).toString(16);
     return str;
   };
+
   const curry = (fn) => {
-    let totalArguments = fn.length;
-    let next = (argumentLength, rest) => {
+    const totalArguments = fn.length;
+    const next = (argumentLength, rest) => {
       if (argumentLength > 0) {
         return (...args) => {
           return next(argumentLength - args.length, [...rest, ...args]);
@@ -623,16 +541,16 @@
     if (isDate(val)) {
       return new Date(val.valueOf());
     }
-    let copyObject = (o) => {
-      let oo = Object.create({});
-      for (let k in o) {
+    const copyObject = (o) => {
+      const oo = Object.create({});
+      for (const k in o) {
         if (hasProperty(o, k)) {
           oo[k] = clone(o[k]);
         }
       }
       return oo;
     };
-    let copyArray = (a) => {
+    const copyArray = (a) => {
       return [...a].map((e) => {
         if (isArray(e)) {
           return copyArray(e);
@@ -651,13 +569,13 @@
     return val;
   };
   const copies = (source, dest, matched = false, excepts = []) => {
-    for (let k in source) {
+    for (const k in source) {
       if (excepts.length > 0 && excepts.includes(k)) {
         continue;
       }
-      if (!matched || matched && dest.hasOwnProperty(k)) {
-        let oa = source[k];
-        let ob = dest[k];
+      if (!matched || matched && hasProperty(dest, k)) {
+        const oa = source[k];
+        const ob = dest[k];
         if (isObject(ob) && isObject(oa) || isArray(ob) && isArray(oa)) {
           dest[k] = copies(oa, dest[k], matched, excepts);
         } else {
@@ -670,52 +588,71 @@
   const unique = (arr = []) => {
     return [...new Set(arr)];
   };
-  exports.curry = curry;
-  exports.compose = compose;
-  exports.pipe = pipe;
+  const sort = (fn, arr = []) => {
+    return [...arr].sort(fn);
+  };
+  const sortBy = (key, order = 1, arr = []) => {
+    return sort(arr, (m, n) => {
+      return m[key] > n[key] ? order : (m[key] < n[key] ? (-1 * order) : 0);
+    });
+  };
+  const shuffle = (arr = []) => {
+    return sort(() => {
+      return Math.random() > 0.5;
+    }, [...arr]);
+  };
+  const pick = (count = 1, arr = []) => {
+    const a = shuffle([...arr]);
+    const mc = Math.max(1, count);
+    const c = Math.min(mc, a.length - 1);
+    return a.splice(0, c);
+  };
+
   exports.clone = clone;
+  exports.compose = compose;
   exports.copies = copies;
-  exports.unique = unique;
-  exports.isNull = isNull;
-  exports.isUndefined = isUndefined;
-  exports.isFunction = isFunction;
-  exports.isString = isString;
-  exports.isNumber = isNumber;
-  exports.isInteger = isInteger;
+  exports.curry = curry;
+  exports.equals = equals;
+  exports.escapeHTML = escapeHTML;
+  exports.format = format;
+  exports.genid = genid;
+  exports.hasProperty = hasProperty;
   exports.isArray = isArray;
-  exports.isObject = isObject;
   exports.isBoolean = isBoolean;
   exports.isDate = isDate;
   exports.isElement = isElement;
-  exports.isLetter = isLetter;
   exports.isEmail = isEmail;
   exports.isEmpty = isEmpty;
-  exports.hasProperty = hasProperty;
-  exports.equals = equals;
-  exports.encode = encode;
-  exports.decode = decode;
-  exports.trim = trim;
-  exports.truncate = truncate;
-  exports.stripTags = stripTags;
-  exports.escapeHTML = escapeHTML;
-  exports.unescapeHTML = unescapeHTML;
-  exports.ucfirst = ucfirst;
-  exports.ucwords = ucwords;
-  exports.leftPad = leftPad;
-  exports.rightPad = rightPad;
-  exports.repeat = repeat;
-  exports.replaceAll = replaceAll;
-  exports.stripAccent = stripAccent;
-  exports.createId = createId;
-  exports.createAlias = createAlias;
-  exports.template = template;
-  exports.random = random;
-  exports.now = now;
-  exports.time = time;
-  exports.format = format;
-  exports.relativize = relativize;
-  exports.utc = utc;
+  exports.isFunction = isFunction;
+  exports.isInteger = isInteger;
+  exports.isLetter = isLetter;
+  exports.isNull = isNull;
+  exports.isNumber = isNumber;
+  exports.isObject = isObject;
+  exports.isString = isString;
+  exports.isUndefined = isUndefined;
   exports.local = local;
   exports.md5 = md5;
+  exports.now = now;
+  exports.pick = pick;
+  exports.pipe = pipe;
+  exports.randint = randint;
+  exports.relativize = relativize;
+  exports.replaceAll = replaceAll;
+  exports.shuffle = shuffle;
+  exports.slugify = slugify;
+  exports.sort = sort;
+  exports.sortBy = sortBy;
+  exports.stripAccent = stripAccent;
+  exports.stripTags = stripTags;
+  exports.time = time;
+  exports.truncate = truncate;
+  exports.ucfirst = ucfirst;
+  exports.ucwords = ucwords;
+  exports.unescapeHTML = unescapeHTML;
+  exports.unique = unique;
+  exports.utc = utc;
+
   Object.defineProperty(exports, '__esModule', { value: true });
-})));
+
+}));

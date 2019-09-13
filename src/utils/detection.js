@@ -49,12 +49,12 @@ export const isElement = (v) => {
 };
 
 export const isLetter = (val) => {
-  let re = /^[a-z]+$/i;
+  const re = /^[a-z]+$/i;
   return isString(val) && re.test(val);
 };
 
 export const isEmail = (val) => {
-  let re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+  const re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
   return isString(val) && re.test(val);
 };
 

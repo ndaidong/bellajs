@@ -8,10 +8,10 @@ const test = require('tap').test;
 const {variants} = require('../../config');
 
 // clone
-let checkClone = (bella) => {
+const checkClone = (bella) => {
   test('Testing .clone(Object target) method', (assert) => {
     assert.comment('Clone object');
-    let a = {
+    const a = {
       level: 4,
       IQ: 140,
       epouse: {
@@ -24,7 +24,7 @@ let checkClone = (bella) => {
       reg: /^\w+@\s([a-z])$/gi,
     };
 
-    let ca = bella.clone(a);
+    const ca = bella.clone(a);
     assert.ok(bella.hasProperty(ca, 'level'), 'ca must have level');
     assert.ok(bella.hasProperty(ca, 'IQ'), 'ca must have IQ');
     assert.ok(bella.hasProperty(ca, 'epouse'), 'ca must have epouse');
@@ -33,7 +33,7 @@ let checkClone = (bella) => {
 
 
     assert.comment('Clone array');
-    let b = [
+    const b = [
       1,
       5,
       0,
@@ -56,7 +56,7 @@ let checkClone = (bella) => {
       ],
     ];
 
-    let cb = bella.clone(b);
+    const cb = bella.clone(b);
     assert.ok(b.length === cb.length, 'cb.length === b.length');
     assert.ok(bella.equals(b, cb), 'cb === b');
 

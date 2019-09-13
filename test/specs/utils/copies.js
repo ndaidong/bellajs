@@ -8,9 +8,9 @@ const test = require('tap').test;
 const {variants} = require('../../config');
 
 // copies
-let checkCopies = (bella) => {
+const checkCopies = (bella) => {
   test('Testing .copies(Object target) method', (assert) => {
-    let a = {
+    const a = {
       name: 'Toto',
       age: 30,
       level: 8,
@@ -18,7 +18,7 @@ let checkCopies = (bella) => {
         name: 'America',
       },
     };
-    let b = {
+    const b = {
       level: 4,
       IQ: 140,
       epouse: {
@@ -41,12 +41,12 @@ let checkCopies = (bella) => {
     assert.ok(bella.hasProperty(b, 'epouse'), 'Result must have epouse');
     assert.equals(b.level, 8, 'Level must be 8');
 
-    let c = {
+    const c = {
       name: 'Kiwi',
       age: 16,
       gender: 'male',
     };
-    let d = {
+    const d = {
       name: 'Aline',
       age: 20,
     };
