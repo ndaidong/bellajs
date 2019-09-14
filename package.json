@@ -1,5 +1,5 @@
 {
-  "version": "8.0.0rc1",
+  "version": "8.0.0",
   "name": "bellajs",
   "description": "A useful helper for any javascript program",
   "homepage": "https://www.npmjs.com/package/bellajs",
@@ -25,9 +25,9 @@
   },
   "devDependencies": {
     "coveralls": "^3.0.6",
-    "eslint": "^6.3.0",
+    "eslint": "^6.4.0",
     "eslint-config-goes": "^1.1.6",
-    "gcc-min": "^7.1.0",
+    "gcc-min": "^7.1.2",
     "is": "^3.3.0",
     "jsdom": "^15.1.1",
     "jsdom-global": "^3.0.2",
