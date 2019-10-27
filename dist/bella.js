@@ -1,6 +1,6 @@
 /**
- * bellajs@8.0.0
- * built on: Sat, 14 Sep 2019 10:28:18 GMT
+ * bellajs@8.0.1
+ * built on: Sun, 27 Oct 2019 14:28:07 GMT
  * repository: https://github.com/ndaidong/bellajs
  * maintainer: @ndaidong
  * License: MIT
@@ -9,7 +9,7 @@
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
   typeof define === 'function' && define.amd ? define(['exports'], factory) :
   (global = global || self, factory(global.bella = {}));
-}(this, function (exports) {
+}(this, (function (exports) {
   const ob2Str = (val) => {
     return {}.toString.call(val);
   };
@@ -655,4 +655,4 @@
 
   Object.defineProperty(exports, '__esModule', { value: true });
 
-}));
+})));

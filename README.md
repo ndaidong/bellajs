@@ -12,7 +12,9 @@ You may be interested in [BellaPy](https://github.com/ndaidong/bellapy) too.
 # Contents
 
 * [Setup](#setup)
+
 * [APIs](#apis)
+  
   * [DataType detection](#datatype-detection)
   * [String manipulation](#string-manipulation)
   * [Template](#template)
@@ -34,25 +36,24 @@ You may be interested in [BellaPy](https://github.com/ndaidong/bellapy) too.
     * [unique](#unique)
 
 * [Test](#test)
-* [License](#license)
 
+* [License](#license)
 
 ## Setup
 
 - Node.js
-
+  
   ```
   npm i bellajs
   ```
 
 - CDN
-
+  
   - [bella.js](https://cdn.rawgit.com/ndaidong/bellajs/master/dist/bella.js)
   - [bella.min.js](https://cdn.rawgit.com/ndaidong/bellajs/master/dist/bella.min.js)
   - [bella.min.map](https://cdn.rawgit.com/ndaidong/bellajs/master/dist/bella.min.map)
 
 - Load with ESM, CommonJS, AMD or UMD style
-
 
 ### Usage
 
@@ -75,46 +76,43 @@ import {
 } from 'bellajs';
 ```
 
-
 ## APIs
 
 ### DataType detection
 
- - .isArray(Anything val)
- - .isBoolean(Anything val)
- - .isDate(Anything val)
- - .isElement(Anything val)
- - .isEmail(Anything val)
- - .isEmpty(Anything val)
- - .isFunction(Anything val)
- - .isInteger(Anything val)
- - .isLetter(Anything val)
- - .isNull(Anything val)
- - .isNumber(Anything val)
- - .isObject(Anything val)
- - .isString(Anything val)
- - .isUndefined(Anything val)
-
+- .isArray(Anything val)
+- .isBoolean(Anything val)
+- .isDate(Anything val)
+- .isElement(Anything val)
+- .isEmail(Anything val)
+- .isEmpty(Anything val)
+- .isFunction(Anything val)
+- .isInteger(Anything val)
+- .isLetter(Anything val)
+- .isNull(Anything val)
+- .isNumber(Anything val)
+- .isObject(Anything val)
+- .isString(Anything val)
+- .isUndefined(Anything val)
 
 ### String manipulation
 
-  - .ucfirst(String s)
-  - .ucwords(String s)
-  - .escapeHTML(String s)
-  - .unescapeHTML(String s)
-  - .slugify(String s)
-  - .stripTags(String s)
-  - .stripAccent(String s)
-  - .truncate(String s, Number limit)
-  - .replaceAll(String s, String|Array search, String|Array replace)
-
+- .ucfirst(String s)
+- .ucwords(String s)
+- .escapeHTML(String s)
+- .unescapeHTML(String s)
+- .slugify(String s)
+- .stripTags(String s)
+- .stripAccent(String s)
+- .truncate(String s, Number limit)
+- .replaceAll(String s, String|Array search, String|Array replace)
 
 ### Date format
 
-  - `relativize([Date | Timestamp])`
-  - `format([Date | Timestamp] [, String pattern])`
-  - `local([Date | Timestamp])`
-  - `utc([Date | Timestamp])`
+- `relativize([Date | Timestamp])`
+- `format([Date | Timestamp] [, String pattern])`
+- `local([Date | Timestamp])`
+- `utc([Date | Timestamp])`
 
 Default pattern for `format()` method is `D, M d, Y  H:i:s A`.
 
@@ -163,7 +161,6 @@ format(t, 'Y/m/d h:i:s'); //=> 2017/11/02 20:07:10
 local(t); //=> Thu, 2 Nov 2017 20:07:10 GMT+0007
 utc(t); //=> Thu, 2 Nov 2017 13:07:10 GMT+0000
 ```
-
 
 ### Other utils
 
@@ -359,7 +356,6 @@ genid(5); // => random 5 chars
 genid(5, 'X_'); // => X_{random 3 chars}
 ```
 
-
 #### md5
 
 ```js
@@ -447,7 +443,6 @@ randint(); // => a random integer
 randint(1, 5); // => a random integer between 3 and 5, including 1 and 5
 ```
 
-
 #### sort
 
 ```js
@@ -462,7 +457,6 @@ import {sort} from 'bellajs';
 sort([3, 1, 5, 2], 1); // => [ 1, 2, 3, 5 ]
 sort([3, 1, 5, 2], -1); // => [ 5, 3, 2, 1 ]
 ```
-
 
 #### sortBy
 
@@ -541,7 +535,6 @@ cd bellajs
 npm install
 npm test
 ```
-
 
 # License
 
