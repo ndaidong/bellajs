@@ -1,6 +1,6 @@
 /**
  * bellajs@8.0.1
- * built on: Sun, 27 Oct 2019 14:37:55 GMT
+ * built on: Sun, 27 Oct 2019 14:53:37 GMT
  * repository: https://github.com/ndaidong/bellajs
  * maintainer: @ndaidong
  * License: MIT

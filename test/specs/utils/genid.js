@@ -3,9 +3,9 @@
  * @ndaidong
  */
 
-const test = require('tap').test;
+import {test} from 'tap';
 
-const {variants} = require('../../config');
+import {variants} from '../../config';
 
 // createId
 const checkGenid = (bella) => {

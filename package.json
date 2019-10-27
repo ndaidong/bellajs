@@ -33,9 +33,6 @@
     "sinon": "^7.5.0",
     "tap": "^14.8.2"
   },
-  "peerDependencies": {
-    "canvas": "^2.5.0"
-  },
   "keywords": [
     "detection",
     "manipulation",

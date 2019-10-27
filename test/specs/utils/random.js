@@ -3,10 +3,11 @@
  * @ndaidong
  */
 
-const test = require('tap').test;
-const is = require('is');
+import is from 'is';
 
-const {variants} = require('../../config');
+import {test} from 'tap';
+
+import {variants} from '../../config';
 
 // random
 const checkRandom = (bella) => {
