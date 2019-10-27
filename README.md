@@ -17,7 +17,6 @@ You may be interested in [BellaPy](https://github.com/ndaidong/bellapy) too.
   
   * [DataType detection](#datatype-detection)
   * [String manipulation](#string-manipulation)
-  * [Template](#template)
   * [Date format](#date-format)
   * [Other utils](#other-utils)
     * [clone](#clone)
@@ -143,7 +142,7 @@ Here are the available characters:
   - A: AM, PM
   - O: timezone
 ```
-
+t s
 Example:
 
 ```js
