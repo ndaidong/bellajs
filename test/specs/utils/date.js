@@ -2,16 +2,15 @@
  * Testing
  * @ndaidong
  */
-const test = require('tap').test;
-const sinon = require('sinon');
+import sinon from 'sinon';
+import {test} from 'tap';
+
+import {variants} from '../../config';
 
 const {
   time,
   now,
-} = require('bellajs');
-
-const {variants} = require('../../config');
-
+} = variants[0];
 
 const isSameTimes = (t1, t2) => {
   return Math.abs(t1 - t2) < 5;

@@ -3,8 +3,8 @@
  * @ndaidong
  */
 
-const fs = require('fs');
-const test = require('tap').test;
+import fs from 'fs';
+import {test} from 'tap';
 
 const pkgFake = require('../../package.json');
 const proFile = './dist/bella.js';
