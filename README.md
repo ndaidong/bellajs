@@ -3,7 +3,8 @@ BellaJS
 
 Lightweight util for handling data type, string... in your Node.js and browser apps.
 
-[![NPM](https://badge.fury.io/js/bellajs.svg)](https://badge.fury.io/js/bellajs)
+[![NPM](https://badge.fury.io/js/bellajs.svg)](https://badge.fury.io/js/bellajs)[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fndaidong%2Fbellajs.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fndaidong%2Fbellajs?ref=badge_shield)
+
 [![Build Status](https://travis-ci.org/ndaidong/bellajs.svg?branch=master)](https://travis-ci.org/ndaidong/bellajs)
 [![Coverage Status](https://coveralls.io/repos/github/ndaidong/bellajs/badge.svg?branch=master)](https://coveralls.io/github/ndaidong/bellajs?branch=master)
 
@@ -538,3 +539,6 @@ npm test
 # License
 
 The MIT License (MIT)
+
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fndaidong%2Fbellajs.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fndaidong%2Fbellajs?ref=badge_large)
