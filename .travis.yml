@@ -9,5 +9,4 @@ before_script:
   - npm i
   - npm i canvas
 script:
-  - npm list
   - npm test
