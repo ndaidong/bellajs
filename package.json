@@ -1,5 +1,5 @@
 {
-  "version": "8.0.1",
+  "version": "8.0.2",
   "name": "bellajs",
   "description": "A useful helper for any javascript program",
   "homepage": "https://www.npmjs.com/package/bellajs",
@@ -8,10 +8,8 @@
     "url": "https://github.com/ndaidong/bellajs"
   },
   "author": "@ndaidong",
-  "type": "module",
   "main": "./dist/bella.js",
   "module": "./src/main",
-  "jsnext:main": "./src/main",
   "browser": "./dist/bella.min.js",
   "engines": {
     "node": ">= 8.6"
@@ -24,14 +22,14 @@
     "reset": "node reset"
   },
   "devDependencies": {
-    "coveralls": "^3.0.7",
+    "coveralls": "^3.0.9",
     "eslint-config-goes": "^1.1.8",
     "gcc-min": "^7.1.5",
     "is": "^3.3.0",
-    "jsdom": "^15.2.0",
+    "jsdom": "^15.2.1",
     "jsdom-global": "^3.0.2",
     "sinon": "^7.5.0",
-    "tap": "^14.8.2"
+    "tap": "^14.10.4"
   },
   "keywords": [
     "detection",
