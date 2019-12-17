@@ -2,15 +2,15 @@
  * Import specs
  */
 
-const {
+import {
   existsSync,
   readdirSync,
-} = require('fs');
+} from 'fs';
 
-const {
+import {
   extname,
   join,
-} = require('path');
+} from 'path';
 
 const dirs = [
   '',
