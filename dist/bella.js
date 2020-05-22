@@ -1,6 +1,6 @@
 /**
- * bellajs@9.0.0
- * built on: Fri, 22 May 2020 02:25:57 GMT
+ * bellajs@9.1.0
+ * built on: Fri, 22 May 2020 02:51:59 GMT
  * repository: https://github.com/ndaidong/bellajs
  * maintainer: @ndaidong
  * License: MIT
@@ -555,8 +555,8 @@
     const value = () => {
       return __val;
     };
-    const getElse = (val) => {
-      return maybe(__val || val);
+    const getElse = (fn) => {
+      return maybe(__val || fn());
     };
     const filter = (fn) => {
       return maybe(fn(__val) === true ? __val : null);

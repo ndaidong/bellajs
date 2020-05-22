@@ -53,8 +53,8 @@ export const maybe = (val) => {
   const value = () => {
     return __val;
   };
-  const getElse = (val) => {
-    return maybe(__val || val);
+  const getElse = (fn) => {
+    return maybe(__val || fn());
   };
   const filter = (fn) => {
     return maybe(fn(__val) === true ? __val : null);
