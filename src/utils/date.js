@@ -53,7 +53,7 @@ const _ord = (day) => {
   return s;
 };
 
-export const format = (input, output = PATTERN) => {
+export const toDateString = (input, output = PATTERN) => {
   const d = isDate(input) ? input : new Date(input);
   if (!isDate(d)) {
     throw new Error('InvalidInput: Number or Date required.');
@@ -144,7 +144,7 @@ export const format = (input, output = PATTERN) => {
   return output.replace(vchar, _term);
 };
 
-export const relativize = (input = time()) => {
+export const toRelativeTime = (input = time()) => {
   const d = isDate(input) ? input : new Date(input);
   if (!isDate(d)) {
     throw new Error('InvalidInput: Number or Date required.');
@@ -183,7 +183,7 @@ export const relativize = (input = time()) => {
   return [delta, units].join(' ') + ' ago';
 };
 
-export const utc = (input = time()) => {
+export const toUTCDateString = (input = time()) => {
   const d = isDate(input) ? input : new Date(input);
   if (!isDate(d)) {
     throw new Error('InvalidInput: Number or Date required.');
@@ -191,13 +191,13 @@ export const utc = (input = time()) => {
   const dMinutes = d.getMinutes();
   const dClone = new Date(d);
   dClone.setMinutes(dMinutes + tzone);
-  return `${format(dClone, 'D, j M Y h:i:s')} GMT+0000`;
+  return `${toDateString(dClone, 'D, j M Y h:i:s')} GMT+0000`;
 };
 
-export const local = (input = time()) => {
+export const toLocalDateString = (input = time()) => {
   const d = isDate(input) ? input : new Date(input);
   if (!isDate(d)) {
     throw new Error('InvalidInput: Number or Date required.');
   }
-  return format(d, 'D, j M Y h:i:s O');
+  return toDateString(d, 'D, j M Y h:i:s O');
 };

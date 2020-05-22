@@ -1,5 +1,5 @@
 {
-  "version": "8.0.2",
+  "version": "9.0.0",
   "name": "bellajs",
   "description": "A useful helper for any javascript program",
   "homepage": "https://www.npmjs.com/package/bellajs",
@@ -12,24 +12,24 @@
   "module": "./src/main",
   "browser": "./dist/bella.min.js",
   "engines": {
-    "node": ">= 8.6"
+    "node": ">= 10.14.2"
   },
   "scripts": {
-    "lint": "eslint src test/specs",
+    "lint": "eslint ./src",
     "pretest": "npm run lint && npm run build",
-    "test": "tap test/start.js --coverage --reporter=spec",
+    "test": "tap tests/start.js --coverage --reporter=spec --coverage-report=html --no-browser",
     "build": "gccmin -e src/main.js -n bella -o dist -p package.json",
     "reset": "node reset"
   },
   "devDependencies": {
-    "coveralls": "^3.0.9",
+    "coveralls": "^3.1.0",
     "eslint-config-goes": "^1.1.8",
-    "gcc-min": "^7.1.5",
+    "gcc-min": "^7.2.0",
     "is": "^3.3.0",
-    "jsdom": "^15.2.1",
+    "jsdom": "^16.2.2",
     "jsdom-global": "^3.0.2",
-    "sinon": "^7.5.0",
-    "tap": "^14.10.4"
+    "sinon": "^9.0.2",
+    "tap": "^14.10.7"
   },
   "keywords": [
     "detection",

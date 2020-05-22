@@ -18,10 +18,10 @@ const isSameTimes = (t1, t2) => {
 
 const checkDateMethods = (date) => {
   const {
-    format,
-    relativize,
-    local,
-    utc,
+    toDateString,
+    toRelativeTime,
+    toLocalDateString,
+    toUTCDateString,
   } = date;
 
   test('Testing .time() method', (assert) => {
@@ -42,7 +42,7 @@ const checkDateMethods = (date) => {
     const check = (t) => {
       const err = new Error('InvalidInput: Number or Date required.');
       assert.throws(() => {
-        console.log(format(t)); // eslint-disable-line no-console
+        console.log(toDateString(t)); // eslint-disable-line no-console
       }, err, 'It must throw error if invalid input.');
     };
 
@@ -51,15 +51,12 @@ const checkDateMethods = (date) => {
       'noop',
       '1988-1-99',
       '4 Thu 15 GMT+0007',
-      () => {
-        return false;
-      },
     ].map(check);
 
     assert.end();
   });
 
-  test('Testing .format(Number timestamp, String pattern) method:', (assert) => {
+  test('Testing .toDateString(Number timestamp, String pattern) method:', (assert) => {
     const atime = 1455784100752;
 
     const samples = [
@@ -92,52 +89,52 @@ const checkDateMethods = (date) => {
       const tpl = sample.ouput;
       const exp = sample.expectation;
       const input = sample.input || atime;
-      const result = format(input, tpl);
+      const result = toDateString(input, tpl);
       assert.deepEqual(result, exp, `"${tpl}" must return ${exp}`);
     });
 
     assert.throws(() => {
-      format(atime, null);
+      toDateString(atime, null);
     }, new Error('Invalid output pattern.'), 'Throw error if invalid pattern');
 
     assert.end();
   });
 
-  test('Testing .relativize(Number timestamp) method:', (assert) => {
+  test('Testing .toRelativeTime(Number timestamp) method:', (assert) => {
     const t = time();
     const clock = sinon.useFakeTimers(t);
 
     // Just now
     setTimeout(() => {
-      const r = relativize(t);
+      const r = toRelativeTime(t);
       const e = 'Just now';
       assert.deepEqual(r, e, `At the begin it must return ${e}`);
     }, 0);
 
     // next 3 seconds
     setTimeout(() => {
-      const r = relativize(t);
+      const r = toRelativeTime(t);
       const e = '3 seconds ago';
       assert.deepEqual(r, e, `After 3 seconds must return ${e}`);
     }, 3000);
 
     // next 2 minutes
     setTimeout(() => {
-      const r = relativize(t);
+      const r = toRelativeTime(t);
       const e = '2 minutes ago';
       assert.deepEqual(r, e, `Next 2 minutes must return ${e}`);
     }, 2 * 6e4);
 
     // next 6 hours
     setTimeout(() => {
-      const r = relativize(t);
+      const r = toRelativeTime(t);
       const e = '6 hours ago';
       assert.deepEqual(r, e, `Next 6 hours must return ${e}`);
     }, 6 * 60 * 6e4);
 
     // next 2 days
     setTimeout(() => {
-      const r = relativize(t);
+      const r = toRelativeTime(t);
       const e = '2 days ago';
       assert.deepEqual(r, e, `Next 2 days must return ${e}`);
     }, 2 * 24 * 60 * 6e4);
@@ -145,33 +142,33 @@ const checkDateMethods = (date) => {
     clock.tick(2 * 24 * 60 * 6e4 + 5e3);
 
     assert.throws(() => {
-      relativize('4 Thu 15 GMT+0007');
+      toRelativeTime('4 Thu 15 GMT+0007');
     }, new Error('InvalidInput: Number or Date required.'), 'Throw error if invalid pattern');
 
     assert.end();
   });
 
-  test('Testing .utc(Number timestamp) method:', (assert) => {
+  test('Testing .toUTCDateString(Number timestamp) method:', (assert) => {
     const t = 1455784100752;
-    const r = utc(t);
+    const r = toUTCDateString(t);
     const e = 'Thu, 18 Feb 2016 08:28:20 GMT+0000';
-    assert.deepEqual(r, e, `.utc(${t}) must return ${e}`);
+    assert.deepEqual(r, e, `.toUTCDateString(${t}) must return ${e}`);
 
     assert.throws(() => {
-      utc('4 Thu 15 GMT+0007');
+      toUTCDateString('4 Thu 15 GMT+0007');
     }, new Error('InvalidInput: Number or Date required.'), 'Throw error if invalid pattern');
     assert.end();
   });
 
 
-  test('Testing .local(Number timestamp) method:', (assert) => {
+  test('Testing .toLocalDateString(Number timestamp) method:', (assert) => {
     const t = 1455784100000;
-    const r = local(t);
+    const r = toLocalDateString(t);
     const e = 'Thu, 18 Feb 2016 15:28:20 GMT+0007';
-    assert.deepEqual(r, e, `.local(${t}) must return ${e}`);
+    assert.deepEqual(r, e, `.toLocalDateString(${t}) must return ${e}`);
 
     assert.throws(() => {
-      local('4 Thu 15 GMT+0007');
+      toLocalDateString('4 Thu 15 GMT+0007');
     }, new Error('InvalidInput: Number or Date required.'), 'Throw error if invalid pattern');
     assert.end();
   });

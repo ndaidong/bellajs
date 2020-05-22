@@ -41,8 +41,10 @@ export const truncate = (s, l) => {
 };
 
 export const stripTags = (s) => {
-  const x = toString(s);
-  return x.replace(/<.*?>/gi, ' ').replace(/\s\s+/g, ' ').trim();
+  return toString(s)
+    .replace(/<.*?>/gi, ' ')
+    .replace(/\s\s+/g, ' ')
+    .trim();
 };
 
 export const escapeHTML = (s) => {
@@ -62,22 +64,14 @@ export const unescapeHTML = (s) => {
 };
 
 export const ucfirst = (s) => {
-  let x = toString(s);
-  if (x.length === 1) {
-    return x.toUpperCase();
-  }
-  x = x.toLowerCase();
-  return x.charAt(0).toUpperCase() + x.slice(1);
+  const x = toString(s).toLowerCase();
+  return x.length > 1 ? x.charAt(0).toUpperCase() + x.slice(1) : x.toUpperCase();
 };
 
 export const ucwords = (s) => {
-  const x = toString(s);
-  const c = x.split(' ');
-  const a = [];
-  c.forEach((w) => {
-    a.push(ucfirst(w));
-  });
-  return a.join(' ');
+  return toString(s).split(' ').map((w) => {
+    return ucfirst(w);
+  }).join(' ');
 };
 
 export const replaceAll = (s, a, b) => {
@@ -169,12 +163,11 @@ export const genid = (leng, prefix = '') => {
   return s;
 };
 
-export const slugify = (s, delimiter) => {
-  const x = stripAccent(s).trim();
-  const d = delimiter || '-';
-  return x.toLowerCase()
+export const slugify = (s, delimiter = '-') => {
+  return stripAccent(s)
+    .trim()
+    .toLowerCase()
     .replace(/\W+/g, ' ')
     .replace(/\s+/g, ' ')
-    .replace(/\s/g, d);
+    .replace(/\s/g, delimiter);
 };
-

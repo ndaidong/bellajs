@@ -1,6 +1,6 @@
 /**
- * bellajs@8.0.2
- * built on: Tue, 17 Dec 2019 04:15:15 GMT
+ * bellajs@9.0.0
+ * built on: Fri, 22 May 2020 02:25:57 GMT
  * repository: https://github.com/ndaidong/bellajs
  * maintainer: @ndaidong
  * License: MIT
@@ -13,6 +13,21 @@
   const ob2Str = (val) => {
     return {}.toString.call(val);
   };
+  const isInteger = (val) => {
+    return Number.isInteger(val);
+  };
+  const isArray = (val) => {
+    return Array.isArray(val);
+  };
+  const isString = (val) => {
+    return String(val) === val;
+  };
+  const isNumber = (val) => {
+    return Number(val) === val;
+  };
+  const isBoolean = (val) => {
+    return Boolean(val) === val;
+  };
   const isNull = (val) => {
     return ob2Str(val) === '[object Null]';
   };
@@ -22,29 +37,14 @@
   const isFunction = (val) => {
     return ob2Str(val) === '[object Function]';
   };
-  const isString = (val) => {
-    return ob2Str(val) === '[object String]';
-  };
-  const isNumber = (val) => {
-    return ob2Str(val) === '[object Number]';
-  };
-  const isInteger = (val) => {
-    return Number.isInteger(val);
-  };
-  const isArray = (val) => {
-    return Array.isArray(val);
-  };
   const isObject = (val) => {
     return ob2Str(val) === '[object Object]' && !isArray(val);
-  };
-  const isBoolean = (val) => {
-    return val === true || val === false;
   };
   const isDate = (val) => {
     return val instanceof Date && !isNaN(val.valueOf());
   };
   const isElement = (v) => {
-    return ob2Str(v).match(/^\[object HTML\w*Element]$/);
+    return ob2Str(v).match(/^\[object HTML\w*Element]$/) !== null;
   };
   const isLetter = (val) => {
     const re = /^[a-z]+$/i;
@@ -54,11 +54,14 @@
     const re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
     return isString(val) && re.test(val);
   };
+  const isNil = (val) => {
+    return isUndefined(val) || isNull(val);
+  };
   const isEmpty = (val) => {
-    return !val || isUndefined(val) || isNull(val) ||
+    return !val || isNil(val) ||
       isString(val) && val === '' ||
-      isArray(val) && JSON.stringify(val) === '[]' ||
-      isObject(val) && JSON.stringify(val) === '{}';
+      isArray(val) && val.length === 0 ||
+      isObject(val) && Object.keys(val).length === 0;
   };
   const hasProperty = (ob, k) => {
     if (!ob || !k) {
@@ -166,8 +169,10 @@
     return r;
   };
   const stripTags = (s) => {
-    const x = toString(s);
-    return x.replace(/<.*?>/gi, ' ').replace(/\s\s+/g, ' ').trim();
+    return toString(s)
+      .replace(/<.*?>/gi, ' ')
+      .replace(/\s\s+/g, ' ')
+      .trim();
   };
   const escapeHTML = (s) => {
     const x = toString(s);
@@ -184,21 +189,13 @@
       .replace(/&amp;/g, '&');
   };
   const ucfirst = (s) => {
-    let x = toString(s);
-    if (x.length === 1) {
-      return x.toUpperCase();
-    }
-    x = x.toLowerCase();
-    return x.charAt(0).toUpperCase() + x.slice(1);
+    const x = toString(s).toLowerCase();
+    return x.length > 1 ? x.charAt(0).toUpperCase() + x.slice(1) : x.toUpperCase();
   };
   const ucwords = (s) => {
-    const x = toString(s);
-    const c = x.split(' ');
-    const a = [];
-    c.forEach((w) => {
-      a.push(ucfirst(w));
-    });
-    return a.join(' ');
+    return toString(s).split(' ').map((w) => {
+      return ucfirst(w);
+    }).join(' ');
   };
   const replaceAll = (s, a, b) => {
     let x = toString(s);
@@ -280,13 +277,13 @@
     }
     return s;
   };
-  const slugify = (s, delimiter) => {
-    const x = stripAccent(s).trim();
-    const d = delimiter || '-';
-    return x.toLowerCase()
+  const slugify = (s, delimiter = '-') => {
+    return stripAccent(s)
+      .trim()
+      .toLowerCase()
       .replace(/\W+/g, ' ')
       .replace(/\s+/g, ' ')
-      .replace(/\s/g, d);
+      .replace(/\s/g, delimiter);
   };
 
   const PATTERN = 'D, M d, Y  h:i:s A';
@@ -327,7 +324,7 @@
     }
     return s;
   };
-  const format = (input, output = PATTERN) => {
+  const toDateString = (input, output = PATTERN) => {
     const d = isDate(input) ? input : new Date(input);
     if (!isDate(d)) {
       throw new Error('InvalidInput: Number or Date required.');
@@ -409,7 +406,7 @@
     };
     return output.replace(vchar, _term);
   };
-  const relativize = (input = time()) => {
+  const toRelativeTime = (input = time()) => {
     const d = isDate(input) ? input : new Date(input);
     if (!isDate(d)) {
       throw new Error('InvalidInput: Number or Date required.');
@@ -446,7 +443,7 @@
     }
     return [delta, units].join(' ') + ' ago';
   };
-  const utc = (input = time()) => {
+  const toUTCDateString = (input = time()) => {
     const d = isDate(input) ? input : new Date(input);
     if (!isDate(d)) {
       throw new Error('InvalidInput: Number or Date required.');
@@ -454,14 +451,14 @@
     const dMinutes = d.getMinutes();
     const dClone = new Date(d);
     dClone.setMinutes(dMinutes + tzone);
-    return `${format(dClone, 'D, j M Y h:i:s')} GMT+0000`;
+    return `${toDateString(dClone, 'D, j M Y h:i:s')} GMT+0000`;
   };
-  const local = (input = time()) => {
+  const toLocalDateString = (input = time()) => {
     const d = isDate(input) ? input : new Date(input);
     if (!isDate(d)) {
       throw new Error('InvalidInput: Number or Date required.');
     }
-    return format(d, 'D, j M Y h:i:s O');
+    return toDateString(d, 'D, j M Y h:i:s O');
   };
 
   let md5 = (str) => {
@@ -471,7 +468,7 @@
     }
     var b, c, d, j,
         x = [],
-        str2 = unescape(encodeURI(str)),
+        str2 = decodeURIComponent(encodeURI(str)),
         a = str2.length,
         h = [b = 1732584193, c = -271733879, ~b, ~c],
         i = 0;
@@ -536,6 +533,46 @@
   };
   const pipe = (...fns) => {
     return fns.reduce((f, g) => (x) => g(f(x)));
+  };
+  const defineProp = (ob, key, val, config = {}) => {
+    const {
+      writable = false,
+      configurable = false,
+      enumerable = false,
+    } = config;
+    Object.defineProperty(ob, key, {
+      value: val,
+      writable,
+      configurable,
+      enumerable,
+    });
+  };
+  const maybe = (val) => {
+    const __val = val;
+    const isNil = () => {
+      return __val === null || __val === undefined;
+    };
+    const value = () => {
+      return __val;
+    };
+    const getElse = (val) => {
+      return maybe(__val || val);
+    };
+    const filter = (fn) => {
+      return maybe(fn(__val) === true ? __val : null);
+    };
+    const map = (fn) => {
+      return maybe(isNil() ? null : fn(__val));
+    };
+    const output = Object.create({});
+    defineProp(output, '__value__', __val, {enumerable: true});
+    defineProp(output, '__type__', 'Maybe', {enumerable: true});
+    defineProp(output, 'isNil', isNil);
+    defineProp(output, 'value', value);
+    defineProp(output, 'map', map);
+    defineProp(output, 'if', filter);
+    defineProp(output, 'else', getElse);
+    return output;
   };
   const clone = (val) => {
     if (isDate(val)) {
@@ -614,7 +651,6 @@
   exports.curry = curry;
   exports.equals = equals;
   exports.escapeHTML = escapeHTML;
-  exports.format = format;
   exports.genid = genid;
   exports.hasProperty = hasProperty;
   exports.isArray = isArray;
@@ -626,18 +662,18 @@
   exports.isFunction = isFunction;
   exports.isInteger = isInteger;
   exports.isLetter = isLetter;
+  exports.isNil = isNil;
   exports.isNull = isNull;
   exports.isNumber = isNumber;
   exports.isObject = isObject;
   exports.isString = isString;
   exports.isUndefined = isUndefined;
-  exports.local = local;
+  exports.maybe = maybe;
   exports.md5 = md5;
   exports.now = now;
   exports.pick = pick;
   exports.pipe = pipe;
   exports.randint = randint;
-  exports.relativize = relativize;
   exports.replaceAll = replaceAll;
   exports.shuffle = shuffle;
   exports.slugify = slugify;
@@ -646,12 +682,15 @@
   exports.stripAccent = stripAccent;
   exports.stripTags = stripTags;
   exports.time = time;
+  exports.toDateString = toDateString;
+  exports.toLocalDateString = toLocalDateString;
+  exports.toRelativeTime = toRelativeTime;
+  exports.toUTCDateString = toUTCDateString;
   exports.truncate = truncate;
   exports.ucfirst = ucfirst;
   exports.ucwords = ucwords;
   exports.unescapeHTML = unescapeHTML;
   exports.unique = unique;
-  exports.utc = utc;
 
   Object.defineProperty(exports, '__esModule', { value: true });
 

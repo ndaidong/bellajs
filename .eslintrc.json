@@ -1,6 +1,7 @@
 {
   "extends": "eslint-config-goes",
   "rules": {
-    "no-prototype-builtins": 0
+    "no-prototype-builtins": 0,
+    "require-jsdoc" : 0
   }
 }

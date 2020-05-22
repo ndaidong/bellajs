@@ -14,7 +14,7 @@ You may be interested in [BellaPy](https://github.com/ndaidong/bellapy) too.
 * [Setup](#setup)
 
 * [APIs](#apis)
-  
+
   * [DataType detection](#datatype-detection)
   * [String manipulation](#string-manipulation)
   * [Date format](#date-format)
@@ -25,6 +25,7 @@ You may be interested in [BellaPy](https://github.com/ndaidong/bellapy) too.
     * [curry](#curryfn)
     * [equals](#equals)
     * [genid](#genid)
+    * [maybe](#maybe)
     * [md5](#md5)
     * [pick](#pick)
     * [pipe](#pipe)
@@ -41,13 +42,13 @@ You may be interested in [BellaPy](https://github.com/ndaidong/bellapy) too.
 ## Setup
 
 - Node.js
-  
+
   ```
   npm i bellajs
   ```
 
 - CDN
-  
+
   - [bella.js](https://cdn.rawgit.com/ndaidong/bellajs/master/dist/bella.js)
   - [bella.min.js](https://cdn.rawgit.com/ndaidong/bellajs/master/dist/bella.min.js)
   - [bella.min.map](https://cdn.rawgit.com/ndaidong/bellajs/master/dist/bella.min.map)
@@ -88,6 +89,7 @@ import {
 - .isFunction(Anything val)
 - .isInteger(Anything val)
 - .isLetter(Anything val)
+- .isNil(Anything val)
 - .isNull(Anything val)
 - .isNumber(Anything val)
 - .isObject(Anything val)
@@ -108,14 +110,14 @@ import {
 
 ### Date format
 
-- `relativize([Date | Timestamp])`
-- `format([Date | Timestamp] [, String pattern])`
-- `local([Date | Timestamp])`
-- `utc([Date | Timestamp])`
+- `toRelativeTime([Date | Timestamp])`
+- `toDateString([Date | Timestamp] [, String pattern])`
+- `toLocalDateString([Date | Timestamp])`
+- `toUTCDateString([Date | Timestamp])`
 
-Default pattern for `format()` method is `D, M d, Y  H:i:s A`.
+Default pattern for `toDateString()` method is `D, M d, Y  H:i:s A`.
 
-Pattern for `local()` and `utc()` is `D, j M Y h:i:s O`.
+Pattern for `toLocalDateString()` and `toUTCDateString()` is `D, j M Y h:i:s O`.
 
 Here are the available characters:
 
@@ -147,18 +149,18 @@ Example:
 
 ```js
 import {
-  relativize,
-  format,
-  local,
-  utc
+  toRelativeTime,
+  toDateString,
+  toLocalDateString,
+  toUTCDateString
 } from 'bellajs';
 
 let t = 1509628030108;
 
-relativize(t); //=> 2 seconds ago
-format(t, 'Y/m/d h:i:s'); //=> 2017/11/02 20:07:10
-local(t); //=> Thu, 2 Nov 2017 20:07:10 GMT+0007
-utc(t); //=> Thu, 2 Nov 2017 13:07:10 GMT+0000
+toRelativeTime(t); //=> 2 seconds ago
+toDateString(t, 'Y/m/d h:i:s'); //=> 2017/11/02 20:07:10
+toLocalDateString(t); //=> Thu, 2 Nov 2017 20:07:10 GMT+0007
+toUTCDateString(t); //=> Thu, 2 Nov 2017 13:07:10 GMT+0000
 ```
 
 ### Other utils
@@ -353,6 +355,59 @@ genid(); // => random 32 chars
 genid(16); // => random 16 chars
 genid(5); // => random 5 chars
 genid(5, 'X_'); // => X_{random 3 chars}
+```
+
+#### maybe
+
+```js
+maybe(Anything val)
+```
+
+Return a static variant of `Maybe` monad.
+
+Examples:
+
+```js
+import {maybe} from 'bellajs';
+
+const plus5 = x => x + 5;
+const minus2 = x => x - 2;
+const isNumber = x => Number(x) === x;
+const toString = x => 'The value is ' + String(x);
+
+maybe(5)
+  .map(plus5)
+  .map(minus2)
+  .value()  // 8
+
+maybe('noop')
+  .map(plus5)
+  .map(minus2)
+  .value()  // null
+
+maybe(5)
+  .if(isNumber)
+  .map(plus5)
+  .map(minus2)
+  .else('Not number')
+  .map(toString)
+  .value()  // 'The value is 8'
+
+maybe()
+  .if(isNumber)
+  .map(plus5)
+  .map(minus2)
+  .map(toString)
+  .value()  // null
+
+maybe()
+  .if(isNumber)
+  .map(plus5)
+  .map(minus2)
+  .else('Not number')
+  .map(toString)
+  .value()  // 'The value is Not number'
+
 ```
 
 #### md5

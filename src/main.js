@@ -31,6 +31,48 @@ export const pipe = (...fns) => {
   return fns.reduce((f, g) => (x) => g(f(x)));
 };
 
+const defineProp = (ob, key, val, config = {}) => {
+  const {
+    writable = false,
+    configurable = false,
+    enumerable = false,
+  } = config;
+  Object.defineProperty(ob, key, {
+    value: val,
+    writable,
+    configurable,
+    enumerable,
+  });
+};
+
+export const maybe = (val) => {
+  const __val = val;
+  const isNil = () => {
+    return __val === null || __val === undefined;
+  };
+  const value = () => {
+    return __val;
+  };
+  const getElse = (val) => {
+    return maybe(__val || val);
+  };
+  const filter = (fn) => {
+    return maybe(fn(__val) === true ? __val : null);
+  };
+  const map = (fn) => {
+    return maybe(isNil() ? null : fn(__val));
+  };
+  const output = Object.create({});
+  defineProp(output, '__value__', __val, {enumerable: true});
+  defineProp(output, '__type__', 'Maybe', {enumerable: true});
+  defineProp(output, 'isNil', isNil);
+  defineProp(output, 'value', value);
+  defineProp(output, 'map', map);
+  defineProp(output, 'if', filter);
+  defineProp(output, 'else', getElse);
+  return output;
+};
+
 
 export const clone = (val) => {
   if (isDate(val)) {
