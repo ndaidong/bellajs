@@ -15,13 +15,15 @@ const checkRandom = (bella) => {
   const minus2 = (x) => x - 2;
   const isNumber = (x) => Number(x) === x;
   const toString = (x) => 'The value is ' + String(x);
+  const getDefault = () => 'This is default value';
+
   test('Testing .maybe() method', (assert) => {
     const x1 = bella.maybe(5)
       .if(isNumber)
       .map(plus5)
       .map(minus2)
       .map(toString)
-      .else('Noop')
+      .else(getDefault)
       .value();
     assert.ok(x1 === 'The value is 8', 'The value must be 8');
 
@@ -30,9 +32,9 @@ const checkRandom = (bella) => {
       .map(plus5)
       .map(minus2)
       .map(toString)
-      .else('Noop')
+      .else(getDefault)
       .value();
-    assert.ok(x2 === 'Noop', 'It must return "Noop"');
+    assert.ok(x2 === 'This is default value', 'It must return default value');
     assert.end();
   });
 };

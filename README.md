@@ -374,6 +374,7 @@ const plus5 = x => x + 5;
 const minus2 = x => x - 2;
 const isNumber = x => Number(x) === x;
 const toString = x => 'The value is ' + String(x);
+const getDefault = () => 'This is default value';
 
 maybe(5)
   .map(plus5)
@@ -389,7 +390,7 @@ maybe(5)
   .if(isNumber)
   .map(plus5)
   .map(minus2)
-  .else('Not number')
+  .else(getDefault)
   .map(toString)
   .value()  // 'The value is 8'
 
@@ -404,9 +405,9 @@ maybe()
   .if(isNumber)
   .map(plus5)
   .map(minus2)
-  .else('Not number')
+  .else(getDefault)
   .map(toString)
-  .value()  // 'The value is Not number'
+  .value()  // 'This is default value'
 
 ```
 
