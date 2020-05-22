@@ -236,12 +236,47 @@ const checkDetection = (bella) => {
     assert.end();
   });
 
+  // isNil
+  test('Testing .isNil(Anything) method:', (assert) => {
+    let something;
+    [
+      something,
+      null,
+      undefined,
+    ].forEach((item) => {
+      const r = bella.isNil(item);
+      const x = stringify(item);
+      assert.ok(r, `bella.isNil(${x}) must be nil.`);
+    });
+
+    [
+      1,
+      true,
+      {a: 1},
+      [
+        1,
+        3,
+      ],
+      '',
+      {},
+      [],
+      Object.create({}),
+      function x() {},
+    ].forEach((item) => {
+      const r = bella.isNil(item);
+      const x = stringify(item);
+      assert.error(r, `bella.isNil(${x}) must not be nil.`);
+    });
+    assert.end();
+  });
 
   // isEmpty
   test('Testing .isEmpty(Anything) method:', (assert) => {
     let something;
     [
       something,
+      null,
+      undefined,
       '',
       {},
       [],
