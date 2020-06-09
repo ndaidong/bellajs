@@ -72,6 +72,11 @@ const checkStringMethods = (bella) => {
     assert.deepEquals(a1, e1, `bella.stripTags('${x}') must return ${e1}`);
 
     assert.deepEquals(bella.stripTags(1238), '1238', `bella.stripTags(1238) must return "1238"`);
+
+    const fn = () => {
+      return bella.stripTags({});
+    };
+    assert.throws(fn, 'Error: InvalidInput: String required', 'stripTag non-string must throw error');
     assert.end();
   });
 

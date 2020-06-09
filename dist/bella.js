@@ -1,6 +1,6 @@
 /**
- * bellajs@9.1.0
- * built on: Fri, 22 May 2020 02:51:59 GMT
+ * bellajs@9.2.0
+ * built on: Tue, 09 Jun 2020 09:35:29 GMT
  * repository: https://github.com/ndaidong/bellajs
  * maintainer: @ndaidong
  * License: MIT
@@ -574,7 +574,12 @@
     defineProp(output, 'else', getElse);
     return output;
   };
-  const clone = (val) => {
+  const clone = (val, history = null) => {
+    const stack = history || new Set();
+    if (stack.has(val)) {
+      return val;
+    }
+    stack.add(val);
     if (isDate(val)) {
       return new Date(val.valueOf());
     }
@@ -582,7 +587,7 @@
       const oo = Object.create({});
       for (const k in o) {
         if (hasProperty(o, k)) {
-          oo[k] = clone(o[k]);
+          oo[k] = clone(o[k], stack);
         }
       }
       return oo;
@@ -594,7 +599,7 @@
         } else if (isObject(e)) {
           return copyObject(e);
         }
-        return clone(e);
+        return clone(e, stack);
       });
     };
     if (isArray(val)) {
@@ -625,8 +630,13 @@
   const unique = (arr = []) => {
     return [...new Set(arr)];
   };
-  const sort = (fn, arr = []) => {
-    return [...arr].sort(fn);
+  const fnSort = (a, b) => {
+    return a > b ? 1 : a < b ? -1 : 0;
+  };
+  const sort = (arr = [], fn = fnSort) => {
+    const tmp = [...arr];
+    tmp.sort(fn);
+    return tmp;
   };
   const sortBy = (key, order = 1, arr = []) => {
     return sort(arr, (m, n) => {
@@ -634,9 +644,9 @@
     });
   };
   const shuffle = (arr = []) => {
-    return sort(() => {
+    return sort([...arr], () => {
       return Math.random() > 0.5;
-    }, [...arr]);
+    });
   };
   const pick = (count = 1, arr = []) => {
     const a = shuffle([...arr]);
