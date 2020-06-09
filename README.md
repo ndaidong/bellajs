@@ -501,7 +501,7 @@ randint(1, 5); // => a random integer between 3 and 5, including 1 and 5
 #### sort
 
 ```js
-sort(Array a, Number order)
+sort(Array a [, Function compare])
 ```
 
 Examples:
@@ -509,8 +509,12 @@ Examples:
 ```js
 import {sort} from 'bellajs';
 
-sort([3, 1, 5, 2], 1); // => [ 1, 2, 3, 5 ]
-sort([3, 1, 5, 2], -1); // => [ 5, 3, 2, 1 ]
+const fn = (a, b) => {
+  return a < b ? 1 : a > b ? -1 : 0;
+};
+
+sort([3, 1, 5, 2], fn); // => [ 1, 2, 3, 5 ]
+sort([3, 1, 5, 2], fn); // => [ 5, 3, 2, 1 ]
 ```
 
 #### sortBy
@@ -549,7 +553,7 @@ const players = [
 ];
 
 const result = sortBy('age', -1, players);
-console.log(result_)
+console.log(result)
 ```
 
 #### shuffle

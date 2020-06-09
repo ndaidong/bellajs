@@ -68,6 +68,13 @@ const checkClone = (bella) => {
     assert.comment('Clone nothing');
     assert.error(bella.clone(), 'Clone nothing must return nothing');
 
+    assert.comment('Clone circular object');
+    const fn = () => {
+      const a = {t: 0};
+      a.me = a;
+    };
+    assert.doesNotThrow(fn, 'Clone circular object must not throw error');
+
     assert.end();
   });
 };

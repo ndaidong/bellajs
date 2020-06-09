@@ -74,7 +74,15 @@ export const maybe = (val) => {
 };
 
 
-export const clone = (val) => {
+export const clone = (val, history = null) => {
+  const stack = history || new Set();
+
+  if (stack.has(val)) {
+    return val;
+  }
+
+  stack.add(val);
+
   if (isDate(val)) {
     return new Date(val.valueOf());
   }
@@ -83,7 +91,7 @@ export const clone = (val) => {
     const oo = Object.create({});
     for (const k in o) {
       if (hasProperty(o, k)) {
-        oo[k] = clone(o[k]);
+        oo[k] = clone(o[k], stack);
       }
     }
     return oo;
@@ -96,7 +104,7 @@ export const clone = (val) => {
       } else if (isObject(e)) {
         return copyObject(e);
       }
-      return clone(e);
+      return clone(e, stack);
     });
   };
 
@@ -134,8 +142,14 @@ export const unique = (arr = []) => {
   return [...new Set(arr)];
 };
 
-export const sort = (fn, arr = []) => {
-  return [...arr].sort(fn);
+const fnSort = (a, b) => {
+  return a > b ? 1 : a < b ? -1 : 0;
+};
+
+export const sort = (arr = [], fn = fnSort) => {
+  const tmp = [...arr];
+  tmp.sort(fn);
+  return tmp;
 };
 
 export const sortBy = (key, order = 1, arr = []) => {
@@ -145,9 +159,9 @@ export const sortBy = (key, order = 1, arr = []) => {
 };
 
 export const shuffle = (arr = []) => {
-  return sort(() => {
+  return sort([...arr], () => {
     return Math.random() > 0.5;
-  }, [...arr]);
+  });
 };
 
 export const pick = (count = 1, arr = []) => {
