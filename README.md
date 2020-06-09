@@ -520,7 +520,7 @@ sort([3, 1, 5, 2], fn); // => [ 5, 3, 2, 1 ]
 #### sortBy
 
 ```js
-sortBy(Array a, String property, Number order)
+sortBy(String property, Number order, Array a)
 ```
 
 Examples:
