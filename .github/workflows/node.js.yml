@@ -24,8 +24,11 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
+    - name: Setup timezone
+      uses: zcong1993/setup-timezone@master
+      with:
+        timezone: ${{ secrets.TZ }}
       env:
-        TZ: ${{ secrets.TZ }}
         COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
     - run: npm i
     - run: npm run build --if-present
