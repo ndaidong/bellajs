@@ -23,7 +23,7 @@
     "reset": "node reset"
   },
   "devDependencies": {
-    "coveralls": "^3.1.0",
+    "codecov": "^3.8.1",
     "eslint-config-goes": "^1.1.8",
     "gcc-min": "^7.2.0",
     "is": "^3.3.0",
