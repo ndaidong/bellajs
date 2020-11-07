@@ -36,4 +36,3 @@ jobs:
     - run: npm run lint
     - run: npm run build --if-present
     - run: npm run citest
-    - run: npm run coveralls
