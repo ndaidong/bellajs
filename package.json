@@ -18,7 +18,7 @@
     "lint": "eslint ./src",
     "pretest": "npm run lint && npm run build",
     "test": "tap tests/start.js --coverage --reporter=spec --coverage-report=html --no-browser",
-    "citest": "tap tests/start.js --coverage --reporter=spec --coverage-report=text-lcov --no-browser | codecov",
+    "citest": "tap tests/start.js --coverage-report=text-lcov | codecov",
     "build": "gccmin -e src/main.js -n bella -o dist -p package.json",
     "reset": "node reset"
   },
