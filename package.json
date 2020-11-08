@@ -1,5 +1,5 @@
 {
-  "version": "9.2.1",
+  "version": "9.2.2",
   "name": "bellajs",
   "description": "A useful helper for any javascript program",
   "homepage": "https://www.npmjs.com/package/bellajs",
@@ -18,12 +18,11 @@
     "lint": "eslint ./src",
     "pretest": "npm run lint && npm run build",
     "test": "tap tests/start.js --coverage --reporter=spec --coverage-report=html --no-browser",
-    "citest": "tap tests/start.js --coverage --reporter=spec --coverage-report=lcov && codecov --disable=gcov",
+    "citest": "tap tests/start.js --coverage --reporter=spec --coverage-report=lcov",
     "build": "gccmin -e src/main.js -n bella -o dist -p package.json",
     "reset": "node reset"
   },
   "devDependencies": {
-    "codecov": "^3.8.1",
     "eslint-config-goes": "^1.1.8",
     "gcc-min": "^7.2.0",
     "is": "^3.3.0",
