@@ -5,9 +5,8 @@ Lightweight util for handling data type, string... in your Node.js and browser a
 
 [![NPM](https://badge.fury.io/js/bellajs.svg)](https://badge.fury.io/js/bellajs)
 ![CI test](https://github.com/ndaidong/bellajs/workflows/ci-test/badge.svg)
-[![codecov](https://codecov.io/gh/ndaidong/bellajs/branch/main/graph/badge.svg?token=rhW2XCUZLD)](https://codecov.io/gh/ndaidong/bellajs)
-[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=ndaidong_bellajs&metric=vulnerabilities)](https://sonarcloud.io/dashboard?id=ndaidong_bellajs)
-[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=ndaidong_bellajs&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=ndaidong_bellajs)
+[![Coverage Status](https://coveralls.io/repos/github/ndaidong/bellajs/badge.svg)](https://coveralls.io/github/ndaidong/bellajs)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=ndaidong_bellajs&metric=alert_status)](https://sonarcloud.io/dashboard?id=ndaidong_bellajs)
 
 You may be interested in [BellaPy](https://github.com/ndaidong/bellapy) too.
 
@@ -51,9 +50,10 @@ You may be interested in [BellaPy](https://github.com/ndaidong/bellapy) too.
 
 - CDN
 
-  - [bella.js](https://cdn.rawgit.com/ndaidong/bellajs/master/dist/bella.js)
-  - [bella.min.js](https://cdn.rawgit.com/ndaidong/bellajs/master/dist/bella.min.js)
-  - [bella.min.map](https://cdn.rawgit.com/ndaidong/bellajs/master/dist/bella.min.map)
+  - [bella.js](https://unpkg.com/bellajs/dist/bella.js)
+  - [bella.min.js](https://unpkg.com/bellajs/dist/bella.min.js)
+  - [bella.min.map](https://unpkg.com/bellajs/dist/bella.min.map)
+
 
 - Load with ESM, CommonJS, AMD or UMD style
 
