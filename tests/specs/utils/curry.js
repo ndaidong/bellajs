@@ -3,9 +3,9 @@
  * @ndaidong
  */
 
-import {test} from 'tap';
+const {test} = require('tap');
 
-import {variants} from '../../config';
+const {variants} = require('../../config');
 
 const checkCurry = (bella) => {
   const curry = bella.curry;

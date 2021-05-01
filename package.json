@@ -1,5 +1,5 @@
 {
-  "version": "9.2.2",
+  "version": "9.3.0",
   "name": "bellajs",
   "description": "A useful helper for any javascript program",
   "homepage": "https://www.npmjs.com/package/bellajs",
@@ -17,19 +17,19 @@
   "scripts": {
     "lint": "eslint ./src",
     "pretest": "npm run lint && npm run build",
-    "test": "tap tests/start.js --coverage --reporter=spec --coverage-report=html --no-browser",
-    "citest": "tap tests/start.js --coverage --reporter=spec --coverage-report=lcov --no-browser",
+    "test": "tap tests/start.js --coverage --reporter=spec --coverage-report=html --no-browser --functions=95 --statements=95 --branches=85",
+    "citest": "tap tests/start.js --coverage --reporter=spec --coverage-report=lcov --no-browser --functions=95 --statements=95 --branches=85",
     "build": "gccmin -e src/main.js -n bella -o dist -p package.json",
     "reset": "node reset"
   },
   "devDependencies": {
-    "eslint-config-goes": "^1.1.8",
-    "gcc-min": "^7.2.0",
+    "eslint-config-goes": "^1.2.0",
+    "gcc-min": "^7.3.0",
     "is": "^3.3.0",
-    "jsdom": "^16.4.0",
+    "jsdom": "^16.5.3",
     "jsdom-global": "^3.0.2",
-    "sinon": "^9.2.1",
-    "tap": "^14.10.8"
+    "sinon": "^10.0.0",
+    "tap": "^15.0.6"
   },
   "keywords": [
     "detection",

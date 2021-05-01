@@ -6,10 +6,10 @@
 /*eslint-disable*/
 export let md5 = (str) => {
 
-  var k = [], i = 0;
+  var k = [], y = 0;
 
-  for(; i < 64; ){
-    k[i] = 0|(Math.abs(Math.sin(++i)) * 4294967296);
+  for(; y < 64; ){
+    k[y] = 0|(Math.abs(Math.sin(++y)) * 4294967296);
   }
 
   var b, c, d, j,

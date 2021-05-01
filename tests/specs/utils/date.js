@@ -2,10 +2,10 @@
  * Testing
  * @ndaidong
  */
-import sinon from 'sinon';
-import {test} from 'tap';
+const sinon = require('sinon');
+const {test} = require('tap');
 
-import {variants} from '../../config';
+const {variants} = require('../../config');
 
 const {
   time,

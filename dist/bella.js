@@ -1,6 +1,6 @@
 /**
- * bellajs@9.2.0
- * built on: Tue, 09 Jun 2020 09:35:29 GMT
+ * bellajs@9.3.0
+ * built on: Sat, 01 May 2021 14:55:33 GMT
  * repository: https://github.com/ndaidong/bellajs
  * maintainer: @ndaidong
  * License: MIT
@@ -8,7 +8,7 @@
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
   typeof define === 'function' && define.amd ? define(['exports'], factory) :
-  (global = global || self, factory(global.bella = {}));
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.bella = {}));
 }(this, (function (exports) {
   const ob2Str = (val) => {
     return {}.toString.call(val);
@@ -462,9 +462,9 @@
   };
 
   let md5 = (str) => {
-    var k = [], i = 0;
-    for(; i < 64; ){
-      k[i] = 0|(Math.abs(Math.sin(++i)) * 4294967296);
+    var k = [], y = 0;
+    for(; y < 64; ){
+      k[y] = 0|(Math.abs(Math.sin(++y)) * 4294967296);
     }
     var b, c, d, j,
         x = [],
