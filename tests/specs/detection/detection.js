@@ -10,10 +10,11 @@
 
 require('jsdom-global')();
 
-import is from 'is';
-import {test} from 'tap';
+const is = require('is');
 
-import {variants} from '../../config';
+const {test} = require('tap');
+
+const {variants} = require('../../config');
 
 const stringify = (x) => {
   if (is.array(x) || is.object(x)) {

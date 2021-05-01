@@ -3,9 +3,9 @@
  * @ndaidong
  */
 
-import {test} from 'tap';
+const {test} = require('tap');
 
-import {variants} from '../../config';
+const {variants} = require('../../config');
 
 const checkStringMethods = (bella) => {
   test('With well-format string input:', (assert) => {
