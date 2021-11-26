@@ -4,28 +4,28 @@
 
 const {
   existsSync,
-  readdirSync,
-} = require('fs');
+  readdirSync
+} = require('fs')
 
 const {
   extname,
-  join,
-} = require('path');
+  join
+} = require('path')
 
 const dirs = [
   '',
   'detection',
   'utils',
-  'string',
-];
+  'string'
+]
 
 dirs.forEach((dir) => {
-  const where = './tests/specs/' + dir;
+  const where = './tests/specs/' + dir
   if (existsSync(where)) {
     readdirSync(where).forEach((file) => {
       if (extname(file) === '.js') {
-        require(join('.' + where, file));
+        require(join('.' + where, file))
       }
-    });
+    })
   }
-});
+})

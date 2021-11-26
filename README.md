@@ -155,14 +155,14 @@ import {
   toDateString,
   toLocalDateString,
   toUTCDateString
-} from 'bellajs';
+} from 'bellajs'
 
-let t = 1509628030108;
+let t = 1509628030108
 
-toRelativeTime(t); //=> 2 seconds ago
-toDateString(t, 'Y/m/d h:i:s'); //=> 2017/11/02 20:07:10
-toLocalDateString(t); //=> Thu, 2 Nov 2017 20:07:10 GMT+0007
-toUTCDateString(t); //=> Thu, 2 Nov 2017 13:07:10 GMT+0000
+toRelativeTime(t) //=> 2 seconds ago
+toDateString(t, 'Y/m/d h:i:s') //=> 2017/11/02 20:07:10
+toLocalDateString(t) //=> Thu, 2 Nov 2017 20:07:10 GMT+0007
+toUTCDateString(t) //=> Thu, 2 Nov 2017 13:07:10 GMT+0000
 ```
 
 ### Other utils
@@ -182,19 +182,19 @@ let b = [
     a: 1,
     b: 'Awesome'
   }
-];
+]
 
-let cb = bella.clone(b);
+let cb = bella.clone(b)
 console.log(cb);
 ```
 
 *cb* now has the same values as *b*, while the properties are standalone, not reference. So that:
 
 ```js
-cb[7].a = 2;
-cb[7].b = 'Noop';
+cb[7].a = 2
+cb[7].b = 'Noop'
 
-console.log(b[7]);
+console.log(b[7])
 ```
 
 What you get is still:
@@ -217,31 +217,31 @@ compose(f1, f2, ...fN)
 Examples:
 
 ```js
-import {compose} from 'bellajs';
+import {compose} from 'bellajs'
 
 let f1 = (name) => {
-  return `f1 ${name}`;
-};
+  return `f1 ${name}`
+}
 let f2 = (name) => {
-  return `f2 ${name}`;
-};
+  return `f2 ${name}`
+}
 let f3 = (name) => {
-  return `f3 ${name}`;
-};
+  return `f3 ${name}`
+}
 
-let addF = compose(f1, f2, f3);
+let addF = compose(f1, f2, f3)
 
 addF('Hello') // => 'f1 f2 f3 Hello'
 
 let add1 = (num) => {
-  return num + 1;
-};
+  return num + 1
+}
 
 let mult2 = (num) => {
-  return num * 2;
-};
+  return num * 2
+}
 
-let add1AndMult2 = compose(add1, mult2);
+let add1AndMult2 = compose(add1, mult2)
 add1AndMult2(3) // => 7
 // because multiple to 2 first, then add 1 late => 3 * 2 + 1
 ```
@@ -267,7 +267,7 @@ let a = {
   nationality: {
     name: 'America'
   }
-};
+}
 let b = {
   level: 4,
   IQ: 140,
@@ -279,10 +279,10 @@ let b = {
     long: '18123.123123.12312',
     lat: '98984771.134231.1234'
   }
-};
+}
 
-bella.copies(a, b);
-console.log(b);
+bella.copies(a, b)
+console.log(b)
 ```
 
 Output:
@@ -314,11 +314,11 @@ curry(fn)
 Examples:
 
 ```js
-import {curry} from 'bellajs';
+import {curry} from 'bellajs'
 
 let sum = curry((a, b, c) => {
   return a + b + c;
-});
+})
 
 sum(3)(2)(1) // => 6
 sum(1)(2)(3) // => 6
@@ -336,10 +336,10 @@ equals(Anything a, Anything b)
 Examples:
 
 ```js
-import {equals} from 'bellajs';
+import {equals} from 'bellajs'
 
-equals({}, {}); // => true
-equals(0, 1); // => false
+equals({}, {}) // => true
+equals(0, 1) // => false
 ```
 
 #### genid
@@ -351,12 +351,12 @@ genid([Number length [, String prefix]])
 Examples:
 
 ```js
-import {genid} from 'bellajs';
+import {genid} from 'bellajs'
 
-genid(); // => random 32 chars
-genid(16); // => random 16 chars
-genid(5); // => random 5 chars
-genid(5, 'X_'); // => X_{random 3 chars}
+genid() // => random 32 chars
+genid(16) // => random 16 chars
+genid(5) // => random 5 chars
+genid(5, 'X_') // => X_{random 3 chars}
 ```
 
 #### maybe
@@ -370,23 +370,23 @@ Return a static variant of `Maybe` monad.
 Examples:
 
 ```js
-import {maybe} from 'bellajs';
+import {maybe} from 'bellajs'
 
-const plus5 = x => x + 5;
-const minus2 = x => x - 2;
-const isNumber = x => Number(x) === x;
-const toString = x => 'The value is ' + String(x);
-const getDefault = () => 'This is default value';
+const plus5 = x => x + 5
+const minus2 = x => x - 2
+const isNumber = x => Number(x) === x
+const toString = x => 'The value is ' + String(x)
+const getDefault = () => 'This is default value'
 
 maybe(5)
   .map(plus5)
   .map(minus2)
-  .value()  // 8
+  .value() // 8
 
 maybe('noop')
   .map(plus5)
   .map(minus2)
-  .value()  // null
+  .value() // null
 
 maybe(5)
   .if(isNumber)
@@ -394,14 +394,14 @@ maybe(5)
   .map(minus2)
   .else(getDefault)
   .map(toString)
-  .value()  // 'The value is 8'
+  .value() // 'The value is 8'
 
 maybe()
   .if(isNumber)
   .map(plus5)
   .map(minus2)
   .map(toString)
-  .value()  // null
+  .value() // null
 
 maybe()
   .if(isNumber)
@@ -409,7 +409,7 @@ maybe()
   .map(minus2)
   .else(getDefault)
   .map(toString)
-  .value()  // 'This is default value'
+  .value() // 'This is default value'
 
 ```
 
@@ -422,9 +422,9 @@ md5(String s)
 Examples:
 
 ```js
-import {md5} from 'bellajs';
+import { md5 } from 'bellajs'
 
-md5('abc'); // => 900150983cd24fb0d6963f7d28e17f72
+md5('abc') // => 900150983cd24fb0d6963f7d28e17f72
 ```
 
 #### pick
@@ -438,11 +438,11 @@ pick(Integer count, Array arr)
 Examples:
 
 ```js
-import {pick} from 'bellajs';
+import { pick } from 'bellajs'
 
 const arr = [1, 3, 8, 2, 5, 7]
-pick(arr, 2);  // --> [3, 5]
-pick(arr, 2);  // --> [8, 1]
+pick(arr, 2) // --> [3, 5]
+pick(arr, 2) // --> [8, 1]
 ```
 
 #### pipe
@@ -456,31 +456,31 @@ pipe(f1, f2, ...fN)
 Examples:
 
 ```js
-import {pipe} from 'bellajs';
+import { pipe } from 'bellajs'
 
 let f1 = (name) => {
-  return `f1 ${name}`;
-};
+  return `f1 ${name}`
+}
 let f2 = (name) => {
-  return `f2 ${name}`;
-};
+  return `f2 ${name}`
+}
 let f3 = (name) => {
-  return `f3 ${name}`;
-};
+  return `f3 ${name}`
+}
 
-let addF = pipe(f1, f2, f3);
+let addF = pipe(f1, f2, f3)
 
 addF('Hello') // => 'f3 f2 f1 Hello'
 
 let add1 = (num) => {
-  return num + 1;
-};
+  return num + 1
+}
 
 let mult2 = (num) => {
-  return num * 2;
-};
+  return num * 2
+}
 
-let add1AndMult2 = pipe(add1, mult2);
+let add1AndMult2 = pipe(add1, mult2)
 add1AndMult2(3) // => 8
 // because add 1 first, then multiple to 2 late => (3 + 1) * 2
 ```
@@ -494,10 +494,10 @@ randint([Number min [, Number max]])
 Examples:
 
 ```js
-import {randint} from 'bellajs';
+import {randint} from 'bellajs'
 
-randint(); // => a random integer
-randint(1, 5); // => a random integer between 3 and 5, including 1 and 5
+randint() // => a random integer
+randint(1, 5) // => a random integer between 3 and 5, including 1 and 5
 ```
 
 #### sort
@@ -509,14 +509,14 @@ sort(Array a [, Function compare])
 Examples:
 
 ```js
-import {sort} from 'bellajs';
+import { sort } from 'bellajs'
 
 const fn = (a, b) => {
-  return a < b ? 1 : a > b ? -1 : 0;
-};
+  return a < b ? 1 : a > b ? -1 : 0
+}
 
-sort([3, 1, 5, 2], fn); // => [ 1, 2, 3, 5 ]
-sort([3, 1, 5, 2], fn); // => [ 5, 3, 2, 1 ]
+sort([3, 1, 5, 2], fn) // => [ 1, 2, 3, 5 ]
+sort([3, 1, 5, 2], fn) // => [ 5, 3, 2, 1 ]
 ```
 
 #### sortBy
@@ -529,7 +529,7 @@ Examples:
 
 ```js
 
-import {sortBy} from 'bellajs';
+import { sortBy } from 'bellajs'
 
 const players = [
   {
@@ -552,9 +552,9 @@ const players = [
     name: 'Caleb McKinney',
     age: 28
   }
-];
+]
 
-const result = sortBy('age', -1, players);
+const result = sortBy('age', -1, players)
 console.log(result)
 ```
 
@@ -569,9 +569,9 @@ shuffle(Array arr)
 Examples:
 
 ```js
-import {shuffle} from 'bellajs';
+import { shuffle } from 'bellajs'
 
-shuffle([1, 3, 8, 2, 5, 7]);
+shuffle([1, 3, 8, 2, 5, 7])
 ```
 
 #### unique
@@ -583,9 +583,9 @@ unique(Array a)
 Examples:
 
 ```js
-import {unique} from 'bellajs';
+import { unique } from 'bellajs'
 
-unique([1, 2, 3, 2, 3, 1, 5]); // => [ 1, 2, 3, 5 ]
+unique([1, 2, 3, 2, 3, 1, 5]) // => [ 1, 2, 3, 5 ]
 ```
 
 ## Test
