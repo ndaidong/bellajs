@@ -1,8 +1,7 @@
 // utils / date
 
 import {
-  isDate,
-  isString
+  isDate
 } from './detection'
 
 const PATTERN = 'D, M d, Y  h:i:s A'
@@ -55,10 +54,6 @@ export const toDateString = (input, output = PATTERN) => {
   const d = isDate(input) ? input : new Date(input)
   if (!isDate(d)) {
     throw new Error('InvalidInput: Number or Date required.')
-  }
-
-  if (!isString(output)) {
-    throw new Error('Invalid output pattern.')
   }
 
   const vchar = /\.*\\?([a-z])/gi

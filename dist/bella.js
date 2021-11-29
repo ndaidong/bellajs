@@ -1,6 +1,6 @@
 /**
  * bellajs@9.4.0
- * built on: Fri, 26 Nov 2021 16:05:18 GMT
+ * built on: Mon, 29 Nov 2021 09:19:51 GMT
  * repository: https://github.com/ndaidong/bellajs
  * maintainer: @ndaidong
  * License: MIT
@@ -315,9 +315,6 @@
     const d = isDate(input) ? input : new Date(input);
     if (!isDate(d)) {
       throw new Error('InvalidInput: Number or Date required.')
-    }
-    if (!isString(output)) {
-      throw new Error('Invalid output pattern.')
     }
     const vchar = /\.*\\?([a-z])/gi;
     const meridiem = output.match(/(\.*)a{1}(\.*)*/i);
