@@ -1,15 +1,12 @@
-/**
- * Testing
- * @ndaidong
- */
+// pipe.test
 
-const { test } = require('tap')
+/* eslint-env jest */
 
-const { variants } = require('../../config')
+import {
+  pipe
+} from './pipe'
 
-const checkPipe = (bella) => {
-  const { pipe } = bella
-
+describe('test .pipe() method:', () => {
   const f1 = (name) => {
     return `f1 ${name}`
   }
@@ -40,13 +37,8 @@ const checkPipe = (bella) => {
 
   const calculate = pipe(add3, mul6, div2, sub5)
 
-  test('Testing .pipe() method', (assert) => {
-    const ex = 'f3 f2 f1 Alice'
-    assert.deepEquals(addDashes('Alice'), ex, `addDashes('Alice') must return "${ex}"`)
-
-    assert.deepEquals(calculate(5), 19, 'calculate(5) must return 19')
-    assert.end()
+  test('  check if .compose() works correctly', () => {
+    expect(addDashes('Alice')).toEqual('f3 f2 f1 Alice')
+    expect(calculate(5)).toEqual(19)
   })
-}
-
-variants.map(checkPipe)
+})

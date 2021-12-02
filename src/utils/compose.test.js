@@ -1,15 +1,12 @@
-/**
- * Testing
- * @ndaidong
- */
+// compose.test
 
-const { test } = require('tap')
+/* eslint-env jest */
 
-const { variants } = require('../../config')
+import {
+  compose
+} from './compose'
 
-const checkCompose = (bella) => {
-  const { compose } = bella
-
+describe('test .compose() method:', () => {
   const f1 = (name) => {
     return `f1 ${name}`
   }
@@ -40,13 +37,8 @@ const checkCompose = (bella) => {
 
   const calculate = compose(sub5, div2, mul6, add3)
 
-  test('Testing .compose() method', (assert) => {
-    const ex = 'f1 f2 f3 Alice'
-    assert.deepEquals(addDashes('Alice'), ex, `addDashes('Alice') must return "${ex}"`)
-
-    assert.deepEquals(calculate(5), 19, 'calculate(5) must return 19')
-    assert.end()
+  test('  check if .compose() works correctly', () => {
+    expect(addDashes('Alice')).toEqual('f1 f2 f3 Alice')
+    expect(calculate(5)).toEqual(19)
   })
-}
-
-variants.map(checkCompose)
+})

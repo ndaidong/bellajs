@@ -15,7 +15,7 @@ describe('test .md5() method:', () => {
 
   const sampleKey = 'bellajs'
   const md5Arr = []
-  while (md5Arr.length < 20) {
+  while (md5Arr.length < 100) {
     md5Arr.push(md5(sampleKey))
   }
   test(`test .md5(${sampleKey}) must return same value (${md5Arr[0]})`, () => {

@@ -1,6 +1,6 @@
 /**
- * bellajs@9.4.0
- * built on: Mon, 29 Nov 2021 09:19:51 GMT
+ * bellajs@10.0.0
+ * built on: Thu, 02 Dec 2021 10:57:05 GMT
  * repository: https://github.com/ndaidong/bellajs
  * maintainer: @ndaidong
  * License: MIT
@@ -512,12 +512,15 @@
     };
     return next(totalArguments, [])
   };
+
   const compose = (...fns) => {
     return fns.reduce((f, g) => (x) => f(g(x)))
   };
+
   const pipe = (...fns) => {
     return fns.reduce((f, g) => (x) => g(f(x)))
   };
+
   const defineProp = (ob, key, val, config = {}) => {
     const {
       writable = false,
@@ -531,6 +534,7 @@
       enumerable
     });
   };
+
   const maybe = (val) => {
     const __val = val;
     const isNil = () => {
@@ -558,6 +562,7 @@
     defineProp(output, 'else', getElse);
     return output
   };
+
   const clone = (val, history = null) => {
     const stack = history || new Set();
     if (stack.has(val)) {
@@ -617,23 +622,30 @@
   const fnSort = (a, b) => {
     return a > b ? 1 : a < b ? -1 : 0
   };
-  const sort = (arr = [], fn = fnSort) => {
+  const sort = (arr = [], sorting) => {
     const tmp = [...arr];
+    const fn = sorting || fnSort;
     tmp.sort(fn);
     return tmp
   };
-  const sortBy = (key, order = 1, arr = []) => {
+  const sortBy = (arr = [], order = 1, key) => {
     return sort(arr, (m, n) => {
       return m[key] > n[key] ? order : (m[key] < n[key] ? (-1 * order) : 0)
     })
   };
   const shuffle = (arr = []) => {
-    return sort([...arr], () => {
-      return Math.random() > 0.5
-    })
+    const input = [...arr];
+    const output = [];
+    let inputLen = input.length;
+    while (inputLen > 0) {
+      const index = Math.floor(Math.random() * inputLen);
+      output.push(input.splice(index, 1)[0]);
+      inputLen--;
+    }
+    return output
   };
-  const pick = (count = 1, arr = []) => {
-    const a = shuffle([...arr]);
+  const pick = (arr = [], count = 1) => {
+    const a = shuffle(arr);
     const mc = Math.max(1, count);
     const c = Math.min(mc, a.length - 1);
     return a.splice(0, c)

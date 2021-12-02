@@ -17,24 +17,27 @@ You may be interested in [BellaPy](https://github.com/ndaidong/bellapy) too.
 * [APIs](#apis)
 
   * [DataType detection](#datatype-detection)
-  * [String manipulation](#string-manipulation)
   * [Date format](#date-format)
-  * [Other utils](#other-utils)
+  * [String manipulation](#string-manipulation)
+  * [Data handling](#data-handling)
     * [clone](#clone)
-    * [compose](#compose)
     * [copies](#copies)
-    * [curry](#curryfn)
-    * [equals](#equals)
-    * [genid](#genid)
-    * [maybe](#maybe)
-    * [md5](#md5)
+  * [Array utils]
     * [pick](#pick)
-    * [pipe](#pipe)
-    * [randint](#randint)
     * [sort](#sort)
     * [sortBy](#sortBy)
     * [shuffle](#shuffle)
     * [unique](#unique)
+  * [Functional utils](#functional-utils)
+    * [curry](#curryfn)
+    * [compose](#compose)
+    * [pipe](#pipe)
+    * [maybe](#maybe)
+  * [Other utils](#other-utils)
+    * [equals](#equals)
+    * [randint](#randint)
+    * [genid](#genid)
+    * [md5](#md5)
 
 * [Test](#test)
 
@@ -71,7 +74,7 @@ const {
 // es6 syntax:
 import bella from 'bellajs';
 
-// with tree shacking
+// or
 import {
   isArray,
   isString,
@@ -97,18 +100,6 @@ import {
 - .isObject(Anything val)
 - .isString(Anything val)
 - .isUndefined(Anything val)
-
-### String manipulation
-
-- .ucfirst(String s)
-- .ucwords(String s)
-- .escapeHTML(String s)
-- .unescapeHTML(String s)
-- .slugify(String s)
-- .stripTags(String s)
-- .stripAccent(String s)
-- .truncate(String s, Number limit)
-- .replaceAll(String s, String|Array search, String|Array replace)
 
 ### Date format
 
@@ -157,15 +148,28 @@ import {
   toUTCDateString
 } from 'bellajs'
 
-let t = 1509628030108
+const t = 1509628030108
 
-toRelativeTime(t) //=> 2 seconds ago
-toDateString(t, 'Y/m/d h:i:s') //=> 2017/11/02 20:07:10
-toLocalDateString(t) //=> Thu, 2 Nov 2017 20:07:10 GMT+0007
-toUTCDateString(t) //=> Thu, 2 Nov 2017 13:07:10 GMT+0000
+toRelativeTime(t) // => 2 seconds ago
+toDateString(t, 'Y/m/d h:i:s') // => 2017/11/02 20:07:10
+toLocalDateString(t) // => Thu, 2 Nov 2017 20:07:10 GMT+0007
+toUTCDateString(t) // => Thu, 2 Nov 2017 13:07:10 GMT+0000
 ```
 
-### Other utils
+### String manipulation
+
+- .ucfirst(String s)
+- .ucwords(String s)
+- .escapeHTML(String s)
+- .unescapeHTML(String s)
+- .slugify(String s)
+- .stripTags(String s)
+- .stripAccent(String s)
+- .truncate(String s, Number limit)
+- .replaceAll(String s, String|Array search, String|Array replace)
+
+
+### Data handling
 
 #### clone
 
@@ -176,7 +180,7 @@ clone(Anything val)
 Return a copy of val.
 
 ```js
-let b = [
+const b = [
   1, 5, 0, 'a', -10, '-10', '',
   {
     a: 1,
@@ -184,8 +188,8 @@ let b = [
   }
 ]
 
-let cb = bella.clone(b)
-console.log(cb);
+const cb = bella.clone(b)
+console.log(cb)
 ```
 
 *cb* now has the same values as *b*, while the properties are standalone, not reference. So that:
@@ -206,46 +210,6 @@ What you get is still:
 }
 ```
 
-#### compose
-
-Performs right-to-left function composition.
-
-```js
-compose(f1, f2, ...fN)
-```
-
-Examples:
-
-```js
-import {compose} from 'bellajs'
-
-let f1 = (name) => {
-  return `f1 ${name}`
-}
-let f2 = (name) => {
-  return `f2 ${name}`
-}
-let f3 = (name) => {
-  return `f3 ${name}`
-}
-
-let addF = compose(f1, f2, f3)
-
-addF('Hello') // => 'f1 f2 f3 Hello'
-
-let add1 = (num) => {
-  return num + 1
-}
-
-let mult2 = (num) => {
-  return num * 2
-}
-
-let add1AndMult2 = compose(add1, mult2)
-add1AndMult2(3) // => 7
-// because multiple to 2 first, then add 1 late => 3 * 2 + 1
-```
-
 #### copies
 
 Copy the properties from *source* to *target*.
@@ -260,7 +224,7 @@ copies(Object source, Object target[[, Boolean requireMatching], Array excepts])
 Example:
 
 ```js
-let a = {
+const a = {
   name: 'Toto',
   age: 30,
   level: 8,
@@ -268,7 +232,7 @@ let a = {
     name: 'America'
   }
 }
-let b = {
+const b = {
   level: 4,
   IQ: 140,
   epouse: {
@@ -305,6 +269,119 @@ Output:
 }
 ```
 
+### Array utils
+
+#### pick
+
+Randomly choose N  elements from array.
+
+```js
+pick(Array arr [, Integer count = 1])
+```
+
+Examples:
+
+```js
+import { pick } from 'bellajs'
+
+const arr = [1, 3, 8, 2, 5, 7]
+pick(arr, 2) // --> [3, 5]
+pick(arr, 2) // --> [8, 1]
+pick(arr) // --> [3]
+pick(arr) // --> [7]
+```
+
+
+#### sort
+
+```js
+sort(Array a [, Function compare])
+```
+
+Examples:
+
+```js
+import { sort } from 'bellajs'
+
+const fn = (a, b) => {
+  return a < b ? 1 : a > b ? -1 : 0
+}
+
+sort([3, 1, 5, 2], fn) // => [ 1, 2, 3, 5 ]
+sort([3, 1, 5, 2], fn) // => [ 5, 3, 2, 1 ]
+```
+
+#### sortBy
+
+```js
+sortBy(Array a, Number order, String property)
+```
+
+Examples:
+
+```js
+
+import { sortBy } from 'bellajs'
+
+const players = [
+  {
+    name: 'Jerome Nash',
+    age: 24
+  },
+  {
+    name: 'Jackson Valdez',
+    age: 21
+  },
+  {
+    name: 'Benjamin Cole',
+    age: 23
+  },
+  {
+    name: 'Manuel Delgado',
+    age: 33
+  },
+  {
+    name: 'Caleb McKinney',
+    age: 28
+  }
+]
+
+const result = sortBy(players, -1, 'age')
+console.log(result)
+```
+
+#### shuffle
+
+Shuffle an array.
+
+```js
+shuffle(Array arr)
+```
+
+Examples:
+
+```js
+import { shuffle } from 'bellajs'
+
+shuffle([1, 3, 8, 2, 5, 7])
+```
+
+#### unique
+
+```js
+unique(Array a)
+```
+
+Examples:
+
+```js
+import { unique } from 'bellajs'
+
+unique([1, 2, 3, 2, 3, 1, 5]) // => [ 1, 2, 3, 5 ]
+```
+
+### Functional utils
+
 #### curry
 
 ```js
@@ -314,10 +391,10 @@ curry(fn)
 Examples:
 
 ```js
-import {curry} from 'bellajs'
+import { curry } from 'bellajs'
 
-let sum = curry((a, b, c) => {
-  return a + b + c;
+const sum = curry((a, b, c) => {
+  return a + b + c
 })
 
 sum(3)(2)(1) // => 6
@@ -327,36 +404,85 @@ sum(1)(2, 3) // => 6
 sum(1, 2, 3) // => 6
 ```
 
-#### equals
+#### compose
+
+Performs right-to-left function composition.
 
 ```js
-equals(Anything a, Anything b)
+compose(f1, f2, ...fN)
 ```
 
 Examples:
 
 ```js
-import {equals} from 'bellajs'
+import {compose} from 'bellajs'
 
-equals({}, {}) // => true
-equals(0, 1) // => false
+const f1 = (name) => {
+  return `f1 ${name}`
+}
+const f2 = (name) => {
+  return `f2 ${name}`
+}
+const f3 = (name) => {
+  return `f3 ${name}`
+}
+
+const addF = compose(f1, f2, f3)
+
+addF('Hello') // => 'f1 f2 f3 Hello'
+
+const add1 = (num) => {
+  return num + 1
+}
+
+const mult2 = (num) => {
+  return num * 2
+}
+
+const add1AndMult2 = compose(add1, mult2)
+add1AndMult2(3) // => 7
+// because multiple to 2 first, then add 1 late => 3 * 2 + 1
 ```
 
-#### genid
+
+#### pipe
+
+Performs left-to-right function composition.
 
 ```js
-genid([Number length [, String prefix]])
+pipe(f1, f2, ...fN)
 ```
 
 Examples:
 
 ```js
-import {genid} from 'bellajs'
+import { pipe } from 'bellajs'
 
-genid() // => random 32 chars
-genid(16) // => random 16 chars
-genid(5) // => random 5 chars
-genid(5, 'X_') // => X_{random 3 chars}
+const f1 = (name) => {
+  return `f1 ${name}`
+}
+const f2 = (name) => {
+  return `f2 ${name}`
+}
+const f3 = (name) => {
+  return `f3 ${name}`
+}
+
+const addF = pipe(f1, f2, f3)
+
+addF('Hello') // => 'f3 f2 f1 Hello'
+
+const add1 = (num) => {
+  return num + 1
+}
+
+const mult2 = (num) => {
+  return num * 2
+}
+
+const add1AndMult2 = pipe(add1, mult2)
+add1AndMult2(3) // => 8
+// because add 1 first, then multiple to 2 late => (3 + 1) * 2
 ```
 
 #### maybe
@@ -370,7 +496,7 @@ Return a static variant of `Maybe` monad.
 Examples:
 
 ```js
-import {maybe} from 'bellajs'
+import { maybe } from 'bellajs'
 
 const plus5 = x => x + 5
 const minus2 = x => x - 2
@@ -410,8 +536,57 @@ maybe()
   .else(getDefault)
   .map(toString)
   .value() // 'This is default value'
-
 ```
+
+### Other utils
+
+#### equals
+
+```js
+equals(Anything a, Anything b)
+```
+
+Examples:
+
+```js
+import { equals } from 'bellajs'
+
+equals({}, {}) // => true
+equals(0, 1) // => false
+```
+
+#### randint
+
+```js
+randint([Number min [, Number max]])
+```
+
+Examples:
+
+```js
+import { randint } from 'bellajs'
+
+randint() // => a random integer
+randint(1, 5) // => a random integer between 3 and 5, including 1 and 5
+```
+
+#### genid
+
+```js
+genid([Number length [, String prefix]])
+```
+
+Examples:
+
+```js
+import { genid } from 'bellajs'
+
+genid() // => random 32 chars
+genid(16) // => random 16 chars
+genid(5) // => random 5 chars
+genid(5, 'X_') // => X_{random 3 chars}
+```
+
 
 #### md5
 
@@ -427,166 +602,6 @@ import { md5 } from 'bellajs'
 md5('abc') // => 900150983cd24fb0d6963f7d28e17f72
 ```
 
-#### pick
-
-Randomly choose N  elements from array.
-
-```js
-pick(Integer count, Array arr)
-```
-
-Examples:
-
-```js
-import { pick } from 'bellajs'
-
-const arr = [1, 3, 8, 2, 5, 7]
-pick(arr, 2) // --> [3, 5]
-pick(arr, 2) // --> [8, 1]
-```
-
-#### pipe
-
-Performs left-to-right function composition.
-
-```js
-pipe(f1, f2, ...fN)
-```
-
-Examples:
-
-```js
-import { pipe } from 'bellajs'
-
-let f1 = (name) => {
-  return `f1 ${name}`
-}
-let f2 = (name) => {
-  return `f2 ${name}`
-}
-let f3 = (name) => {
-  return `f3 ${name}`
-}
-
-let addF = pipe(f1, f2, f3)
-
-addF('Hello') // => 'f3 f2 f1 Hello'
-
-let add1 = (num) => {
-  return num + 1
-}
-
-let mult2 = (num) => {
-  return num * 2
-}
-
-let add1AndMult2 = pipe(add1, mult2)
-add1AndMult2(3) // => 8
-// because add 1 first, then multiple to 2 late => (3 + 1) * 2
-```
-
-#### randint
-
-```js
-randint([Number min [, Number max]])
-```
-
-Examples:
-
-```js
-import {randint} from 'bellajs'
-
-randint() // => a random integer
-randint(1, 5) // => a random integer between 3 and 5, including 1 and 5
-```
-
-#### sort
-
-```js
-sort(Array a [, Function compare])
-```
-
-Examples:
-
-```js
-import { sort } from 'bellajs'
-
-const fn = (a, b) => {
-  return a < b ? 1 : a > b ? -1 : 0
-}
-
-sort([3, 1, 5, 2], fn) // => [ 1, 2, 3, 5 ]
-sort([3, 1, 5, 2], fn) // => [ 5, 3, 2, 1 ]
-```
-
-#### sortBy
-
-```js
-sortBy(String property, Number order, Array a)
-```
-
-Examples:
-
-```js
-
-import { sortBy } from 'bellajs'
-
-const players = [
-  {
-    name: 'Jerome Nash',
-    age: 24
-  },
-  {
-    name: 'Jackson Valdez',
-    age: 21
-  },
-  {
-    name: 'Benjamin Cole',
-    age: 23
-  },
-  {
-    name: 'Manuel Delgado',
-    age: 33
-  },
-  {
-    name: 'Caleb McKinney',
-    age: 28
-  }
-]
-
-const result = sortBy('age', -1, players)
-console.log(result)
-```
-
-#### shuffle
-
-Shuffle an array.
-
-```js
-shuffle(Array arr)
-```
-
-Examples:
-
-```js
-import { shuffle } from 'bellajs'
-
-shuffle([1, 3, 8, 2, 5, 7])
-```
-
-#### unique
-
-```js
-unique(Array a)
-```
-
-Examples:
-
-```js
-import { unique } from 'bellajs'
-
-unique([1, 2, 3, 2, 3, 1, 5]) // => [ 1, 2, 3, 5 ]
-```
 
 ## Test
 
