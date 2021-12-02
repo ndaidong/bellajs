@@ -118,8 +118,8 @@ describe('test .isNull() method:', () => {
 })
 
 describe('test .isUndefined() method:', () => {
-  let val
-  const positives = [undefined, val]
+  let v
+  const positives = [undefined, v]
   positives.forEach((val) => {
     test(`test .isUndefined(${val}) --> true`, () => {
       expect(isUndefined(val)).toBe(true)
@@ -135,8 +135,8 @@ describe('test .isUndefined() method:', () => {
 })
 
 describe('test .isNil() method:', () => {
-  let val
-  const positives = [undefined, val, null]
+  let v
+  const positives = [undefined, v, null]
   positives.forEach((val) => {
     test(`test .isNil(${val}) --> true`, () => {
       expect(isNil(val)).toBe(true)

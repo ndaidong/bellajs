@@ -7,6 +7,7 @@ import {
   isObject,
   isArray,
   isDate,
+  isNil,
   hasProperty
 } from './utils/detection'
 
@@ -78,17 +79,20 @@ export const unique = (arr = []) => {
 }
 
 const fnSort = (a, b) => {
-  return a > b ? 1 : a < b ? -1 : 0
+  return a > b ? 1 : (a < b ? -1 : 0)
 }
 
-export const sort = (arr = [], sorting) => {
+export const sort = (arr = [], sorting = null) => {
   const tmp = [...arr]
   const fn = sorting || fnSort
   tmp.sort(fn)
   return tmp
 }
 
-export const sortBy = (arr = [], order = 1, key) => {
+export const sortBy = (arr = [], order = 1, key = '') => {
+  if (isNil(key)) {
+    return arr
+  }
   return sort(arr, (m, n) => {
     return m[key] > n[key] ? order : (m[key] < n[key] ? (-1 * order) : 0)
   })

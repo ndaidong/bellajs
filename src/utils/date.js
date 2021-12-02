@@ -57,7 +57,7 @@ export const toDateString = (input, output = PATTERN) => {
   }
 
   const vchar = /\.*\\?([a-z])/gi
-  const meridiem = output.match(/(\.*)a{1}(\.*)*/i)
+  const meridiem = output.includes('a') || output.includes('A')
 
   const wn = WEEKDAYS
   const mn = MONTHS
