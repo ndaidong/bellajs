@@ -1,5 +1,5 @@
 {
-  "version": "10.0.1",
+  "version": "10.0.2",
   "name": "bellajs",
   "description": "A useful helper for any javascript program",
   "homepage": "https://www.npmjs.com/package/bellajs",
@@ -34,6 +34,11 @@
         ]
       }
     }
+  },
+  "standard": {
+    "ignore": [
+      "dist"
+    ]
   },
   "keywords": [
     "detection",
