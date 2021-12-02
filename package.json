@@ -15,7 +15,7 @@
     "node": ">= 10.14.2"
   },
   "scripts": {
-    "lint": "standard .",
+    "lint": "standard ./src",
     "pretest": "npm run lint && npm run build",
     "test": "NODE_ENV=test jest --verbose --coverage=true --unhandled-rejections=strict --detectOpenHandles --env=jsdom",
     "build": "gccmin -e src/main.js -n bella -o dist -p package.json",
