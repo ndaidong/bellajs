@@ -7,173 +7,124 @@ import {
   isObject,
   isArray,
   isDate,
-  hasProperty,
-} from './utils/detection';
-
-export const curry = (fn) => {
-  const totalArguments = fn.length;
-  const next = (argumentLength, rest) => {
-    if (argumentLength > 0) {
-      return (...args) => {
-        return next(argumentLength - args.length, [...rest, ...args]);
-      };
-    }
-    return fn(...rest);
-  };
-  return next(totalArguments, []);
-};
-
-export const compose = (...fns) => {
-  return fns.reduce((f, g) => (x) => f(g(x)));
-};
-
-export const pipe = (...fns) => {
-  return fns.reduce((f, g) => (x) => g(f(x)));
-};
-
-const defineProp = (ob, key, val, config = {}) => {
-  const {
-    writable = false,
-    configurable = false,
-    enumerable = false,
-  } = config;
-  Object.defineProperty(ob, key, {
-    value: val,
-    writable,
-    configurable,
-    enumerable,
-  });
-};
-
-export const maybe = (val) => {
-  const __val = val;
-  const isNil = () => {
-    return __val === null || __val === undefined;
-  };
-  const value = () => {
-    return __val;
-  };
-  const getElse = (fn) => {
-    return maybe(__val || fn());
-  };
-  const filter = (fn) => {
-    return maybe(fn(__val) === true ? __val : null);
-  };
-  const map = (fn) => {
-    return maybe(isNil() ? null : fn(__val));
-  };
-  const output = Object.create({});
-  defineProp(output, '__value__', __val, {enumerable: true});
-  defineProp(output, '__type__', 'Maybe', {enumerable: true});
-  defineProp(output, 'isNil', isNil);
-  defineProp(output, 'value', value);
-  defineProp(output, 'map', map);
-  defineProp(output, 'if', filter);
-  defineProp(output, 'else', getElse);
-  return output;
-};
-
+  isNil,
+  hasProperty
+} from './utils/detection'
 
 export const clone = (val, history = null) => {
-  const stack = history || new Set();
+  const stack = history || new Set()
 
   if (stack.has(val)) {
-    return val;
+    return val
   }
 
-  stack.add(val);
+  stack.add(val)
 
   if (isDate(val)) {
-    return new Date(val.valueOf());
+    return new Date(val.valueOf())
   }
 
   const copyObject = (o) => {
-    const oo = Object.create({});
+    const oo = Object.create({})
     for (const k in o) {
       if (hasProperty(o, k)) {
-        oo[k] = clone(o[k], stack);
+        oo[k] = clone(o[k], stack)
       }
     }
-    return oo;
-  };
+    return oo
+  }
 
   const copyArray = (a) => {
     return [...a].map((e) => {
       if (isArray(e)) {
-        return copyArray(e);
+        return copyArray(e)
       } else if (isObject(e)) {
-        return copyObject(e);
+        return copyObject(e)
       }
-      return clone(e, stack);
-    });
-  };
+      return clone(e, stack)
+    })
+  }
 
   if (isArray(val)) {
-    return copyArray(val);
+    return copyArray(val)
   }
 
   if (isObject(val)) {
-    return copyObject(val);
+    return copyObject(val)
   }
 
-  return val;
-};
-
+  return val
+}
 
 export const copies = (source, dest, matched = false, excepts = []) => {
   for (const k in source) {
     if (excepts.length > 0 && excepts.includes(k)) {
-      continue; // eslint-disable-line no-continue
+      continue // eslint-disable-line no-continue
     }
-    if (!matched || matched && hasProperty(dest, k)) {
-      const oa = source[k];
-      const ob = dest[k];
-      if (isObject(ob) && isObject(oa) || isArray(ob) && isArray(oa)) {
-        dest[k] = copies(oa, dest[k], matched, excepts);
+    if (!matched || (matched && hasProperty(dest, k))) {
+      const oa = source[k]
+      const ob = dest[k]
+      if ((isObject(ob) && isObject(oa)) || (isArray(ob) && isArray(oa))) {
+        dest[k] = copies(oa, dest[k], matched, excepts)
       } else {
-        dest[k] = clone(oa);
+        dest[k] = clone(oa)
       }
     }
   }
-  return dest;
-};
+  return dest
+}
 
 export const unique = (arr = []) => {
-  return [...new Set(arr)];
-};
+  return [...new Set(arr)]
+}
 
 const fnSort = (a, b) => {
-  return a > b ? 1 : a < b ? -1 : 0;
-};
+  return a > b ? 1 : (a < b ? -1 : 0)
+}
 
-export const sort = (arr = [], fn = fnSort) => {
-  const tmp = [...arr];
-  tmp.sort(fn);
-  return tmp;
-};
+export const sort = (arr = [], sorting = null) => {
+  const tmp = [...arr]
+  const fn = sorting || fnSort
+  tmp.sort(fn)
+  return tmp
+}
 
-export const sortBy = (key, order = 1, arr = []) => {
+export const sortBy = (arr = [], order = 1, key = '') => {
+  if (isNil(key)) {
+    return arr
+  }
   return sort(arr, (m, n) => {
-    return m[key] > n[key] ? order : (m[key] < n[key] ? (-1 * order) : 0);
-  });
-};
+    return m[key] > n[key] ? order : (m[key] < n[key] ? (-1 * order) : 0)
+  })
+}
 
 export const shuffle = (arr = []) => {
-  return sort([...arr], () => {
-    return Math.random() > 0.5;
-  });
-};
+  const input = [...arr]
+  const output = []
+  let inputLen = input.length
+  while (inputLen > 0) {
+    const index = Math.floor(Math.random() * inputLen)
+    output.push(input.splice(index, 1)[0])
+    inputLen--
+  }
+  return output
+}
 
-export const pick = (count = 1, arr = []) => {
-  const a = shuffle([...arr]);
-  const mc = Math.max(1, count);
-  const c = Math.min(mc, a.length - 1);
-  return a.splice(0, c);
-};
+export const pick = (arr = [], count = 1) => {
+  const a = shuffle(arr)
+  const mc = Math.max(1, count)
+  const c = Math.min(mc, a.length - 1)
+  return a.splice(0, c)
+}
 
-export * from './utils/detection';
-export * from './utils/equals';
-export * from './utils/string';
-export * from './utils/random';
-export * from './utils/date';
-export * from './utils/md5';
+export * from './utils/detection'
+export * from './utils/equals'
+export * from './utils/string'
+export * from './utils/random'
+export * from './utils/date'
+export * from './utils/md5'
+
+export * from './utils/curry'
+export * from './utils/compose'
+export * from './utils/pipe'
+export * from './utils/maybe'

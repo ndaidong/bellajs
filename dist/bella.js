@@ -1,6 +1,6 @@
 /**
- * bellajs@9.3.0
- * built on: Sat, 01 May 2021 14:55:33 GMT
+ * bellajs@10.0.0
+ * built on: Thu, 02 Dec 2021 10:57:05 GMT
  * repository: https://github.com/ndaidong/bellajs
  * maintainer: @ndaidong
  * License: MIT
@@ -9,114 +9,101 @@
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
   typeof define === 'function' && define.amd ? define(['exports'], factory) :
   (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.bella = {}));
-}(this, (function (exports) {
+})(this, (function (exports) {
   const ob2Str = (val) => {
-    return {}.toString.call(val);
+    return {}.toString.call(val)
   };
   const isInteger = (val) => {
-    return Number.isInteger(val);
+    return Number.isInteger(val)
   };
   const isArray = (val) => {
-    return Array.isArray(val);
+    return Array.isArray(val)
   };
   const isString = (val) => {
-    return String(val) === val;
+    return String(val) === val
   };
   const isNumber = (val) => {
-    return Number(val) === val;
+    return Number(val) === val
   };
   const isBoolean = (val) => {
-    return Boolean(val) === val;
+    return Boolean(val) === val
   };
   const isNull = (val) => {
-    return ob2Str(val) === '[object Null]';
+    return ob2Str(val) === '[object Null]'
   };
   const isUndefined = (val) => {
-    return ob2Str(val) === '[object Undefined]';
+    return ob2Str(val) === '[object Undefined]'
+  };
+  const isNil = (val) => {
+    return isUndefined(val) || isNull(val)
   };
   const isFunction = (val) => {
-    return ob2Str(val) === '[object Function]';
+    return ob2Str(val) === '[object Function]'
   };
   const isObject = (val) => {
-    return ob2Str(val) === '[object Object]' && !isArray(val);
+    return ob2Str(val) === '[object Object]' && !isArray(val)
   };
   const isDate = (val) => {
-    return val instanceof Date && !isNaN(val.valueOf());
+    return val instanceof Date && !isNaN(val.valueOf())
   };
   const isElement = (v) => {
-    return ob2Str(v).match(/^\[object HTML\w*Element]$/) !== null;
+    return ob2Str(v).match(/^\[object HTML\w*Element]$/) !== null
   };
   const isLetter = (val) => {
     const re = /^[a-z]+$/i;
-    return isString(val) && re.test(val);
+    return isString(val) && re.test(val)
   };
   const isEmail = (val) => {
     const re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
-    return isString(val) && re.test(val);
-  };
-  const isNil = (val) => {
-    return isUndefined(val) || isNull(val);
+    return isString(val) && re.test(val)
   };
   const isEmpty = (val) => {
     return !val || isNil(val) ||
-      isString(val) && val === '' ||
-      isArray(val) && val.length === 0 ||
-      isObject(val) && Object.keys(val).length === 0;
+      (isString(val) && val === '') ||
+      (isArray(val) && val.length === 0) ||
+      (isObject(val) && Object.keys(val).length === 0)
   };
   const hasProperty = (ob, k) => {
     if (!ob || !k) {
-      return false;
+      return false
     }
-    return Object.prototype.hasOwnProperty.call(ob, k);
+    return Object.prototype.hasOwnProperty.call(ob, k)
   };
 
   const equals = (a, b) => {
-    let re = true;
     if (isEmpty(a) && isEmpty(b)) {
-      return true;
+      return true
     }
     if (isDate(a) && isDate(b)) {
-      return a.getTime() === b.getTime();
-    }
-    if (isNumber(a) && isNumber(b) || isString(a) && isString(b)) {
-      return a === b;
+      return a.getTime() === b.getTime()
     }
     if (isArray(a) && isArray(b)) {
       if (a.length !== b.length) {
-        return false;
+        return false
       }
-      if (a.length > 0) {
-        for (let i = 0, l = a.length; i < l; i++) {
-          if (!equals(a[i], b[i])) {
-            re = false;
-            break;
-          }
+      let re = true;
+      for (let i = 0; i < a.length; i++) {
+        if (!equals(a[i], b[i])) {
+          re = false;
+          break
         }
       }
-    } else if (isObject(a) && isObject(b)) {
-      const as = [];
-      const bs = [];
-      for (const k1 in a) {
-        if (hasProperty(a, k1)) {
-          as.push(k1);
-        }
+      return re
+    }
+    if (isObject(a) && isObject(b)) {
+      if (Object.keys(a).length !== Object.keys(b).length) {
+        return false
       }
-      for (const k2 in b) {
-        if (hasProperty(b, k2)) {
-          bs.push(k2);
-        }
-      }
-      if (as.length !== bs.length) {
-        return false;
-      }
+      let re = true;
       for (const k in a) {
         if (!hasProperty(b, k) || !equals(a[k], b[k])) {
           re = false;
-          break;
+          break
         }
       }
+      return re
     }
-    return re;
+    return a === b
   };
 
   const MAX_NUMBER = Number.MAX_SAFE_INTEGER;
@@ -128,7 +115,7 @@
       max = MAX_NUMBER;
     }
     if (min === max) {
-      return max;
+      return max
     }
     if (min > max) {
       min = Math.min(min, max);
@@ -136,21 +123,21 @@
     }
     const offset = min;
     const range = max - min + 1;
-    return Math.floor(Math.random() * range) + offset;
+    return Math.floor(Math.random() * range) + offset
   };
 
   const toString = (input) => {
     const s = isNumber(input) ? String(input) : input;
     if (!isString(s)) {
-      throw new Error('InvalidInput: String required.');
+      throw new Error('InvalidInput: String required.')
     }
-    return s;
+    return s
   };
   const truncate = (s, l) => {
     const o = toString(s);
     const t = l || 140;
     if (o.length <= t) {
-      return o;
+      return o
     }
     let x = o.substring(0, t);
     const a = x.split(' ');
@@ -166,36 +153,36 @@
       x = x.substring(0, t - 3);
       r = x + '...';
     }
-    return r;
+    return r
   };
   const stripTags = (s) => {
     return toString(s)
       .replace(/<.*?>/gi, ' ')
       .replace(/\s\s+/g, ' ')
-      .trim();
+      .trim()
   };
   const escapeHTML = (s) => {
     const x = toString(s);
     return x.replace(/&/g, '&amp;')
       .replace(/</g, '&lt;')
       .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;');
+      .replace(/"/g, '&quot;')
   };
   const unescapeHTML = (s) => {
     const x = toString(s);
     return x.replace(/&quot;/g, '"')
       .replace(/&lt;/g, '<')
       .replace(/&gt;/g, '>')
-      .replace(/&amp;/g, '&');
+      .replace(/&amp;/g, '&')
   };
   const ucfirst = (s) => {
     const x = toString(s).toLowerCase();
-    return x.length > 1 ? x.charAt(0).toUpperCase() + x.slice(1) : x.toUpperCase();
+    return x.length > 1 ? x.charAt(0).toUpperCase() + x.slice(1) : x.toUpperCase()
   };
   const ucwords = (s) => {
     return toString(s).split(' ').map((w) => {
-      return ucfirst(w);
-    }).join(' ');
+      return ucfirst(w)
+    }).join(' ')
   };
   const replaceAll = (s, a, b) => {
     let x = toString(s);
@@ -222,7 +209,7 @@
         }
       }
     }
-    return x;
+    return x
   };
   const stripAccent = (s) => {
     let x = toString(s);
@@ -242,7 +229,7 @@
       u: 'ú|ù|ủ|ũ|ụ|ư|ứ|ừ|ử|ữ|ự|û',
       U: 'Ú|Ù|Ủ|Ũ|Ụ|Ư|Ứ|Ừ|Ử|Ữ|Ự|Û',
       y: 'ý|ỳ|ỷ|ỹ|ỵ',
-      Y: 'Ý|Ỳ|Ỷ|Ỹ|Ỵ',
+      Y: 'Ý|Ỳ|Ỷ|Ỹ|Ỵ'
     };
     const updateS = (ai, key) => {
       x = replaceAll(x, ai, key);
@@ -251,11 +238,11 @@
       if (hasProperty(map, key)) {
         const a = map[key].split('|');
         a.forEach((item) => {
-          return updateS(item, key);
+          return updateS(item, key)
         });
       }
     }
-    return x;
+    return x
   };
   const genid = (leng, prefix = '') => {
     const lc = 'abcdefghijklmnopqrstuvwxyz';
@@ -264,9 +251,9 @@
     const cand = [
       lc,
       uc,
-      nb,
+      nb
     ].join('').split('').sort(() => {
-      return Math.random() > 0.5;
+      return Math.random() > 0.5
     }).join('');
     const t = cand.length;
     const ln = Math.max(leng || 32, prefix.length);
@@ -275,7 +262,7 @@
       const k = randint(0, t);
       s += cand.charAt(k) || '';
     }
-    return s;
+    return s
   };
   const slugify = (s, delimiter = '-') => {
     return stripAccent(s)
@@ -283,32 +270,32 @@
       .toLowerCase()
       .replace(/\W+/g, ' ')
       .replace(/\s+/g, ' ')
-      .replace(/\s/g, delimiter);
+      .replace(/\s/g, delimiter)
   };
 
   const PATTERN = 'D, M d, Y  h:i:s A';
   const WEEKDAYS = [
-    'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday',
+    'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'
   ];
   const MONTHS = [
     'January', 'February', 'March', 'April',
     'May', 'June', 'July', 'August',
-    'September', 'October', 'November', 'December',
+    'September', 'October', 'November', 'December'
   ];
   const now = () => {
-    return new Date();
+    return new Date()
   };
   const time = () => {
-    return Date.now();
+    return Date.now()
   };
   const tzone = now().getTimezoneOffset();
   const tz = (() => {
     const z = Math.abs(tzone / 60);
     const sign = tzone < 0 ? '+' : '-';
-    return ['GMT', sign, String(z).padStart(4, '0')].join('');
+    return ['GMT', sign, String(z).padStart(4, '0')].join('')
   })();
   const _num = (n) => {
-    return String(n < 10 ? '0' + n : n);
+    return String(n < 10 ? '0' + n : n)
   };
   const _ord = (day) => {
     let s = day + ' ';
@@ -322,94 +309,91 @@
     } else {
       s = 'th';
     }
-    return s;
+    return s
   };
   const toDateString = (input, output = PATTERN) => {
     const d = isDate(input) ? input : new Date(input);
     if (!isDate(d)) {
-      throw new Error('InvalidInput: Number or Date required.');
-    }
-    if (!isString(output)) {
-      throw new Error('Invalid output pattern.');
+      throw new Error('InvalidInput: Number or Date required.')
     }
     const vchar = /\.*\\?([a-z])/gi;
     const meridiem = output.match(/(\.*)a{1}(\.*)*/i);
     const wn = WEEKDAYS;
     const mn = MONTHS;
-    let f = {
-      Y() {
-        return d.getFullYear();
+    const f = {
+      Y () {
+        return d.getFullYear()
       },
-      y() {
-        return (f.Y() + '').slice(-2);
+      y () {
+        return (f.Y() + '').slice(-2)
       },
-      F() {
-        return mn[f.n() - 1];
+      F () {
+        return mn[f.n() - 1]
       },
-      M() {
-        return (f.F() + '').slice(0, 3);
+      M () {
+        return (f.F() + '').slice(0, 3)
       },
-      m() {
-        return _num(f.n());
+      m () {
+        return _num(f.n())
       },
-      n() {
-        return d.getMonth() + 1;
+      n () {
+        return d.getMonth() + 1
       },
-      S() {
-        return _ord(f.j());
+      S () {
+        return _ord(f.j())
       },
-      j() {
-        return d.getDate();
+      j () {
+        return d.getDate()
       },
-      d() {
-        return _num(f.j());
+      d () {
+        return _num(f.j())
       },
-      t() {
-        return new Date(f.Y(), f.n(), 0).getDate();
+      t () {
+        return new Date(f.Y(), f.n(), 0).getDate()
       },
-      w() {
-        return d.getDay();
+      w () {
+        return d.getDay()
       },
-      l() {
-        return wn[f.w()];
+      l () {
+        return wn[f.w()]
       },
-      D() {
-        return (f.l() + '').slice(0, 3);
+      D () {
+        return (f.l() + '').slice(0, 3)
       },
-      G() {
-        return d.getHours();
+      G () {
+        return d.getHours()
       },
-      g() {
-        return f.G() % 12 || 12;
+      g () {
+        return f.G() % 12 || 12
       },
-      h() {
-        return _num(meridiem ? f.g() : f.G());
+      h () {
+        return _num(meridiem ? f.g() : f.G())
       },
-      i() {
-        return _num(d.getMinutes());
+      i () {
+        return _num(d.getMinutes())
       },
-      s() {
-        return _num(d.getSeconds());
+      s () {
+        return _num(d.getSeconds())
       },
-      a() {
-        return f.G() > 11 ? 'pm' : 'am';
+      a () {
+        return f.G() > 11 ? 'pm' : 'am'
       },
-      A() {
-        return f.a().toUpperCase();
+      A () {
+        return f.a().toUpperCase()
       },
-      O() {
-        return tz;
+      O () {
+        return tz
       }
     };
     const _term = (t, s) => {
-      return f[t] ? f[t]() : s;
+      return f[t] ? f[t]() : s
     };
-    return output.replace(vchar, _term);
+    return output.replace(vchar, _term)
   };
   const toRelativeTime = (input = time()) => {
     const d = isDate(input) ? input : new Date(input);
     if (!isDate(d)) {
-      throw new Error('InvalidInput: Number or Date required.');
+      throw new Error('InvalidInput: Number or Date required.')
     }
     let delta = now() - d;
     let nowThreshold = parseInt(d, 10);
@@ -417,7 +401,7 @@
       nowThreshold = 0;
     }
     if (delta <= nowThreshold) {
-      return 'Just now';
+      return 'Just now'
     }
     let units = null;
     const conversions = {
@@ -427,11 +411,11 @@
       hour: 60,
       day: 24,
       month: 30,
-      year: 12,
+      year: 12
     };
     for (const key in conversions) {
       if (delta < conversions[key]) {
-        break;
+        break
       } else {
         units = key;
         delta /= conversions[key];
@@ -441,24 +425,24 @@
     if (delta !== 1) {
       units += 's';
     }
-    return [delta, units].join(' ') + ' ago';
+    return [delta, units].join(' ') + ' ago'
   };
   const toUTCDateString = (input = time()) => {
     const d = isDate(input) ? input : new Date(input);
     if (!isDate(d)) {
-      throw new Error('InvalidInput: Number or Date required.');
+      throw new Error('InvalidInput: Number or Date required.')
     }
     const dMinutes = d.getMinutes();
     const dClone = new Date(d);
     dClone.setMinutes(dMinutes + tzone);
-    return `${toDateString(dClone, 'D, j M Y h:i:s')} GMT+0000`;
+    return `${toDateString(dClone, 'D, j M Y h:i:s')} GMT+0000`
   };
   const toLocalDateString = (input = time()) => {
     const d = isDate(input) ? input : new Date(input);
     if (!isDate(d)) {
-      throw new Error('InvalidInput: Number or Date required.');
+      throw new Error('InvalidInput: Number or Date required.')
     }
-    return toDateString(d, 'D, j M Y h:i:s O');
+    return toDateString(d, 'D, j M Y h:i:s O')
   };
 
   let md5 = (str) => {
@@ -521,67 +505,72 @@
     const next = (argumentLength, rest) => {
       if (argumentLength > 0) {
         return (...args) => {
-          return next(argumentLength - args.length, [...rest, ...args]);
-        };
+          return next(argumentLength - args.length, [...rest, ...args])
+        }
       }
-      return fn(...rest);
+      return fn(...rest)
     };
-    return next(totalArguments, []);
+    return next(totalArguments, [])
   };
+
   const compose = (...fns) => {
-    return fns.reduce((f, g) => (x) => f(g(x)));
+    return fns.reduce((f, g) => (x) => f(g(x)))
   };
+
   const pipe = (...fns) => {
-    return fns.reduce((f, g) => (x) => g(f(x)));
+    return fns.reduce((f, g) => (x) => g(f(x)))
   };
+
   const defineProp = (ob, key, val, config = {}) => {
     const {
       writable = false,
       configurable = false,
-      enumerable = false,
+      enumerable = false
     } = config;
     Object.defineProperty(ob, key, {
       value: val,
       writable,
       configurable,
-      enumerable,
+      enumerable
     });
   };
+
   const maybe = (val) => {
     const __val = val;
     const isNil = () => {
-      return __val === null || __val === undefined;
+      return __val === null || __val === undefined
     };
     const value = () => {
-      return __val;
+      return __val
     };
     const getElse = (fn) => {
-      return maybe(__val || fn());
+      return maybe(__val || fn())
     };
     const filter = (fn) => {
-      return maybe(fn(__val) === true ? __val : null);
+      return maybe(fn(__val) === true ? __val : null)
     };
     const map = (fn) => {
-      return maybe(isNil() ? null : fn(__val));
+      return maybe(isNil() ? null : fn(__val))
     };
     const output = Object.create({});
-    defineProp(output, '__value__', __val, {enumerable: true});
-    defineProp(output, '__type__', 'Maybe', {enumerable: true});
+    defineProp(output, '__value__', __val, { enumerable: true });
+    defineProp(output, '__type__', 'Maybe', { enumerable: true });
     defineProp(output, 'isNil', isNil);
     defineProp(output, 'value', value);
     defineProp(output, 'map', map);
     defineProp(output, 'if', filter);
     defineProp(output, 'else', getElse);
-    return output;
+    return output
   };
+
   const clone = (val, history = null) => {
     const stack = history || new Set();
     if (stack.has(val)) {
-      return val;
+      return val
     }
     stack.add(val);
     if (isDate(val)) {
-      return new Date(val.valueOf());
+      return new Date(val.valueOf())
     }
     const copyObject = (o) => {
       const oo = Object.create({});
@@ -590,69 +579,76 @@
           oo[k] = clone(o[k], stack);
         }
       }
-      return oo;
+      return oo
     };
     const copyArray = (a) => {
       return [...a].map((e) => {
         if (isArray(e)) {
-          return copyArray(e);
+          return copyArray(e)
         } else if (isObject(e)) {
-          return copyObject(e);
+          return copyObject(e)
         }
-        return clone(e, stack);
-      });
+        return clone(e, stack)
+      })
     };
     if (isArray(val)) {
-      return copyArray(val);
+      return copyArray(val)
     }
     if (isObject(val)) {
-      return copyObject(val);
+      return copyObject(val)
     }
-    return val;
+    return val
   };
   const copies = (source, dest, matched = false, excepts = []) => {
     for (const k in source) {
       if (excepts.length > 0 && excepts.includes(k)) {
-        continue;
+        continue
       }
-      if (!matched || matched && hasProperty(dest, k)) {
+      if (!matched || (matched && hasProperty(dest, k))) {
         const oa = source[k];
         const ob = dest[k];
-        if (isObject(ob) && isObject(oa) || isArray(ob) && isArray(oa)) {
+        if ((isObject(ob) && isObject(oa)) || (isArray(ob) && isArray(oa))) {
           dest[k] = copies(oa, dest[k], matched, excepts);
         } else {
           dest[k] = clone(oa);
         }
       }
     }
-    return dest;
+    return dest
   };
   const unique = (arr = []) => {
-    return [...new Set(arr)];
+    return [...new Set(arr)]
   };
   const fnSort = (a, b) => {
-    return a > b ? 1 : a < b ? -1 : 0;
+    return a > b ? 1 : a < b ? -1 : 0
   };
-  const sort = (arr = [], fn = fnSort) => {
+  const sort = (arr = [], sorting) => {
     const tmp = [...arr];
+    const fn = sorting || fnSort;
     tmp.sort(fn);
-    return tmp;
+    return tmp
   };
-  const sortBy = (key, order = 1, arr = []) => {
+  const sortBy = (arr = [], order = 1, key) => {
     return sort(arr, (m, n) => {
-      return m[key] > n[key] ? order : (m[key] < n[key] ? (-1 * order) : 0);
-    });
+      return m[key] > n[key] ? order : (m[key] < n[key] ? (-1 * order) : 0)
+    })
   };
   const shuffle = (arr = []) => {
-    return sort([...arr], () => {
-      return Math.random() > 0.5;
-    });
+    const input = [...arr];
+    const output = [];
+    let inputLen = input.length;
+    while (inputLen > 0) {
+      const index = Math.floor(Math.random() * inputLen);
+      output.push(input.splice(index, 1)[0]);
+      inputLen--;
+    }
+    return output
   };
-  const pick = (count = 1, arr = []) => {
-    const a = shuffle([...arr]);
+  const pick = (arr = [], count = 1) => {
+    const a = shuffle(arr);
     const mc = Math.max(1, count);
     const c = Math.min(mc, a.length - 1);
-    return a.splice(0, c);
+    return a.splice(0, c)
   };
 
   exports.clone = clone;
@@ -704,4 +700,4 @@
 
   Object.defineProperty(exports, '__esModule', { value: true });
 
-})));
+}));

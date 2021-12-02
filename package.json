@@ -1,5 +1,5 @@
 {
-  "version": "9.3.0",
+  "version": "10.0.0",
   "name": "bellajs",
   "description": "A useful helper for any javascript program",
   "homepage": "https://www.npmjs.com/package/bellajs",
@@ -15,21 +15,25 @@
     "node": ">= 10.14.2"
   },
   "scripts": {
-    "lint": "eslint ./src",
+    "lint": "standard ./src",
     "pretest": "npm run lint && npm run build",
-    "test": "tap tests/start.js --coverage --reporter=spec --coverage-report=html --no-browser --functions=95 --statements=95 --branches=85",
-    "citest": "tap tests/start.js --coverage --reporter=spec --coverage-report=lcov --no-browser --functions=95 --statements=95 --branches=85",
+    "test": "NODE_ENV=test jest --verbose --coverage=true --unhandled-rejections=strict --detectOpenHandles --env=jsdom",
     "build": "gccmin -e src/main.js -n bella -o dist -p package.json",
     "reset": "node reset"
   },
   "devDependencies": {
-    "eslint-config-goes": "^1.2.0",
+    "@babel/plugin-transform-modules-commonjs": "^7.16.0",
     "gcc-min": "^7.3.0",
-    "is": "^3.3.0",
-    "jsdom": "^16.5.3",
-    "jsdom-global": "^3.0.2",
-    "sinon": "^10.0.0",
-    "tap": "^15.0.6"
+    "jest": "^27.3.1"
+  },
+  "babel": {
+    "env": {
+      "test": {
+        "plugins": [
+          "@babel/plugin-transform-modules-commonjs"
+        ]
+      }
+    }
   },
   "keywords": [
     "detection",

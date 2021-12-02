@@ -4,108 +4,108 @@ import {
   isArray,
   isString,
   isNumber,
-  hasProperty,
-} from './detection';
+  hasProperty
+} from './detection'
 
-import {randint} from './random';
+import { randint } from './random'
 
 const toString = (input) => {
-  const s = isNumber(input) ? String(input) : input;
+  const s = isNumber(input) ? String(input) : input
   if (!isString(s)) {
-    throw new Error('InvalidInput: String required.');
+    throw new Error('InvalidInput: String required.')
   }
-  return s;
-};
+  return s
+}
 
 export const truncate = (s, l) => {
-  const o = toString(s);
-  const t = l || 140;
+  const o = toString(s)
+  const t = l || 140
   if (o.length <= t) {
-    return o;
+    return o
   }
-  let x = o.substring(0, t);
-  const a = x.split(' ');
-  const b = a.length;
-  let r = '';
+  let x = o.substring(0, t)
+  const a = x.split(' ')
+  const b = a.length
+  let r = ''
   if (b > 1) {
-    a.pop();
-    r += a.join(' ');
+    a.pop()
+    r += a.join(' ')
     if (r.length < o.length) {
-      r += '...';
+      r += '...'
     }
   } else {
-    x = x.substring(0, t - 3);
-    r = x + '...';
+    x = x.substring(0, t - 3)
+    r = x + '...'
   }
-  return r;
-};
+  return r
+}
 
 export const stripTags = (s) => {
   return toString(s)
     .replace(/<.*?>/gi, ' ')
     .replace(/\s\s+/g, ' ')
-    .trim();
-};
+    .trim()
+}
 
 export const escapeHTML = (s) => {
-  const x = toString(s);
+  const x = toString(s)
   return x.replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;');
-};
+    .replace(/"/g, '&quot;')
+}
 
 export const unescapeHTML = (s) => {
-  const x = toString(s);
+  const x = toString(s)
   return x.replace(/&quot;/g, '"')
     .replace(/&lt;/g, '<')
     .replace(/&gt;/g, '>')
-    .replace(/&amp;/g, '&');
-};
+    .replace(/&amp;/g, '&')
+}
 
 export const ucfirst = (s) => {
-  const x = toString(s).toLowerCase();
-  return x.length > 1 ? x.charAt(0).toUpperCase() + x.slice(1) : x.toUpperCase();
-};
+  const x = toString(s).toLowerCase()
+  return x.length > 1 ? x.charAt(0).toUpperCase() + x.slice(1) : x.toUpperCase()
+}
 
 export const ucwords = (s) => {
   return toString(s).split(' ').map((w) => {
-    return ucfirst(w);
-  }).join(' ');
-};
+    return ucfirst(w)
+  }).join(' ')
+}
 
 export const replaceAll = (s, a, b) => {
-  let x = toString(s);
+  let x = toString(s)
 
   if (isNumber(a)) {
-    a = String(a);
+    a = String(a)
   }
   if (isNumber(b)) {
-    b = String(b);
+    b = String(b)
   }
 
   if (isString(a) && isString(b)) {
-    const aa = x.split(a);
-    x = aa.join(b);
+    const aa = x.split(a)
+    x = aa.join(b)
   } else if (isArray(a) && isString(b)) {
     a.forEach((v) => {
-      x = replaceAll(x, v, b);
-    });
+      x = replaceAll(x, v, b)
+    })
   } else if (isArray(a) && isArray(b) && a.length === b.length) {
-    const k = a.length;
+    const k = a.length
     if (k > 0) {
       for (let i = 0; i < k; i++) {
-        const aaa = a[i];
-        const bb = b[i];
-        x = replaceAll(x, aaa, bb);
+        const aaa = a[i]
+        const bb = b[i]
+        x = replaceAll(x, aaa, bb)
       }
     }
   }
-  return x;
-};
+  return x
+}
 
 export const stripAccent = (s) => {
-  let x = toString(s);
+  let x = toString(s)
 
   const map = {
     a: 'á|à|ả|ã|ạ|ă|ắ|ặ|ằ|ẳ|ẵ|â|ấ|ầ|ẩ|ẫ|ậ|ä',
@@ -123,45 +123,45 @@ export const stripAccent = (s) => {
     u: 'ú|ù|ủ|ũ|ụ|ư|ứ|ừ|ử|ữ|ự|û',
     U: 'Ú|Ù|Ủ|Ũ|Ụ|Ư|Ứ|Ừ|Ử|Ữ|Ự|Û',
     y: 'ý|ỳ|ỷ|ỹ|ỵ',
-    Y: 'Ý|Ỳ|Ỷ|Ỹ|Ỵ',
-  };
+    Y: 'Ý|Ỳ|Ỷ|Ỹ|Ỵ'
+  }
 
   const updateS = (ai, key) => {
-    x = replaceAll(x, ai, key);
-  };
+    x = replaceAll(x, ai, key)
+  }
 
   for (const key in map) {
     if (hasProperty(map, key)) {
-      const a = map[key].split('|');
+      const a = map[key].split('|')
       a.forEach((item) => {
-        return updateS(item, key);
-      });
+        return updateS(item, key)
+      })
     }
   }
-  return x;
-};
+  return x
+}
 
 export const genid = (leng, prefix = '') => {
-  const lc = 'abcdefghijklmnopqrstuvwxyz';
-  const uc = lc.toUpperCase();
-  const nb = '0123456789';
+  const lc = 'abcdefghijklmnopqrstuvwxyz'
+  const uc = lc.toUpperCase()
+  const nb = '0123456789'
   const cand = [
     lc,
     uc,
-    nb,
+    nb
   ].join('').split('').sort(() => {
-    return Math.random() > 0.5;
-  }).join('');
+    return Math.random() > 0.5
+  }).join('')
 
-  const t = cand.length;
-  const ln = Math.max(leng || 32, prefix.length);
-  let s = prefix;
+  const t = cand.length
+  const ln = Math.max(leng || 32, prefix.length)
+  let s = prefix
   while (s.length < ln) {
-    const k = randint(0, t);
-    s += cand.charAt(k) || '';
+    const k = randint(0, t)
+    s += cand.charAt(k) || ''
   }
-  return s;
-};
+  return s
+}
 
 export const slugify = (s, delimiter = '-') => {
   return stripAccent(s)
@@ -169,5 +169,5 @@ export const slugify = (s, delimiter = '-') => {
     .toLowerCase()
     .replace(/\W+/g, ' ')
     .replace(/\s+/g, ' ')
-    .replace(/\s/g, delimiter);
-};
+    .replace(/\s/g, delimiter)
+}
