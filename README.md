@@ -7,6 +7,7 @@ Lightweight util for handling data type, string... in your Node.js and browser a
 ![CI test](https://github.com/ndaidong/bellajs/workflows/ci-test/badge.svg)
 [![Coverage Status](https://coveralls.io/repos/github/ndaidong/bellajs/badge.svg)](https://coveralls.io/github/ndaidong/bellajs)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=ndaidong_bellajs&metric=alert_status)](https://sonarcloud.io/dashboard?id=ndaidong_bellajs)
+[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 You may be interested in [BellaPy](https://github.com/ndaidong/bellapy) too.
 
