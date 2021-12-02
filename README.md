@@ -13,16 +13,14 @@ You may be interested in [BellaPy](https://github.com/ndaidong/bellapy) too.
 # Contents
 
 * [Setup](#setup)
-
 * [APIs](#apis)
-
   * [DataType detection](#datatype-detection)
   * [Date format](#date-format)
   * [String manipulation](#string-manipulation)
   * [Data handling](#data-handling)
     * [clone](#clone)
     * [copies](#copies)
-  * [Array utils]
+  * [Array utils](#array-utils)
     * [pick](#pick)
     * [sort](#sort)
     * [sortBy](#sortBy)
