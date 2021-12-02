@@ -7,7 +7,7 @@ import {
   isObject,
   isArray,
   isDate,
-  isNil,
+  isString,
   hasProperty
 } from './utils/detection'
 
@@ -90,7 +90,7 @@ export const sort = (arr = [], sorting = null) => {
 }
 
 export const sortBy = (arr = [], order = 1, key = '') => {
-  if (isNil(key)) {
+  if (!isString(key) || !hasProperty(arr[0], key)) {
     return arr
   }
   return sort(arr, (m, n) => {

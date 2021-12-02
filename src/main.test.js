@@ -166,6 +166,12 @@ describe('test .sortBy() method:', () => {
     ]
     const sortedArr = sortBy(arr, 1, 'age')
     expect(JSON.stringify(sortedArr) === JSON.stringify(sortedByAge)).toBeTruthy()
+
+    const sortedByNonStringKey = sortBy(arr, 1, 99)
+    expect(JSON.stringify(sortedByNonStringKey) === JSON.stringify(arr)).toBeTruthy()
+
+    const sortedByNonExistKey = sortBy(arr, 1, 'balance')
+    expect(JSON.stringify(sortedByNonExistKey) === JSON.stringify(arr)).toBeTruthy()
   })
 })
 

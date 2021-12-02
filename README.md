@@ -136,7 +136,7 @@ Here are the available characters:
   - A: AM, PM
   - O: timezone
 ```
-t s
+
 Example:
 
 ```js
@@ -220,7 +220,6 @@ copies(Object source, Object target[[, Boolean requireMatching], Array excepts])
 - *requireMatching*: if true, BellaJS only copies the properties that are already exist in *target*.
 - *excepts*: array of the properties properties in *source* that you don't want to copy.
 
-Example:
 
 ```js
 const a = {
@@ -297,7 +296,7 @@ pick(arr) // --> [7]
 sort(Array a [, Function compare])
 ```
 
-Examples:
+For example:
 
 ```js
 import { sort } from 'bellajs'
@@ -307,7 +306,6 @@ const fn = (a, b) => {
 }
 
 sort([3, 1, 5, 2], fn) // => [ 1, 2, 3, 5 ]
-sort([3, 1, 5, 2], fn) // => [ 5, 3, 2, 1 ]
 ```
 
 #### sortBy
@@ -316,7 +314,7 @@ sort([3, 1, 5, 2], fn) // => [ 5, 3, 2, 1 ]
 sortBy(Array a, Number order, String property)
 ```
 
-Examples:
+For example:
 
 ```js
 
@@ -357,7 +355,7 @@ Shuffle an array.
 shuffle(Array arr)
 ```
 
-Examples:
+For example:
 
 ```js
 import { shuffle } from 'bellajs'
@@ -371,7 +369,7 @@ shuffle([1, 3, 8, 2, 5, 7])
 unique(Array a)
 ```
 
-Examples:
+For example:
 
 ```js
 import { unique } from 'bellajs'
@@ -593,7 +591,7 @@ genid(5, 'X_') // => X_{random 3 chars}
 md5(String s)
 ```
 
-Examples:
+For example:
 
 ```js
 import { md5 } from 'bellajs'

@@ -1,6 +1,6 @@
 /**
  * bellajs@10.0.0
- * built on: Thu, 02 Dec 2021 10:57:05 GMT
+ * built on: Thu, 02 Dec 2021 13:50:33 GMT
  * repository: https://github.com/ndaidong/bellajs
  * maintainer: @ndaidong
  * License: MIT
@@ -317,7 +317,7 @@
       throw new Error('InvalidInput: Number or Date required.')
     }
     const vchar = /\.*\\?([a-z])/gi;
-    const meridiem = output.match(/(\.*)a{1}(\.*)*/i);
+    const meridiem = output.includes('a') || output.includes('A');
     const wn = WEEKDAYS;
     const mn = MONTHS;
     const f = {
@@ -620,15 +620,18 @@
     return [...new Set(arr)]
   };
   const fnSort = (a, b) => {
-    return a > b ? 1 : a < b ? -1 : 0
+    return a > b ? 1 : (a < b ? -1 : 0)
   };
-  const sort = (arr = [], sorting) => {
+  const sort = (arr = [], sorting = null) => {
     const tmp = [...arr];
     const fn = sorting || fnSort;
     tmp.sort(fn);
     return tmp
   };
-  const sortBy = (arr = [], order = 1, key) => {
+  const sortBy = (arr = [], order = 1, key = '') => {
+    if (!isString(key) || !hasProperty(arr[0], key)) {
+      return arr
+    }
     return sort(arr, (m, n) => {
       return m[key] > n[key] ? order : (m[key] < n[key] ? (-1 * order) : 0)
     })
