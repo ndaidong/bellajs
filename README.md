@@ -48,6 +48,12 @@ You may be interested in [BellaPy](https://github.com/ndaidong/bellapy) too.
 
   ```bash
   npm i bellajs
+
+  # pnpm
+  pnpm i bellajs
+
+  # yarn
+  yarn add bellajs
   ```
 
 - CDN
@@ -56,8 +62,6 @@ You may be interested in [BellaPy](https://github.com/ndaidong/bellapy) too.
   - CommonJS: [bella.js](https://unpkg.com/bellajs/dist/cjs/bella.js)
   - For old browsers: [bella.min.js](https://unpkg.com/bellajs/dist/bella.min.js)
 
-
-- Load with ESM, CommonJS, AMD or UMD style
 
 ### Usage
 
