@@ -1,5 +1,5 @@
 {
-  "version": "10.0.2",
+  "version": "11.0.0rc1",
   "name": "bellajs",
   "description": "A useful helper for any javascript program",
   "homepage": "https://www.npmjs.com/package/bellajs",
@@ -9,22 +9,18 @@
   },
   "author": "@ndaidong",
   "main": "./dist/bella.js",
-  "module": "./src/main",
+  "module": "./src/main.js",
   "browser": "./dist/bella.min.js",
+  "type": "module",
   "engines": {
-    "node": ">= 10.14.2"
+    "node": ">= 14"
   },
   "scripts": {
     "lint": "standard ./src",
     "pretest": "npm run lint && npm run build",
     "test": "NODE_ENV=test jest --verbose --coverage=true --unhandled-rejections=strict --detectOpenHandles --env=jsdom",
-    "build": "gccmin -e src/main.js -n bella -o dist -p package.json",
+    "build": "node build.js src/main.js",
     "reset": "node reset"
-  },
-  "devDependencies": {
-    "@babel/plugin-transform-modules-commonjs": "^7.16.0",
-    "gcc-min": "^7.3.0",
-    "jest": "^27.3.1"
   },
   "babel": {
     "env": {
@@ -35,9 +31,14 @@
       }
     }
   },
+  "devDependencies": {
+    "@babel/plugin-transform-modules-commonjs": "^7.16.7",
+    "esbuild": "^0.14.10",
+    "jest": "^27.3.1"
+  },
   "standard": {
     "ignore": [
-      "dist"
+      "./dist"
     ]
   },
   "keywords": [
