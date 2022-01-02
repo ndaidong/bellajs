@@ -63,9 +63,9 @@ You may be interested in [BellaPy](https://github.com/ndaidong/bellapy) too.
   - For old browsers: [bella.min.js](https://unpkg.com/bellajs/dist/bella.min.js)
 
 
-### Usage
+## Usage
 
-#### Node.js:
+### Node.js:
 
 Sync v14, ECMAScript modules [have became the official standard format](https://nodejs.org/docs/latest-v14.x/api/esm.html#esm_modules_ecmascript_modules).
 
@@ -84,7 +84,7 @@ const bella = require('bellajs/dist/cjs/bella.js')
 console.log(bella.genid())
 ```
 
-#### Browsers:
+### Browsers:
 
 Currently ECMAScript modules work fine on almost browsers:
 
