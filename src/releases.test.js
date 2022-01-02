@@ -29,6 +29,7 @@ const runtest = (fname) => {
       expect(lines[5].startsWith(` * License: ${pkg.license}`)).toBeTruthy()
     })
   })
+  return fpath
 }
 
 const arr = [
