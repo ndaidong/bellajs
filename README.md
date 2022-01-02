@@ -46,38 +46,63 @@ You may be interested in [BellaPy](https://github.com/ndaidong/bellapy) too.
 
 - Node.js
 
-  ```
+  ```bash
   npm i bellajs
+
+  # pnpm
+  pnpm i bellajs
+
+  # yarn
+  yarn add bellajs
   ```
 
 - CDN
 
-  - [bella.js](https://unpkg.com/bellajs/dist/bella.js)
-  - [bella.min.js](https://unpkg.com/bellajs/dist/bella.min.js)
-  - [bella.min.map](https://unpkg.com/bellajs/dist/bella.min.map)
+  - ES6 Module: [bella.esm.js](https://unpkg.com/bellajs/dist/bella.esm.js)
+  - CommonJS: [bella.js](https://unpkg.com/bellajs/dist/cjs/bella.js)
+  - For old browsers: [bella.min.js](https://unpkg.com/bellajs/dist/bella.min.js)
 
 
-- Load with ESM, CommonJS, AMD or UMD style
+## Usage
 
-### Usage
+### Node.js:
+
+Sync v14, ECMAScript modules [have became the official standard format](https://nodejs.org/docs/latest-v14.x/api/esm.html#esm_modules_ecmascript_modules).
+
+Just [enable](https://nodejs.org/api/packages.html#determining-module-system) and enjoy with ES6 import/export syntax.
+
 
 ```js
-const bella = require('bellajs');
+import { genid } from 'bellajs'
+console.log(genid())
+```
 
-// few methods only:
-const {
-  isArray,
-  isString,
-} = require('bellajs');
+For regular CommonJS environment, `require` can be used as below:
 
-// es6 syntax:
-import bella from 'bellajs';
+```js
+const bella = require('bellajs/dist/cjs/bella.js')
+console.log(bella.genid())
+```
 
-// or
-import {
-  isArray,
-  isString,
-} from 'bellajs';
+### Browsers:
+
+Currently ECMAScript modules work fine on almost browsers:
+
+```html
+<script type="module">
+import { genid } from 'https://unpkg.com/bellajs/dist/bella.esm.js'
+console.log(genid())
+</script>
+```
+
+With outdated browsers, we can use traditional way:
+
+```html
+<script type="text/javascript" src="https://unpkg.com/bellajs/dist/bella.min.js"></script>
+
+<script>
+console.log(window.bella.genid())
+</script>
 ```
 
 ## APIs
