@@ -18,25 +18,10 @@ You may be interested in [BellaPy](https://github.com/ndaidong/bellapy) too.
   * [DataType detection](#datatype-detection)
   * [Date format](#date-format)
   * [String manipulation](#string-manipulation)
-  * [Data handling](#data-handling)
-    * [clone](#clone)
-    * [copies](#copies)
-  * [Array utils](#array-utils)
-    * [pick](#pick)
-    * [sort](#sort)
-    * [sortBy](#sortBy)
-    * [shuffle](#shuffle)
-    * [unique](#unique)
-  * [Functional utils](#functional-utils)
-    * [curry](#curryfn)
-    * [compose](#compose)
-    * [pipe](#pipe)
-    * [maybe](#maybe)
-  * [Other utils](#other-utils)
-    * [equals](#equals)
-    * [randint](#randint)
-    * [genid](#genid)
-    * [md5](#md5)
+  * [Data handling](#data-handling): [clone](#clone), [copies](#copies)
+  * [Array utils](#array-utils): [pick](#pick), [sort](#sort), [sortBy](#sortBy), [shuffle](#shuffle), [unique](#unique)
+  * [Functional utils](#functional-utils): [curry](#curryfn), [compose](#compose), [pipe](#pipe), [maybe](#maybe)
+  * [Other utils](#other-utils): [equals](#equals), [randint](#randint), [genid](#genid)
 
 * [Test](#test)
 
@@ -608,22 +593,6 @@ genid(16) // => random 16 chars
 genid(5) // => random 5 chars
 genid(5, 'X_') // => X_{random 3 chars}
 ```
-
-
-#### md5
-
-```js
-md5(String s)
-```
-
-For example:
-
-```js
-import { md5 } from 'bellajs'
-
-md5('abc') // => 900150983cd24fb0d6963f7d28e17f72
-```
-
 
 ## Test
 
