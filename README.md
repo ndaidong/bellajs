@@ -114,12 +114,8 @@ console.log(window.bella.genid())
 
 - `toRelativeTime([Date | Timestamp])`
 - `toDateString([Date | Timestamp] [, String pattern])`
-- `toLocalDateString([Date | Timestamp])`
-- `toUTCDateString([Date | Timestamp])`
 
 Default pattern for `toDateString()` method is `D, M d, Y  H:i:s A`.
-
-Pattern for `toLocalDateString()` and `toUTCDateString()` is `D, j M Y h:i:s O`.
 
 Here are the available characters:
 
@@ -153,16 +149,16 @@ Example:
 import {
   toRelativeTime,
   toDateString,
-  toLocalDateString,
-  toUTCDateString
+  LOCAL_DATE_PATTERN,
+  UTC_DATE_PATTERN
 } from 'bellajs'
 
 const t = 1509628030108
 
 toRelativeTime(t) // => 2 seconds ago
 toDateString(t, 'Y/m/d h:i:s') // => 2017/11/02 20:07:10
-toLocalDateString(t) // => Thu, 2 Nov 2017 20:07:10 GMT+0007
-toUTCDateString(t) // => Thu, 2 Nov 2017 13:07:10 GMT+0000
+toDateString(t, LOCAL_DATE_PATTERN) // => Thu, 2 Nov 2017 20:07:10 GMT+0007
+toDateString(t, UTC_DATE_PATTERN) // => Thu, 2 Nov 2017 13:07:10 GMT+0000
 ```
 
 ### String manipulation
