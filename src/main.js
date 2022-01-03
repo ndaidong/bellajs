@@ -122,7 +122,6 @@ export * from './utils/equals'
 export * from './utils/string'
 export * from './utils/random'
 export * from './utils/date'
-export * from './utils/md5'
 
 export * from './utils/curry'
 export * from './utils/compose'
