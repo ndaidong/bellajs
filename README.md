@@ -16,27 +16,12 @@ You may be interested in [BellaPy](https://github.com/ndaidong/bellapy) too.
 * [Setup](#setup)
 * [APIs](#apis)
   * [DataType detection](#datatype-detection)
-  * [Date format](#date-format)
   * [String manipulation](#string-manipulation)
-  * [Data handling](#data-handling)
-    * [clone](#clone)
-    * [copies](#copies)
-  * [Array utils](#array-utils)
-    * [pick](#pick)
-    * [sort](#sort)
-    * [sortBy](#sortBy)
-    * [shuffle](#shuffle)
-    * [unique](#unique)
-  * [Functional utils](#functional-utils)
-    * [curry](#curryfn)
-    * [compose](#compose)
-    * [pipe](#pipe)
-    * [maybe](#maybe)
-  * [Other utils](#other-utils)
-    * [equals](#equals)
-    * [randint](#randint)
-    * [genid](#genid)
-    * [md5](#md5)
+  * [Data handling](#data-handling): [clone](#clone), [copies](#copies)
+  * [Array utils](#array-utils): [pick](#pick), [sort](#sort), [sortBy](#sortBy), [shuffle](#shuffle), [unique](#unique)
+  * [Functional utils](#functional-utils): [curry](#curryfn), [compose](#compose), [pipe](#pipe), [maybe](#maybe)
+  * [Date utils](#date-utils)
+  * [Other utils](#other-utils): [equals](#equals), [randint](#randint), [genid](#genid)
 
 * [Test](#test)
 
@@ -125,60 +110,6 @@ console.log(window.bella.genid())
 - .isString(Anything val)
 - .isUndefined(Anything val)
 
-### Date format
-
-- `toRelativeTime([Date | Timestamp])`
-- `toDateString([Date | Timestamp] [, String pattern])`
-- `toLocalDateString([Date | Timestamp])`
-- `toUTCDateString([Date | Timestamp])`
-
-Default pattern for `toDateString()` method is `D, M d, Y  H:i:s A`.
-
-Pattern for `toLocalDateString()` and `toUTCDateString()` is `D, j M Y h:i:s O`.
-
-Here are the available characters:
-
-```
-  - Y: full year, ex: 2050
-  - y: short year, ex: 50
-  - F: full month name, ex: August
-  - M: short month name, ex: Aug
-  - m: month index with zero, ex: 08 (in 08/24/2050)
-  - n: short month name with no zero, ex: 8 (in 8/24/2050)
-  - S: the ordering subfix for date, ext: 1st, 2nd, 3rd, 4th
-  - j: day of the month, with no zero, ex: 3 (in 18/3/2050)
-  - d: day of the month, with zero, ex: 03 (in 18/03/2050)
-  - t: date in year
-  - w: weekday in number
-  - l: long name of weekday, ex: Sunday
-  - D: short name of weekday, ex: Sun
-  - G: hour, with no zero: 0 - 24
-  - g: hour, with no zero: 0 - 12
-  - h: hour, with zero:  00 - 24
-  - i: minute:  00 - 59
-  - s: second:  00 - 59
-  - a: am, pm
-  - A: AM, PM
-  - O: timezone
-```
-
-Example:
-
-```js
-import {
-  toRelativeTime,
-  toDateString,
-  toLocalDateString,
-  toUTCDateString
-} from 'bellajs'
-
-const t = 1509628030108
-
-toRelativeTime(t) // => 2 seconds ago
-toDateString(t, 'Y/m/d h:i:s') // => 2017/11/02 20:07:10
-toLocalDateString(t) // => Thu, 2 Nov 2017 20:07:10 GMT+0007
-toUTCDateString(t) // => Thu, 2 Nov 2017 13:07:10 GMT+0000
-```
 
 ### String manipulation
 
@@ -560,6 +491,78 @@ maybe()
   .value() // 'This is default value'
 ```
 
+### Date utils
+
+- `formatDateString(Date | Timestamp [, String locale [, Object options]])`
+- `formatTimeAgo(Date | Timestamp [, String locale [, String justnow]])`
+
+
+Example:
+
+```js
+import {
+  formatDateString,
+  formatTimeAgo
+} from 'bellajs'
+
+const today = new Date()
+
+formatDateString(today) // => Jan 3, 2022, 8:34:28 PM GMT+7
+
+// custom format
+formatDateString(today, {
+  dateStyle: 'short',
+  timeStyle: 'short',
+  hour12: true
+}) // => 1/3/22, 8:34 PM
+
+// custom locale
+formatDateString(today, 'zh') // => 2022年1月3日 GMT+7 下午8:34:28
+
+// custom lang and format
+formatDateString(today, 'zh', {
+  dateStyle: 'short',
+  timeStyle: 'long',
+  hour12: true
+}) // => 2022/1/3 GMT+7 下午8:34:28
+
+formatDateString(today, 'vi') // => 20:34:28 GMT+7, 3 thg 1, 2022
+formatDateString(today, 'vi', {
+  dateStyle: 'full',
+  timeStyle: 'full'
+}) // => 20:34:28 Giờ Đông Dương Thứ Hai, 3 tháng 1, 2022
+
+const yesterday = today.setDate(today.getDate() - 1)
+formatTimeAgo(yesterday) // => 1 day ago
+
+const current = new Date()
+const aLittleWhile = current.setHours(current.getHours() - 3)
+formatTimeAgo(aLittleWhile) // => 3 hours ago
+
+// change locale
+formatTimeAgo(aLittleWhile, 'zh') // => 3小时前
+formatTimeAgo(aLittleWhile, 'vi') // => 3 giờ trước
+```
+
+The last param `justnow` can be used to display a custom 'just now' message, when the distance is lesser than 1s.
+
+```js
+const now = new Date()
+const aJiff = now.setTime(now.getTime() - 100)
+formatTimeAgo(aJiff) // => 'just now'
+console.log(formatTimeAgo(aJiff, 'fr', 'à l\'instant')) // => à l'instant
+console.log(formatTimeAgo(aJiff, 'ja', 'すこし前')) // => すこし前
+```
+
+These two functions based on recent features of built-in object `Intl`.
+
+Please refer the following resources for more info:
+
+- [Intl.DateTimeFormat() constructor](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/DateTimeFormat)
+- [Intl.RelativeTimeFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/RelativeTimeFormat)
+- [Intl.Locale](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale)
+
+
 ### Other utils
 
 #### equals
@@ -608,22 +611,6 @@ genid(16) // => random 16 chars
 genid(5) // => random 5 chars
 genid(5, 'X_') // => X_{random 3 chars}
 ```
-
-
-#### md5
-
-```js
-md5(String s)
-```
-
-For example:
-
-```js
-import { md5 } from 'bellajs'
-
-md5('abc') // => 900150983cd24fb0d6963f7d28e17f72
-```
-
 
 ## Test
 
