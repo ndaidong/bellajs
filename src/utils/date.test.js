@@ -10,9 +10,29 @@ import {
 describe('test .formatDateString() method', () => {
   const d = new Date()
 
-  test('  check if .formatDateString() wih default options', () => {
+  test('  check .formatDateString() with default options', () => {
     const result = formatDateString(d)
     const reg = /^\w+\s\d+,\s+\d{4},\s\d+:\d+:\d+\s(AM|PM)\s(GMT)\+\d+$/
+    expect(result.match(reg) !== null).toBeTruthy()
+  })
+
+  test('  check .formatDateString() with custom options', () => {
+    const result = formatDateString(d, {
+      dateStyle: 'full',
+      timeStyle: 'medium',
+      hour12: true
+    })
+    const reg = /^\w+,\s\w+\s\d+,\s+\d{4}\sat\s\d+:\d+:\d+\s(AM|PM)$/
+    expect(result.match(reg) !== null).toBeTruthy()
+  })
+
+  test('  check .formatDateString() with custom language and options', () => {
+    const result = formatDateString(d, 'en', {
+      dateStyle: 'full',
+      timeStyle: 'medium',
+      hour12: true
+    })
+    const reg = /^\w+,\s\w+\s\d+,\s+\d{4}\sat\s\d+:\d+:\d+\s(AM|PM)$/
     expect(result.match(reg) !== null).toBeTruthy()
   })
 })

@@ -16,11 +16,11 @@ You may be interested in [BellaPy](https://github.com/ndaidong/bellapy) too.
 * [Setup](#setup)
 * [APIs](#apis)
   * [DataType detection](#datatype-detection)
-  * [Date format](#date-format)
   * [String manipulation](#string-manipulation)
   * [Data handling](#data-handling): [clone](#clone), [copies](#copies)
   * [Array utils](#array-utils): [pick](#pick), [sort](#sort), [sortBy](#sortBy), [shuffle](#shuffle), [unique](#unique)
   * [Functional utils](#functional-utils): [curry](#curryfn), [compose](#compose), [pipe](#pipe), [maybe](#maybe)
+  * [Date utils](#date-utils)
   * [Other utils](#other-utils): [equals](#equals), [randint](#randint), [genid](#genid)
 
 * [Test](#test)
@@ -109,63 +109,6 @@ console.log(window.bella.genid())
 - .isObject(Anything val)
 - .isString(Anything val)
 - .isUndefined(Anything val)
-
-### Date format
-
-- `formatDateString(Date | Timestamp [, locale] [, options])`
-- `formatTimeAgo(Date | Timestamp [, locale] [, justnow])`
-
-
-Example:
-
-```js
-import {
-  formatDateString
-} from 'bellajs'
-
-const today = new Date()
-
-formatDateString(today) // => Jan 3, 2022, 4:21:42 PM GMT+7
-formatDateString(today, 'zh') // => 2022年1月3日 GMT+7 下午4:21:42
-formatDateString(today, 'vi') // => 04:21:42 CH GMT+7, 3 thg 1, 2022
-```
-
-`locale`
-
-
-```js
-import {
-  formatTimeAgo
-} from 'bellajs'
-
-const yesterday = today.setDate(today.getDate() - 1)
-formatTimeAgo(yesterday) // => 1 day ago
-
-const current = new Date()
-const aLittleWhile = current.setHours(current.getHours() - 3)
-formatTimeAgo(aLittleWhile) // => 3 hours ago
-
-formatTimeAgo(aLittleWhile, 'zh') // => 3小时前
-formatTimeAgo(aLittleWhile, 'vi') // => 3 giờ trước
-```
-
-The last param `justnow` can be used to display a custom 'just now' message, when the distance is lesser than 1s.
-
-```js
-const now = new Date()
-const aJiff = now.setTime(now.getTime() - 100)
-formatTimeAgo(aJiff) // => 'just now'
-console.log(formatTimeAgo(aJiff, 'fr', 'à l\'instant')) // => à l'instant
-console.log(formatTimeAgo(aJiff, 'ja', 'すこし前')) // => すこし前
-```
-
-These two function based on recent features of built-in object `Intl`.
-
-Please refer the following resources for more info:
-
-- [Intl.DateTimeFormat() constructor](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/DateTimeFormat)
-- [Intl.RelativeTimeFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/RelativeTimeFormat)
-- [Intl.Locale](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale)
 
 
 ### String manipulation
@@ -547,6 +490,78 @@ maybe()
   .map(toString)
   .value() // 'This is default value'
 ```
+
+### Date utils
+
+- `formatDateString(Date | Timestamp [, String locale [, Object options]])`
+- `formatTimeAgo(Date | Timestamp [, String locale [, String justnow]])`
+
+
+Example:
+
+```js
+import {
+  formatDateString,
+  formatTimeAgo
+} from 'bellajs'
+
+const today = new Date()
+
+formatDateString(today) // => Jan 3, 2022, 8:34:28 PM GMT+7
+
+// custom format
+formatDateString(today, {
+  dateStyle: 'short',
+  timeStyle: 'short',
+  hour12: true
+}) // => 1/3/22, 8:34 PM
+
+// custom locale
+formatDateString(today, 'zh') // => 2022年1月3日 GMT+7 下午8:34:28
+
+// custom lang and format
+formatDateString(today, 'zh', {
+  dateStyle: 'short',
+  timeStyle: 'long',
+  hour12: true
+}) // => 2022/1/3 GMT+7 下午8:34:28
+
+formatDateString(today, 'vi') // => 20:34:28 GMT+7, 3 thg 1, 2022
+formatDateString(today, 'vi', {
+  dateStyle: 'full',
+  timeStyle: 'full'
+}) // => 20:34:28 Giờ Đông Dương Thứ Hai, 3 tháng 1, 2022
+
+const yesterday = today.setDate(today.getDate() - 1)
+formatTimeAgo(yesterday) // => 1 day ago
+
+const current = new Date()
+const aLittleWhile = current.setHours(current.getHours() - 3)
+formatTimeAgo(aLittleWhile) // => 3 hours ago
+
+// change locale
+formatTimeAgo(aLittleWhile, 'zh') // => 3小时前
+formatTimeAgo(aLittleWhile, 'vi') // => 3 giờ trước
+```
+
+The last param `justnow` can be used to display a custom 'just now' message, when the distance is lesser than 1s.
+
+```js
+const now = new Date()
+const aJiff = now.setTime(now.getTime() - 100)
+formatTimeAgo(aJiff) // => 'just now'
+console.log(formatTimeAgo(aJiff, 'fr', 'à l\'instant')) // => à l'instant
+console.log(formatTimeAgo(aJiff, 'ja', 'すこし前')) // => すこし前
+```
+
+These two functions based on recent features of built-in object `Intl`.
+
+Please refer the following resources for more info:
+
+- [Intl.DateTimeFormat() constructor](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/DateTimeFormat)
+- [Intl.RelativeTimeFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/RelativeTimeFormat)
+- [Intl.Locale](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale)
+
 
 ### Other utils
 

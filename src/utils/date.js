@@ -1,9 +1,12 @@
 // utils / date
 
+import {
+  isObject
+} from './detection'
+
 const DATE_FORMAT = {
   dateStyle: 'medium',
-  timeStyle: 'long',
-  hour12: true
+  timeStyle: 'long'
 }
 
 const TIME_CONVERS = {
@@ -16,8 +19,26 @@ const TIME_CONVERS = {
   year: 12
 }
 
-export const formatDateString = (input, lang = 'en', opt = DATE_FORMAT) => {
-  const dtf = new Intl.DateTimeFormat([lang, 'en'], opt)
+const isValidLocal = (hl) => {
+  try {
+    const locale = new Intl.Locale(hl)
+    return locale.language !== ''
+  } catch (err) {
+    return false
+  }
+}
+
+export const formatDateString = (...args) => {
+  const input = args[0]
+  const lang = isValidLocal(args[1]) ? args[1] : 'en'
+  const opt = args.length >= 3
+    ? args[2]
+    : args.length === 1
+      ? DATE_FORMAT
+      : isObject(args[1])
+        ? args[1]
+        : DATE_FORMAT
+  const dtf = new Intl.DateTimeFormat(lang, opt)
   return dtf.format(new Date(input))
 }
 
