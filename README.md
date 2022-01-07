@@ -52,22 +52,21 @@ You may be interested in [BellaPy](https://github.com/ndaidong/bellapy) too.
 
 ### Node.js:
 
-Sync v14, ECMAScript modules [have became the official standard format](https://nodejs.org/docs/latest-v14.x/api/esm.html#esm_modules_ecmascript_modules).
-
-Just [enable](https://nodejs.org/api/packages.html#determining-module-system) and enjoy with ES6 import/export syntax.
-
-
 ```js
-import { genid } from 'bellajs'
-console.log(genid())
+import {
+  slugify
+} from 'bella'
+
+// with CommonJS environment
+// const { genid, slugify } = require('bellajs/dist/cjs/bella.js')
+
+slugify('')
 ```
 
-For regular CommonJS environment, `require` can be used as below:
+##### Note:
 
-```js
-const bella = require('bellajs/dist/cjs/bella.js')
-console.log(bella.genid())
-```
+> Since Node.js v14, ECMAScript modules [have became the official standard format](https://nodejs.org/docs/latest-v14.x/api/esm.html#esm_modules_ecmascript_modules).
+> Just ensure that you are [using module system](https://nodejs.org/api/packages.html#determining-module-system) and enjoy with ES6 import/export syntax.
 
 ### Browsers:
 
@@ -550,8 +549,8 @@ The last param `justnow` can be used to display a custom 'just now' message, whe
 const now = new Date()
 const aJiff = now.setTime(now.getTime() - 100)
 formatTimeAgo(aJiff) // => 'just now'
-console.log(formatTimeAgo(aJiff, 'fr', 'à l\'instant')) // => à l'instant
-console.log(formatTimeAgo(aJiff, 'ja', 'すこし前')) // => すこし前
+formatTimeAgo(aJiff, 'fr', 'à l\'instant') // => à l'instant
+formatTimeAgo(aJiff, 'ja', 'すこし前') // => すこし前
 ```
 
 These two functions based on recent features of built-in object `Intl`.
