@@ -1,5 +1,5 @@
 {
   "name": "bellajs-cjs",
-  "version": "11.0.0rc3",
+  "version": "11.0.0",
   "main": "./bella.js"
 }
