@@ -25,7 +25,8 @@
   "devDependencies": {
     "@babel/plugin-transform-modules-commonjs": "^7.16.7",
     "esbuild": "^0.14.10",
-    "jest": "^27.4.7"
+    "jest": "^27.4.7",
+    "standard": "^16.0.4"
   },
   "babel": {
     "env": {

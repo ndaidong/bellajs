@@ -3,11 +3,11 @@
  * @ndaidong
  **/
 
-import {mkdirSync, readFileSync, rmSync, writeFileSync, copyFileSync} from 'fs'
+import { mkdirSync, readFileSync, rmSync, writeFileSync, copyFileSync } from 'fs'
 
-import {buildSync} from 'esbuild'
+import { buildSync } from 'esbuild'
 
-const pkg = JSON.parse(readFileSync('./package.json', {encoding: 'utf-8'}))
+const pkg = JSON.parse(readFileSync('./package.json', { encoding: 'utf-8' }))
 
 rmSync('dist', {
   force: true,
