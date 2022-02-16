@@ -82,7 +82,7 @@ console.log(genid())
 With outdated browsers, we can use traditional way:
 
 ```html
-<script type="text/javascript" src="https://unpkg.com/bellajs/dist/bella.min.js"></script>
+<script type="text/javascript" src="https://unpkg.com/bellajs/dist/bella.iife.js"></script>
 
 <script>
 console.log(window.bella.genid())

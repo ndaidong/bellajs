@@ -1,17 +1,19 @@
 /**
  * build.js
  * @ndaidong
-**/
+ **/
 
-import { readFileSync, writeFileSync } from 'fs'
-import { execSync } from 'child_process'
+import { mkdirSync, readFileSync, rmSync, writeFileSync, copyFileSync } from 'fs'
 
 import { buildSync } from 'esbuild'
 
-const pkg = JSON.parse(readFileSync('./package.json'))
+const pkg = JSON.parse(readFileSync('./package.json', { encoding: 'utf-8' }))
 
-execSync('rm -rf dist')
-execSync('mkdir dist')
+rmSync('dist', {
+  force: true,
+  recursive: true
+})
+mkdirSync('dist')
 
 const buildTime = (new Date()).toISOString()
 const comment = [
@@ -71,9 +73,11 @@ const iifeVersion = {
   mainFields: ['browser'],
   target: ['es2020'],
   globalName: 'bella',
-  outfile: 'dist/bella.min.js',
+  outfile: 'dist/bella.iife.js',
   banner: {
     js: comment
   }
 }
 buildSync(iifeVersion)
+// For backward
+copyFileSync(iifeVersion.outfile, './dist/bella.min.js')

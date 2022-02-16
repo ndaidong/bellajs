@@ -10,7 +10,7 @@
   "author": "@ndaidong",
   "main": "./dist/cjs/bella.js",
   "module": "./src/main.js",
-  "browser": "./dist/bella.min.js",
+  "browser": "./dist/bella.esm.js",
   "type": "module",
   "engines": {
     "node": ">= 14"
@@ -25,7 +25,8 @@
   "devDependencies": {
     "@babel/plugin-transform-modules-commonjs": "^7.16.7",
     "esbuild": "^0.14.10",
-    "jest": "^27.4.7"
+    "jest": "^27.4.7",
+    "standard": "^16.0.4"
   },
   "babel": {
     "env": {
