@@ -13,7 +13,7 @@ import {
   stripAccent,
   slugify,
   genid
-} from './string'
+} from './string.js'
 
 describe('test .truncate() method:', () => {
   const inputs = [

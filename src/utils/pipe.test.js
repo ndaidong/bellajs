@@ -4,7 +4,7 @@
 
 import {
   pipe
-} from './pipe'
+} from './pipe.js'
 
 describe('test .pipe() method:', () => {
   const f1 = (name) => {

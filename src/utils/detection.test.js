@@ -19,7 +19,7 @@ import {
   isEmail,
   isEmpty,
   hasProperty
-} from './detection'
+} from './detection.js'
 
 describe('test .isInteger() method:', () => {
   const positives = [1, 1000, 9999, 0, -3]

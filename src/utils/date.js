@@ -2,7 +2,7 @@
 
 import {
   isObject
-} from './detection'
+} from './detection.js'
 
 const DATE_FORMAT = {
   dateStyle: 'medium',

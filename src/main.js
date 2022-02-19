@@ -9,7 +9,7 @@ import {
   isDate,
   isString,
   hasProperty
-} from './utils/detection'
+} from './utils/detection.js'
 
 export const clone = (val, history = null) => {
   const stack = history || new Set()
@@ -117,13 +117,13 @@ export const pick = (arr = [], count = 1) => {
   return a.splice(0, c)
 }
 
-export * from './utils/detection'
-export * from './utils/equals'
-export * from './utils/string'
-export * from './utils/random'
-export * from './utils/date'
+export * from './utils/detection.js'
+export * from './utils/equals.js'
+export * from './utils/string.js'
+export * from './utils/random.js'
+export * from './utils/date.js'
 
-export * from './utils/curry'
-export * from './utils/compose'
-export * from './utils/pipe'
-export * from './utils/maybe'
+export * from './utils/curry.js'
+export * from './utils/compose.js'
+export * from './utils/pipe.js'
+export * from './utils/maybe.js'

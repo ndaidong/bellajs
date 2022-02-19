@@ -10,7 +10,7 @@ import {
   sort,
   sortBy,
   pick
-} from './main'
+} from './main.js'
 
 describe('test .clone() method:', () => {
   test('  check if .clone(object) works correctly', () => {

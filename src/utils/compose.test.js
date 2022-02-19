@@ -4,7 +4,7 @@
 
 import {
   compose
-} from './compose'
+} from './compose.js'
 
 describe('test .compose() method:', () => {
   const f1 = (name) => {
