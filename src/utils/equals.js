@@ -6,7 +6,7 @@ import {
   isArray,
   isDate,
   hasProperty
-} from './detection'
+} from './detection.js'
 
 export const equals = (a, b) => {
   if (isEmpty(a) && isEmpty(b)) {

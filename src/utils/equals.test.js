@@ -2,7 +2,7 @@
 
 /* eslint-env jest */
 
-import { equals } from './equals'
+import { equals } from './equals.js'
 
 describe('test .equals() method:', () => {
   let val

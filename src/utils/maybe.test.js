@@ -4,7 +4,7 @@
 
 import {
   maybe
-} from './maybe'
+} from './maybe.js'
 
 describe('test .maybe() method:', () => {
   const plus5 = (x) => x + 5

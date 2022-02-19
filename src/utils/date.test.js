@@ -5,7 +5,7 @@
 import {
   formatDateString,
   formatTimeAgo
-} from './date'
+} from './date.js'
 
 describe('test .formatDateString() method', () => {
   const d = new Date()

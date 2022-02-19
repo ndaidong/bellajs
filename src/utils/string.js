@@ -5,9 +5,9 @@ import {
   isString,
   isNumber,
   hasProperty
-} from './detection'
+} from './detection.js'
 
-import { randint } from './random'
+import { randint } from './random.js'
 
 const toString = (input) => {
   const s = isNumber(input) ? String(input) : input

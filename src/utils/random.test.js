@@ -2,7 +2,7 @@
 
 /* eslint-env jest */
 
-import { randint } from './random'
+import { randint } from './random.js'
 
 describe('test .randint() method:', () => {
   const randArr = []

@@ -4,7 +4,7 @@
 
 import {
   curry
-} from './curry'
+} from './curry.js'
 
 describe('test .curry() method:', () => {
   const sum = curry((a, b, c) => {

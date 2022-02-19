@@ -2,7 +2,7 @@
 
 import {
   defineProp
-} from './defineProp'
+} from './defineProp.js'
 
 export const maybe = (val) => {
   const __val = val
