@@ -1,5 +1,5 @@
 {
-  "version": "11.0.2",
+  "version": "11.0.3",
   "name": "bellajs",
   "description": "A useful helper for any javascript program",
   "homepage": "https://www.npmjs.com/package/bellajs",
@@ -18,24 +18,15 @@
   "scripts": {
     "lint": "standard .",
     "pretest": "npm run lint",
-    "test": "NODE_ENV=test jest --verbose --coverage=true --unhandled-rejections=strict --detectOpenHandles --env=jsdom",
+    "test": "NODE_ENV=test NODE_OPTIONS=--experimental-vm-modules jest --verbose --coverage=true --unhandled-rejections=strict --detectOpenHandles --env=jsdom",
     "build": "node build.js src/main.js",
     "reset": "node reset"
   },
   "devDependencies": {
-    "@babel/plugin-transform-modules-commonjs": "^7.16.7",
-    "esbuild": "^0.14.10",
-    "jest": "^27.4.7",
-    "standard": "^16.0.4"
-  },
-  "babel": {
-    "env": {
-      "test": {
-        "plugins": [
-          "@babel/plugin-transform-modules-commonjs"
-        ]
-      }
-    }
+    "esbuild": "^0.14.42",
+    "jest": "^28.1.0",
+    "jest-environment-jsdom": "^28.1.0",
+    "standard": "^17.0.0"
   },
   "standard": {
     "ignore": [

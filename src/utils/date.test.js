@@ -2,6 +2,8 @@
 
 /* eslint-env jest */
 
+import { jest } from '@jest/globals'
+
 import {
   formatDateString,
   formatTimeAgo
