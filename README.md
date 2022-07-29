@@ -17,123 +17,98 @@ You may be interested in [BellaPy](https://github.com/ndaidong/bellapy) too.
 * [APIs](#apis)
   * [DataType detection](#datatype-detection)
   * [String manipulation](#string-manipulation)
-  * [Data handling](#data-handling): [clone](#clone), [copies](#copies)
-  * [Array utils](#array-utils): [pick](#pick), [sort](#sort), [sortBy](#sortBy), [shuffle](#shuffle), [unique](#unique)
-  * [Functional utils](#functional-utils): [curry](#curryfn), [compose](#compose), [pipe](#pipe), [maybe](#maybe)
-  * [Date utils](#date-utils)
-  * [Other utils](#other-utils): [equals](#equals), [randint](#randint), [genid](#genid)
+  * [Data handling](#data-handling): [`clone`](#cloneanything-val), [`copies`](#copiesobject-source-object-target-boolean-requirematching-array-excepts)
+  * [Array utils](#array-utils): [`pick`](#pickarray-arr--number-count--1), [`sort`](#sortarray-arr--function-compare), [`sortBy`](#sortbyarray-arr-number-order-string-property), [`shuffle`](#shufflearray-arr), [`unique`](#uniquearray-arr)
+  * [Functional utils](#functional-utils): [`curry`](#curryfn), [`compose`](#composef1-f2-fn), [`pipe`](#pipef1-f2-fn), [`maybe`](#maybeanything-val)
+  * [Date utils](#date-utils): [`formatDateString`](#formatdatestringdate--timestamp--string-locale--object-options), [`formatTimeAgo`](#formattimeagodate--timestamp--string-locale--string-justnow)
+  * [Other utils](#other-utils): [`randint`](#randintnumber-min--number-max), [`genid`](#genidnumber-length--string-prefix)
 
 * [Test](#test)
 
 * [License](#license)
 
-## Setup
+## Install
 
 - Node.js
 
-  ```bash
-  npm i bellajs
+```bash
+npm i bellajs
 
-  # pnpm
-  pnpm i bellajs
+# pnpm
+pnpm i bellajs
 
-  # yarn
-  yarn add bellajs
-  ```
-
-- CDN
-
-  - ES6 Module: [bella.esm.js](https://unpkg.com/bellajs/dist/bella.esm.js)
-  - CommonJS: [bella.js](https://unpkg.com/bellajs/dist/cjs/bella.js)
-  - For old browsers: [bella.min.js](https://unpkg.com/bellajs/dist/bella.min.js)
-
-
-## Usage
-
-### Node.js:
-
-```js
-import {
-  slugify
-} from 'bella'
-
-// with CommonJS environment
-// const { genid, slugify } = require('bellajs/dist/cjs/bella.js')
-
-slugify('')
+# yarn
+yarn add bellajs
 ```
 
-##### Note:
-
-> Since Node.js v14, ECMAScript modules [have became the official standard format](https://nodejs.org/docs/latest-v14.x/api/esm.html#esm_modules_ecmascript_modules).
-> Just ensure that you are [using module system](https://nodejs.org/api/packages.html#determining-module-system) and enjoy with ES6 import/export syntax.
-
-### Browsers:
-
-Currently ECMAScript modules work fine on almost browsers:
+- Browser
 
 ```html
 <script type="module">
 import { genid } from 'https://unpkg.com/bellajs/dist/bella.esm.js'
+
 console.log(genid())
 </script>
 ```
 
-With outdated browsers, we can use traditional way:
 
-```html
-<script type="text/javascript" src="https://unpkg.com/bellajs/dist/bella.iife.js"></script>
+## Usage
 
-<script>
-console.log(window.bella.genid())
-</script>
+```js
+import {
+  genid,
+  slugify
+} from 'bella'
+
+const postId = genid(32)
+console.log(postId)
+const slug = slugify('Goldman Sachs, JPMorgan Predict Euro-Area Recession')
+console.log(slug)
 ```
 
 ## APIs
 
 ### DataType detection
 
-- .isArray(Anything val)
-- .isBoolean(Anything val)
-- .isDate(Anything val)
-- .isElement(Anything val)
-- .isEmail(Anything val)
-- .isEmpty(Anything val)
-- .isFunction(Anything val)
-- .isInteger(Anything val)
-- .isLetter(Anything val)
-- .isNil(Anything val)
-- .isNull(Anything val)
-- .isNumber(Anything val)
-- .isObject(Anything val)
-- .isString(Anything val)
-- .isUndefined(Anything val)
+- `.isArray(Anything val)`
+- `.isBoolean(Anything val)`
+- `.isDate(Anything val)`
+- `.isElement(Anything val)`
+- `.isEmail(Anything val)`
+- `.isEmpty(Anything val)`
+- `.isFunction(Anything val)`
+- `.isInteger(Anything val)`
+- `.isLetter(Anything val)`
+- `.isNil(Anything val)`
+- `.isNull(Anything val)`
+- `.isNumber(Anything val)`
+- `.isObject(Anything val)`
+- `.isString(Anything val)`
+- `.isUndefined(Anything val)`
 
 
 ### String manipulation
 
-- .ucfirst(String s)
-- .ucwords(String s)
-- .escapeHTML(String s)
-- .unescapeHTML(String s)
-- .slugify(String s)
-- .stripTags(String s)
-- .stripAccent(String s)
-- .truncate(String s, Number limit)
-- .replaceAll(String s, String|Array search, String|Array replace)
+- `.ucfirst(String s)`
+- `.ucwords(String s)`
+- `.escapeHTML(String s)`
+- `.unescapeHTML(String s)`
+- `.slugify(String s)`
+- `.stripTags(String s)`
+- `.stripAccent(String s)`
+- `.truncate(String s, Number limit)`
+- `.replaceAll(String s, String|Array search, String|Array replace)`
 
 
 ### Data handling
 
-#### clone
+#### `clone(Anything val)`
+
+Make a deep copy of a variable.
 
 ```js
-clone(Anything val)
-```
+import { clone } from 'bellajs'
 
-Return a copy of val.
-
-```js
 const b = [
   1, 5, 0, 'a', -10, '-10', '',
   {
@@ -142,7 +117,7 @@ const b = [
   }
 ]
 
-const cb = bella.clone(b)
+const cb = clone(b)
 console.log(cb)
 ```
 
@@ -164,19 +139,18 @@ What you get is still:
 }
 ```
 
-#### copies
+#### `copies(Object source, Object target[[, Boolean requireMatching], Array excepts])`
 
 Copy the properties from *source* to *target*.
-
-```js
-copies(Object source, Object target[[, Boolean requireMatching], Array excepts])
-```
 
 - *requireMatching*: if true, BellaJS only copies the properties that are already exist in *target*.
 - *excepts*: array of the properties properties in *source* that you don't want to copy.
 
+After this action, target will be modified.
 
 ```js
+import { copies } from 'bellajs'
+
 const a = {
   name: 'Toto',
   age: 30,
@@ -198,7 +172,7 @@ const b = {
   }
 }
 
-bella.copies(a, b)
+copies(a, b)
 console.log(b)
 ```
 
@@ -224,15 +198,9 @@ Output:
 
 ### Array utils
 
-#### pick
+#### `pick(Array arr [, Number count = 1])`
 
 Randomly choose N  elements from array.
-
-```js
-pick(Array arr [, Integer count = 1])
-```
-
-Examples:
 
 ```js
 import { pick } from 'bellajs'
@@ -245,13 +213,9 @@ pick(arr) // --> [7]
 ```
 
 
-#### sort
+#### `sort(Array arr [, Function compare])`
 
-```js
-sort(Array a [, Function compare])
-```
-
-For example:
+Sort the array using a function.
 
 ```js
 import { sort } from 'bellajs'
@@ -263,16 +227,11 @@ const fn = (a, b) => {
 sort([3, 1, 5, 2], fn) // => [ 1, 2, 3, 5 ]
 ```
 
-#### sortBy
+#### `sortBy(Array arr, Number order, String property)`
+
+Sort the array by specific property and direction.
 
 ```js
-sortBy(Array a, Number order, String property)
-```
-
-For example:
-
-```js
-
 import { sortBy } from 'bellajs'
 
 const players = [
@@ -302,15 +261,9 @@ const result = sortBy(players, -1, 'age')
 console.log(result)
 ```
 
-#### shuffle
+#### `shuffle(Array arr)`
 
-Shuffle an array.
-
-```js
-shuffle(Array arr)
-```
-
-For example:
+Shuffle the positions of elements in an array.
 
 ```js
 import { shuffle } from 'bellajs'
@@ -318,13 +271,9 @@ import { shuffle } from 'bellajs'
 shuffle([1, 3, 8, 2, 5, 7])
 ```
 
-#### unique
+#### `unique(Array arr)`
 
-```js
-unique(Array a)
-```
-
-For example:
+Remove all duplicate elements from an array.
 
 ```js
 import { unique } from 'bellajs'
@@ -334,13 +283,9 @@ unique([1, 2, 3, 2, 3, 1, 5]) // => [ 1, 2, 3, 5 ]
 
 ### Functional utils
 
-#### curry
+#### `curry(fn)`
 
-```js
-curry(fn)
-```
-
-Examples:
+Make a curried function.
 
 ```js
 import { curry } from 'bellajs'
@@ -356,18 +301,12 @@ sum(1)(2, 3) // => 6
 sum(1, 2, 3) // => 6
 ```
 
-#### compose
+#### `compose(f1, f2, ...fN)`
 
 Performs right-to-left function composition.
 
 ```js
-compose(f1, f2, ...fN)
-```
-
-Examples:
-
-```js
-import {compose} from 'bellajs'
+import { compose } from 'bellajs'
 
 const f1 = (name) => {
   return `f1 ${name}`
@@ -397,15 +336,9 @@ add1AndMult2(3) // => 7
 ```
 
 
-#### pipe
+#### `pipe(f1, f2, ...fN)`
 
 Performs left-to-right function composition.
-
-```js
-pipe(f1, f2, ...fN)
-```
-
-Examples:
 
 ```js
 import { pipe } from 'bellajs'
@@ -437,15 +370,9 @@ add1AndMult2(3) // => 8
 // because add 1 first, then multiple to 2 late => (3 + 1) * 2
 ```
 
-#### maybe
-
-```js
-maybe(Anything val)
-```
+#### `maybe(Anything val)`
 
 Return a static variant of `Maybe` monad.
-
-Examples:
 
 ```js
 import { maybe } from 'bellajs'
@@ -492,16 +419,11 @@ maybe()
 
 ### Date utils
 
-- `formatDateString(Date | Timestamp [, String locale [, Object options]])`
-- `formatTimeAgo(Date | Timestamp [, String locale [, String justnow]])`
-
-
-Example:
+#### `formatDateString(Date | Timestamp [, String locale [, Object options]])`
 
 ```js
 import {
-  formatDateString,
-  formatTimeAgo
+  formatDateString
 } from 'bellajs'
 
 const today = new Date()
@@ -530,6 +452,17 @@ formatDateString(today, 'vi', {
   dateStyle: 'full',
   timeStyle: 'full'
 }) // => 20:34:28 Giờ Đông Dương Thứ Hai, 3 tháng 1, 2022
+```
+
+
+#### `formatTimeAgo(Date | Timestamp [, String locale [, String justnow]])`
+
+```js
+import {
+  formatTimeAgo
+} from 'bellajs'
+
+const today = new Date()
 
 const yesterday = today.setDate(today.getDate() - 1)
 formatTimeAgo(yesterday) // => 1 day ago
@@ -564,28 +497,9 @@ Please refer the following resources for more info:
 
 ### Other utils
 
-#### equals
+#### `randint([Number min [, Number max]])`
 
-```js
-equals(Anything a, Anything b)
-```
-
-Examples:
-
-```js
-import { equals } from 'bellajs'
-
-equals({}, {}) // => true
-equals(0, 1) // => false
-```
-
-#### randint
-
-```js
-randint([Number min [, Number max]])
-```
-
-Examples:
+Returns a number between `min` and `max`
 
 ```js
 import { randint } from 'bellajs'
@@ -594,13 +508,9 @@ randint() // => a random integer
 randint(1, 5) // => a random integer between 3 and 5, including 1 and 5
 ```
 
-#### genid
+#### `genid([Number length [, String prefix]])`
 
-```js
-genid([Number length [, String prefix]])
-```
-
-Examples:
+Create random ID string.
 
 ```js
 import { genid } from 'bellajs'

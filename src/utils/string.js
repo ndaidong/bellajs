@@ -141,24 +141,25 @@ export const stripAccent = (s) => {
   return x
 }
 
+const lowerChars = 'abcdefghijklmnopqrstuvwxyz'
+const upperChars = lowerChars.toUpperCase()
+const digits = '0123456789'
+const characters = [
+  lowerChars,
+  upperChars,
+  digits
+].join('').split('')
+
 export const genid = (leng, prefix = '') => {
-  const lc = 'abcdefghijklmnopqrstuvwxyz'
-  const uc = lc.toUpperCase()
-  const nb = '0123456789'
-  const cand = [
-    lc,
-    uc,
-    nb
-  ].join('').split('').sort(() => {
+  const chars = characters.sort(() => {
     return Math.random() > 0.5
   }).join('')
-
-  const t = cand.length
+  const t = chars.length
   const ln = Math.max(leng || 32, prefix.length)
   let s = prefix
   while (s.length < ln) {
     const k = randint(0, t)
-    s += cand.charAt(k) || ''
+    s += chars.charAt(k) || ''
   }
   return s
 }

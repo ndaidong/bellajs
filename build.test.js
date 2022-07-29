@@ -9,10 +9,6 @@ import {
 
 const pkg = JSON.parse(readFileSync('./package.json'))
 
-const esmFile = 'bella.esm.js'
-const cjsFile = 'cjs/bella.js'
-const minFile = 'bella.min.js'
-
 const runtest = (fname) => {
   const fpath = `./dist/${fname}`
   describe(`Validate ${fname} version output`, () => {
@@ -23,19 +19,10 @@ const runtest = (fname) => {
     const lines = constent.split('\n')
     test('Check if file meta contains package info', () => {
       expect(lines[0].includes(`${pkg.name}@${pkg.version}`)).toBeTruthy()
-      expect(lines[0].includes(pkg.author)).toBeTruthy()
-      expect(lines[0].includes(pkg.license)).toBeTruthy()
+      expect(lines[0].includes(pkg.repository.url)).toBeTruthy()
     })
   })
   return fpath
 }
 
-const arr = [
-  esmFile,
-  cjsFile,
-  minFile
-]
-
-arr.forEach((fname) => {
-  runtest(fname)
-})
+runtest('bella.esm.js')

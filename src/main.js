@@ -118,7 +118,6 @@ export const pick = (arr = [], count = 1) => {
 }
 
 export * from './utils/detection.js'
-export * from './utils/equals.js'
 export * from './utils/string.js'
 export * from './utils/random.js'
 export * from './utils/date.js'
