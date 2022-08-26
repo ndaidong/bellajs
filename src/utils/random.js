@@ -1,13 +1,12 @@
 // utils / random
 
-const MAX_NUMBER = Number.MAX_SAFE_INTEGER
-
 export const randint = (min, max) => {
+  const maxint = Number.MAX_SAFE_INTEGER
   if (!min || min < 0) {
     min = 0
   }
   if (!max) {
-    max = MAX_NUMBER
+    max = maxint
   }
   if (min === max) {
     return max

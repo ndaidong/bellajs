@@ -141,17 +141,20 @@ export const stripAccent = (s) => {
   return x
 }
 
-const lowerChars = 'abcdefghijklmnopqrstuvwxyz'
-const upperChars = lowerChars.toUpperCase()
-const digits = '0123456789'
-const characters = [
-  lowerChars,
-  upperChars,
-  digits
-].join('').split('')
+const getCharList = () => {
+  const lowerChars = 'abcdefghijklmnopqrstuvwxyz'
+  const upperChars = lowerChars.toUpperCase()
+  const digits = '0123456789'
+  const characters = [
+    lowerChars,
+    upperChars,
+    digits
+  ].join('').split('')
+  return characters
+}
 
 export const genid = (leng, prefix = '') => {
-  const chars = characters.sort(() => {
+  const chars = getCharList().sort(() => {
     return Math.random() > 0.5
   }).join('')
   const t = chars.length
