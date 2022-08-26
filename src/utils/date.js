@@ -4,19 +4,23 @@ import {
   isObject
 } from './detection.js'
 
-const DATE_FORMAT = {
-  dateStyle: 'medium',
-  timeStyle: 'long'
+const getDateFormat = () => {
+  return {
+    dateStyle: 'medium',
+    timeStyle: 'long'
+  }
 }
 
-const TIME_CONVERS = {
-  second: 1000,
-  minute: 60,
-  hour: 60,
-  day: 24,
-  week: 7,
-  month: 4,
-  year: 12
+const getTimeConvers = () => {
+  return {
+    second: 1000,
+    minute: 60,
+    hour: 60,
+    day: 24,
+    week: 7,
+    month: 4,
+    year: 12
+  }
 }
 
 const isValidLocal = (hl) => {
@@ -31,13 +35,14 @@ const isValidLocal = (hl) => {
 export const formatDateString = (...args) => {
   const input = args[0]
   const lang = isValidLocal(args[1]) ? args[1] : 'en'
+  const dfmt = getDateFormat()
   const opt = args.length >= 3
     ? args[2]
     : args.length === 1
-      ? DATE_FORMAT
+      ? dfmt
       : isObject(args[1])
         ? args[1]
-        : DATE_FORMAT
+        : dfmt
   const dtf = new Intl.DateTimeFormat(lang, opt)
   return dtf.format(new Date(input))
 }
@@ -45,16 +50,17 @@ export const formatDateString = (...args) => {
 export const formatTimeAgo = (input, lang = 'en', justnow = 'just now') => {
   const t = new Date(input)
   let delta = Date.now() - t
-  if (delta <= TIME_CONVERS.second) {
+  const tcv = getTimeConvers()
+  if (delta <= tcv.second) {
     return justnow
   }
   let unit = 'second'
-  for (const key in TIME_CONVERS) {
-    if (delta < TIME_CONVERS[key]) {
+  for (const key in tcv) {
+    if (delta < tcv[key]) {
       break
     } else {
       unit = key
-      delta /= TIME_CONVERS[key]
+      delta /= tcv[key]
     }
   }
   delta = Math.floor(delta)
