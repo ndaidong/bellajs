@@ -1,5 +1,5 @@
 {
-  "version": "11.0.6",
+  "version": "11.0.7",
   "name": "bellajs",
   "description": "A useful helper for any javascript program",
   "homepage": "https://www.npmjs.com/package/bellajs",
@@ -9,6 +9,10 @@
   },
   "author": "@ndaidong",
   "main": "./src/main.js",
+  "exports": {
+    "import": "./src/main.js",
+    "require": "./dist/cjs/bella.js"
+  },
   "type": "module",
   "engines": {
     "node": ">= 14"
