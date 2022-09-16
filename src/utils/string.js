@@ -17,47 +17,37 @@ const toString = (input) => {
   return s
 }
 
-export const truncate = (s, l) => {
-  const o = toString(s)
-  const t = l || 140
-  if (o.length <= t) {
-    return o
+export const truncate = (s, len = 140) => {
+  const txt = toString(s)
+  const txtlen = txt.length
+  if (txtlen <= len) {
+    return txt
   }
-  let x = o.substring(0, t)
-  const a = x.split(' ')
-  const b = a.length
-  let r = ''
-  if (b > 1) {
-    a.pop()
-    r += a.join(' ')
-    if (r.length < o.length) {
-      r += '...'
-    }
-  } else {
-    x = x.substring(0, t - 3)
-    r = x + '...'
+  const subtxt = txt.substring(0, len).trim()
+  const subtxtArr = subtxt.split(' ')
+  const subtxtLen = subtxtArr.length
+  if (subtxtLen > 1) {
+    subtxtArr.pop()
+    return subtxtArr.map(word => word.trim()).join(' ') + '...'
   }
-  return r
+  return subtxt.substring(0, len - 3) + '...'
 }
 
 export const stripTags = (s) => {
-  return toString(s)
-    .replace(/<.*?>/gi, ' ')
-    .replace(/\s\s+/g, ' ')
-    .trim()
+  return toString(s).replace(/(<([^>]+)>)/ig, '').trim()
 }
 
 export const escapeHTML = (s) => {
-  const x = toString(s)
-  return x.replace(/&/g, '&amp;')
+  return toString(s)
+    .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;')
 }
 
 export const unescapeHTML = (s) => {
-  const x = toString(s)
-  return x.replace(/&quot;/g, '"')
+  return toString(s)
+    .replace(/&quot;/g, '"')
     .replace(/&lt;/g, '<')
     .replace(/&gt;/g, '>')
     .replace(/&amp;/g, '&')
@@ -74,15 +64,10 @@ export const ucwords = (s) => {
   }).join(' ')
 }
 
-export const replaceAll = (s, a, b) => {
+export const replaceAll = (s, alpha, beta) => {
   let x = toString(s)
-
-  if (isNumber(a)) {
-    a = String(a)
-  }
-  if (isNumber(b)) {
-    b = String(b)
-  }
+  const a = isNumber(alpha) ? String(alpha) : alpha
+  const b = isNumber(beta) ? String(beta) : beta
 
   if (isString(a) && isString(b)) {
     const aa = x.split(a)
@@ -104,32 +89,39 @@ export const replaceAll = (s, a, b) => {
   return x
 }
 
-export const stripAccent = (s) => {
-  let x = toString(s)
+const getCharMap = () => {
+  const lmap = {
+    a: 'á|à|ả|ã|ạ|ă|ắ|ặ|ằ|ẳ|ẵ|â|ấ|ầ|ẩ|ẫ|ậ|ä|æ',
+    c: 'ç',
+    d: 'đ|ð',
+    e: 'é|è|ẻ|ẽ|ẹ|ê|ế|ề|ể|ễ|ệ|ë',
+    i: 'í|ì|ỉ|ĩ|ị|ï|î',
+    n: 'ñ',
+    o: 'ó|ò|ỏ|õ|ọ|ô|ố|ồ|ổ|ỗ|ộ|ơ|ớ|ờ|ở|ỡ|ợ|ö|ø',
+    s: 'ß',
+    u: 'ú|ù|ủ|ũ|ụ|ư|ứ|ừ|ử|ữ|ự|û',
+    y: 'ý|ỳ|ỷ|ỹ|ỵ|ÿ'
+  }
 
   const map = {
-    a: 'á|à|ả|ã|ạ|ă|ắ|ặ|ằ|ẳ|ẵ|â|ấ|ầ|ẩ|ẫ|ậ|ä',
-    A: 'Á|À|Ả|Ã|Ạ|Ă|Ắ|Ặ|Ằ|Ẳ|Ẵ|Â|Ấ|Ầ|Ẩ|Ẫ|Ậ|Ä',
-    c: 'ç',
-    C: 'Ç',
-    d: 'đ',
-    D: 'Đ',
-    e: 'é|è|ẻ|ẽ|ẹ|ê|ế|ề|ể|ễ|ệ|ë',
-    E: 'É|È|Ẻ|Ẽ|Ẹ|Ê|Ế|Ề|Ể|Ễ|Ệ|Ë',
-    i: 'í|ì|ỉ|ĩ|ị|ï|î',
-    I: 'Í|Ì|Ỉ|Ĩ|Ị|Ï|Î',
-    o: 'ó|ò|ỏ|õ|ọ|ô|ố|ồ|ổ|ỗ|ộ|ơ|ớ|ờ|ở|ỡ|ợ|ö',
-    O: 'Ó|Ò|Ỏ|Õ|Ọ|Ô|Ố|Ồ|Ổ|Ô|Ộ|Ơ|Ớ|Ờ|Ở|Ỡ|Ợ|Ö',
-    u: 'ú|ù|ủ|ũ|ụ|ư|ứ|ừ|ử|ữ|ự|û',
-    U: 'Ú|Ù|Ủ|Ũ|Ụ|Ư|Ứ|Ừ|Ử|Ữ|Ự|Û',
-    y: 'ý|ỳ|ỷ|ỹ|ỵ',
-    Y: 'Ý|Ỳ|Ỷ|Ỹ|Ỵ'
+    ...lmap
   }
+  Object.keys(lmap).forEach((k) => {
+    const K = k.toUpperCase()
+    map[K] = lmap[k].toUpperCase()
+  })
+
+  return map
+}
+
+export const stripAccent = (s) => {
+  let x = toString(s)
 
   const updateS = (ai, key) => {
     x = replaceAll(x, ai, key)
   }
 
+  const map = getCharMap()
   for (const key in map) {
     if (hasProperty(map, key)) {
       const a = map[key].split('|')
@@ -145,20 +137,15 @@ const getCharList = () => {
   const lowerChars = 'abcdefghijklmnopqrstuvwxyz'
   const upperChars = lowerChars.toUpperCase()
   const digits = '0123456789'
-  const characters = [
-    lowerChars,
-    upperChars,
-    digits
-  ].join('').split('')
-  return characters
+  return lowerChars.concat(upperChars).concat(digits).split('')
 }
 
-export const genid = (leng, prefix = '') => {
+export const genid = (len = 32, prefix = '') => {
   const chars = getCharList().sort(() => {
     return Math.random() > 0.5
   }).join('')
   const t = chars.length
-  const ln = Math.max(leng || 32, prefix.length)
+  const ln = Math.max(len, prefix.length)
   let s = prefix
   while (s.length < ln) {
     const k = randint(0, t)
