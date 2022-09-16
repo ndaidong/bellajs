@@ -3,7 +3,7 @@
  * @ndaidong
  **/
 
-import { mkdirSync, readFileSync, rmSync } from 'fs'
+import { mkdirSync, readFileSync, writeFileSync, rmSync } from 'fs'
 
 import { buildSync } from 'esbuild'
 
@@ -21,19 +21,46 @@ const comment = [
   `built with esbuild at ${buildTime}`
 ].join(' - ')
 
-const esmVersion = {
+const baseOpt = {
   entryPoints: ['src/main.js'],
   bundle: true,
   charset: 'utf8',
   target: ['es2020', 'node14'],
   minify: true,
   write: true,
+  sourcemap: 'external'
+}
+
+const esmVersion = {
+  ...baseOpt,
   platform: 'browser',
   format: 'esm',
-  sourcemap: 'external',
   outfile: 'dist/bella.esm.js',
   banner: {
     js: comment
   }
 }
 buildSync(esmVersion)
+
+const cjsVersion = {
+  ...baseOpt,
+  platform: 'node',
+  format: 'cjs',
+  mainFields: ['main'],
+  outfile: 'dist/cjs/bella.js',
+  banner: {
+    js: comment
+  }
+}
+buildSync(cjsVersion)
+
+const cjspkg = {
+  name: pkg.name,
+  version: pkg.version,
+  main: './bella.js'
+}
+writeFileSync(
+  'dist/cjs/package.json',
+  JSON.stringify(cjspkg, null, '  '),
+  'utf8'
+)
