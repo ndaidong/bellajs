@@ -3,7 +3,7 @@
  * @ndaidong
  **/
 
-import { mkdirSync, readFileSync, writeFileSync, rmSync } from 'fs'
+import { mkdirSync, readFileSync, rmSync } from 'fs'
 
 import { buildSync } from 'esbuild'
 
@@ -47,20 +47,10 @@ const cjsVersion = {
   platform: 'node',
   format: 'cjs',
   mainFields: ['main'],
-  outfile: 'dist/cjs/bella.js',
+  outfile: 'dist/bella.js',
   banner: {
     js: comment
   }
 }
-buildSync(cjsVersion)
 
-const cjspkg = {
-  name: pkg.name,
-  version: pkg.version,
-  main: './bella.js'
-}
-writeFileSync(
-  'dist/cjs/package.json',
-  JSON.stringify(cjspkg, null, '  '),
-  'utf8'
-)
+buildSync(cjsVersion)

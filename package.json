@@ -11,7 +11,7 @@
   "main": "./src/main.js",
   "exports": {
     "import": "./src/main.js",
-    "require": "./dist/cjs/bella.js"
+    "require": "./dist/bella.js"
   },
   "type": "module",
   "engines": {
