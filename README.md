@@ -28,9 +28,9 @@ You may be interested in [BellaPy](https://github.com/ndaidong/bellapy) too.
 
 * [License](#license)
 
-## Install
+## Install & Usage
 
-- Node.js
+### Node.js
 
 ```bash
 npm i bellajs
@@ -42,29 +42,22 @@ pnpm i bellajs
 yarn add bellajs
 ```
 
-- Browser
+### Deno
+
+```ts
+import { genid } from 'https://esm.sh/bellajs'
+
+console.log(genid())
+```
+
+### Browser
 
 ```html
 <script type="module">
-import { genid } from 'https://unpkg.com/bellajs/dist/bella.esm.js'
+import { genid, slugify } from 'https://unpkg.com/bellajs/dist/bella.esm.js'
 
 console.log(genid())
 </script>
-```
-
-
-## Usage
-
-```js
-import {
-  genid,
-  slugify
-} from 'bella'
-
-const postId = genid(32)
-console.log(postId)
-const slug = slugify('Goldman Sachs, JPMorgan Predict Euro-Area Recession')
-console.log(slug)
 ```
 
 ## APIs
@@ -518,7 +511,6 @@ import { sha512 } from 'bellajs'
 sha512(text) // => hashed string 128 hex characters, 512-bit (32-byte)
 ```
 
-
 ### Random utils
 
 #### `randint([Number min [, Number max]])`
@@ -544,6 +536,8 @@ genid(16) // => random 16 chars
 genid(5) // => random 5 chars
 genid(5, 'X_') // => X_{random 3 chars}
 ```
+
+When `length` > 128, only first 99 characters are being generated using `crypto.getRandomValues()`, the rest will be calculated with `Math.random()`.
 
 ## Test
 
