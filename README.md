@@ -21,7 +21,8 @@ You may be interested in [BellaPy](https://github.com/ndaidong/bellapy) too.
   * [Array utils](#array-utils): [`pick`](#pickarray-arr--number-count--1), [`sort`](#sortarray-arr--function-compare), [`sortBy`](#sortbyarray-arr-number-order-string-property), [`shuffle`](#shufflearray-arr), [`unique`](#uniquearray-arr)
   * [Functional utils](#functional-utils): [`curry`](#curryfn), [`compose`](#composef1-f2-fn), [`pipe`](#pipef1-f2-fn), [`maybe`](#maybeanything-val)
   * [Date utils](#date-utils): [`formatDateString`](#formatdatestringdate--timestamp--string-locale--object-options), [`formatTimeAgo`](#formattimeagodate--timestamp--string-locale--string-justnow)
-  * [Other utils](#other-utils): [`randint`](#randintnumber-min--number-max), [`genid`](#genidnumber-length--string-prefix)
+  * [Crypto utils](#crypto-utils): [`sha256`](#sha256), [`sha512`](#sha512)
+  * [Other utils](#random-utils): [`randint`](#randintnumber-min--number-max), [`uuid`](#uuid), [`genid`](#genidnumber-length--string-prefix)
 
 * [Test](#test)
 
@@ -495,7 +496,30 @@ Please refer the following resources for more info:
 - [Intl.Locale](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale)
 
 
-### Other utils
+### Crypto utils
+
+#### `sha256()`
+
+Generate signature for a text using SHA-256 Cryptographic Hash Algorithm.
+
+```js
+import { sha256 } from 'bellajs'
+
+sha256(text) // => hashed string 64 hex characters, 256-bit (16-byte)
+```
+
+#### `sha512()`
+
+Generate signature for a text using SHA-512 Cryptographic Hash Algorithm.
+
+```js
+import { sha512 } from 'bellajs'
+
+sha512(text) // => hashed string 128 hex characters, 512-bit (32-byte)
+```
+
+
+### Random utils
 
 #### `randint([Number min [, Number max]])`
 
@@ -507,6 +531,17 @@ import { randint } from 'bellajs'
 randint() // => a random integer
 randint(1, 5) // => a random integer between 3 and 5, including 1 and 5
 ```
+
+#### `uuid()`
+
+Returns a random UUID string
+
+```js
+import { uuid } from 'bellajs'
+
+uuid() // => ba01a31a-96e6-409f-9020-839dcfcf217f
+```
+
 
 #### `genid([Number length [, String prefix]])`
 

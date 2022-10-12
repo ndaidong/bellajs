@@ -7,8 +7,6 @@ import {
   hasProperty
 } from './detection.js'
 
-import { randint } from './random.js'
-
 const toString = (input) => {
   const s = isNumber(input) ? String(input) : input
   if (!isString(s)) {
@@ -131,27 +129,6 @@ export const stripAccent = (s) => {
     }
   }
   return x
-}
-
-const getCharList = () => {
-  const lowerChars = 'abcdefghijklmnopqrstuvwxyz'
-  const upperChars = lowerChars.toUpperCase()
-  const digits = '0123456789'
-  return lowerChars.concat(upperChars).concat(digits).split('')
-}
-
-export const genid = (len = 32, prefix = '') => {
-  const chars = getCharList().sort(() => {
-    return Math.random() > 0.5
-  }).join('')
-  const t = chars.length
-  const ln = Math.max(len, prefix.length)
-  let s = prefix
-  while (s.length < ln) {
-    const k = randint(0, t)
-    s += chars.charAt(k) || ''
-  }
-  return s
 }
 
 export const slugify = (s, delimiter = '-') => {
