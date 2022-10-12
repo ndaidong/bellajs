@@ -1,5 +1,5 @@
 {
-  "version": "11.0.7",
+  "version": "11.1.0",
   "name": "bellajs",
   "description": "A useful helper for any javascript program",
   "homepage": "https://www.npmjs.com/package/bellajs",
@@ -13,21 +13,30 @@
     "import": "./src/main.js",
     "require": "./dist/bella.js"
   },
+  "imports": {
+    "node:crypto": "./src/browser/crypto.js"
+  },
+  "browser": {
+    "node:crypto": "./src/browser/crypto.js",
+    "node:util": "./src/browser/txtutil.js"
+  },
   "type": "module",
   "engines": {
-    "node": ">= 14"
+    "node": ">= 15"
   },
   "scripts": {
     "lint": "standard .",
+    "lint:fix": "standard --fix",
     "pretest": "npm run lint",
     "test": "NODE_ENV=test NODE_OPTIONS=--experimental-vm-modules jest --verbose --coverage=true --env=jsdom",
     "build": "node build.js src/main.js",
     "reset": "node reset"
   },
   "devDependencies": {
-    "esbuild": "^0.15.7",
-    "jest": "^29.0.3",
-    "jest-environment-jsdom": "^29.0.3"
+    "esbuild": "^0.15.10",
+    "jest": "^29.1.2",
+    "jest-environment-jsdom": "^29.1.2",
+    "standard": "^17.0.0"
   },
   "standard": {
     "ignore": [

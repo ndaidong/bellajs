@@ -11,8 +11,7 @@ import {
   ucwords,
   replaceAll,
   stripAccent,
-  slugify,
-  genid
+  slugify
 } from './string.js'
 
 describe('test .truncate() method:', () => {
@@ -251,28 +250,5 @@ describe('test .slugify() method:', () => {
       const actual = slugify(text)
       expect(actual).toEqual(expectation)
     })
-  })
-})
-
-describe('test .genid() method:', () => {
-  test('  check .genid() default param', () => {
-    const actual = genid()
-    expect(actual).toHaveLength(32)
-  })
-
-  test('  check .genid(80)', () => {
-    const actual = genid(80)
-    expect(actual).toHaveLength(80)
-  })
-
-  const len = 100
-  const ids = []
-  while (ids.length < len) {
-    ids.push(genid())
-  }
-  const uniques = Array.from(new Set(ids))
-  test('  check .genid() always return unique string', () => {
-    expect(ids).toHaveLength(len)
-    expect(uniques).toHaveLength(ids.length)
   })
 })

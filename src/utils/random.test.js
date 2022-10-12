@@ -2,7 +2,7 @@
 
 /* eslint-env jest */
 
-import { randint } from './random.js'
+import { randint, genid } from './random.js'
 
 describe('test .randint() method:', () => {
   const randArr = []
@@ -29,14 +29,27 @@ describe('test .randint() method:', () => {
       expect(q).toBeLessThanOrEqual(max)
     }
   })
+})
 
-  const min2 = 100
-  const max2 = 30
-  test(`test .randint() between ${min2} - ${max2}`, () => {
-    for (let i = 0; i < 100; i++) {
-      const q = randint(min2, max2)
-      expect(q).toBeGreaterThanOrEqual(max2)
-      expect(q).toBeLessThanOrEqual(min2)
-    }
+describe('test .genid() method:', () => {
+  test('check .genid() default param', () => {
+    const actual = genid()
+    expect(actual).toHaveLength(32)
+  })
+
+  test('check .genid(512)', () => {
+    const actual = genid(512)
+    expect(actual).toHaveLength(512)
+  })
+
+  const len = 100
+  const ids = []
+  while (ids.length < len) {
+    ids.push(genid())
+  }
+  const uniques = Array.from(new Set(ids))
+  test('check .genid() always return unique string', () => {
+    expect(ids).toHaveLength(len)
+    expect(uniques).toHaveLength(ids.length)
   })
 })

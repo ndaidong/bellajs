@@ -21,15 +21,16 @@ You may be interested in [BellaPy](https://github.com/ndaidong/bellapy) too.
   * [Array utils](#array-utils): [`pick`](#pickarray-arr--number-count--1), [`sort`](#sortarray-arr--function-compare), [`sortBy`](#sortbyarray-arr-number-order-string-property), [`shuffle`](#shufflearray-arr), [`unique`](#uniquearray-arr)
   * [Functional utils](#functional-utils): [`curry`](#curryfn), [`compose`](#composef1-f2-fn), [`pipe`](#pipef1-f2-fn), [`maybe`](#maybeanything-val)
   * [Date utils](#date-utils): [`formatDateString`](#formatdatestringdate--timestamp--string-locale--object-options), [`formatTimeAgo`](#formattimeagodate--timestamp--string-locale--string-justnow)
-  * [Other utils](#other-utils): [`randint`](#randintnumber-min--number-max), [`genid`](#genidnumber-length--string-prefix)
+  * [Crypto utils](#crypto-utils): [`sha256`](#sha256), [`sha512`](#sha512)
+  * [Random utils](#random-utils): [`randint`](#randintnumber-min--number-max), [`genid`](#genidnumber-length--string-prefix)
 
 * [Test](#test)
 
 * [License](#license)
 
-## Install
+## Install & Usage
 
-- Node.js
+### Node.js
 
 ```bash
 npm i bellajs
@@ -41,29 +42,22 @@ pnpm i bellajs
 yarn add bellajs
 ```
 
-- Browser
+### Deno
+
+```ts
+import { genid } from 'https://esm.sh/bellajs'
+
+console.log(genid())
+```
+
+### Browser
 
 ```html
 <script type="module">
-import { genid } from 'https://unpkg.com/bellajs/dist/bella.esm.js'
+import { genid, slugify } from 'https://unpkg.com/bellajs/dist/bella.esm.js'
 
 console.log(genid())
 </script>
-```
-
-
-## Usage
-
-```js
-import {
-  genid,
-  slugify
-} from 'bella'
-
-const postId = genid(32)
-console.log(postId)
-const slug = slugify('Goldman Sachs, JPMorgan Predict Euro-Area Recession')
-console.log(slug)
 ```
 
 ## APIs
@@ -495,7 +489,29 @@ Please refer the following resources for more info:
 - [Intl.Locale](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale)
 
 
-### Other utils
+### Crypto utils
+
+#### `sha256()`
+
+Generate signature for a text using SHA-256 Cryptographic Hash Algorithm.
+
+```js
+import { sha256 } from 'bellajs'
+
+sha256(text) // => hashed string 64 hex characters, 256-bit (16-byte)
+```
+
+#### `sha512()`
+
+Generate signature for a text using SHA-512 Cryptographic Hash Algorithm.
+
+```js
+import { sha512 } from 'bellajs'
+
+sha512(text) // => hashed string 128 hex characters, 512-bit (32-byte)
+```
+
+### Random utils
 
 #### `randint([Number min [, Number max]])`
 
@@ -520,6 +536,8 @@ genid(16) // => random 16 chars
 genid(5) // => random 5 chars
 genid(5, 'X_') // => X_{random 3 chars}
 ```
+
+When `length` > 128, only first 99 characters are being generated using `crypto.getRandomValues()`, the rest will be calculated with `Math.random()`.
 
 ## Test
 
