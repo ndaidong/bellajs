@@ -1,5 +1,5 @@
 {
-  "version": "11.1.0",
+  "version": "11.1.1",
   "name": "bellajs",
   "description": "A useful helper for any javascript program",
   "homepage": "https://www.npmjs.com/package/bellajs",
@@ -13,16 +13,9 @@
     "import": "./src/main.js",
     "require": "./dist/bella.js"
   },
-  "imports": {
-    "node:crypto": "./src/browser/crypto.js"
-  },
-  "browser": {
-    "node:crypto": "./src/browser/crypto.js",
-    "node:util": "./src/browser/txtutil.js"
-  },
   "type": "module",
   "engines": {
-    "node": ">= 15"
+    "node": ">= 14"
   },
   "scripts": {
     "lint": "standard .",
