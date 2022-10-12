@@ -39,5 +39,5 @@ const cryptoGen = (len = 32, prefix = '') => {
 }
 
 export const genid = (len = 32, prefix = '') => {
-  return len <= 128 ? cryptoGen(len, prefix) : mathGen(len, prefix)
+  return len <= 128 ? cryptoGen(len, prefix) : `${cryptoGen(99, prefix)}${mathGen(len - 99)}`
 }
