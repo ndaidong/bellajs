@@ -1,5 +1,5 @@
 {
-  "version": "11.0.8",
+  "version": "11.1.0",
   "name": "bellajs",
   "description": "A useful helper for any javascript program",
   "homepage": "https://www.npmjs.com/package/bellajs",
@@ -22,7 +22,7 @@
   },
   "type": "module",
   "engines": {
-    "node": ">= 14"
+    "node": ">= 15"
   },
   "scripts": {
     "lint": "standard .",
