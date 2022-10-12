@@ -2,7 +2,7 @@
 
 /* eslint-env jest */
 
-import { randint, uuid, genid } from './random.js'
+import { randint, genid } from './random.js'
 
 describe('test .randint() method:', () => {
   const randArr = []
@@ -28,22 +28,6 @@ describe('test .randint() method:', () => {
       expect(q).toBeGreaterThanOrEqual(min)
       expect(q).toBeLessThanOrEqual(max)
     }
-  })
-})
-
-describe('test .uuid() method:', () => {
-  test('test .uuid() length and format', () => {
-    const uid = uuid()
-    expect(uid.length).toEqual(36)
-    expect(uid.match(/^(\w+)-(\w{4})-(\w{4})-(\w{4})-(\w+)$/)).toBeTruthy()
-    const len = 10
-    const ids = []
-    while (ids.length < len) {
-      ids.push(uuid())
-    }
-    const uniques = Array.from(new Set(ids))
-    expect(ids).toHaveLength(len)
-    expect(uniques).toHaveLength(ids.length)
   })
 })
 

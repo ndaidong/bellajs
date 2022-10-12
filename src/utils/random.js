@@ -11,26 +11,6 @@ export const randint = (min = 0, max = 1e6) => {
   return Math.floor(floatNum * (max - min + 1)) + min
 }
 
-const ranhex = (len) => {
-  let s = ''
-  const nums = crypto.getRandomValues(new Uint8Array(len))
-  for (let i = 0; i < nums.length; i++) {
-    const n = nums[i].toString(16)
-    const r = Math.random()
-    const c = n.charAt(Math.floor(r * n.length))
-    s += c
-  }
-  return s
-}
-
-const randomUUID = () => {
-  return `${ranhex(8)}-${ranhex(4)}-${ranhex(4)}-${ranhex(4)}-${ranhex(12)}`
-}
-
-export const uuid = () => {
-  return crypto.randomUUID ? crypto.randomUUID() : randomUUID()
-}
-
 const mathGen = (len = 32, prefix = '') => {
   let s = prefix
   for (let i = 0; i < len; i++) {

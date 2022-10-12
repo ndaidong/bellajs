@@ -22,7 +22,7 @@ You may be interested in [BellaPy](https://github.com/ndaidong/bellapy) too.
   * [Functional utils](#functional-utils): [`curry`](#curryfn), [`compose`](#composef1-f2-fn), [`pipe`](#pipef1-f2-fn), [`maybe`](#maybeanything-val)
   * [Date utils](#date-utils): [`formatDateString`](#formatdatestringdate--timestamp--string-locale--object-options), [`formatTimeAgo`](#formattimeagodate--timestamp--string-locale--string-justnow)
   * [Crypto utils](#crypto-utils): [`sha256`](#sha256), [`sha512`](#sha512)
-  * [Other utils](#random-utils): [`randint`](#randintnumber-min--number-max), [`uuid`](#uuid), [`genid`](#genidnumber-length--string-prefix)
+  * [Other utils](#random-utils): [`randint`](#randintnumber-min--number-max), [`genid`](#genidnumber-length--string-prefix)
 
 * [Test](#test)
 
@@ -531,17 +531,6 @@ import { randint } from 'bellajs'
 randint() // => a random integer
 randint(1, 5) // => a random integer between 3 and 5, including 1 and 5
 ```
-
-#### `uuid()`
-
-Returns a random UUID string
-
-```js
-import { uuid } from 'bellajs'
-
-uuid() // => ba01a31a-96e6-409f-9020-839dcfcf217f
-```
-
 
 #### `genid([Number length [, String prefix]])`
 
