@@ -22,7 +22,7 @@ describe('test .formatDateString() method', () => {
     const result = formatDateString(d, {
       dateStyle: 'full',
       timeStyle: 'medium',
-      hour12: true
+      hour12: true,
     })
     const reg = /^\w+,\s\w+\s\d+,\s+\d{4}\sat\s\d+:\d+:\d+\s(AM|PM)$/
     expect(result.match(reg) !== null).toBeTruthy()
@@ -32,7 +32,7 @@ describe('test .formatDateString() method', () => {
     const result = formatDateString(d, 'en', {
       dateStyle: 'full',
       timeStyle: 'medium',
-      hour12: true
+      hour12: true,
     })
     const reg = /^\w+,\s\w+\s\d+,\s+\d{4}\sat\s\d+:\d+:\d+\s(AM|PM)$/
     expect(result.match(reg) !== null).toBeTruthy()

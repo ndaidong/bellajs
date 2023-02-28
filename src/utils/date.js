@@ -7,7 +7,7 @@ import {
 const getDateFormat = () => {
   return {
     dateStyle: 'medium',
-    timeStyle: 'long'
+    timeStyle: 'long',
   }
 }
 
@@ -19,7 +19,7 @@ const getTimeConvers = () => {
     day: 24,
     week: 7,
     month: 4,
-    year: 12
+    year: 12,
   }
 }
 

@@ -98,11 +98,11 @@ const getCharMap = () => {
     o: 'ó|ò|ỏ|õ|ọ|ô|ố|ồ|ổ|ỗ|ộ|ơ|ớ|ờ|ở|ỡ|ợ|ö|ø',
     s: 'ß',
     u: 'ú|ù|ủ|ũ|ụ|ư|ứ|ừ|ử|ữ|ự|û',
-    y: 'ý|ỳ|ỷ|ỹ|ỵ|ÿ'
+    y: 'ý|ỳ|ỷ|ỹ|ỵ|ÿ',
   }
 
   const map = {
-    ...lmap
+    ...lmap,
   }
   Object.keys(lmap).forEach((k) => {
     const K = k.toUpperCase()
