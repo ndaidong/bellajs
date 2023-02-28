@@ -269,7 +269,7 @@ describe('test .isEmpty() method:', () => {
 describe('test .hasProperty() method:', () => {
   const obj = {
     name: 'alice',
-    age: 17
+    age: 17,
   }
   const positives = ['name', 'age']
   positives.forEach((val) => {

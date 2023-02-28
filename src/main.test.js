@@ -19,12 +19,12 @@ describe('test .clone() method:', () => {
       IQ: 140,
       epouse: {
         name: 'Alice',
-        age: 27
+        age: 27,
       },
       birthday: new Date(),
       a: 0,
       clone: false,
-      reg: /^\w+@\s([a-z])$/gi
+      reg: /^\w+@\s([a-z])$/gi,
     }
     const y = clone(x)
     Object.keys(x).forEach((k) => {
@@ -52,7 +52,7 @@ describe('test .clone() method:', () => {
       '',
       {
         a: 1,
-        b: 'Awesome'
+        b: 'Awesome',
       },
       [
         5,
@@ -60,9 +60,9 @@ describe('test .clone() method:', () => {
         8,
         {
           name: 'Lys',
-          age: 11
-        }
-      ]
+          age: 11,
+        },
+      ],
     ]
     const y = clone(x)
     expect(y).toHaveLength(x.length)
@@ -84,29 +84,29 @@ describe('test .copies() method:', () => {
       age: 30,
       level: 8,
       nationality: {
-        name: 'America'
+        name: 'America',
       },
       groups: [
         'admin',
-        'accountant'
-      ]
+        'accountant',
+      ],
     }
     const dest = {
       level: 4,
       IQ: 140,
       epouse: {
         name: 'Alice',
-        age: 27
+        age: 27,
       },
       nationality: {
         name: 'Congo',
         long: '18123.123123.12312',
-        lat: '98984771.134231.1234'
+        lat: '98984771.134231.1234',
       },
       groups: [
         'finance',
-        'manager'
-      ]
+        'manager',
+      ],
     }
     copies(source, dest)
     Object.keys(source).forEach((k) => {
@@ -119,11 +119,11 @@ describe('test .copies() method:', () => {
     const source = {
       name: 'Kiwi',
       age: 16,
-      gender: 'male'
+      gender: 'male',
     }
     const dest = {
       name: 'Aline',
-      age: 20
+      age: 20,
     }
     copies(source, dest, true, ['age'])
     expect(hasProperty(dest, 'gender')).toBeFalsy()
@@ -155,14 +155,14 @@ describe('test .sortBy() method:', () => {
       { age: 9, name: 'B' },
       { age: 3, name: 'A' },
       { age: 12, name: 'D' },
-      { age: 7, name: 'C' }
+      { age: 7, name: 'C' },
     ]
     const sortedByAge = [
       { age: 3, name: 'A' },
       { age: 5, name: 'E' },
       { age: 7, name: 'C' },
       { age: 9, name: 'B' },
-      { age: 12, name: 'D' }
+      { age: 12, name: 'D' },
     ]
     const sortedArr = sortBy(arr, 1, 'age')
     expect(JSON.stringify(sortedArr) === JSON.stringify(sortedByAge)).toBeTruthy()
