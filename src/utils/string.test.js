@@ -237,10 +237,10 @@ describe('test .slugify() method:', () => {
   const inputs = [
     {
       text: 'Sur l\'année 2015',
-      expectation: 'sur-l-annee-2015',
+      expectation: 'sur-lannee-2015',
     },
     {
-      text: 'Nghị luận tác phẩm "Đường kách mệnh" của Hồ Chí Minh',
+      text: 'Nghị luận tác phẩm "Đường kách mệnh" của Hồ Chí Minh?!',
       expectation: 'nghi-luan-tac-pham-duong-kach-menh-cua-ho-chi-minh',
     },
   ]

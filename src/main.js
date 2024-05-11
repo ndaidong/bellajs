@@ -59,7 +59,7 @@ export const clone = (val, history = null) => {
 export const copies = (source, dest, matched = false, excepts = []) => {
   for (const k in source) {
     if (excepts.length > 0 && excepts.includes(k)) {
-      continue // eslint-disable-line no-continue
+      continue
     }
     if (!matched || (matched && hasProperty(dest, k))) {
       const oa = source[k]
