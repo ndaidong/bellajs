@@ -1,5 +1,4 @@
-BellaJS
-========
+# BellaJS
 
 Lightweight util for handling data type, string... in your Node.js and browser apps.
 
@@ -8,7 +7,7 @@ Lightweight util for handling data type, string... in your Node.js and browser a
 ![CI test](https://github.com/ndaidong/bellajs/workflows/ci-test/badge.svg)
 [![Coverage Status](https://coveralls.io/repos/github/ndaidong/bellajs/badge.svg)](https://coveralls.io/github/ndaidong/bellajs)
 
-# Contents
+## Contents
 
 * [Setup](#setup)
 * [APIs](#apis)
@@ -38,22 +37,25 @@ pnpm i bellajs
 yarn add bellajs
 ```
 
+```ts
+// es6 module
+import { genid } from 'bellajs'
+console.log(genid())
+```
+
 ### Deno
 
 ```ts
 import { genid } from 'https://esm.sh/bellajs'
 
-console.log(genid())
+// deno > 1.28
+import { genid } from 'npm:bellajs'
 ```
 
 ### Browser
 
-```html
-<script type="module">
-import { genid, slugify } from 'https://unpkg.com/bellajs/dist/bella.esm.js'
-
-console.log(genid())
-</script>
+```ts
+import { genid } from 'https://unpkg.com/bellajs'
 ```
 
 ## APIs
@@ -519,6 +521,8 @@ npm install
 npm test
 ```
 
-# License
+## License
 
 The MIT License (MIT)
+
+---
