@@ -27,7 +27,7 @@ const isValidLocal = (hl) => {
   try {
     const locale = new Intl.Locale(hl)
     return locale.language !== ''
-  } catch (err) {
+  } catch {
     return false
   }
 }

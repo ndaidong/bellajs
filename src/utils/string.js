@@ -133,9 +133,11 @@ export const stripAccent = (s) => {
 
 export const slugify = (s, delimiter = '-') => {
   return stripAccent(s)
+    .normalize('NFKD')
+    .replace(/[\u0300-\u036f]/g, '')
     .trim()
     .toLowerCase()
-    .replace(/\W+/g, ' ')
-    .replace(/\s+/g, ' ')
-    .replace(/\s/g, delimiter)
+    .replace(/[^a-z0-9 -]/g, '')
+    .replace(/\s+/g, delimiter)
+    .replace(new RegExp(`${delimiter}+`, 'g'), delimiter)
 }

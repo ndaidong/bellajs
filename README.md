@@ -4,10 +4,9 @@ BellaJS
 Lightweight util for handling data type, string... in your Node.js and browser apps.
 
 [![NPM](https://badge.fury.io/js/bellajs.svg)](https://badge.fury.io/js/bellajs)
+![CodeQL](https://github.com/ndaidong/bellajs/workflows/CodeQL/badge.svg)
 ![CI test](https://github.com/ndaidong/bellajs/workflows/ci-test/badge.svg)
 [![Coverage Status](https://coveralls.io/repos/github/ndaidong/bellajs/badge.svg)](https://coveralls.io/github/ndaidong/bellajs)
-![CodeQL](https://github.com/ndaidong/bellajs/workflows/CodeQL/badge.svg)
-[![CodeFactor](https://www.codefactor.io/repository/github/ndaidong/bellajs/badge)](https://www.codefactor.io/repository/github/ndaidong/bellajs)
 
 # Contents
 
