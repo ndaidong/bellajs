@@ -1,17 +1,30 @@
 // utils / date
 
-import {
-  isObject
-} from './detection.js'
+import { isObject } from "./detection.ts";
 
-const getDateFormat = () => {
-  return {
-    dateStyle: 'medium',
-    timeStyle: 'long',
-  }
+interface DateFormat {
+  dateStyle: string;
+  timeStyle: string;
 }
 
-const getTimeConvers = () => {
+interface TimeConversions {
+  second: number;
+  minute: number;
+  hour: number;
+  day: number;
+  week: number;
+  month: number;
+  year: number;
+}
+
+const getDateFormat = (): DateFormat => {
+  return {
+    dateStyle: "medium",
+    timeStyle: "long",
+  };
+};
+
+const getTimeConvers = (): TimeConversions => {
   return {
     second: 1000,
     minute: 60,
@@ -20,10 +33,10 @@ const getTimeConvers = () => {
     week: 7,
     month: 4,
     year: 12,
-  }
-}
+  };
+};
 
-const isValidLocal = (hl) => {
+const isValidLocal = (hl: string): boolean => {
   try {
     const locale = new Intl.Locale(hl)
     return locale.language !== ''
@@ -32,7 +45,7 @@ const isValidLocal = (hl) => {
   }
 }
 
-export const formatDateString = (...args) => {
+export const formatDateString = (...args: any[]): string => {
   const input = args[0]
   const lang = isValidLocal(args[1]) ? args[1] : 'en'
   const dfmt = getDateFormat()
@@ -47,20 +60,20 @@ export const formatDateString = (...args) => {
   return dtf.format(new Date(input))
 }
 
-export const formatTimeAgo = (input, lang = 'en', justnow = 'just now') => {
-  const t = new Date(input)
-  let delta = Date.now() - t
+export const formatTimeAgo = (input: any, lang: string = 'en', justnow: string = 'just now'): string => {
+  const t: number = (new Date(input)).getTime()
+  let delta: number = Date.now() - t
   const tcv = getTimeConvers()
   if (delta <= tcv.second) {
     return justnow
   }
-  let unit = 'second'
+  let unit: any = 'second'
   for (const key in tcv) {
-    if (delta < tcv[key]) {
+    if (delta < tcv[key as keyof typeof tcv]) {
       break
     } else {
       unit = key
-      delta /= tcv[key]
+      delta /= tcv[key as keyof typeof tcv]
     }
   }
   delta = Math.floor(delta)

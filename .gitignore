@@ -15,3 +15,8 @@ yarn.lock
 coverage.lcov
 package-lock.json
 pnpm-lock.yaml
+deno.lock
+
+npm
+cov
+cov.lcov
