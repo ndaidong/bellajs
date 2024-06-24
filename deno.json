@@ -1,6 +1,6 @@
 {
   "name": "@ndaidong/bellajs",
-  "version": "12.0.0-rc1",
+  "version": "12.0.0",
   "description": "A useful helper for any javascript program",
   "homepage": "https://github.com/ndaidong/bellajs",
   "repository": {
