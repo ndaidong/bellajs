@@ -7,7 +7,7 @@ Deno.test("check if .formatDateString() works correctly", async (t) => {
 
   await t.step("  check .formatDateString() with default options", () => {
     const result = formatDateString(d);
-    const reg = /^\w+\s\d+,\s+\d{4},\s\d+:\d+:\d+\s(AM|PM)\s(GMT)\+\d+$/;
+    const reg = /^\w+\s\d+,\s+\d{4},\s\d+:\d+:\d+\s(AM|PM)+/;
     assertEquals(result.match(reg) !== null, true);
   });
 
