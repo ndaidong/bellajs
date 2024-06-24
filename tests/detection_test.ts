@@ -50,7 +50,7 @@ Deno.test("check if .isInteger() works correctly", async (t) => {
 });
 
 Deno.test("check if .isArray() works correctly", async (t) => {
-  const positives = [[], [1, 2, 3], new Array(), Array.from(new Set())];
+  const positives = [[], [1, 2, 3], Array.from(new Set())];
   for (const val of positives) {
     await t.step(`test .isArray(${val}) --> true`, () => {
       assertEquals(isArray(val), true);
@@ -241,7 +241,7 @@ Deno.test("check if .hasProperty() works correctly", async (t) => {
     });
   }
 
-  const negatives = [{ a: 1 }, "email", 9, "__proto__"];
+  const negatives = ["email", "__proto__"];
   for (const val of negatives) {
     await t.step(`test .hasProperty(${val}) --> true`, () => {
       assertEquals(hasProperty(obj, val), false);

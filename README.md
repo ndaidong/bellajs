@@ -23,7 +23,6 @@ apps.
     [`shuffle`](#shufflearray-arr), [`unique`](#uniquearray-arr)
   - [Functional utils](#functional-utils): [`curry`](#curryfn),
     [`compose`](#composef1-f2-fn), [`pipe`](#pipef1-f2-fn),
-    [`maybe`](#maybeanything-val)
   - [Date utils](#date-utils):
     [`formatDateString`](#formatdatestringdate--timestamp--string-locale--object-options),
     [`formatTimeAgo`](#formattimeagodate--timestamp--string-locale--string-justnow)
@@ -429,53 +428,6 @@ const mult2 = (num) => {
 const add1AndMult2 = pipe(add1, mult2);
 add1AndMult2(3); // => 8
 // because add 1 first, then multiple to 2 late => (3 + 1) * 2
-```
-
-#### `maybe(Anything val)`
-
-Return a static variant of `Maybe` monad.
-
-```js
-import { maybe } from "@ndaidong/bellajs";
-
-const plus5 = (x) => x + 5;
-const minus2 = (x) => x - 2;
-const isNumber = (x) => Number(x) === x;
-const toString = (x) => "The value is " + String(x);
-const getDefault = () => "This is default value";
-
-maybe(5)
-  .map(plus5)
-  .map(minus2)
-  .value(); // 8
-
-maybe("noop")
-  .map(plus5)
-  .map(minus2)
-  .value(); // null
-
-maybe(5)
-  .if(isNumber)
-  .map(plus5)
-  .map(minus2)
-  .else(getDefault)
-  .map(toString)
-  .value(); // 'The value is 8'
-
-maybe()
-  .if(isNumber)
-  .map(plus5)
-  .map(minus2)
-  .map(toString)
-  .value(); // null
-
-maybe()
-  .if(isNumber)
-  .map(plus5)
-  .map(minus2)
-  .else(getDefault)
-  .map(toString)
-  .value(); // 'This is default value'
 ```
 
 ### Date utils

@@ -1,14 +1,20 @@
 // utils / curry
 
-export const curry = <T extends (...args: any[]) => any>(fn: T) => {
-  const totalArguments: number = fn.length;
-  const next = (argumentLength: number, rest: any[]) => {
+type AnyFunction = (...args: any[]) => any;
+
+export const curry = <F extends AnyFunction>(
+  fn: F,
+): (...args: any[]) => any => {
+  const totalArguments = fn.length;
+
+  const next = (argumentLength: number, rest: any[]): any => {
     if (argumentLength > 0) {
-      return (...args: any[]) => {
+      return (...args: any[]): any => {
         return next(argumentLength - args.length, [...rest, ...args]);
       };
     }
     return fn(...rest);
   };
+
   return next(totalArguments, []);
 };

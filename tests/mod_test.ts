@@ -1,7 +1,7 @@
 import { assertEquals, assertStringIncludes } from "assert";
 
 import {
-  AnyObject,
+  type AnyObject,
   clone,
   copies,
   hasProperty,

@@ -1,6 +1,6 @@
 // utils / string
 
-import { hasProperty, isArray, isNumber, isString } from "./detection.ts";
+import { hasProperty, isString } from "./detection.ts";
 
 const toString = (input: any): string => {
   return !isString(input) ? String(input) : input;

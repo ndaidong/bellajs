@@ -1,12 +1,6 @@
 // mod.ts
 
-import {
-  hasProperty,
-  isArray,
-  isDate,
-  isObject,
-  isString,
-} from "./utils/detection.ts";
+import { hasProperty, isArray, isObject, isString } from "./utils/detection.ts";
 
 export type AnyObject = { [key: string]: any };
 
@@ -37,7 +31,7 @@ export function copies(
   return dest;
 }
 
-export const unique = (arr: any[] = []): any[] => {
+export const unique = <T>(arr: T[] = []): T[] => {
   return [...new Set(arr)];
 };
 
@@ -45,21 +39,21 @@ const fnSort = (a: any, b: any): number => {
   return a > b ? 1 : (a < b ? -1 : 0);
 };
 
-export const sort = (
-  arr: any[] = [],
-  sorting: ((a: any, b: any) => number) | null = null,
-): any[] => {
-  const tmp: any[] = [...arr];
-  const fn: (a: any, b: any) => number = sorting || fnSort;
+export const sort = <T>(
+  arr: T[] = [],
+  sorting: ((a: T, b: T) => number) | null = null,
+): T[] => {
+  const tmp: T[] = [...arr];
+  const fn: (a: T, b: T) => number = sorting || fnSort;
   tmp.sort(fn);
   return tmp;
 };
 
-export const sortBy = (
-  arr: any[] = [],
+export const sortBy = <T extends Record<string, any>>(
+  arr: T[] = [],
   order: number = 1,
   key: string = "",
-): any[] => {
+): T[] => {
   if (!isString(key) || !hasProperty(arr[0], key)) {
     return arr;
   }
@@ -68,9 +62,9 @@ export const sortBy = (
   });
 };
 
-export const shuffle = (arr: any[] = []): any[] => {
-  const input: any[] = [...arr];
-  const output: any[] = [];
+export const shuffle = <T>(arr: T[] = []): T[] => {
+  const input: T[] = [...arr];
+  const output: T[] = [];
   let inputLen: number = input.length;
   while (inputLen > 0) {
     const index: number = Math.floor(Math.random() * inputLen);
@@ -80,8 +74,8 @@ export const shuffle = (arr: any[] = []): any[] => {
   return output;
 };
 
-export const pick = (arr: any[] = [], count: number = 1): any[] => {
-  const a: any[] = shuffle(arr);
+export const pick = <T>(arr: T[] = [], count: number = 1): T[] => {
+  const a: T[] = shuffle(arr);
   const mc: number = Math.max(1, count);
   const c: number = Math.min(mc, a.length - 1);
   return a.splice(0, c);
@@ -95,4 +89,3 @@ export * from "./utils/date.ts";
 export * from "./utils/curry.ts";
 export * from "./utils/compose.ts";
 export * from "./utils/pipe.ts";
-export * from "./utils/maybe.ts";

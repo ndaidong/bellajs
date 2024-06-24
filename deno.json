@@ -17,6 +17,15 @@
     "@deno/dnt": "jsr:@deno/dnt@^0.41.2"
   },
   "exports": "./mod.ts",
+  "lint": {
+    "include": ["mod.ts", "utils/*.ts", "scripts/*.ts", "tests/*.ts"],
+    "exclude": ["npm"],
+    "rules": {
+      "tags": ["recommended"],
+      "include": [],
+      "exclude": ["no-explicit-any"]
+    }
+  },
   "test": {
     "include": ["tests"],
     "exclude": []

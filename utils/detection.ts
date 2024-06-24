@@ -61,9 +61,6 @@ export const isEmpty = (val: any): boolean => {
     (isObject(val) && Object.keys(val).length === 0);
 };
 
-export const hasProperty = (ob: any, k: any): boolean => {
-  if (!ob || !k) {
-    return false;
-  }
-  return Object.prototype.hasOwnProperty.call(ob, k);
+export const hasProperty = (obj: any, prop: string): boolean => {
+  return Object.prototype.hasOwnProperty.call(obj, prop);
 };
