@@ -38,45 +38,49 @@ const getTimeConvers = (): TimeConversions => {
 
 const isValidLocal = (hl: string): boolean => {
   try {
-    const locale = new Intl.Locale(hl)
-    return locale.language !== ''
+    const locale = new Intl.Locale(hl);
+    return locale.language !== "";
   } catch {
-    return false
+    return false;
   }
-}
+};
 
 export const formatDateString = (...args: any[]): string => {
-  const input = args[0]
-  const lang = isValidLocal(args[1]) ? args[1] : 'en'
-  const dfmt = getDateFormat()
+  const input = args[0];
+  const lang = isValidLocal(args[1]) ? args[1] : "en";
+  const dfmt = getDateFormat();
   const opt = args.length >= 3
     ? args[2]
     : args.length === 1
-      ? dfmt
-      : isObject(args[1])
-        ? args[1]
-        : dfmt
-  const dtf = new Intl.DateTimeFormat(lang, opt)
-  return dtf.format(new Date(input))
-}
+    ? dfmt
+    : isObject(args[1])
+    ? args[1]
+    : dfmt;
+  const dtf = new Intl.DateTimeFormat(lang, opt);
+  return dtf.format(new Date(input));
+};
 
-export const formatTimeAgo = (input: any, lang: string = 'en', justnow: string = 'just now'): string => {
-  const t: number = (new Date(input)).getTime()
-  let delta: number = Date.now() - t
-  const tcv = getTimeConvers()
+export const formatTimeAgo = (
+  input: any,
+  lang: string = "en",
+  justnow: string = "just now",
+): string => {
+  const t: number = (new Date(input)).getTime();
+  let delta: number = Date.now() - t;
+  const tcv = getTimeConvers();
   if (delta <= tcv.second) {
-    return justnow
+    return justnow;
   }
-  let unit: any = 'second'
+  let unit: any = "second";
   for (const key in tcv) {
     if (delta < tcv[key as keyof typeof tcv]) {
-      break
+      break;
     } else {
-      unit = key
-      delta /= tcv[key as keyof typeof tcv]
+      unit = key;
+      delta /= tcv[key as keyof typeof tcv];
     }
   }
-  delta = Math.floor(delta)
-  const rel = new Intl.RelativeTimeFormat(lang)
-  return rel.format(-delta, unit)
-}
+  delta = Math.floor(delta);
+  const rel = new Intl.RelativeTimeFormat(lang);
+  return rel.format(-delta, unit);
+};

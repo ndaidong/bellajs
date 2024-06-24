@@ -8,33 +8,34 @@ import {
   isString,
 } from "./utils/detection.ts";
 
-export const clone = (val: any): any => {
+export type AnyObject = { [key: string]: any };
+
+export const clone = (val: AnyObject): AnyObject => {
   return structuredClone(val);
 };
 
-export const copies = (
-  source: object,
-  dest: object,
+export function copies(
+  source: AnyObject,
+  dest: AnyObject,
   matched: boolean = false,
   excepts: string[] = [],
-): object => {
-  const xdest = clone(dest)
+): AnyObject {
   for (const k in source) {
     if (excepts.length > 0 && excepts.includes(k)) {
       continue;
     }
     if (!matched || (matched && hasProperty(dest, k))) {
-      const oa: any = source[k as keyof typeof source];
-      const ob: any = dest[k as keyof typeof dest];
+      const oa = source[k];
+      const ob = dest[k];
       if ((isObject(ob) && isObject(oa)) || (isArray(ob) && isArray(oa))) {
-        xdest[k] = copies(oa, dest[k as keyof typeof dest], matched, excepts);
+        dest[k] = copies(oa, dest[k], matched, excepts);
       } else {
-        xdest[k] = clone(oa);
+        dest[k] = clone(oa);
       }
     }
   }
-  return xdest;
-};
+  return dest;
+}
 
 export const unique = (arr: any[] = []): any[] => {
   return [...new Set(arr)];

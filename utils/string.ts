@@ -56,7 +56,7 @@ export const ucwords = (s: string): string => {
 };
 
 export const replaceAll = (s: string, a: string, b: string): string => {
-  return toString(s).replaceAll(a, b)
+  return toString(s).replaceAll(a, b);
 };
 
 const getCharMap = (): { [key: string]: string } => {
