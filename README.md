@@ -113,12 +113,12 @@ for (let i = 0; i < 5; i++) {
 
 ```html
 <script type="module">
-import { genid } from "https://esm.sh/@ndaidong/bellajs";
-// import { genid } from 'https://unpkg.com/@ndaidong/bellajs/esm/mod.js';
+  import { genid } from "https://esm.sh/@ndaidong/bellajs";
+  // import { genid } from 'https://unpkg.com/@ndaidong/bellajs/esm/mod.js';
 
-for (let i = 0; i < 5; i++) {
-  console.log(genid());
-}
+  for (let i = 0; i < 5; i++) {
+    console.log(genid());
+  }
 </script>
 ```
 

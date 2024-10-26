@@ -16,8 +16,8 @@ export const genid = (len: number = 32, prefix: string = ""): string => {
 };
 
 export const randint = (min: number = 0, max: number = 1e6): number => {
-  const byteArray = new Uint8Array(1);
+  const byteArray = new Uint32Array(1);
   crypto.getRandomValues(byteArray);
-  const floatNum = Number("0." + byteArray[0].toString());
-  return Math.floor(floatNum * (max - min + 1)) + min;
+  const randomNumber = byteArray[0] / (0xffffffff + 1);
+  return Math.floor(randomNumber * (max - min + 1)) + min;
 };
