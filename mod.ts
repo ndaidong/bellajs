@@ -1,11 +1,52 @@
 // mod.ts
 
-import { hasProperty, isArray, isObject, isString } from "./utils/detection.ts";
+import { hasProperty, isArray, isObject, isString, isDate } from "./utils/detection.ts";
 
 export type AnyObject = { [key: string]: any };
 
-export const clone = (val: AnyObject): AnyObject => {
-  return structuredClone(val);
+export const clone = (val: any, history: any = null): any => {
+  const stack = history || new Set()
+
+  if (stack.has(val)) {
+    return val
+  }
+
+  stack.add(val)
+
+  if (isDate(val)) {
+    return new Date(val.valueOf())
+  }
+
+  const copyObject = (o: any): any => {
+    const oo = Object.create({})
+    for (const k in o) {
+      if (hasProperty(o, k)) {
+        oo[k] = clone(o[k], stack)
+      }
+    }
+    return oo
+  }
+
+  const copyArray = (a: any): any => {
+    return [...a].map((e: any): any => {
+      if (isArray(e)) {
+        return copyArray(e)
+      } else if (isObject(e)) {
+        return copyObject(e)
+      }
+      return clone(e, stack)
+    })
+  }
+
+  if (isArray(val)) {
+    return copyArray(val)
+  }
+
+  if (isObject(val)) {
+    return copyObject(val)
+  }
+
+  return val
 };
 
 export function copies(

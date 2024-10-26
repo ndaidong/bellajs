@@ -19,13 +19,21 @@ Deno.test("check if .randint() works correctly", async (t) => {
     assertEquals(q, 10);
   });
 
-  const min = 50;
-  const max = 80;
-  await t.step(`.randint() between ${min} - ${max}`, () => {
-    for (let i = 0; i < 100; i++) {
-      const q = randint(min, max);
-      assertEquals(q >= min, true);
-      assertEquals(q <= max, true);
+  await t.step(`.randint() in the range of [min, max]`, () => {
+    for (let i = 0; i < 1000; i++) {
+      const q = randint(0, 10);
+      assertEquals(q >= 0, true);
+      assertEquals(q <= 10, true);
+    }
+    for (let i = 0; i < 1000; i++) {
+      const q = randint(100, 1000);
+      assertEquals(q >= 100, true);
+      assertEquals(q <= 1000, true);
+    }
+    for (let i = 0; i < 1000; i++) {
+      const q = randint(0, 10000);
+      assertEquals(q >= 0, true);
+      assertEquals(q <= 10000, true);
     }
   });
 });
